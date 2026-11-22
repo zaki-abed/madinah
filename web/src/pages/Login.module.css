@@ -1,0 +1,43 @@
+/* صفحة تسجيل الدخول. منقولة من لوحة Login.dc.html كما هي.
+   CSS Module حتى لا تتداخل أسماؤها (.btn و .f) مع طبقة نظام التصميم العامة:
+   اللوحة نفسها لا تحمّل تلك الطبقة، ومقاساتها مختلفة (زر 48px وحقل 46px). */
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.lg{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;min-height:100vh;position:relative;display:flex;flex-direction:column;align-items:center;padding:56px 20px 28px;box-sizing:border-box}
+.band{position:absolute;inset:0 0 auto 0;height:300px;background:#142B4A}
+.top{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;text-align:center;margin-bottom:28px}
+.mark{width:64px;height:64px;border-radius:18px;background:#1C3A60;display:flex;align-items:center;justify-content:center}
+.top .n{font-size:20px;line-height:30px;font-weight:700}
+.top .e{font-size:12px;color:#9FB0C6;margin-top:-6px}
+.box{position:relative;width:100%;max-width:420px;background:#fff;border:1px solid #E1E6EE;border-radius:20px;box-shadow:0 12px 32px rgba(20,43,74,.08);padding:32px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px}
+.box h1{margin:0;font-size:24px;line-height:34px;font-weight:700}
+.box .sub{margin:2px 0 0;color:#4A5A70;font-size:14px;line-height:22px}
+.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#142B4A}
+.inp{position:relative}
+.inp .ic{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);color:#8795A8;display:flex;pointer-events:none}
+.f input{font:inherit;font-size:15px;font-weight:400;color:#142B4A;height:46px;border:1px solid #D3DAE5;border-radius:10px;padding:0 40px 0 14px;background:#fff;box-sizing:border-box;width:100%;direction:ltr;text-align:left;font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif}
+.f input::placeholder{color:#9FB0C6}
+.f input:focus{outline:3px solid #16B8A633;outline-offset:0;border-color:#16B8A6}
+.f input.bad{border-color:#D2493A}
+.f input.pw{padding-left:44px}
+.eye{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;border-radius:8px;background:transparent;color:#4A5A70;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.eye:hover{background:#F5F7FA;color:#142B4A}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.chk{display:flex;align-items:center;gap:8px;cursor:pointer;color:#4A5A70;font-size:13px;font-weight:500}
+.chk input{width:16px;height:16px;accent-color:#16B8A6;margin:0}
+.fg{font-size:13px;font-weight:600;color:#0E7C70;background:none;border:0;padding:0;cursor:pointer;font-family:inherit}
+.fg:hover{text-decoration:underline}
+.hintbox{font-size:12px;line-height:20px;color:#3A4A60;background:#F5F7FA;border-radius:10px;padding:10px 12px}
+.err{display:flex;align-items:flex-start;gap:8px;background:#D2493A12;border:1px solid #F3D3CF;color:#A3291D;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600;line-height:20px}
+.err svg{flex:none;margin-top:2px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;padding:0 18px;border-radius:10px;font:inherit;font-size:15px;font-weight:600;border:1px solid #142B4A;background:#142B4A;color:#fff;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#0B1626;color:#fff}
+.sec{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:#4A5A70;border-top:1px solid #EDF1F5;padding-top:14px;margin-top:2px}
+.foot{position:relative;margin-top:auto;padding-top:28px;font-size:12px;color:#8795A8;text-align:center}
+@media (max-width:600px){
+ .lg{padding:28px 14px 20px}
+ .band{height:220px}
+ .top{margin-bottom:20px}
+ .mark{width:52px;height:52px;border-radius:14px}
+ .top .n{font-size:17px;line-height:26px}
+ .box{padding:24px 18px;border-radius:16px}
+}
