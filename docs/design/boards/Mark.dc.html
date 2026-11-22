@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>رمز مكتب المدينة للخدمات المالية</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="display: inline-flex; line-height: 0">
+<svg width="{{size}}" height="{{size}}" viewBox="0 0 64 64" role="img" aria-label="رمز مكتب المدينة للخدمات المالية"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="{{outer}}" stroke-width="{{sw}}" stroke-linecap="round"></path><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="{{inner}}" stroke-width="{{sw}}" stroke-linecap="round"></path><sc-if value="{{showDot}}" hint-placeholder-val="{{ true }}"><circle cx="32" cy="12" r="{{dotR}}" fill="{{dot}}"></circle></sc-if></svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"size":{"editor":"int","default":160,"min":16,"max":600},"outer":{"editor":"color","default":"#142B4A"},"inner":{"editor":"color","default":"#16B8A6"},"dot":{"editor":"color","default":"#F2B84B"},"$preview":{"width":160,"height":160}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const size = Number(this.props.size ?? 160);
+    const small = size <= 40;
+    return {
+      size: size,
+      outer: this.props.outer ?? '#142B4A',
+      inner: this.props.inner ?? '#16B8A6',
+      dot: this.props.dot ?? '#F2B84B',
+      sw: small ? 8.5 : 7,
+      dotR: small ? 5 : 4.5,
+      showDot: size > 20
+    };
+  }
+}
+</script>
+</body>
+</html>

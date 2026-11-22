@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>فهرس المشروع</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.pg{direction:rtl;width:1440px;box-sizing:border-box;padding:56px 64px;background:#F5F7FA;color:#142B4A;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;font-size:15px;line-height:1.6;display:flex;flex-direction:column;gap:28px}
+h1{margin:0;font-size:32px;line-height:44px;font-weight:700}
+h2{margin:0;font-size:18px;line-height:28px;font-weight:700}
+.sub{margin:0;color:#4A5A70;font-size:14px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.ext{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid #E1E6EE;border-top:3px solid #16B8A6;border-radius:12px;padding:20px 22px;text-decoration:none;color:#142B4A}
+.ext:hover{border-color:#16B8A6;background:#F3FBFA}
+.ext b{font-size:17px}.ext span{font-size:13px;color:#4A5A70}.ext i{font-style:normal;font-size:13px;color:#0A5F56;font-weight:600;margin-top:4px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.lk{display:flex;flex-wrap:wrap;gap:8px}
+.lk a{display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1px solid #E1E6EE;border-radius:10px;background:#F8FAFC;color:#142B4A;text-decoration:none;font-size:14px;font-weight:500}
+.lk a:hover{border-color:#16B8A6;background:#F3FBFA}
+.pt{display:inline-flex;height:24px;align-items:center;padding:0 10px;border-radius:999px;background:#E6EEF7;color:#1F3F66;font-size:12px;font-weight:600;align-self:flex-start}
+ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+</style>
+</helmet>
+<div class="pg">
+<div><h1>فهرس المشروع — مكتب المدينة</h1><p class="sub">ابدئي من هون. كل ملفات المشروع وصفحاته بمكان واحد. آخر تحديث 22/11/2026.</p></div>
+<section style="display:flex;flex-direction:column;gap:12px"><h2>الملفات المرجعية</h2><p class="sub">المخطط والخريطة لوحات داخل هذا الملف (صفحة «النظام المالي»)، والـ Design System ملف مستقل بيفتح بتاب جديد.</p><div class="g2"><a class="ext" href="FinChart.dc.html"><b>مخطط النظام المالي</b><span>كل العمليات المالية وكيف بتمشي، مرسومة كمخطط مترابط.</span><i>فتح الملف ←</i></a><a class="ext" href="FinMap.dc.html"><b>الخريطة المالية</b><span>ملخص النظام: العملات، الشاشات المنجزة، الخطوات القادمة والأسئلة المفتوحة.</span><i>فتح الملف ←</i></a><a class="ext" href="https://claude.ai/artifact/9MqED9eLyi3BYNKpCgh2fZ" target="_blank" rel="noopener"><b>Design System «مكتب المدينة»</b><span>ملف الألوان والخطوط والمقاسات الرسمي اللي بيستخدمه أي تصميم جديد.</span><i>فتح الملف ←</i></a></div></section>
+<section style="display:flex;flex-direction:column;gap:12px"><h2>صفحات هذا الملف</h2><p class="sub">بتكبسي على أي اسم وبتروحي للوحة مباشرة.</p><div class="card"><span class="pt">الهوية البصرية</span><span class="sub">نظام الواجهة v1: الألوان، الخطوط، الكروت، الجداول، الأزرار.</span><div class="lk"><a href="DesignSystem.dc.html">الهوية البصرية — نظام الواجهة</a></div></div><div class="card"><span class="pt">قاعدة البيانات</span><span class="sub">تصميم الجداول وقواعدها، والنواقص اللي بدها اعتماد (القسم 9).</span><div class="lk"><a href="Database.dc.html">تصميم قاعدة البيانات</a><a href="DbRules.dc.html">قواعد قاعدة البيانات — مرجع</a></div></div><div class="card"><span class="pt">الواجهات الجديدة</span><span class="sub">شاشات النظام كلها.</span><div class="lk"><a href="Login.dc.html">1. تسجيل الدخول</a><a href="Main.dc.html">2. لوحة التحكم</a><a href="Vault.dc.html">3. خزنة الشيكل</a><a href="UsdtVault.dc.html">3أ. خزنة USDT</a><a href="Accounts.dc.html">4. الحسابات والخزائن</a><a href="AddAccount.dc.html">4أ. إضافة حساب</a><a href="TransfersList.dc.html">5. سجل الحوالات</a><a href="Transfer.dc.html">6. حوالة جديدة</a><a href="WeightedAvg.dc.html">7. صندوق USDT</a><a href="Internal.dc.html">8. نقل داخلي</a><a href="Office.dc.html">9. صفحة المكتب</a><a href="OfficePortal.dc.html">9أ. صفحة المكتب الخارجية</a><a href="Paypal.dc.html">10. PayPal</a><a href="BankAccounts.dc.html">10أ. البنوك</a><a href="Wallets.dc.html">10ب. المحافظ المصرية</a><a href="CryptoAccounts.dc.html">10ج. منصات USDT</a><a href="CardsLinks.dc.html">10د. البطاقات والربط</a><a href="PalWallets.dc.html">10هـ. المحافظ الفلسطينية</a><a href="CashPlus.dc.html">10و. Cash Plus</a><a href="Egp.dc.html">11. صندوق الجنيه</a><a href="Users.dc.html">12. المستخدمون والصلاحيات</a><a href="Clients.dc.html">13. الزبائن</a><a href="Customers.dc.html">14. الديون</a><a href="Customer.dc.html">15. ملف الزبون</a><a href="Limits.dc.html">16. حدود الحسابات</a><a href="Issues.dc.html">18. مشاكل الحسابات</a><a href="IssueDetail.dc.html">19. تفاصيل المشكلة</a></div></div><div class="card"><span class="pt">ملف التصميم</span><span class="sub">الشعار والألوان والأيقونات.</span><div class="lk"><a href="BrandDirections.dc.html">01 — اتجاهات الرمز</a><a href="LogoSystem.dc.html">02 — نظام الشعار</a><a href="Identity.dc.html">03 — الألوان والخطوط</a><a href="Icons.dc.html">04 — الأيقونات</a></div></div></section>
+<section class="card" style="border-top:3px solid #E0A12B"><h2>قرارات بانتظارك</h2><ol><li>ملف الزبون بيفتح دايماً على علاء بدل الزبون المختار.</li><li>أزرار ما بتعمل شي: Excel، واتساب، تعديل.</li><li>الملاحظات ما بتنحفظ.</li><li>رقم الحوالة ثابت TR-1043.</li><li>الحفظ ما بيتحقق من الحقول الفاضية.</li><li>اسم المكتب: «أبو حامد» ولا «أبو حامدة»؟</li><li>Wise وRevolut: نضيفهم ولا لأ؟</li></ol></section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>حدود الحسابات</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.acc{background:#16B8A6;border-color:#16B8A6;color:#0B1626}
+.btn.acc:hover{background:#13A595;color:#0B1626}
+.btn svg{width:18px;height:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:14px 16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kpi{padding:20px 24px;display:flex;flex-direction:column;gap:6px}
+.chipf{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-size:13px;font-weight:600;color:#142B4A}
+.f input,.f select{height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;font:inherit;font-size:15px;color:#142B4A;background:#fff;box-sizing:border-box;width:100%}
+.f input:focus,.f select:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.hint{font-size:12px;color:#4A5A70}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#1C3A60;color:#fff}
+.tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:600;color:#3A4A60;background:#fff;border:1px solid #E1E6EE;text-decoration:none;cursor:pointer;font-family:inherit}
+.tab.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.chk{width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.chk.y{background:#DDF5F2;color:#0A5F56}.chk.n{background:#EEF1F5;color:#9FB0C6}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;box-sizing:border-box}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:560px;max-height:100%;overflow:auto;padding:28px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 50px rgba(11,22,38,.25)}
+.mh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.x{width:40px;height:40px;border-radius:10px;border:0;background:#F5F7FA;color:#142B4A;cursor:pointer;font-size:20px;line-height:1}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.note{background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60}
+.bc{padding:20px;display:flex;flex-direction:column;gap:6px;border-radius:20px;background:#fff;border:1px solid #E1E6EE}
+.bc .big{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:28px;line-height:38px;direction:ltr;unicode-bidi:isolate;text-align:end;color:#A3291D}
+.info dt{font-size:12px;color:#4A5A70;margin:0}
+.info dd{margin:0 0 12px;font-size:15px;font-weight:600}
+.ib{width:36px;height:36px;border-radius:9px;border:1px solid #E1E6EE;background:#fff;color:#A3291D;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.ib:hover{background:#FBE7E5}
+.urow{display:grid;grid-template-columns:28px 1fr 120px 130px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #EDF1F5}
+.urow input[type=text]{height:40px;border:1px solid #D3DAE5;border-radius:10px;padding:0 10px;font:inherit;font-family:'IBM Plex Mono',monospace;font-size:14px;width:100%;box-sizing:border-box;text-align:left;direction:ltr}
+textarea{font:inherit;font-size:15px;border:1px solid #D3DAE5;border-radius:10px;padding:10px 14px;min-height:72px;resize:vertical;color:#142B4A;box-sizing:border-box;width:100%}
+.f textarea:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.lc{background:#fff;border:1px solid #E1E6EE;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px;border-top-width:4px}
+.lm{display:flex;flex-direction:column;gap:6px}
+.lbar{height:10px;border-radius:999px;background:#EDF1F5;overflow:hidden;position:relative}
+.lbar span{display:block;height:100%;border-radius:999px}
+.lbar i{position:absolute;top:-2px;bottom:-2px;width:2px;background:#142B4A;opacity:.35}
+.al{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;font-size:14px}
+.lr{display:grid;grid-template-columns:110px 150px 1fr 36px;gap:10px;align-items:end}
+.lr select,.lr input{height:42px;border:1px solid #D3DAE5;border-radius:10px;padding:0 10px;font:inherit;font-size:14px;color:#142B4A;background:#fff;width:100%;box-sizing:border-box}
+.nl{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid #E1E6EE;background:#FAFBFC}
+.lt{display:flex;flex-direction:column;overflow-x:auto}
+.lt-r{display:grid;grid-template-columns:minmax(230px,1.6fr) repeat(3,minmax(130px,1fr)) 120px 80px;gap:16px;align-items:center;padding:12px 4px;border-bottom:1px solid #EDF1F5;min-width:860px}
+.lt-r:last-child{border-bottom:0}
+.lt-r.foc{background:#F2FBFA;border-radius:12px}
+.lt-h{padding-top:0;font-size:12px;font-weight:600;color:#4A5A70}
+.lt-c{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lt-c b.amt{font-size:15px;line-height:22px}
+.lt-bar{height:5px;border-radius:999px;background:#E9EDF2;overflow:hidden}
+.ab{display:flex;flex-direction:column;gap:10px;padding:12px 16px;border-radius:14px;background:#FFFCF3;border:1px solid #F2D9A6}
+.ab-h{display:flex;align-items:center;gap:8px;color:#7A5200;font-size:14px}
+.ab-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ab-c{display:inline-flex;align-items:center;min-height:34px;padding:0 14px;border-radius:999px;border:1px solid #F2D9A6;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#7A5200;cursor:pointer}
+.ab-c:hover{background:#FDF0D5}
+.ab-c.bad{border-color:#F3D3CF;color:#A3291D}
+.ab-c.bad:hover{background:#FBE7E5}
+.lt-g{display:flex;align-items:center;gap:10px;min-width:860px;margin-top:6px;padding:12px 8px;border:0;border-top:1px solid #E1E6EE;background:transparent;font:inherit;color:#142B4A;text-align:start;cursor:pointer}
+.lt-g:hover{background:#F8FAFC}
+.lt-g b{font-size:14px}
+.lt-m b{color:#3A4A60}
+.sts{display:flex;flex-wrap:wrap;padding:6px 0}
+.st{flex:1 1 180px;display:flex;flex-direction:column;gap:2px;padding:10px 22px;border-top:3px solid var(--c);margin-top:-6px}
+.st .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--c);margin-inline-end:6px;vertical-align:middle}
+.st+.st{border-inline-start:1px solid #EDF1F5}
+.st b.amt{font-size:24px;line-height:32px;font-weight:600;color:var(--t);text-align:start}
+.sts{overflow:hidden}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav on" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+<header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+ <div><h1 style="margin:0;font-size:32px;line-height:44px;font-weight:700">حدود الحسابات</h1><p class="sub" style="margin:4px 0 0">حدود الدخول والخروج لكل حساب: يومي وأسبوعي وشهري، مع تنبيه قبل الوصول للحد</p></div>
+</header>
+
+<section class="card sts" aria-label="ملخص">
+ <div class="st" style="--c:#16B8A6;--t:#0A5F56"><span class="cap"><i class="dot"></i>عليها ليميت</span><b class="amt">{{cntAll}}</b><span class="cap">{{cntAllSub}}</span></div>
+ <div class="st" style="--c:#9FB0C6;--t:#3A4A60"><span class="cap"><i class="dot"></i>بدون ليميت</span><b class="amt">{{cntNoLim}}</b><span class="cap">غير معرّف أو لا يوجد</span></div>
+ <div class="st" style="--c:#F2B84B;--t:#7A5200"><span class="cap"><i class="dot"></i>قريب من الحد</span><b class="amt">{{cntWarn}}</b><span class="cap">وصل لنسبة التنبيه</span></div>
+ <div class="st" style="--c:#D9534A;--t:#A3291D"><span class="cap"><i class="dot"></i>وصل للحد</span><b class="amt">{{cntBad}}</b><span class="cap">لا يقبل حركات جديدة</span></div>
+</section>
+
+<sc-if value="{{hasAlerts}}" hint-placeholder-val="{{ true }}">
+<section class="ab" aria-label="التنبيهات">
+ <div class="ab-h"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg><b>{{alertHead}}</b></div>
+ <div class="ab-chips"><sc-for list="{{alertChips}}" as="a" hint-placeholder-count="3"><button type="button" class="{{a.cls}}" onClick="{{a.go}}">{{a.label}}</button></sc-for></div>
+</section>
+</sc-if>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+ <div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{chips}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div>
+ <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#4A5A70;cursor:pointer"><input type="checkbox" checked="{{onlyAlerts}}" onChange="{{toggleAlerts}}" style="width:18px;height:18px;accent-color:#16B8A6">التنبيهات فقط</label>
+</div>
+
+<section class="card" style="padding:18px 22px;display:flex;flex-direction:column;gap:6px" aria-label="الحسابات التي عليها ليميت">
+ <div class="lt" role="table" aria-label="حدود الحسابات">
+  <div class="lt-r lt-h" role="row"><span role="columnheader">الحساب</span><span role="columnheader">يومي</span><span role="columnheader">أسبوعي</span><span role="columnheader">شهري</span><span role="columnheader">الحالة</span><span role="columnheader"><span class="vh">إجراء</span></span></div>
+  <sc-for list="{{cards}}" as="c" hint-placeholder-count="6">
+   <div class="{{c.rowCls}}" role="row">
+    <div role="cell" style="display:flex;flex-direction:column;min-width:0"><b style="font-size:14px;line-height:22px">{{c.name}}</b><span class="cap">{{c.sub}}</span></div>
+    <sc-for list="{{c.cols}}" as="x" hint-placeholder-count="3">
+     <div role="cell" class="lt-c">
+      <sc-if value="{{x.has}}" hint-placeholder-val="{{ true }}"><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><b class="amt" style="{{x.leftStyle}}">{{x.left}}</b><span class="cap">من <span class="amt">{{x.max}}</span></span></div><div class="lt-bar"><div style="{{x.bar}}"></div></div></sc-if>
+      <sc-if value="{{x.none}}" hint-placeholder-val="{{ false }}"><span class="cap">{{x.noneTxt}}</span></sc-if>
+     </div>
+    </sc-for>
+    <div role="cell"><span class="{{c.statePill}}">{{c.state}}</span></div>
+    <div role="cell" style="text-align:left"><button class="btn" type="button" style="min-height:36px;padding:0 12px;font-size:13px" onClick="{{c.edit}}">تعديل</button></div>
+   </div>
+  </sc-for>
+  <sc-if value="{{hasNoLim}}" hint-placeholder-val="{{ true }}">
+   <button type="button" class="lt-g" onClick="{{toggleNoLim}}" aria-expanded="{{noLimExp}}"><span>{{noLimChev}}</span><b>حسابات بدون ليميت</b><span class="cap">{{noLimCount}} · غير معرّف أو لا يوجد ليميت · بدون تنبيه</span></button>
+   <sc-if value="{{noLimOpen}}" hint-placeholder-val="{{ false }}">
+    <sc-for list="{{noLim}}" as="c" hint-placeholder-count="3">
+     <div class="lt-r lt-m" role="row">
+      <div role="cell" style="display:flex;flex-direction:column;min-width:0"><b style="font-size:14px;line-height:22px">{{c.name}}</b><span class="cap">{{c.sub}}</span></div>
+      <sc-for list="{{c.cols}}" as="x" hint-placeholder-count="3"><div role="cell" class="lt-c"><span class="cap">{{x.noneTxt}}</span></div></sc-for>
+      <div role="cell"><span class="{{c.statePill}}">{{c.state}}</span></div>
+      <div role="cell" style="text-align:left"><button class="btn" type="button" style="min-height:36px;padding:0 12px;font-size:13px" onClick="{{c.edit}}">تعديل</button></div>
+     </div>
+    </sc-for>
+   </sc-if>
+  </sc-if>
+ </div>
+ <sc-if value="{{noRows}}" hint-placeholder-val="{{ false }}"><div class="note" style="text-align:center">لا توجد حسابات ضمن هذا الاختيار</div></sc-if>
+</section>
+<p class="cap" style="margin:0;font-size:13px">المستخدم يُحسب من حركات النظام نفسه (حوالات، نقل داخلي، استيراد PayPal). في «الدخول والخروج» يُجمع الداخل والخارج في عداد واحد. الخط الرمادي على الشريط = نسبة التنبيه.</p>
+
+
+
+<sc-if value="{{isEdit}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="تعديل الليميت"><div class="modal" style="max-width:600px">
+ <div class="mh"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">ليميت {{eName}}</h2><p class="cap" style="margin:2px 0 0;font-size:13px">اترك المبلغ فارغاً إذا كانت فترة معيّنة غير معرّفة</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{close}}">×</button></div>
+ <div class="chips" role="group" aria-label="وجود ليميت" style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{eLsChips}}" as="c" hint-placeholder-count="3"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div>
+ <sc-if value="{{eHasNote}}" hint-placeholder-val="{{ false }}"><div class="note">{{eLsNote}}</div></sc-if>
+ <sc-if value="{{eHas}}" hint-placeholder-val="{{ true }}">
+ <div class="lr cap" style="font-weight:600"><span>الفترة</span><span>الاتجاه</span><span>الحد ({{eCur}})</span><span></span></div>
+ <sc-for list="{{eRows}}" as="r" hint-placeholder-count="3"><div class="lr">
+  <select value="{{r.period}}" onChange="{{r.onPeriod}}" aria-label="الفترة"><option value="d">يومي</option><option value="w">أسبوعي</option><option value="m">شهري</option></select>
+  <select value="{{r.kind}}" onChange="{{r.onKind}}" aria-label="الاتجاه"><option value="both">الدخول والخروج</option><option value="out">الخروج فقط</option></select>
+  <input type="text" class="amt" style="text-align:left" value="{{r.max}}" onChange="{{r.onMax}}" aria-label="الحد" placeholder="غير معرّف">
+  <button class="ib" type="button" aria-label="حذف السطر" onClick="{{r.del}}">×</button>
+ </div></sc-for>
+ <button class="btn" type="button" onClick="{{addRow}}">+ إضافة ليميت</button>
+ <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+  <label class="f"><label>نبّهني عند الوصول إلى</label><select value="{{eThr}}" onChange="{{onThr}}"><option value="70">70% من الحد</option><option value="80">80% من الحد</option><option value="90">90% من الحد</option></select></label>
+  <label class="f"><label>طريقة الاحتساب</label><select value="{{eMode}}" onChange="{{onMode}}"><option value="cal">تقويمي (اليوم / الأسبوع / الشهر الحالي)</option><option value="roll">متحرك (آخر 24 ساعة / 7 أيام / 30 يوماً)</option></select></label>
+  <sc-if value="{{eShowWs}}" hint-placeholder-val="{{ true }}"><label class="f"><label>بداية الأسبوع</label><select value="{{eWs}}" onChange="{{onWs}}"><option value="sat">السبت</option><option value="sun">الأحد</option><option value="mon">الاثنين</option></select></label></sc-if>
+ </div>
+ <div class="note">{{eModeNote}}</div>
+ </sc-if>
+ <sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{close}}">إلغاء</button><button class="btn pri" type="button" onClick="{{save}}">حفظ</button></div>
+</div></div>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var focus = '';
+    try { focus = String((typeof location !== 'undefined' && location.hash) || '').replace('#', ''); } catch (e) {}
+    var U = [{ p: 'w', k: 'both', unk: true }, { p: 'm', k: 'both', unk: true }];
+    var PP = function (d, w, m) { return [{ p: 'd', k: 'out', max: 8000, used: d }, { p: 'w', k: 'out', max: 16000, used: w }, { p: 'm', k: 'out', max: 50000, used: m }]; };
+    this.state = { f: 'all', onlyAlerts: false, edit: null, err: '', draft: null, focus: focus,
+      accs: [
+        { id: 'pz', name: 'PayPal – حساب زكي', g: 'pay', cur: 'USD', thr: 80, mode: 'cal', ws: 'mon', ls: 'has', lims: PP(4200, 13050, 42811) },
+        { id: 'po', name: 'PayPal – حساب المكتب', g: 'pay', cur: 'USD', thr: 80, mode: 'cal', ws: 'mon', ls: 'has', lims: PP(0, 0, 0) },
+        { id: 'wi', name: 'Wise', g: 'pay', cur: 'EUR', thr: 80, mode: 'cal', ws: 'sat', ls: 'none', lims: [] },
+        { id: 'ba', name: 'بنك فلسطين – حساب أحمد', g: 'bank', cur: 'USD', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'both', max: 2000, used: 1500 }].concat(U) },
+        { id: 'bk', name: 'بنك فلسطين – حساب كرم', g: 'bank', cur: 'USD', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'both', max: 2000, used: 1900 }].concat(U) },
+        { id: 'bh', name: 'بنك فلسطين – حساب هبة', g: 'bank', cur: 'USD', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'both', max: 2000, used: 400 }].concat(U) },
+        { id: 'bo', name: 'بنك فلسطين – حساب المكتب', g: 'bank', cur: 'USD', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'both', max: 2000, used: 0 }].concat(U) },
+        { id: 'ar', name: 'البنك العربي – حساب المكتب', g: 'bank', cur: 'USD', thr: 80, mode: 'cal', ws: 'sat', ls: 'unknown', lims: [] },
+        { id: 'v1', name: 'Vodafone Cash – محفظة أحمد', g: 'egw', cur: 'EGP', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'both', max: 60000, used: 27600 }, { p: 'm', k: 'both', max: 200000, used: 164000 }] },
+        { id: 'v2', name: 'Vodafone Cash – محفظة إضافية', g: 'egw', cur: 'EGP', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'both', max: 60000, used: 8000 }, { p: 'm', k: 'both', max: 200000, used: 90000 }] },
+        { id: 'ip', name: 'InstaPay – إنستاباي 1', g: 'egw', cur: 'EGP', thr: 80, mode: 'cal', ws: 'sat', ls: 'has', lims: [{ p: 'd', k: 'out', max: 120000, used: 20000 }, { p: 'm', k: 'out', max: 400000, used: 122000 }] },
+        { id: 'j1', name: 'JAWWAL Pay – محفظة أحمد', g: 'plw', cur: 'ILS', thr: 80, mode: 'cal', ws: 'sat', ls: 'unknown', lims: [] },
+        { id: 'j2', name: 'JAWWAL Pay – محفظة كرم', g: 'plw', cur: 'ILS', thr: 80, mode: 'cal', ws: 'sat', ls: 'unknown', lims: [] },
+        { id: 'pp1', name: 'PalPay – محفظة أحمد', g: 'plw', cur: 'ILS', thr: 80, mode: 'cal', ws: 'sat', ls: 'unknown', lims: [] },
+        { id: 'mc', name: 'Maalchat – محفظة هبة', g: 'plw', cur: 'ILS', thr: 80, mode: 'cal', ws: 'sat', ls: 'unknown', lims: [] }
+      ] };
+  }
+  renderVals() {
+    var self = this, st = this.state, set = function (o) { self.setState(o); };
+    var m0 = function (n) { return Number(n).toLocaleString('en-US', { maximumFractionDigits: 2 }); };
+    var num = function (v) { var n = parseFloat(String(v).replace(/,/g, '')); return isNaN(n) ? 0 : n; };
+    var PN = { d: 'يومي', w: 'أسبوعي', m: 'شهري' }, KN = { out: 'الخروج فقط', both: 'الدخول والخروج' }, WSN = { sat: 'السبت', sun: 'الأحد', mon: 'الاثنين' };
+    var GR = [['pay', 'منصات الدفع والتحويل', 'منصة دفع وتحويل', 'pill info'], ['bank', 'البنوك', 'بنك', 'pill neutral'], ['egw', 'المحافظ المصرية', 'محفظة مصرية', 'pill teal'], ['plw', 'المحافظ الفلسطينية', 'محفظة فلسطينية', 'pill teal']];
+    var G = {}; GR.forEach(function (g) { G[g[0]] = g; });
+    var resetOf = function (a, p) { return a.mode === 'roll' ? { d: 'آخر 24 ساعة', w: 'آخر 7 أيام', m: 'آخر 30 يوماً' }[p] : { d: 'يتجدد منتصف الليل', w: 'يتجدد يوم ' + WSN[a.ws || 'sat'], m: 'يتجدد أول الشهر' }[p]; };
+    var alerts = [], cWarn = 0, cBad = 0;
+    var cards = st.accs.map(function (a) {
+      var worst = 0, has = a.ls === 'has', rows = has ? a.lims : [], anyUnk = rows.some(function (l) { return l.unk; });
+      var lims = rows.map(function (l) {
+        var title = KN[l.k] + ' · ' + PN[l.p], reset = resetOf(a, l.p);
+        if (l.unk) return { title: title, reset: reset, pct: '—', pctStyle: 'color:#4A5A70;font-weight:600', bar: 'width:0%', mark: 'inset-inline-start:' + a.thr + '%', usedTxt: 'غير معرّف', left: '', hasEff: false, eff: '' };
+        var pct = l.max > 0 ? l.used / l.max * 100 : 0, lvl = pct >= 100 ? 2 : pct >= a.thr ? 1 : 0;
+        worst = Math.max(worst, lvl);
+        var col = lvl === 2 ? '#D9534A' : lvl === 1 ? '#F2B84B' : '#16B8A6', left = Math.max(0, l.max - l.used);
+        if (lvl) alerts.push({ lvl: lvl, acc: a.name, text: title + ': مستخدم ' + m0(l.used) + ' من ' + m0(l.max) + ' ' + a.cur + (lvl === 2 ? ' — وصل للحد' : ' — باقي ' + m0(left)), reset: reset,
+          pill: lvl === 2 ? 'pill bad' : 'pill warn', tag: lvl === 2 ? 'وصل للحد' : 'قريب من الحد', style: lvl === 2 ? 'background:#FFF8F7' : 'background:#FFFCF3' });
+        return { title: title, reset: reset, pct: pct.toFixed(0) + '%', pctStyle: 'color:' + (lvl === 2 ? '#A3291D' : lvl === 1 ? '#7A5200' : '#136A43') + ';font-weight:600',
+          bar: 'width:' + Math.min(100, pct).toFixed(1) + '%;background:' + col, mark: 'inset-inline-start:' + a.thr + '%',
+          usedTxt: m0(l.used) + ' / ' + m0(l.max) + ' ' + a.cur, left: lvl === 2 ? 'لا يوجد متبقٍ' : 'المتبقي ' + m0(left) + ' ' + a.cur, hasEff: false, eff: '' };
+      });
+      if (worst === 2) cBad += 1; else if (worst === 1) cWarn += 1;
+      var unk = a.ls === 'unknown', foc = st.focus === a.id;
+      var dirTxt = rows.length ? KN[rows[0].k] : '', calcTxt = a.mode === 'roll' ? 'متحرك' : 'تقويمي' + (rows.some(function (x) { return x.p === 'w'; }) ? ' · الأسبوع يبدأ ' + WSN[a.ws || 'sat'] : '');
+      var cols = unk ? ['d', 'w', 'm'].map(function () { return { has: false, none: true, noneTxt: 'غير معرّف' }; }) : ['d', 'w', 'm'].map(function (p) {
+        var l = rows.filter(function (x) { return x.p === p; })[0];
+        if (!l) return { has: false, none: true, noneTxt: 'لا يوجد حد' };
+        if (l.unk) return { has: false, none: true, noneTxt: 'غير معرّف' };
+        var pc = l.max > 0 ? l.used / l.max * 100 : 0, cl = pc >= 100 ? 2 : pc >= a.thr ? 1 : 0;
+        return { has: true, none: false, noneTxt: '', left: m0(Math.max(0, l.max - l.used)), max: m0(l.max), leftStyle: 'color:' + ['#142B4A', '#7A5200', '#A3291D'][cl],
+          bar: 'height:100%;border-radius:999px;width:' + Math.min(100, pc).toFixed(1) + '%;background:' + ['#16B8A6', '#F2B84B', '#D9534A'][cl] };
+      });
+      return { a: a, worst: worst, unkAny: unk || anyUnk, cols: cols, sub: has ? [dirTxt, a.cur, calcTxt].filter(Boolean).join(' · ') : G[a.g][2] + ' · ' + a.cur, rowCls: 'lt-r' + (foc ? ' foc' : ''), name: a.name, cur: a.cur, type: G[a.g][2], typeCls: G[a.g][3], lims: lims, none: !lims.length, noneText: unk ? 'الليميت غير معروف بعد' : 'لا يوجد ليميت لهذا الحساب',
+        state: unk ? 'غير معرّف' : !lims.length ? 'بدون ليميت' : worst === 2 ? 'وصل للحد' : worst === 1 ? 'قريب من الحد' : anyUnk ? 'معرّف جزئياً' : 'ضمن الحد',
+        statePill: unk || !lims.length || (anyUnk && !worst) ? 'pill neutral' : worst === 2 ? 'pill bad' : worst === 1 ? 'pill warn' : 'pill ok',
+        border: 'border-top-color:' + (unk || !lims.length ? '#E1E6EE' : worst === 2 ? '#D9534A' : worst === 1 ? '#F2B84B' : '#16B8A6') + (foc ? ';box-shadow:0 0 0 2px #16B8A6' : ''),
+        foc: foc,
+        edit: function () { set({ edit: a.id, err: '', draft: { ls: a.ls, thr: String(a.thr), mode: a.mode, ws: a.ws || 'sat', rows: a.lims.map(function (l) { return { p: l.p, k: l.k, max: l.unk ? '' : m0(l.max), used: l.used || 0 }; }) } }); } };
+    });
+    alerts.sort(function (x, y) { return y.lvl - x.lvl; });
+    var cntN = function (n, one, two, many) { return n === 1 ? one : n === 2 ? two : n + ' ' + many; };
+    var alertChips = cards.filter(function (c) { return c.worst > 0; }).map(function (c) {
+      var best = null;
+      c.a.lims.forEach(function (l) { if (l.unk || !(l.max > 0)) return; var pc = l.used / l.max; if (!best || pc > best.pc) best = { pc: pc, l: l }; });
+      return { c: c, pc: best.pc, label: c.name + ' · ' + PN[best.l.p] + (c.worst === 2 ? ' · وصل للحد' : ' · باقي ' + m0(Math.max(0, best.l.max - best.l.used))) };
+    }).sort(function (x, y) { return y.c.worst - x.c.worst || y.pc - x.pc; }).map(function (x) {
+      return { label: x.label, cls: 'ab-c' + (x.c.worst === 2 ? ' bad' : ''), go: function () { set({ focus: x.c.a.id, f: 'all', onlyAlerts: false }); } };
+    });
+    var nBad = cards.filter(function (c) { return c.worst === 2; }).length, nWarn = cards.filter(function (c) { return c.worst === 1; }).length;
+    var alertHead = [nBad ? cntN(nBad, 'حساب واحد وصل للحد', 'حسابان وصلا للحد', 'حسابات وصلت للحد') : '', nWarn ? cntN(nWarn, 'حساب واحد قريب من الحد', 'حسابان قريبان من الحد', 'حسابات قريبة من الحد') : ''].filter(Boolean).join(' · ');
+    var inF = function (c) { return st.f === 'all' || c.a.g === st.f; };
+    var noLim = cards.filter(function (c) { return inF(c) && !st.onlyAlerts && c.none; });
+    var shown = cards.filter(function (c) { return inF(c) && !c.none && (!st.onlyAlerts || c.worst > 0); }).sort(function (x, y) { return (y.foc ? 1 : 0) - (x.foc ? 1 : 0) || y.worst - x.worst; });
+    var chips = [['all', 'الكل']].concat(GR.filter(function (g) { return st.accs.some(function (a) { return a.g === g[0]; }); }).map(function (g) { return [g[0], g[1]]; }))
+      .map(function (c) { return { label: c[1], cls: 'chipf' + (st.f === c[0] ? ' on' : ''), go: function () { set({ f: c[0] }); } }; });
+    var withL = cards.filter(function (c) { return c.a.ls === 'has' && c.lims.length; }).length, unkN = cards.filter(function (c) { return c.unkAny; }).length;
+    var acc = st.accs.filter(function (a) { return a.id === st.edit; })[0], d = st.draft;
+    var setD = function (o) { set({ draft: Object.assign({}, d, o), err: '' }); };
+    var setRow = function (i, o) { var rows = d.rows.slice(); rows[i] = Object.assign({}, rows[i], o); setD({ rows: rows }); };
+    return {
+      cntAll: String(withL), cntAllSub: 'من ' + st.accs.length + ' حسابات', cntUnk: String(unkN), cntNoLim: String(cards.filter(function (c) { return c.none; }).length), cntWarn: String(cWarn), cntBad: String(cBad),
+      warnStyle: cWarn ? 'color:#7A5200' : 'color:#4A5A70', badStyle: cBad ? 'color:#A3291D' : 'color:#4A5A70',
+      hasAlerts: alertChips.length > 0, alertHead: alertHead, alertChips: alertChips,
+      chips: chips, onlyAlerts: st.onlyAlerts, toggleAlerts: function () { set({ onlyAlerts: !st.onlyAlerts }); }, cards: shown, noRows: !shown.length && !noLim.length, noLim: noLim, hasNoLim: noLim.length > 0, noLimOpen: !!st.noLimOpen, noLimExp: st.noLimOpen ? 'true' : 'false', noLimChev: st.noLimOpen ? '▾' : '◂', toggleNoLim: function () { set({ noLimOpen: !st.noLimOpen }); }, noLimCount: noLim.length === 1 ? 'حساب واحد' : noLim.length === 2 ? 'حسابان' : noLim.length + ' حسابات',
+      isEdit: !!acc, eName: acc ? acc.name : '', eCur: acc ? acc.cur : '', close: function () { set({ edit: null, err: '' }); },
+      eLsChips: d ? [['has', 'للحساب ليميت'], ['unknown', 'غير معرّف'], ['none', 'لا يوجد ليميت']].map(function (o) { var on = d.ls === o[0]; return { label: o[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { setD({ ls: o[0] }); } }; }) : [],
+      eHas: !!d && d.ls === 'has', eLsNote: d && d.ls === 'unknown' ? 'يظهر في كرت الحساب «غير معرّف» بدون تنبيه، ويمكن تحديده لاحقاً.' : d && d.ls === 'none' ? 'يظهر في كرت الحساب «لا يوجد ليميت لهذا الحساب».' : '', eHasNote: !!d && d.ls !== 'has',
+      eRows: d ? d.rows.map(function (r, i) { return { period: r.p, kind: r.k, max: r.max,
+        onPeriod: function (e) { setRow(i, { p: e.target.value }); }, onKind: function (e) { setRow(i, { k: e.target.value }); }, onMax: function (e) { setRow(i, { max: e.target.value }); },
+        del: function () { setD({ rows: d.rows.filter(function (x, j) { return j !== i; }) }); } }; }) : [],
+      addRow: function () { setD({ rows: d.rows.concat([{ p: 'd', k: 'both', max: '', used: 0 }]) }); },
+      eThr: d ? d.thr : '80', onThr: function (e) { setD({ thr: e.target.value }); },
+      eMode: d ? d.mode : 'cal', onMode: function (e) { setD({ mode: e.target.value }); },
+      eWs: d ? d.ws : 'sat', onWs: function (e) { setD({ ws: e.target.value }); }, eShowWs: !!d && d.mode === 'cal',
+      eModeNote: d && d.mode === 'roll' ? 'متحرك: يُحتسب الحد على آخر 24 ساعة أو آخر 7 أيام أو آخر 30 يوماً من لحظة الحركة.' : 'تقويمي: يتجدد الحد اليومي عند منتصف الليل، والأسبوعي في بداية الأسبوع المختارة، والشهري أول كل شهر.',
+      hasErr: !!st.err, err: st.err,
+      save: function () {
+        var seen = {}, bad = '';
+        if (d.ls === 'has') {
+          if (!d.rows.length) bad = 'أضف حداً واحداً على الأقل، أو اختر «غير معرّف» أو «لا يوجد ليميت».';
+          d.rows.forEach(function (r) { var k = r.p + r.k; if (seen[k]) bad = 'يوجد ليميت مكرر لنفس الفترة والاتجاه.'; seen[k] = 1; if (String(r.max).trim() && num(r.max) <= 0) bad = 'مبلغ الحد يجب أن يكون أكبر من صفر، أو يُترك فارغاً إذا كان غير معرّف.'; });
+        }
+        if (bad) return set({ err: bad });
+        var order = { d: 0, w: 1, m: 2 };
+        var accs = st.accs.map(function (a) { return a.id !== acc.id ? a : Object.assign({}, a, { ls: d.ls, thr: num(d.thr), mode: d.mode, ws: d.ws, lims: d.ls !== 'has' ? [] : d.rows.map(function (r) { return String(r.max).trim() ? { p: r.p, k: r.k, max: num(r.max), used: r.used || 0 } : { p: r.p, k: r.k, unk: true }; }).sort(function (x, y) { return order[x.p] - order[y.p]; }) }); });
+        set({ accs: accs, edit: null, err: '' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

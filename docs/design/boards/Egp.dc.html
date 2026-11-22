@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>صندوق الجنيه</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.acc{background:#16B8A6;border-color:#16B8A6;color:#0B1626}
+.btn.acc:hover{background:#13A595;color:#0B1626}
+.btn svg{width:18px;height:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:14px 16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kpi{padding:20px 24px;display:flex;flex-direction:column;gap:6px}
+.chipf{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#1C3A60;color:#fff}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.st{padding:24px 28px;display:flex;flex-direction:column;gap:6px;border-inline-start:1px solid #EDF1F5}
+.st:first-child{border-inline-start:0}
+.st .v{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:34px;line-height:44px;direction:ltr;unicode-bidi:isolate;text-align:end}
+.tx{background:#fff;border:1px solid #E1E6EE;border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.tx.draft{border-color:#F2B84B;background:#FFFCF3}
+.tx.edit{border-color:#16B8A6;background:#F7FDFC}
+.tx.cancel{background:#FCF8F7;border-color:#F3D3CF;box-shadow:inset -3px 0 0 #D2493A}
+.tx.cancel .val{color:#6A7A90}
+.fields{display:grid;grid-template-columns:140px 140px minmax(140px,1fr) minmax(130px,1fr) 120px minmax(130px,1fr) auto;gap:12px;align-items:end}
+@media (max-width:900px){.fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fl{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fl>span{font-size:12px;font-weight:600;color:#4A5A70}
+.val{height:42px;display:flex;align-items:center;font-size:15px;font-weight:500;padding:0 2px}
+.inp{height:42px;border:1px solid #D3DAE5;border-radius:10px;padding:0 12px;font:inherit;font-size:15px;color:#142B4A;background:#fff;box-sizing:border-box;width:100%}
+.inp:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.num{font-family:'IBM Plex Mono',monospace;direction:ltr;text-align:left}
+.seg{display:inline-flex;background:#EEF1F5;border-radius:10px;padding:3px;gap:3px;height:42px;box-sizing:border-box}
+.seg button{font:inherit;font-size:14px;border:0;border-radius:8px;padding:0 14px;background:transparent;color:#3A4A60;cursor:pointer}
+.seg button.buy{background:#142B4A;color:#fff;font-weight:600}
+.seg button.sell{background:#A3291D;color:#fff;font-weight:600}
+.acts{display:flex;gap:6px;justify-content:flex-end}
+.ib{width:40px;height:40px;border-radius:10px;border:1px solid #E1E6EE;background:#fff;color:#4A5A70;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.ib:hover{color:#142B4A;border-color:#D3DAE5}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px dashed #E1E6EE;font-size:13px}
+.add{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border:1.5px dashed #9FD9D1;border-radius:16px;background:transparent;color:#0E7C70;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.add:hover{background:#F2FBFA}
+.unit{position:relative}
+.unit .inp{padding-right:52px}
+.unit>i{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-style:normal;font-size:12px;font-weight:600;color:#4A5A70}
+.calc{height:42px;border:1px dashed #D3DAE5;border-radius:10px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;background:#F8FAFC;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.dt{display:flex;flex-wrap:wrap;gap:6px 18px}
+.dt b{font-family:'IBM Plex Mono',monospace;font-weight:600;direction:ltr;unicode-bidi:isolate;color:#142B4A}
+.tx.cancel .dt b{font-family:inherit;direction:rtl;color:#A3291D;font-weight:600}
+.gain{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-weight:600}
+.tp.cn{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap;background:#D2493A14;color:#A3291D}
+.cxr{margin-top:4px;font-size:11px;line-height:16px;color:#A3291D;white-space:normal;max-width:150px}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+.cxov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;box-sizing:border-box}
+.cxm{background:#fff;border-radius:16px;width:100%;max-width:480px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px;box-shadow:0 16px 40px rgba(11,22,38,.22);direction:rtl}
+.cxm h2{margin:0;font-size:20px;line-height:30px;font-weight:700}
+.cxm .cxn{background:#E6EEF7;color:#1F3F66;border-radius:10px;padding:10px 14px;font-size:13px;line-height:20px}
+.cxm textarea{font:inherit;font-size:14px;border:1px solid #D3DAE5;border-radius:10px;padding:10px 14px;min-height:80px;resize:vertical;color:#142B4A;box-sizing:border-box;width:100%}
+.cxm textarea:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.cxm .cxe{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:600}
+.cxm .cxx{width:32px;height:32px;border:0;background:#F1F4F8;border-radius:8px;font-size:18px;cursor:pointer;color:#4A5A70}
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav on" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+  <header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="width:52px;height:52px;border-radius:14px;background:#142B4A;color:#16B8A6;display:inline-flex;align-items:center;justify-content:center;flex:none"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg></span>
+      <div>
+        <h1 style="margin:0;font-size:32px;line-height:44px;font-weight:700">صندوق الجنيه</h1>
+        <p class="sub" style="margin:2px 0 0">إدارة مخزون الجنيه المصري وحساب متوسط التكلفة والأرباح</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="stats" aria-label="ملخص الصندوق">
+    <div class="st"><span class="sub" style="font-size:14px;font-weight:600">المخزون المتبقي</span><span class="v">{{stock}}</span><span class="cap" style="text-align:end">جنيه مصري (EGP) · التكلفة <b class="amt" style="color:#142B4A">{{stockUsd}}</b></span></div>
+    <div class="st"><span style="font-size:14px;font-weight:600;color:#0E7C70">متوسط التكلفة</span><span class="v" style="color:#0E7C70">{{avg}}</span><span class="cap" style="text-align:end">جنيه لكل دولار · <b class="amt" style="color:#0E7C70">{{perEgp}}</b> لكل جنيه</span></div>
+    <div class="st"><span style="font-size:14px;font-weight:600;{{pnlColor}}">{{pnlLabel}}</span><span class="v" style="{{pnlColor}}">{{pnl}}</span><span class="cap" style="text-align:end">USD · الربح المحقق من البيع فقط</span></div>
+  </section>
+
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding:12px 16px;border-radius:14px;background:#fff;border:1px solid #E1E6EE;font-size:13px" aria-label="توزيع المخزون على المحافظ">
+    <b>موزّع على المحافظ:</b>
+    <sc-for list="{{walRows}}" as="w" hint-placeholder-count="3"><span class="sub">{{w.name}} <b class="amt" style="color:#142B4A">{{w.bal}}</b></span></sc-for>
+    <span class="{{matchPill}}">{{matchTxt}}</span>
+    <a href="Wallets.dc.html" style="margin-inline-start:auto;font-weight:600;text-decoration:none">المحافظ المصرية ←</a>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+      <div style="display:flex;align-items:center;gap:10px"><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">سجل العمليات</h2><span class="pill info amt">{{savedCount}}</span><sc-if value="{{hasDrafts}}" hint-placeholder-val="{{ false }}"><span class="pill warn">{{draftCount}} مسودة جديدة</span></sc-if></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#4A5A70;cursor:pointer;margin-inline-end:6px"><input type="checkbox" checked="{{showCancelled}}" onChange="{{toggleCancelled}}" style="width:18px;height:18px;accent-color:#16B8A6">إظهار الملغاة</label>
+        <button class="btn sm" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9M10 13h4"/></svg>أرشفة فترة</button>
+        <button class="btn sm" type="button">CSV</button>
+        <button class="btn sm" type="button">PDF</button>
+        <button class="btn acc sm" type="button" onClick="{{addDraft}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>إضافة صفقة</button>
+      </div>
+    </div>
+
+    <sc-if value="{{cxOpen}}" hint-placeholder-val="{{ false }}">
+    <div class="cxov" role="dialog" aria-modal="true" aria-label="إلغاء صفقة"><div class="cxm">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><h2>إلغاء الصفقة</h2><p style="margin:2px 0 0;font-size:13px;color:#4A5A70">{{cxDesc}}</p></div><button class="cxx" type="button" aria-label="إغلاق" onClick="{{cxClose}}">×</button></div>
+      <div class="cxn">لا تُحذف الصفقة، بل تبقى في السجل بحالة «ملغاة» ولا تدخل في الحساب.</div>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#142B4A">سبب الإلغاء (إلزامي)<textarea value="{{cxReason}}" onChange="{{cxOnReason}}" placeholder="مثال: سُجّلت مرتين بالخطأ"></textarea></label>
+      <sc-if value="{{cxErr}}" hint-placeholder-val="{{ false }}"><div class="cxe" role="alert">{{cxErr}}</div></sc-if>
+      <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{cxClose}}">تراجع</button><button class="btn" type="button" style="background:#A3291D;border-color:#A3291D;color:#fff" onClick="{{cxSave}}">تأكيد الإلغاء</button></div>
+    </div></div>
+    </sc-if>
+
+    <sc-if value="{{error}}" hint-placeholder-val="{{ false }}">
+      <div role="alert" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#FBE7E5;color:#A3291D;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600"><span>{{error}}</span><button type="button" class="ib" style="width:32px;height:32px;border:0;background:transparent;color:#A3291D" aria-label="إغلاق التنبيه" onClick="{{clearError}}">✕</button></div>
+    </sc-if>
+
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+      <article class="{{r.cls}}">
+        <sc-if value="{{r.editable}}" hint-placeholder-val="{{ false }}">
+          <div class="fields">
+            <label class="fl"><span>التاريخ</span><input class="inp num" type="text" value="{{r.f.date}}" onChange="{{r.onDate}}" placeholder="YYYY-MM-DD"></label>
+            <div class="fl"><span>النوع</span><div class="seg" role="group" aria-label="نوع الصفقة"><button type="button" class="{{r.buyCls}}" onClick="{{r.setBuy}}">شراء</button><button type="button" class="{{r.sellCls}}" onClick="{{r.setSell}}">بيع</button></div></div>
+            <label class="fl"><span>المرسل / المستقبل</span><input class="inp" type="text" value="{{r.f.party}}" onChange="{{r.onParty}}" placeholder="الاسم"></label>
+            <label class="fl"><span>{{r.qtyLabel}}</span><span class="unit"><input class="inp num" inputmode="decimal" value="{{r.f.amount}}" onChange="{{r.onAmount}}" placeholder="0"><i>ج.م</i></span></label>
+            <label class="fl"><span>سعر الصرف</span><span class="unit"><input class="inp num" inputmode="decimal" value="{{r.f.rate}}" onChange="{{r.onRate}}" placeholder="0.00"><i>ج.م/$</i></span></label>
+            <div class="fl"><span>المبلغ بالدولار (USD)</span><span class="calc"><span style="color:#0E7C70">$</span><span class="amt">{{r.liveUsd}}</span></span></div>
+            <div class="acts"></div>
+          </div>
+          <div class="foot" style="border-top-style:solid">
+            <span class="{{r.modePill}}">{{r.modeLabel}}</span>
+            <div style="display:flex;gap:8px"><button class="btn sm" type="button" onClick="{{r.discard}}">إلغاء</button><button class="btn pri sm" type="button" onClick="{{r.confirm}}">{{r.confirmLabel}}</button></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{r.readonly}}" hint-placeholder-val="{{ true }}">
+          <div class="fields">
+            <div class="fl"><span>التاريخ</span><span class="val" style="flex-wrap:wrap;gap:6px"><span class="amt" style="{{r.dateStyle}}">{{r.date}}</span><sc-if value="{{r.isCancelled}}" hint-placeholder-val="{{ false }}"><span class="tp cn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg>ملغاة</span></sc-if></span></div>
+            <div class="fl"><span>النوع</span><span class="val"><span class="{{r.typePill}}">{{r.typeLabel}}</span></span></div>
+            <div class="fl"><span>المرسل / المستقبل</span><span class="val" style="font-weight:600">{{r.party}}</span></div>
+            <div class="fl"><span>{{r.qtyLabel}}</span><span class="val amt" style="justify-content:flex-end;{{r.amtStyle}}">{{r.amount}}</span></div>
+            <div class="fl"><span>سعر الصرف</span><span class="val amt" style="justify-content:flex-end;{{r.strike}}">{{r.rate}}</span></div>
+            <div class="fl"><span>المبلغ بالدولار (USD)</span><span class="val amt" style="justify-content:flex-end;font-weight:600;{{r.strike}}">{{r.usd}}</span></div>
+            <div class="acts">
+              <sc-if value="{{r.active}}" hint-placeholder-val="{{ true }}">
+                <button class="ib" type="button" aria-label="تعديل الصفقة" onClick="{{r.startEdit}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+                <button class="ib" type="button" aria-label="إلغاء الصفقة" onClick="{{r.cancel}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg></button>
+              </sc-if>
+            </div>
+          </div>
+          <div class="foot">
+            <div class="dt sub"><sc-for list="{{r.details}}" as="d" hint-placeholder-count="3"><span>{{d.k}}: <b>{{d.v}}</b></span></sc-for></div>
+            <div style="display:flex;align-items:center;gap:12px"><span class="sub">{{r.partyRole}}: <b style="color:#142B4A">{{r.party}}</b></span><sc-if value="{{r.hasPnl}}" hint-placeholder-val="{{ false }}"><span class="gain amt" style="{{r.pnlStyle}}">{{r.pnl}}</span></sc-if></div>
+          </div>
+        </sc-if>
+      </article>
+    </sc-for>
+
+    <button class="add" type="button" onClick="{{addDraft}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" width="20" height="20"><path d="M12 5v14M5 12h14"/></svg>إضافة عملية جديدة</button>
+  </section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.seq = 10;
+    this.state = {
+      showCancelled: false, error: '', cxId: null, cxReason: '', cxErr: '',
+      rows: [
+        { id: 'e4', date: '2026-10-29', type: 'SELL', party: 'مكتب النور', amount: 65000, rate: 49.63, mode: 'saved', cancelled: false, createdAt: 4 },
+        { id: 'e3', date: '2026-10-15', type: 'BUY', party: 'فايز عرفات', amount: 100000, rate: 51, mode: 'saved', cancelled: false, createdAt: 3 },
+        { id: 'e2', date: '2026-09-02', type: 'SELL', party: 'عميل نقدي', amount: 20000, rate: 50.5, mode: 'saved', cancelled: false, createdAt: 2 },
+        { id: 'e2c', date: '2026-09-05', type: 'BUY', party: 'مكتب الأمل', amount: 15000, rate: 52, mode: 'saved', cancelled: true, reason: 'سُجّلت مرتين بالخطأ', createdAt: 1.5 },
+        { id: 'e1', date: '2026-09-01', type: 'BUY', party: 'مورد معتمد', amount: 55000, rate: 53.5, mode: 'saved', cancelled: false, createdAt: 1 }
+      ]
+    };
+  }
+  // الترتيب المحاسبي: التاريخ ثم وقت الإضافة
+  order(list) {
+    return list.slice().sort(function (a, b) {
+      if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+      return a.createdAt - b.createdAt;
+    });
+  }
+  // نفس معادلات صندوق الجنيه في النظام الحالي
+  calc(list) {
+    var stock = 0, cost = 0, pnl = 0, per = {}, deficit = false;
+    this.order(list).forEach(function (t) {
+      var usd = t.rate > 0 ? t.amount / t.rate : 0;               // قيمة الصفقة بالدولار = الجنيه ÷ سعر الصرف
+      var before = stock;
+      if (t.type === 'BUY') {
+        if (stock <= 0.00001) { stock = t.amount; cost = usd; }      // المخزون نفد: دورة مخزون جديدة
+        else { stock += t.amount; cost += usd; }                     // دمج بالمتوسط المرجح
+        per[t.id] = { usd: usd, stockAfter: stock, costAfter: cost, avgRate: cost > 0 ? stock / cost : t.rate };
+      } else {
+        if (t.amount > before + 0.0001) deficit = true;
+        var sold = Math.min(t.amount, before);                       // لا يُحتسب بيع يتجاوز المخزون
+        var unit = before > 0 ? cost / before : 0;                   // تكلفة الجنيه الواحد بالدولار
+        var costSold = sold * unit;                                   // تكلفة الكمية المباعة
+        var sale = t.rate > 0 ? sold / t.rate : 0;                    // قيمة البيع بالدولار
+        var p = sale - costSold;                                      // الربح المحقق
+        pnl += p;
+        stock = Math.max(0, stock - sold); cost = Math.max(0, cost - costSold);
+        if (stock <= 0.00001) { stock = 0; cost = 0; }               // نهاية دورة المخزون
+        per[t.id] = { usd: usd, sale: sale, costSold: costSold, pnl: p, stockAfter: stock, costAfter: cost, avgRate: unit > 0 ? 1 / unit : 0 };
+      }
+    });
+    return { stock: stock, cost: cost, pnl: pnl, per: per, deficit: deficit };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var m2 = function (n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    var num = function (v) { return parseFloat(String(v).replace(/,/g, '')); };
+    var live = st.rows.filter(function (r) { return r.mode !== 'draft' && !r.cancelled; });
+    var c = this.calc(live);
+    var upd = function (id, fn) { self.setState({ error: '', rows: st.rows.map(function (r) { return r.id === id ? fn(Object.assign({}, r)) : r; }) }); };
+    var setF = function (id, k) { return function (e) { var v = e.target.value; upd(id, function (r) { r.f = Object.assign({}, r.f); r.f[k] = v; return r; }); }; };
+    var validate = function (r) {
+      var amount = num(r.f.amount), rate = num(r.f.rate);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(r.f.date)) return 'أدخل التاريخ بصيغة YYYY-MM-DD.';
+      if (isNaN(amount) || amount <= 0) return 'يرجى إدخال كمية جنيه صالحة وأكبر من الصفر.';
+      if (isNaN(rate) || rate <= 0) return 'يرجى إدخال سعر صرف صالح وأكبر من الصفر.';
+      var cand = live.filter(function (x) { return x.id !== r.id; }).concat([{ id: r.id, date: r.f.date, type: r.f.type, amount: amount, rate: rate, createdAt: r.createdAt }]);
+      if (self.calc(cand).deficit) return 'الكمية المباعة أكبر من المخزون المتاح في ذلك التاريخ.';
+      return { amount: amount, rate: rate };
+    };
+    var shown = st.rows.filter(function (r) { return st.showCancelled || !r.cancelled; }).slice().sort(function (a, b) {
+      var da = a.mode === 'draft' ? 1 : 0, db = b.mode === 'draft' ? 1 : 0;
+      if (da !== db) return db - da;
+      if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+      return b.createdAt - a.createdAt;
+    });
+    var rows = shown.map(function (r) {
+      var editable = r.mode === 'draft' || r.mode === 'edit';
+      var o = { cls: 'tx' + (r.mode === 'draft' ? ' draft' : r.mode === 'edit' ? ' edit' : r.cancelled ? ' cancel' : ''), editable: editable, readonly: !editable };
+      if (editable) {
+        var A = num(r.f.amount), R = num(r.f.rate);
+        o.f = r.f;
+        o.liveUsd = (A > 0 && R > 0) ? m2(A / R) : '0.00';
+        o.qtyLabel = r.f.type === 'BUY' ? 'كمية الجنيه' : 'الكمية المباعة';
+        o.buyCls = r.f.type === 'BUY' ? 'buy' : ''; o.sellCls = r.f.type === 'SELL' ? 'sell' : '';
+        o.setBuy = function () { upd(r.id, function (x) { x.f = Object.assign({}, x.f, { type: 'BUY' }); return x; }); };
+        o.setSell = function () { upd(r.id, function (x) { x.f = Object.assign({}, x.f, { type: 'SELL' }); return x; }); };
+        o.onDate = setF(r.id, 'date'); o.onParty = setF(r.id, 'party'); o.onAmount = setF(r.id, 'amount'); o.onRate = setF(r.id, 'rate');
+        o.modePill = r.mode === 'draft' ? 'pill warn' : 'pill teal';
+        o.modeLabel = r.mode === 'draft' ? 'مسودة غير محفوظة · لا تؤثر إطلاقاً على المخزون أو الأرباح' : 'تعديل صفقة محفوظة';
+        o.confirmLabel = r.mode === 'draft' ? 'تأكيد وإضافة العملية' : 'حفظ التعديل';
+        o.discard = function () {
+          if (r.mode === 'draft') self.setState({ error: '', rows: st.rows.filter(function (x) { return x.id !== r.id; }) });
+          else upd(r.id, function (x) { x.mode = 'saved'; delete x.f; return x; });
+        };
+        o.confirm = function () {
+          var v = validate(r);
+          if (typeof v === 'string') { self.setState({ error: v }); return; }
+          upd(r.id, function (x) { x.date = x.f.date; x.type = x.f.type; x.party = x.f.party || '—'; x.amount = v.amount; x.rate = v.rate; x.mode = 'saved'; delete x.f; return x; });
+        };
+      } else {
+        var p = c.per[r.id] || {};
+        var buy = r.type === 'BUY';
+        var d = r.date.split('-');
+        o.date = d[2] + '/' + d[1] + '/' + d[0];
+        o.typeLabel = buy ? 'شراء' : 'بيع'; o.typePill = buy ? 'pill info' : 'pill bad';
+        o.qtyLabel = buy ? 'كمية الجنيه' : 'الكمية المباعة';
+        o.party = r.party; o.partyRole = buy ? 'الجهة' : 'العميل';
+        o.amount = m2(r.amount) + ' ج.م'; o.rate = String(r.rate);
+        o.usd = '$' + m2(r.rate > 0 ? r.amount / r.rate : 0);
+        o.active = !r.cancelled; o.isCancelled = !!r.cancelled; o.dateStyle = r.cancelled ? 'color:#4A5A70' : '';
+        o.strike = r.cancelled ? 'text-decoration:line-through;color:#4A5A70' : '';
+        o.amtStyle = r.cancelled ? o.strike : (buy ? 'color:#136A43' : 'color:#A3291D');
+        o.hasPnl = false; o.pnl = ''; o.pnlStyle = '';
+        if (r.cancelled) o.details = [{ k: 'الحالة', v: 'ملغاة · لا تدخل في الحساب' }, { k: 'سبب الإلغاء', v: r.reason || '—' }];
+        else if (buy) o.details = [
+          { k: 'إضافة للمخزون', v: '+' + m2(r.amount) + ' ج.م' },
+          { k: 'التكلفة', v: '$' + m2(p.usd || 0) },
+          { k: 'المخزون بعد الشراء', v: m2(p.stockAfter || 0) + ' ج.م' } ];
+        else {
+          o.details = [
+            { k: 'قيمة البيع', v: '$' + m2(p.sale || 0) },
+            { k: 'تكلفة المخزون', v: '$' + m2(p.costSold || 0) },
+            { k: 'المتبقي', v: m2(p.stockAfter || 0) + ' ج.م' } ];
+          var v = p.pnl || 0;
+          o.hasPnl = true;
+          o.pnl = (v < 0 ? 'خسارة: −$' : 'ربح: +$') + m2(Math.abs(v));
+          o.pnlStyle = v < 0 ? 'background:#FBE7E5;color:#A3291D' : 'background:#E2F4EC;color:#136A43';
+        }
+        o.startEdit = function () { upd(r.id, function (x) { x.mode = 'edit'; x.f = { date: x.date, type: x.type, party: x.party, amount: String(x.amount), rate: String(x.rate) }; return x; }); };
+        o.cancel = function () {
+          var rest = live.filter(function (x) { return x.id !== r.id; });
+          if (self.calc(rest).deficit) { self.setState({ error: 'لا يمكن إلغاء هذا الشراء لأن عمليات بيع لاحقة تعتمد عليه.' }); return; }
+          self.setState({ error: '', cxId: r.id, cxReason: '', cxErr: '' });
+        };
+      }
+      return o;
+    });
+    var drafts = st.rows.filter(function (r) { return r.mode === 'draft'; }).length;
+    var avgRate = c.cost > 0 && c.stock > 0 ? c.stock / c.cost : 0;
+    var unit = c.stock > 0 && c.cost > 0 ? c.cost / c.stock : 0;
+    var WAL = [['محفظة أحمد', 30000], ['محفظة إضافية', 25000], ['إنستاباي 1', 15000]];
+    var walSum = WAL.reduce(function (s, w) { return s + w[1]; }, 0), diff = c.stock - walSum;
+    var cxRow = st.cxId ? st.rows.filter(function (x) { return x.id === st.cxId; })[0] : null;
+    return {
+      cxOpen: !!cxRow, cxReason: st.cxReason || '', cxErr: st.cxErr || '',
+      cxDesc: cxRow ? (cxRow.type === 'BUY' ? 'شراء' : 'بيع') + ' · ' + cxRow.party + ' · ' + String(cxRow.date).split('-').reverse().join('/') + ' · ' + cxRow.amount.toLocaleString('en-US') + ' ج.م' : '',
+      cxClose: function () { self.setState({ cxId: null, cxReason: '', cxErr: '' }); },
+      cxOnReason: function (e) { self.setState({ cxReason: e.target.value, cxErr: '' }); },
+      cxSave: function () {
+        var rs = String(self.state.cxReason || '').trim();
+        if (!rs) { self.setState({ cxErr: 'اكتب سبب الإلغاء.' }); return; }
+        var id = self.state.cxId;
+        self.setState({ cxId: null, cxReason: '', cxErr: '', error: '', rows: self.state.rows.map(function (x) { return x.id === id ? Object.assign({}, x, { cancelled: true, reason: rs }) : x; }) });
+      },
+      walRows: WAL.map(function (w) { return { name: w[0], bal: m2(w[1]) }; }),
+      matchPill: Math.abs(diff) < 0.01 ? 'pill ok' : 'pill warn',
+      matchTxt: Math.abs(diff) < 0.01 ? '✓ مطابق لمخزون الصندوق' : 'فرق ' + m2(Math.abs(diff)) + ' ج.م عن مخزون الصندوق',
+      stock: m2(c.stock), stockUsd: 'USD $' + m2(c.cost),
+      avg: avgRate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 }),
+      perEgp: '$' + unit.toFixed(4),
+      pnl: (c.pnl < 0 ? '−$' : '+$') + m2(Math.abs(c.pnl)),
+      pnlLabel: c.pnl < 0 ? 'خسارة الفترة الحالية' : 'أرباح الفترة الحالية',
+      pnlColor: c.pnl < 0 ? 'color:#A3291D' : 'color:#136A43',
+      savedCount: live.length, draftCount: drafts, hasDrafts: drafts > 0,
+      rows: rows, error: st.error,
+      clearError: function () { self.setState({ error: '' }); },
+      showCancelled: st.showCancelled,
+      toggleCancelled: function () { self.setState({ showCancelled: !st.showCancelled }); },
+      addDraft: function () {
+        self.seq += 1;
+        self.setState({ error: '', rows: [{ id: 'd' + self.seq, mode: 'draft', cancelled: false, createdAt: 100 + self.seq, date: '', type: 'BUY', party: '', amount: 0, rate: 0,
+          f: { date: '2026-11-11', type: 'BUY', party: '', amount: '', rate: '' } }].concat(st.rows) });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>تفاصيل مشكلة حساب</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.code{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:#EEF1F5;color:#142B4A;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#1C3A60;color:#fff}
+.btn.acc{background:#16B8A6;border-color:#16B8A6;color:#0B1626}
+.btn.acc:hover{background:#13A595;color:#0B1626}
+.btn svg{width:18px;height:18px}
+.mb{min-height:34px;padding:0 12px;font-size:13px;border-radius:9px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 14px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap;position:sticky;top:0;z-index:1}
+.tbl td{padding:12px 14px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}.dark{background:#142B4A;color:#fff}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kpi{background:#fff;border:1px solid #E1E6EE;border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi .n{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;line-height:40px;direction:ltr;unicode-bidi:isolate;text-align:end}
+.kpi .l{font-size:14px;font-weight:600}
+.chipf{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f label,.f .lb{font-size:13px;font-weight:600;color:#142B4A}
+.f input,.f select{height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 12px;font:inherit;font-size:14px;color:#142B4A;background:#fff;box-sizing:border-box;width:100%}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+textarea{font:inherit;font-size:14px;border:1px solid #D3DAE5;border-radius:10px;padding:10px 12px;min-height:72px;resize:vertical;color:#142B4A;box-sizing:border-box;width:100%}
+.hint{font-size:12px;color:#4A5A70}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;box-sizing:border-box}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:780px;max-height:100%;overflow:auto;padding:28px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 50px rgba(11,22,38,.25)}
+.mh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.x{width:40px;height:40px;border-radius:10px;border:0;background:#F5F7FA;color:#142B4A;cursor:pointer;font-size:20px;line-height:1}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.note{background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60}
+.fs{border:1px solid #E1E6EE;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;margin:0}
+.fs legend{font-size:15px;font-weight:700;padding:0 6px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.lnk{color:#142B4A;font-weight:600;text-decoration:none}
+.lnk:hover{color:#0E7C70;text-decoration:underline}
+.flash{display:flex;align-items:center;gap:10px;background:#E2F4EC;color:#136A43;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600}
+.tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:600;color:#3A4A60;background:#fff;border:1px solid #E1E6EE;cursor:pointer;font-family:inherit}
+.tab.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.cnt{font-family:'IBM Plex Mono',monospace;font-size:12px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#EEF1F5;color:#3A4A60;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}
+.cnt.on{background:#1F4470;color:#fff}
+.sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px 24px;margin:0}
+.sum dt{font-size:12px;color:#4A5A70;font-weight:600}
+.sum dd{margin:2px 0 0;font-size:15px;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:8px 12px;font-size:14px;margin:0}
+.kv dt{color:#4A5A70;font-size:13px}
+.kv dd{margin:0;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.tl{list-style:none;margin:0;padding:0}
+.tl-i{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;position:relative;padding-bottom:22px}
+.tl-i::before{content:"";position:absolute;inset-inline-start:19px;top:44px;bottom:4px;width:2px;background:#E1E6EE}
+.tl-i:last-child::before{display:none}
+.tl-dot{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.tl-c{min-width:0;padding-top:2px}
+.qa{display:flex;gap:10px;margin-top:8px;padding:8px 12px;border-radius:10px;background:#F5F8FC;font-size:14px}
+.qa b{flex:none;font-size:12px;color:#1F3F66;min-width:76px;padding-top:1px}
+.qa.in{background:#FFFCF3}.qa.in b{color:#7A5200}
+.att{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border-radius:8px;border:1px solid #E1E6EE;background:#F8FAFC;color:#142B4A;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.att:hover{border-color:#16B8A6}
+.lk{border:0;background:transparent;color:#0E7C70;font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:0 6px;min-height:32px}
+.lk:hover{text-decoration:underline}
+.drop{display:flex;align-items:center;justify-content:center;gap:10px;min-height:64px;border:1.5px dashed #B8C4D4;border-radius:12px;background:#FAFBFC;color:#3A4A60;font:inherit;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+.drop:hover{border-color:#16B8A6;background:#F3FBFA}
+.doc{display:flex;gap:12px;padding:14px;border:1px solid #EDF1F5;border-radius:14px;background:#fff}
+.dic{width:44px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.row-sum{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:#F5F7FA;font-size:14px}
+.chat{display:flex;flex-direction:column;gap:10px;background:#F7F9FB;border-radius:16px;padding:16px}
+.dsep{display:flex;justify-content:center;margin:6px 0}
+.dsep span{font-size:12px;color:#4A5A70;background:#fff;border:1px solid #E1E6EE;border-radius:999px;padding:2px 12px}
+.sys{display:flex;justify-content:center}
+.sysin{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;max-width:80%;font-size:12px;line-height:18px;padding:5px 12px;border-radius:12px;text-align:center}
+.row{display:flex}
+.row.in{justify-content:flex-start}
+.row.out{justify-content:flex-end}
+.bub{max-width:72%;min-width:260px;display:flex;flex-direction:column;gap:6px;padding:10px 14px;border-radius:16px;border:1px solid #E1E6EE;background:#fff;box-sizing:border-box}
+.row.in .bub{border-start-start-radius:4px}
+.row.out .bub{background:#EAF6F4;border-color:#C9E9E4;border-start-end-radius:4px}
+.bh{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;font-weight:600;color:#4A5A70}
+.bt{font-size:15px;line-height:22px;font-weight:700}
+.bb{margin:0;font-size:14px;line-height:21px;color:#3A4A60;white-space:pre-line}
+.bf{display:flex;align-items:center;gap:8px;justify-content:space-between;font-size:11px;color:#6A7A90}
+.lk.sm{font-size:11px;min-height:24px;padding:0 4px}
+.lk.ed{opacity:0;transition:opacity .12s}
+.bub:hover .lk.ed,.lk.ed:focus{opacity:1}
+.files{display:flex;flex-direction:column;background:#fff;border:1px solid #E1E6EE;border-radius:14px;overflow:hidden}
+.frow{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid #EDF1F5}
+.frow:first-child{border-top:0}
+.frow .dic{width:36px;height:40px;border-radius:8px}
+.ibx{width:36px;height:36px;border-radius:9px;border:1px solid #E1E6EE;background:#fff;color:#142B4A;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.ibx:hover{background:#F5F7FA}
+.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.hc{display:flex;flex-direction:column;gap:4px;padding:18px 24px;border-inline-start:1px solid #EDF1F5;min-width:0}
+.hc:first-child{border-inline-start:0}
+.hl{font-size:12px;font-weight:600;color:#4A5A70}
+.hn{font-size:22px;line-height:32px;font-weight:700;color:#142B4A}
+.hn.amt{font-weight:600}
+.quote{margin:0;padding:10px 14px;background:#F5F7FA;border-radius:12px;font-size:14px;font-style:italic;color:#142B4A}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav on" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+<nav aria-label="مسار الصفحة" class="cap" style="font-size:13px;margin-bottom:-12px"><a href="Issues.dc.html" style="font-weight:600;text-decoration:none">مشاكل الحسابات والمنصات</a> ‹ <span class="en">{{i.id}}</span></nav>
+<header style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:16px;justify-content:space-between">
+ <div style="min-width:0">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="{{i.stPill}}">{{i.stLabel}}</span><sc-if value="{{i.hasOutcome}}" hint-placeholder-val="{{ false }}"><span class="pill dark">{{i.outcome}}</span></sc-if><sc-if value="{{i.hasWait}}" hint-placeholder-val="{{ true }}"><span class="{{i.waitPill}}">{{i.waitLabel}}</span></sc-if></div>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px"><h1 style="margin:0;font-size:30px;line-height:42px;font-weight:700">{{i.acc}}</h1><span class="{{i.typePill}}" title="{{i.typeDesc}}" style="height:30px;padding:0 14px;font-size:14px;cursor:help">{{i.typeShort}}</span></div>
+ </div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap">
+  <sc-if value="{{i.open}}" hint-placeholder-val="{{ true }}">
+   <button class="btn pri" type="button" onClick="{{openMsg}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>مراسلة</button>
+  </sc-if>
+  <sc-if value="{{i.closed}}" hint-placeholder-val="{{ false }}"><button class="btn pri" type="button" onClick="{{openReopen}}">إعادة فتح المشكلة</button></sc-if>
+ </div>
+</header>
+
+<sc-if value="{{hasReminders}}" hint-placeholder-val="{{ true }}">
+<section aria-label="تذكيرات هذه المشكلة" style="display:flex;flex-direction:column;gap:8px">
+ <sc-for list="{{reminders}}" as="r" hint-placeholder-count="2"><div style="{{r.box}}"><span class="{{r.pill}}">{{r.tag}}</span><span style="flex:1">{{r.text}}</span></div></sc-for>
+</section>
+</sc-if>
+
+<section class="card" style="padding:0;overflow:hidden" aria-label="ملخص الحالة">
+ <div class="hero">
+  <div class="hc"><span class="hl">الرصيد المتوقف</span><span class="hn amt">{{i.aff}}</span><span class="cap">الرصيد كله وقت بداية المشكلة</span></div>
+  <div class="hc"><span class="hl">{{i.durLabel}}</span><span class="hn">{{i.dur}}</span><span class="cap">منذ <span class="amt">{{i.startF}}</span></span></div>
+  <div class="hc" style="{{i.lastBox}}"><span class="hl">آخر حركة</span><span class="hn" style="{{i.lastStyle}}">{{i.lastAgo}} <sc-if value="{{i.stale}}" hint-placeholder-val="{{ false }}"><span class="pill warn" style="height:22px;font-size:11px;vertical-align:middle">تحتاج متابعة</span></sc-if></span><span class="cap">{{i.lastWhat}}</span></div>
+ </div>
+ <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:12px 24px;border-top:1px solid #EDF1F5;border-bottom:1px solid #EDF1F5;background:#FAFBFC;font-size:13px;color:#4A5A70">
+  <span style="display:inline-flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM3 7l9 6 9-6"/></svg><b class="en" style="color:#142B4A;font-weight:600">{{i.email}}</b> · المتابعة تكون منه · <a href="Accounts.dc.html" style="font-weight:600">ملف الحساب</a></span>
+  <span style="flex:1"></span>
+  <span>المسؤول: <b style="color:#142B4A">{{i.owner}}</b></span>
+ </div>
+ <div style="padding:16px 24px;display:flex;flex-direction:column;gap:10px">
+  <blockquote class="quote"><span class="cap" style="display:block;font-weight:600;font-style:normal">سبب المنصة</span>«{{i.reason}}»</blockquote>
+  <p style="margin:0;font-size:14px;color:#3A4A60">{{i.desc}}</p>
+ </div>
+</section>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap" role="tablist" aria-label="أقسام المشكلة">
+ <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4"><button type="button" role="tab" class="{{t.cls}}" aria-selected="{{t.sel}}" onClick="{{t.go}}">{{t.label}}<span class="{{t.cntCls}}">{{t.n}}</span></button></sc-for>
+</div>
+
+<sc-if value="{{tabTl}}" hint-placeholder-val="{{ true }}">
+<section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:16px" aria-label="السجل الزمني">
+ <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+  <div><h2 style="margin:0;font-size:20px;line-height:30px;font-weight:700">المراسلات والسجل الزمني</h2><p class="cap" style="margin:2px 0 0">على اليمين رسائل المنصة، وعلى اليسار رسائلنا · لا يُحذف شيء، وأي تعديل يُحفظ مع النسخة الأصلية</p></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+   <div style="display:flex;gap:6px" role="group" aria-label="ترتيب"><sc-for list="{{orderChips}}" as="c" hint-placeholder-count="2"><button type="button" class="{{c.cls}}" style="height:32px;font-size:12px" onClick="{{c.go}}" aria-pressed="{{c.pressed}}">{{c.label}}</button></sc-for></div>
+  </div>
+ </div>
+ <div class="chat">
+  <sc-for list="{{items}}" as="e" hint-placeholder-count="6">
+   <sc-if value="{{e.isDate}}" hint-placeholder-val="{{ false }}"><div class="dsep"><span class="amt">{{e.date}}</span></div></sc-if>
+   <sc-if value="{{e.isSys}}" hint-placeholder-val="{{ false }}"><div class="sys"><div class="sysin" style="{{e.sysStyle}}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{e.ic}}"/></svg><span><b>{{e.title}}</b><sc-if value="{{e.hasBody}}" hint-placeholder-val="{{ false }}"> · {{e.body}}</sc-if></span><span class="amt" style="opacity:.75">{{e.time}}</span></div></div></sc-if>
+   <sc-if value="{{e.isMsg}}" hint-placeholder-val="{{ true }}"><div class="row {{e.side}}"><div class="bub">
+    <div class="bh"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{e.ic}}"/></svg><span>{{e.kLabel}}</span><sc-if value="{{e.hasTopic}}" hint-placeholder-val="{{ true }}"><span>· {{e.topic}}</span></sc-if><sc-if value="{{e.hasDecision}}" hint-placeholder-val="{{ false }}"><span class="pill dark" style="height:20px;font-size:11px;padding:0 8px">قرار: {{e.decision}}</span></sc-if></div>
+    <b class="bt">{{e.title}}</b>
+    <sc-if value="{{e.hasBody}}" hint-placeholder-val="{{ true }}"><p class="bb" style="{{e.bodyStyle}}">{{e.body}}</p><sc-if value="{{e.canMore}}" hint-placeholder-val="{{ false }}"><button type="button" class="lk" style="min-height:24px;padding:0" onClick="{{e.toggleMore}}">{{e.moreLabel}}</button></sc-if></sc-if>
+    <sc-if value="{{e.hasChips}}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{e.atts}}" as="a" hint-placeholder-count="1"><button type="button" class="att" onClick="{{a.open}}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11l-8.5 8.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L14 7"/></svg><span class="en">{{a.name}}</span></button></sc-for></div></sc-if>
+    <sc-if value="{{e.showOrig}}" hint-placeholder-val="{{ false }}"><div class="note" style="padding:8px 10px;font-size:12px;display:flex;flex-direction:column;gap:2px"><b>النسخة الأصلية</b><span>{{e.origTitle}}</span><span class="cap">{{e.origBody}}</span></div></sc-if>
+    <div class="bf"><span>{{e.sender}} · <span class="amt">{{e.time}}</span></span><sc-if value="{{e.edited}}" hint-placeholder-val="{{ false }}"><button type="button" class="lk sm" onClick="{{e.toggleOrig}}">{{e.editedText}}</button></sc-if><sc-if value="{{e.canEdit}}" hint-placeholder-val="{{ true }}"><button type="button" class="lk sm ed" onClick="{{e.edit}}">تعديل</button></sc-if></div>
+   </div></div></sc-if>
+  </sc-for>
+ </div>
+ <sc-if value="{{noEvents}}" hint-placeholder-val="{{ false }}"><div class="note" style="text-align:center">لا يوجد شيء ضمن هذا الاختيار</div></sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{tabDocs}}" hint-placeholder-val="{{ false }}">
+<section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px" aria-label="المستندات والمرفقات">
+ <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+  <div><h2 style="margin:0;font-size:20px;line-height:30px;font-weight:700">المستندات والمرفقات</h2><p class="cap" style="margin:2px 0 0">كل الملفات مرتبة حسب الرسالة اللي إجت معها · تُضاف الملفات من خلال المراسلة</p></div>
+ </div>
+ <div class="chat" style="gap:14px">
+  <sc-for list="{{docGroups}}" as="g" hint-placeholder-count="4">
+   <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:#4A5A70"><span class="amt" style="font-weight:600">{{g.date}}</span><span class="{{g.sidePill}}" style="height:20px;font-size:11px;padding:0 8px">{{g.side}}</span><span>{{g.title}}</span></div>
+    <div class="files">
+     <sc-for list="{{g.files}}" as="d" hint-placeholder-count="2"><div class="frow">
+      <span class="dic" style="{{d.icStyle}}"><span class="en" style="font-size:10px;font-weight:700">{{d.ext}}</span></span>
+      <span style="flex:1;min-width:0"><b class="en" style="display:block;font-size:14px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{d.name}}</b><span class="cap">{{d.desc}}</span></span>
+      <button class="btn mb" type="button" onClick="{{d.open}}">فتح</button>
+      <button class="ibx" type="button" onClick="{{d.dl}}" aria-label="تنزيل {{d.name}}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button>
+     </div></sc-for>
+    </div>
+   </div>
+  </sc-for>
+ </div>
+</section>
+</sc-if>
+
+<sc-if value="{{tabAudit}}" hint-placeholder-val="{{ false }}">
+<section class="card" style="overflow:hidden" aria-label="سجل التدقيق">
+ <div style="padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><div style="flex:1"><h2 style="margin:0;font-size:20px;line-height:30px;font-weight:700">سجل التدقيق</h2><p class="cap" style="margin:2px 0 0">كل عملية على المشكلة مع المستخدم والتاريخ والوقت · لا يمكن تعديل هذا السجل</p></div><span class="pill info">صلاحيات القسم من «المستخدمون والصلاحيات»</span></div>
+ <div style="overflow-x:auto"><table class="tbl">
+  <thead><tr><th>الوقت</th><th>المستخدم</th><th>العملية</th><th>التفاصيل</th><th>الجهاز</th></tr></thead>
+  <tbody><sc-for list="{{audit}}" as="l" hint-placeholder-count="5"><tr><td class="amt">{{l.atF}}</td><td>{{l.user}}</td><td><span class="{{l.pill}}">{{l.kind}}</span></td><td style="white-space:normal;min-width:260px">{{l.what}}</td><td class="cap en">{{l.dev}}</td></tr></sc-for></tbody>
+ </table></div>
+</section>
+</sc-if>
+
+<sc-if value="{{mMsg}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="{{msgTitle}}"><div class="modal">
+ <div class="mh"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">{{msgTitle}}</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{msgSub}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{closeM}}">×</button></div>
+ <sc-if value="{{m.isNew}}" hint-placeholder-val="{{ true }}">
+  <div class="f"><span class="lb" id="mw">من مين؟</span><div style="display:flex;gap:8px;flex-wrap:wrap" role="group" aria-labelledby="mw"><sc-for list="{{dirChips}}" as="c" hint-placeholder-count="2"><button type="button" class="{{c.cls}}" style="height:44px;padding:0 20px;font-size:14px" onClick="{{c.go}}" aria-pressed="{{c.pressed}}">{{c.label}}</button></sc-for></div></div>
+  <div class="f"><span class="lb" id="mc">القناة</span><div style="display:flex;gap:8px;flex-wrap:wrap" role="group" aria-labelledby="mc"><sc-for list="{{chChips}}" as="c" hint-placeholder-count="4"><button type="button" class="{{c.cls}}" onClick="{{c.go}}" aria-pressed="{{c.pressed}}">{{c.label}}</button></sc-for></div></div>
+  <div class="f"><span class="lb" id="mt">الموضوع</span><div style="display:flex;gap:8px;flex-wrap:wrap" role="group" aria-labelledby="mt"><sc-for list="{{topicChips}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" onClick="{{c.go}}" aria-pressed="{{c.pressed}}">{{c.label}}</button></sc-for></div></div>
+  <sc-if value="{{showDecision}}" hint-placeholder-val="{{ false }}">
+   <div class="fs" style="background:#F8FAFC"><span class="lb" id="md" style="font-size:13px;font-weight:600">ما هو القرار؟</span><div style="display:flex;gap:8px;flex-wrap:wrap" role="group" aria-labelledby="md"><sc-for list="{{decChips}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" onClick="{{c.go}}" aria-pressed="{{c.pressed}}">{{c.label}}</button></sc-for></div>
+    <sc-if value="{{hasDecHint}}" hint-placeholder-val="{{ false }}"><div class="note" style="{{decHintStyle}}">{{decHint}}</div></sc-if>
+   </div>
+  </sc-if>
+  <div class="g2">
+   <div class="f"><label for="ma">التاريخ والوقت</label><input id="ma" type="datetime-local" value="{{m.at}}" onChange="{{mAt}}"></div>
+  </div>
+ </sc-if>
+ <div class="f"><label for="ms">ملخص قصير (إلزامي)</label><input id="ms" value="{{m.title}}" onChange="{{mTitle}}" placeholder="{{msgPh}}"></div>
+ <div class="f"><label for="mb">التفاصيل أو نص الرسالة</label><textarea id="mb" value="{{m.body}}" onChange="{{mBody}}" style="min-height:96px" placeholder="نص الرسالة أو ملخصها، ورقم القضية إن وُجد"></textarea></div>
+ <sc-if value="{{m.isNew}}" hint-placeholder-val="{{ true }}">
+  <div class="f"><span class="lb">المرفقات</span><span class="hint">{{attHint}}</span><button type="button" class="drop" onClick="{{mAddAtt}}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>اسحب الملفات هنا أو اضغط للاختيار</button>
+   <sc-if value="{{m.hasAtts}}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{m.attList}}" as="a" hint-placeholder-count="1"><span class="att" style="cursor:default"><span class="en">{{a}}</span></span></sc-for></div></sc-if></div>
+ </sc-if>
+ <sc-if value="{{m.isEdit}}" hint-placeholder-val="{{ false }}"><div class="note">التاريخ الأصلي ومن سجّلها لا يتغيران. النسخة الأصلية تبقى ظاهرة، والتعديل يُسجَّل في سجل التدقيق.</div></sc-if>
+ <sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{closeM}}">إلغاء</button><button class="btn pri" type="button" onClick="{{saveMsg}}">{{msgSave}}</button></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{mStatus}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="{{stTitle}}"><div class="modal" style="max-width:600px">
+ <div class="mh"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">{{stTitle}}</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{stSub}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{closeM}}">×</button></div>
+ <sc-if value="{{stShowFields}}" hint-placeholder-val="{{ true }}">
+  <div class="g2">
+   <div class="f"><label for="ss">حالة المشكلة</label><select id="ss" value="{{m.st}}" onChange="{{mSt}}"><sc-for list="{{stOpts}}" as="o" hint-placeholder-count="2"><option value="{{o.v}}">{{o.l}}</option></sc-for></select></div>
+   <div class="f"><label for="sa">نوع المشكلة</label><select id="sa" value="{{m.type}}" onChange="{{mType}}"><sc-for list="{{typeOpts}}" as="o" hint-placeholder-count="3"><option value="{{o.v}}">{{o.l}}</option></sc-for></select><span class="hint">مثلاً: تجميد ← إغلاق</span></div>
+  </div>
+ </sc-if>
+ <sc-if value="{{closeWarn}}" hint-placeholder-val="{{ false }}"><div class="note" style="background:#FFFCF3;color:#7A5200">{{closeWarnText}}</div></sc-if>
+ <div class="f"><label for="sn">{{stNoteLabel}}</label><textarea id="sn" value="{{m.note}}" onChange="{{mNote}}"></textarea></div>
+ <sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{closeM}}">إلغاء</button><button class="btn pri" type="button" onClick="{{saveStatus}}">{{stSave}}</button></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{mView}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="{{vTitle}}"><div class="modal" style="max-width:640px">
+ <div class="mh"><div style="min-width:0"><h2 style="margin:0;font-size:20px;line-height:30px;font-weight:700;overflow-wrap:anywhere">{{vTitle}}</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{vMeta}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{closeM}}">×</button></div>
+ <div style="height:280px;border-radius:14px;background:repeating-linear-gradient(135deg,#EEF1F5 0 14px,#F5F7FA 14px 28px);display:flex;align-items:center;justify-content:center;color:#4A5A70;font-weight:600">معاينة الملف</div>
+ <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button class="btn" type="button" onClick="{{vDl}}">تنزيل</button><button class="btn pri" type="button" onClick="{{closeM}}">إغلاق</button></div>
+</div></div>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var E = function (id, at, kind, title, o) { return Object.assign({ id: id, at: at, rec: at, kind: kind, title: title, body: '', by: 'أحمد', atts: [] }, o || {}); };
+    var M = function (id, at, dir, ch, topic, title, o) { return E(id, at, 'msg', title, Object.assign({ dir: dir, ch: ch, topic: topic, ref: '', dec: '' }, o || {})); };
+    this.state = { tab: 'tl', order: 'new', who: 'all', exp: {}, modal: null, m: {}, err: '', orig: {},
+      issue: { id: 'ISS-014', acc: 'PayPal – حساب المكتب', plat: 'PayPal', cur: 'USD', type: 'restrict', st: 'open', owner: 'أحمد', start: '2026-09-18', email: 'madina.office.pp@example.com', aff: 8420,
+        desc: 'ظهرت رسالة تقييد عند محاولة سحب 3,000 دولار إلى بنك فلسطين – أحمد (USD). الرصيد كله متوقف.',
+        reason: 'نشاط غير معتاد على الحساب، ومراجعة لمصدر الأموال.' },
+      events: [
+        E('e1', '2026-09-18 09:20', 'start', 'PayPal قيّد الحساب', { body: 'وصل إشعار بالبريد وفي لوحة PayPal بتقييد الحساب. كل العمليات متوقفة ما عدا الريفند، والرصيد كله متوقف.', atts: ['d1'] }),
+        M('e3', '2026-09-19 10:40', 'in', 'email', 'docs', 'طلب مستندات لمراجعة الحساب', { body: 'إثبات هوية ساري، وإثبات عنوان لا يزيد عمره عن 3 أشهر، وتوضيح لآخر 10 عمليات واردة.\nرقم القضية: PP-D-48213977', ref: 'PP-D-48213977' }),
+        M('e4', '2026-09-21 14:10', 'out', 'form', 'docs', 'رفع المستندات المطلوبة عبر نموذج PayPal الخاص بالتقييد', { body: 'رفعنا الجواز وكشف الحساب وملف توضيح العمليات.', atts: ['d2', 'd3', 'd4'] }),
+        M('e5', '2026-09-23 12:30', 'out', 'call', 'support', 'مكالمة مع الدعم للتأكد من وصول المستندات', { body: 'قالوا إن المستندات وصلت، والمراجعة تأخذ من 5 إلى 7 أيام عمل.', by: 'كرم' }),
+        M('e6', '2026-10-05 09:15', 'in', 'email', 'clarify', 'طلب توضيح مصدر الأموال لـ 4 حوالات', { body: 'الحوالات الواردة بين 01/09 و15/09.', ref: 'PP-D-48213977' }),
+        M('e7', '2026-10-08 16:00', 'out', 'email', 'clarify', 'إرسال توضيح مصدر الأموال مع الفواتير', { body: 'شرح لطبيعة عمل المكتب مع فواتير الحوالات الأربع.', ref: 'PP-D-48213977', atts: ['d5'] }),
+        M('e8', '2026-10-22 11:20', 'in', 'email', 'decision', 'استمرار التقييد 180 يوماً', { dec: 'other', body: 'الحساب سيبقى مقيّداً والرصيد محجوزاً 180 يوماً من تاريخ التقييد.', ref: 'PP-D-48213977' }),
+        M('e9', '2026-10-23 13:00', 'out', 'email', 'appeal', 'تقديم اعتراض على القرار', { body: 'أرفقنا سجل التعامل مع المكاتب.', ref: 'PP-A-1190245', atts: ['d6'] }),
+        M('e10', '2026-10-29 10:00', 'in', 'email', 'decision', 'رفض الاعتراض · الرصيد متاح للسحب بعد 17/03/2027', { dec: 'appealRej', ref: 'PP-A-1190245', atts: ['d7'], by: 'كرم', edit: { n: 1, title: 'رفض الاعتراض · الرصيد متاح للسحب بعد 17/02/2027', body: '' } }),
+        M('e12', '2026-11-04 15:25', 'out', 'chat', 'support', 'السؤال عن سحب جزئي قبل انتهاء المدة', { body: 'ردّ الدعم: الطلب تحت المراجعة وسيتواصلون خلال 5 أيام.', by: 'كرم' }),
+        M('e13', '2026-11-05 10:30', 'out', 'email', 'support', 'طلب رسمي بالبريد لسحب جزئي', { body: 'أرسلنا الطلب بالبريد بعد المحادثة لتوثيقه.', ref: 'PP-D-48213977' })
+      ],
+      docs: [
+        { id: 'd1', name: 'limitation-notice.png', kind: 'لقطة شاشة', at: '2026-09-18 09:25', by: 'أحمد', desc: 'إشعار التقييد في لوحة PayPal', link: 'e1' },
+        { id: 'd2', name: 'passport-ahmad.pdf', kind: 'مستند هوية', at: '2026-09-21 14:05', by: 'أحمد', desc: 'جواز سفر أحمد', link: 'e4' },
+        { id: 'd3', name: 'bank-statement-08-2026.pdf', kind: 'إثبات عنوان', at: '2026-09-21 14:06', by: 'أحمد', desc: 'كشف بنك فلسطين لشهر 08/2026', link: 'e4' },
+        { id: 'd4', name: 'last-10-transactions.pdf', kind: 'كشف حساب', at: '2026-09-21 14:08', by: 'أحمد', desc: 'توضيح آخر 10 عمليات واردة', link: 'e4' },
+        { id: 'd5', name: 'invoices-4-transfers.pdf', kind: 'PDF', at: '2026-10-08 15:50', by: 'أحمد', desc: 'فواتير الحوالات الأربع', link: 'e7' },
+        { id: 'd6', name: 'appeal-office-records.pdf', kind: 'PDF', at: '2026-10-23 12:55', by: 'أحمد', desc: 'سجل التعامل مع المكاتب للاعتراض', link: 'e9' },
+        { id: 'd7', name: 'paypal-2026-10-29.eml', kind: 'رسالة بريد إلكتروني', at: '2026-10-29 10:05', by: 'كرم', desc: 'نسخة من رسالة رفض الاعتراض', link: 'e10' }
+      ],
+      fin: [
+        { at: '2026-09-18', bal: 8420, held: 8420, avail: 0, rec: 0, lost: 0, note: 'الرصيد وقت التقييد · كله محجوز', by: 'أحمد' },
+        { at: '2026-10-29', held: 8420, avail: 0, rec: 0, lost: 0, note: 'لا تغيير · حسب رد المنصة يصبح متاحاً بعد 17/03/2027', by: 'كرم' }
+      ],
+      audit: [
+        ['2026-11-05 10:31', 'أحمد', 'msg', 'إضافة مراسلة «طلب رسمي بالبريد لسحب جزئي»'],
+        ['2026-11-04 15:26', 'كرم', 'msg', 'إضافة مراسلة «السؤال عن سحب جزئي قبل انتهاء المدة»'],
+        ['2026-10-30 09:12', 'أحمد', 'edit', 'تعديل مراسلة «رفض الاعتراض»: تصحيح التاريخ 17/02/2027 ← 17/03/2027'],
+        ['2026-10-29 10:06', 'كرم', 'upload', 'رفع ملف paypal-2026-10-29.eml'],
+        ['2026-09-18 09:22', 'أحمد', 'create', 'إنشاء المشكلة ISS-014']
+      ].map(function (a) { return { at: a[0], user: a[1], kind: a[2], what: a[3], dev: a[1] === 'كرم' ? 'Chrome · Android' : 'Chrome · Windows' }; })
+    };
+  }
+  renderVals() {
+    var self = this, st = this.state, I = st.issue, set = function (o) { self.setState(o); };
+    var TODAY_S = '2026-11-14', TODAY = new Date(TODAY_S + 'T00:00:00'), FOLLOW = 7;
+    var ST = { open: ['مفتوحة', 'info'], canWd: ['السحب متاح', 'teal'], closed: ['مغلقة', 'neutral'] };
+    var TYPES = { restrict: 'تقييد الحساب', freeze: 'تجميد الحساب', close: 'إغلاق الحساب' };
+    var TDESC = { restrict: 'كل العمليات متوقفة ما عدا بعضها مثل الريفند', freeze: 'كل العمليات متوقفة', close: 'الحساب مغلق والرصيد متوقف' };
+    var TPILL = { restrict: 'pill warn', freeze: 'pill bad', close: 'pill dark' };
+    var SHORT = { restrict: 'تقييد', freeze: 'تجميد', close: 'إغلاق' };
+    var DET = { noWd: 'منع السحب', noSend: 'منع الإرسال', noRecv: 'منع الاستقبال', docs: 'طلب مستندات', sof: 'مراجعة مصدر الأموال', other: 'أخرى' };
+    var CH = { email: ['إيميل', 'mail'], chat: ['شات المنصة', 'chat'], form: ['نموذج المنصة', 'doc'], call: ['مكالمة', 'phone'], wa: ['واتساب', 'wa'] };
+    var TOPIC = { docs: 'طلب مستندات', clarify: 'طلب توضيح', support: 'طلب دعم', appeal: 'اعتراض', decision: 'قرار من المنصة' };
+    var DEC = { restrict: 'تقييد الحساب', freeze: 'تجميد الحساب', wdOk: 'السماح بسحب الرصيد', restore: 'إعادة الحساب كما كان', closeHeld: 'إغلاق الحساب بالرصيد', closeEmpty: 'إغلاق الحساب بدون رصيد', appealRej: 'رفض الاعتراض', other: 'قرار آخر' };
+    var OUT = { restore: 'عاد الحساب كما كان', closeHeld: 'أُغلق الحساب ولم يُرجَع الرصيد', closeEmpty: 'أُغلق الحساب بعد سحب الرصيد' };
+    var SUGG = { restrict: ['type', 'restrict'], freeze: ['type', 'freeze'], wdOk: ['st', 'canWd'], restore: ['end', 'restore'], closeHeld: ['end', 'closeHeld'], closeEmpty: ['end', 'closeEmpty'] };
+    var decHintOf = function (k) {
+      if (k === 'restrict' || k === 'freeze') return 'سيتغير نوع المشكلة تلقائياً: ' + SHORT[I.type] + ' ← ' + SHORT[k] + '.';
+      if (k === 'wdOk') return 'المنصة تسمح بسحب الرصيد، والحساب يبقى ' + { restrict: 'مقيّداً', freeze: 'مجمّداً', close: 'مغلقاً' }[I.type] + '. ستصبح حالة المشكلة «السحب متاح» تلقائياً، وتبقى مفتوحة حتى يُسحب الرصيد.';
+      if (k === 'restore') return 'عاد الحساب يعمل بشكل طبيعي بكل رصيده، كأن المشكلة لم تكن. ستُغلق المشكلة تلقائياً.';
+      if (k === 'closeHeld') return 'أغلقت المنصة الحساب ولم تُرجع الرصيد. ستُغلق المشكلة تلقائياً، والرصيد المتوقف (' + fmt(I.aff) + ' ' + I.cur + ') يسجّله المدير يدوياً كخسارة من الحوالات.';
+      if (k === 'closeEmpty') return 'أغلقت المنصة الحساب بعد سحب الرصيد. ستُغلق المشكلة تلقائياً.';
+      if (k === 'appealRej' || k === 'other') return 'لا يتغير شيء في حالة المشكلة أو نوعها.';
+      return '';
+    };
+    var SYS = { start: ['بداية المشكلة', 'lock', 'background:#FBE7E5;color:#A3291D'], accSt: ['تغيير نوع المشكلة', 'lock', 'background:#FBE7E5;color:#A3291D'], fin: ['تحديث مالي', 'money', 'background:#DDF5F2;color:#0A5F56'], issueSt: ['تغيير الحالة', 'status', 'background:#EEF1F5;color:#3A4A60'] };
+    var IC = { doc: 'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6', mail: 'M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM3 7l9 6 9-6', phone: 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z', chat: 'M4 5h16v11H9l-5 4z', wa: 'M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zM9 9c0 3 3 6 6 6', lock: 'M7 11h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2zM8 11V8a4 4 0 0 1 8 0v3', money: 'M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 1 0 0-5', note: 'M5 4h14v16H5zM8 8h8M8 12h8M8 16h5', status: 'M12 4a8 8 0 1 0 0 16 8 8 0 1 0 0-16M12 8v4l3 2' };
+    var AK = { create: ['إنشاء', 'pill info'], edit: ['تعديل', 'pill neutral'], msg: ['إضافة مراسلة', 'pill info'], upload: ['رفع ملف', 'pill teal'], open: ['فتح ملف', 'pill neutral'], status: ['تغيير الحالة', 'pill warn'], fin: ['تحديث مالي', 'pill teal'], close: ['إغلاق', 'pill bad'], reopen: ['إعادة فتح', 'pill warn'] };
+    var DOCK = ['PDF', 'صورة', 'لقطة شاشة', 'مستند هوية', 'إثبات عنوان', 'كشف حساب', 'رسالة بريد إلكتروني', 'مستند آخر'];
+    var fmt = function (n) { return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    var fd = function (d) { if (!d) return ''; var p = d.slice(0, 10).split('-').reverse().join('/'); return d.length > 10 ? p + ' ' + d.slice(11, 16) : p; };
+    var toD = function (d) { return new Date(d.slice(0, 10) + 'T00:00:00'); };
+    var dd = function (d) { return Math.round((TODAY - toD(d)) / 86400000); };
+    var dayW = function (n) { return n === 0 ? 'اليوم' : n === 1 ? 'يوم واحد' : n === 2 ? 'يومين' : n <= 10 ? n + ' أيام' : n + ' يوماً'; };
+    var unitW = function (n, one, two, few, many) { return n === 1 ? one : n === 2 ? two : n <= 10 ? n + ' ' + few : n + ' ' + many; };
+    var age = function (from, to) {
+      var a = toD(from), b = to ? toD(to) : TODAY, y = b.getFullYear() - a.getFullYear(), m = b.getMonth() - a.getMonth(), d = b.getDate() - a.getDate();
+      if (d < 0) { m--; d += new Date(b.getFullYear(), b.getMonth(), 0).getDate(); } if (m < 0) { y--; m += 12; }
+      var w = Math.floor(d / 7); d = d % 7; var parts = [];
+      if (y) parts.push(unitW(y, 'سنة', 'سنتان', 'سنوات', 'سنة')); if (m) parts.push(unitW(m, 'شهر', 'شهران', 'أشهر', 'شهراً'));
+      if (w) parts.push(unitW(w, 'أسبوع', 'أسبوعان', 'أسابيع', 'أسبوعاً')); if (d) parts.push(unitW(d, 'يوم', 'يومان', 'أيام', 'يوماً'));
+      parts = parts.slice(0, 3); if (!parts.length) return 'اليوم';
+      return parts.length === 1 ? parts[0] : parts.slice(0, -1).join(' و') + ' و' + parts[parts.length - 1];
+    };
+    var stamp = function () { var n = new Date(); return TODAY_S + ' ' + String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0'); };
+    var num = function (v) { var s = String(v == null ? '' : v).replace(/,/g, '').trim(); return s === '' ? 0 : isNaN(Number(s)) ? NaN : Number(s); };
+    var opt = function (v, l) { return { v: v, l: l }; };
+    var chip = function (on) { return 'chipf' + (on ? ' on' : ''); };
+    var isOpen = I.st !== 'closed';
+    var docById = function (id) { return st.docs.filter(function (d) { return d.id === id; })[0]; };
+    var evById = function (id) { return st.events.filter(function (e) { return e.id === id; })[0]; };
+    var logA = function (kind, what, base) { return [{ at: stamp(), user: 'أحمد', kind: kind, what: what, dev: 'Chrome · Windows' }].concat(base || self.state.audit); };
+    var openDocView = function (d) { set({ modal: 'view', m: { doc: d.id }, audit: logA('open', 'فتح ملف ' + d.name) }); };
+    var dlDoc = function (d) { set({ audit: logA('open', 'تنزيل ملف ' + d.name) }); };
+    var sysEv = function (kind, title, body) { return { id: kind + Date.now() + Math.random().toString(36).slice(2, 5), at: stamp(), rec: stamp(), kind: kind, title: title, body: body || '', by: 'أحمد', atts: [] }; };
+
+    // ---- money
+    var F0 = st.fin[0], FL = st.fin[st.fin.length - 1];
+    var finCards = [
+      ['الرصيد وقت بداية المشكلة', F0.bal, 'كله محجوز من ' + fd(F0.at), ''],
+      ['ما زال محجوزاً', FL.held, 'حتى ' + fd(FL.at), FL.held > 0 ? 'warn' : ''],
+      ['متاح للسحب الآن', FL.avail, FL.avail > 0 ? 'لم يُسحب بعد' : 'لا يوجد', FL.avail > 0 ? 'teal' : ''],
+      ['تم سحبه واسترداده', FL.rec, 'إجمالي حتى الآن', FL.rec > 0 ? 'ok' : ''],
+      ['فُقد نهائياً', FL.lost, FL.lost > 0 ? 'بقرار موثق من المدير' : 'لا يُسجَّل إلا بقرار المدير', FL.lost > 0 ? 'bad' : '']
+    ].map(function (c) { var T = { teal: ['background:#F3FBFA;border-color:#BFE6E0', 'color:#0A5F56'], ok: ['background:#F1FAF5;border-color:#BFE3CF', 'color:#136A43'], warn: ['background:#FFFCF3;border-color:#F2D9A6', 'color:#7A5200'], bad: ['background:#FFF8F7;border-color:#F3D3CF', 'color:#A3291D'] }[c[3]] || ['', '']; return { label: c[0], v: fmt(c[1]), cap: c[2], box: T[0], numStyle: T[1] }; });
+
+    // ---- waiting & last activity
+    var sorted = st.events.slice().sort(function (a, b) { return a.at < b.at ? 1 : -1; });
+    var msgs = sorted.filter(function (e) { return e.kind === 'msg'; });
+    var lastMsg = msgs[0], lastEv = sorted[0], lastDays = lastEv ? dd(lastEv.at) : 0, lastMsgDays = lastMsg ? dd(lastMsg.at) : 0;
+    var waitUs = isOpen && lastMsg && lastMsg.dir === 'in', waitPlat = isOpen && lastMsg && lastMsg.dir === 'out';
+    var isStale = isOpen && lastDays >= FOLLOW;
+    var rem = [];
+    if (isStale) rem.push({ lvl: 1, tag: 'تحتاج متابعة', text: (waitPlat ? 'بانتظار رد المنصة منذ ' + dayW(lastMsgDays) : waitUs ? 'ردّت المنصة ولم نرد منذ ' + dayW(lastMsgDays) : 'لا يوجد أي إجراء منذ ' + dayW(lastDays)) + ' · آخر حركة: ' + lastEv.title });
+    else if (waitUs && lastMsg.topic === 'docs') rem.push({ lvl: 2, tag: 'الدور علينا', text: 'طلبت المنصة مستندات ولم نرد بعد · منذ ' + dayW(lastMsgDays) });
+    var reminders = rem.map(function (r) { return { tag: r.tag, text: r.text, pill: r.lvl === 2 ? 'pill bad' : 'pill warn', box: 'display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 14px;border-radius:14px;font-size:14px;border:1px solid ' + (r.lvl === 2 ? '#F3D3CF;background:#FFF8F7' : '#F2D9A6;background:#FFFCF3') }; });
+
+    // ---- timeline
+    var evs = st.order === 'new' ? sorted : sorted.slice().reverse();
+    var kLabelOf = function (e) { return e.kind === 'msg' ? CH[e.ch][0] : SYS[e.kind][0]; };
+    var events = evs.map(function (e) {
+      var isM = e.kind === 'msg', so = !!st.orig[e.id];
+      var atts = (e.atts || []).map(docById).filter(Boolean).map(function (d) { return { name: d.name, open: function () { openDocView(d); } }; });
+      return { atF: fd(e.at), recF: fd(e.rec), by: e.by, title: e.title, hasBody: !!e.body, body: e.body,
+        kLabel: kLabelOf(e), ic: IC[isM ? CH[e.ch][1] : SYS[e.kind][1]], dot: isM ? (e.dir === 'in' ? 'background:#FDF0D5;color:#7A5200' : 'background:#E6EEF7;color:#1F3F66') : SYS[e.kind][2],
+        hasWho: isM, who: isM ? (e.dir === 'in' ? 'من المنصة' : 'منا') : '', whoPill: e.dir === 'in' ? 'pill warn' : 'pill info',
+        hasTopic: isM && e.topic !== 'decision', topic: isM ? TOPIC[e.topic] : '', hasDecision: isM && e.topic === 'decision', decision: isM && e.dec ? DEC[e.dec] : '',
+        atts: atts, hasChips: atts.length > 0,
+        edited: !!e.edit, editedText: e.edit ? (e.edit.n === 1 ? 'معدّل مرة' : 'معدّل ' + e.edit.n + ' مرات') : '', origLabel: so ? 'إخفاء الأصل' : 'عرض الأصل',
+        toggleOrig: function () { var o = Object.assign({}, self.state.orig); o[e.id] = !o[e.id]; set({ orig: o }); },
+        showOrig: so && !!e.edit, origTitle: e.edit ? e.edit.title : '', origBody: e.edit ? e.edit.body : '',
+        canEdit: isOpen && isM,
+        edit: function () { set({ modal: 'msg', err: '', m: { isEdit: true, isNew: false, id: e.id, title: e.title, body: e.body } }); },
+        id: e.id, day: e.at.slice(0, 10), isMsg: isM, isSys: !isM, isDate: false, side: e.dir === 'in' ? 'in' : 'out', time: e.at.slice(11, 16),
+        sender: isM ? (e.dir === 'in' ? I.plat : e.by) : '', sysStyle: SYS[e.kind] ? SYS[e.kind][2] : '',
+        canMore: (e.body || '').length > 110, moreLabel: st.exp[e.id] ? 'أقل' : 'المزيد', bodyStyle: (e.body || '').length > 110 && !st.exp[e.id] ? 'display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden' : '',
+        toggleMore: function () { var x = Object.assign({}, self.state.exp); x[e.id] = !x[e.id]; set({ exp: x }); } };
+    });
+    var items = [], lastDay = '';
+    events.forEach(function (ev) { if (ev.day !== lastDay) { items.push({ isDate: true, isMsg: false, isSys: false, date: fd(ev.day) }); lastDay = ev.day; } items.push(ev); });
+
+    var tabs = [['tl', 'المراسلات والسجل', st.events.length], ['docs', 'المستندات', st.docs.length], ['audit', 'سجل التدقيق', st.audit.length]].map(function (t) {
+      var on = st.tab === t[0]; return { label: t[1], n: String(t[2]), cls: 'tab' + (on ? ' on' : ''), sel: on ? 'true' : 'false', cntCls: 'cnt' + (on ? ' on' : ''), go: function () { set({ tab: t[0] }); } }; });
+    var linkLabel = function (id) { if (!id) return 'المشكلة عموماً'; var e = evById(id); return e ? (e.kind === 'msg' ? 'مراسلة: ' : '') + e.title : '—'; };
+    var EXT = { pdf: 'background:#FBE7E5;color:#A3291D', png: 'background:#E6EEF7;color:#1F3F66', jpg: 'background:#E6EEF7;color:#1F3F66', eml: 'background:#FDF0D5;color:#7A5200' };
+
+    // ---- modal helpers
+    var M = st.m || {}, mod = st.modal;
+    var setM = function (k, chk) { return function (e) { var m = Object.assign({}, self.state.m); m[k] = chk ? e.target.checked : e.target.value; set({ m: m, err: '' }); }; };
+    var pickM = function (k, v, extra) { return function () { var m = Object.assign({}, self.state.m, extra || {}); m[k] = v; set({ m: m, err: '' }); }; };
+    var newDocs = function (names, link, at) { return names.map(function (n, i) { return { id: 'd' + Date.now() + i, name: n, kind: /\.(png|jpg)$/.test(n) ? 'لقطة شاشة' : 'PDF', at: at, by: 'أحمد', desc: '', link: link }; }); };
+    var finSum = num(M.held) + num(M.avail) + num(M.rec) + (M.loss ? num(M.lost) : 0);
+    var vDoc = M.doc ? docById(M.doc) : null;
+    var sug = M.topic === 'decision' && M.dir === 'in' ? SUGG[M.dec] : null;
+    var caseRef = (msgs.filter(function (e) { return !!e.ref; })[0] || {}).ref || '';
+    var nMsgIn = msgs.filter(function (e) { return e.dir === 'in'; }).length;
+
+    return {
+      i: { id: I.id, acc: I.acc, plat: I.plat, cur: I.cur, ref: caseRef, hasRef: !!caseRef, email: I.email || '—', typeLabel: TYPES[I.type], typeShort: SHORT[I.type], typePill: TPILL[I.type], typeDesc: TDESC[I.type], stLabel: ST[I.st][0], stPill: 'pill ' + ST[I.st][1], hasOutcome: !isOpen && !!I.outcome, outcome: OUT[I.outcome] || '',
+        hasWait: waitUs || waitPlat, waitLabel: waitPlat ? 'بانتظار المنصة' : 'الدور علينا', waitPill: waitUs ? 'pill bad' : 'pill warn',
+        hasDet: (I.det || []).length > 0, det: (I.det || []).map(function (k) { return DET[k]; }),
+        startF: fd(I.start), durLabel: isOpen ? 'مدة المشكلة حتى اليوم' : 'استمرت المشكلة', dur: age(I.start, isOpen ? null : I.closedAt), owner: I.owner,
+        lastAgo: lastEv ? (lastDays === 0 ? 'اليوم' : 'قبل ' + dayW(lastDays)) : '—', lastWhat: lastEv ? kLabelOf(lastEv) + ' · ' + lastEv.title : '', stale: isStale, lastStyle: isStale ? 'color:#7A5200' : '', lastBox: isStale ? 'background:#FFFCF3' : '',
+        msgCount: msgs.length + ' مراسلة', msgSplit: (msgs.length - nMsgIn) + ' منا · ' + nMsgIn + ' من المنصة',
+        aff: fmt(I.aff) + ' ' + I.cur, held: fmt(FL.held) + ' ' + I.cur, desc: I.desc, reason: I.reason || 'السبب غير معروف', open: isOpen, closed: !isOpen },
+      hasReminders: reminders.length > 0, reminders: reminders, tabs: tabs,
+      tabTl: st.tab === 'tl', tabDocs: st.tab === 'docs', tabFin: st.tab === 'fin', tabAudit: st.tab === 'audit',
+      whoChips: [['all', 'الكل'], ['out', 'منا'], ['in', 'من المنصة']].map(function (c) { var on = st.who === c[0]; return { label: c[1], cls: chip(on), pressed: on ? 'true' : 'false', go: function () { set({ who: c[0] }); } }; }),
+      orderChips: [['new', 'الأحدث أولاً'], ['old', 'الأقدم أولاً']].map(function (c) { var on = st.order === c[0]; return { label: c[1], cls: chip(on), pressed: on ? 'true' : 'false', go: function () { set({ order: c[0] }); } }; }),
+      events: events, items: items, noEvents: events.length === 0,
+      docGroups: (function () {
+        var map = {}, order = [];
+        st.docs.forEach(function (d) { var k = d.link && evById(d.link) ? d.link : '_'; if (!map[k]) { map[k] = []; order.push(k); } map[k].push(d); });
+        var gs = order.map(function (k) { var e = k === '_' ? null : evById(k), isM = e && e.kind === 'msg';
+          return { at: e ? e.at : '0', date: e ? fd(e.at).slice(0, 10) : '—', title: e ? (isM ? CH[e.ch][0] + ' · ' : '') + e.title : 'مرفقات عامة', side: e ? (isM ? (e.dir === 'in' ? 'من المنصة' : 'منا') : 'النظام') : '—', sidePill: isM && e.dir === 'in' ? 'pill warn' : isM ? 'pill teal' : 'pill neutral',
+            files: map[k].map(function (d) { var ext = (d.name.split('.').pop() || '').toLowerCase(); return { name: d.name, desc: d.desc || d.kind, ext: ext.toUpperCase(), icStyle: EXT[ext] || 'background:#EEF1F5;color:#3A4A60', open: function () { openDocView(d); }, dl: function () { dlDoc(d); } }; }) }; });
+        gs.sort(function (x, y) { return x.at < y.at ? 1 : -1; });
+        return gs;
+      })(),
+      docs: st.docs.slice().sort(function (a, b) { return a.at < b.at ? 1 : -1; }).map(function (d) { var ext = (d.name.split('.').pop() || '').toLowerCase(); return { name: d.name, kind: d.kind, atF: fd(d.at), by: d.by, desc: d.desc || '—', link: linkLabel(d.link), ext: ext.toUpperCase(), icStyle: EXT[ext] || 'background:#EEF1F5;color:#3A4A60', open: function () { openDocView(d); }, dl: function () { dlDoc(d); } }; }),
+      finCards: finCards, finLastF: fd(FL.at), finStart: fmt(F0.bal) + ' ' + I.cur,
+      finRows: st.fin.slice().reverse().map(function (r) { return { atF: fd(r.at), held: fmt(r.held), avail: fmt(r.avail), rec: fmt(r.rec), lost: fmt(r.lost), note: r.note, by: r.by }; }),
+      audit: st.audit.map(function (a) { return { atF: fd(a.at), user: a.user, kind: AK[a.kind][0], pill: AK[a.kind][1], what: a.what, dev: a.dev }; }),
+
+      m: M, hasErr: !!st.err, err: st.err, closeM: function () { set({ modal: null, m: {}, err: '' }); },
+      mAt: setM('at'), mRef: setM('ref'), mTitle: setM('title'), mBody: setM('body'), mApply: setM('apply', true), mSt: setM('st'), mType: setM('type'), mNote: setM('note'),
+      
+      mDate: setM('date'), mHeld: setM('held'), mAvail: setM('avail'), mRec: setM('rec'), mLost: setM('lost'), mDecision: setM('decision'), mLoss: setM('loss', true),
+      mAddAtt: function () { var m = Object.assign({}, self.state.m), l = (m.attList || []).slice(); l.push(m.ch === 'chat' ? 'chat-screenshot-' + (l.length + 1) + '.png' : 'attachment-' + (l.length + 1) + '.pdf'); m.attList = l; m.hasAtts = true; set({ m: m }); },
+
+      // message / note modal
+      mMsg: mod === 'msg', msgTitle: M.isEdit ? 'تعديل' : 'مراسلة جديدة',
+      msgSub: M.isEdit ? 'التعديل لا يحذف النسخة الأصلية' : 'رسالة منا أو من المنصة، بأي قناة، مع مرفقاتها',
+      msgSave: M.isEdit ? 'حفظ التعديل' : 'حفظ المراسلة', msgPh: 'مثال: المنصة طلبت كشف حساب لآخر 3 أشهر',
+      attHint: M.ch === 'chat' ? 'الملفات المرسلة عبر الشات، ولقطة من المحادثة قبل إغلاقها' : M.ch === 'form' ? 'الملفات المرفوعة من نموذج المنصة (مثل نموذج PayPal الخاص بالتقييد)' : 'الملفات المرسلة أو المستلمة مع هذه المراسلة (اختياري)',
+      dirChips: [['out', 'منا'], ['in', 'من المنصة']].map(function (c) { var on = M.dir === c[0]; return { label: c[1], cls: chip(on), pressed: on ? 'true' : 'false', go: pickM('dir', c[0], c[0] === 'out' && M.topic === 'decision' ? { topic: '' } : null) }; }),
+      chChips: Object.keys(CH).map(function (k) { var on = M.ch === k; return { label: CH[k][0], cls: chip(on), pressed: on ? 'true' : 'false', go: pickM('ch', k) }; }),
+      topicChips: Object.keys(TOPIC).filter(function (k) { return k !== 'decision' || M.dir === 'in'; }).map(function (k) { var on = M.topic === k; return { label: TOPIC[k], cls: chip(on), pressed: on ? 'true' : 'false', go: pickM('topic', k) }; }),
+      showDecision: M.topic === 'decision' && M.dir === 'in',
+      decChips: Object.keys(DEC).filter(function (k) { return k !== I.type; }).map(function (k) { var on = M.dec === k; return { label: DEC[k], cls: chip(on), pressed: on ? 'true' : 'false', go: pickM('dec', k) }; }),
+      hasDecHint: !!M.dec, decHint: decHintOf(M.dec), decHintStyle: SUGG[M.dec] ? 'background:#EEF8F6;color:#0A5F56' : '',
+      openMsg: function () { set({ modal: 'msg', err: '', m: { isNew: true, isEdit: false, dir: 'out', ch: 'email', topic: '', dec: '', apply: true, at: TODAY_S + 'T' + stamp().slice(11), ref: caseRef, title: '', body: '', attList: [], hasAtts: false } }); },
+      saveMsg: function () {
+        var m = self.state.m, t = String(m.title || '').trim();
+        if (!t) return set({ err: 'اكتب ملخصاً قصيراً.' });
+        if (m.isEdit) {
+          var evs2 = self.state.events.map(function (e) { if (e.id !== m.id) return e; var ed = e.edit ? { n: e.edit.n + 1, title: e.edit.title, body: e.edit.body } : { n: 1, title: e.title, body: e.body }; return Object.assign({}, e, { title: t, body: m.body, edit: ed }); });
+          return set({ events: evs2, modal: null, m: {}, audit: logA('edit', 'تعديل «' + t + '» · النسخة الأصلية محفوظة') });
+        }
+        if (!m.topic) return set({ err: 'اختر موضوع المراسلة.' });
+        if (m.topic === 'decision' && !m.dec) return set({ err: 'اختر القرار.' });
+        var id = 'e' + Date.now(), at = String(m.at || '').replace('T', ' ').slice(0, 16) || stamp(), nd = newDocs(m.attList || [], id, stamp());
+        var ev = { id: id, at: at, rec: stamp(), kind: 'msg', dir: m.dir, ch: m.ch, topic: m.topic, dec: m.topic === 'decision' ? m.dec : '', ref: m.ref, title: t, body: m.body, by: 'أحمد', atts: nd.map(function (d) { return d.id; }) };
+        var list = self.state.events.concat([ev]), iss = Object.assign({}, self.state.issue), aud = logA('msg', 'إضافة مراسلة «' + t + '»');
+        if (nd.length) aud = logA('upload', 'رفع ' + nd.length + ' ملف مع المراسلة', aud);
+        var sg = m.topic === 'decision' && m.dir === 'in' ? SUGG[m.dec] : null;
+        if (sg) {
+          if (sg[0] === 'st' && iss.st !== sg[1]) { list.push(sysEv('issueSt', ST[iss.st][0] + ' ← ' + ST[sg[1]][0], 'تلقائياً بناءً على قرار المنصة')); aud = logA('status', ST[iss.st][0] + ' ← ' + ST[sg[1]][0], aud); iss.st = sg[1]; }
+          if (sg[0] === 'type' && iss.type !== sg[1]) { list.push(sysEv('accSt', SHORT[iss.type] + ' ← ' + SHORT[sg[1]], 'تلقائياً بناءً على قرار المنصة')); aud = logA('status', 'نوع المشكلة: ' + SHORT[iss.type] + ' ← ' + SHORT[sg[1]], aud); iss.type = sg[1]; }
+          if (sg[0] === 'end') { if (sg[1] !== 'restore' && iss.type !== 'close') { list.push(sysEv('accSt', SHORT[iss.type] + ' ← ' + SHORT.close, 'تلقائياً بناءً على قرار المنصة')); iss.type = 'close'; } list.push(sysEv('issueSt', ST[iss.st][0] + ' ← مغلقة', OUT[sg[1]] + ' · تلقائياً بناءً على قرار المنصة')); aud = logA('close', ST[iss.st][0] + ' ← مغلقة · ' + OUT[sg[1]], aud); iss.st = 'closed'; iss.closedAt = TODAY_S; iss.outcome = sg[1]; }
+        }
+        set({ events: list, docs: self.state.docs.concat(nd), issue: iss, audit: aud, modal: null, m: {}, tab: 'tl', order: 'new' });
+      },
+
+      // money
+      mFin: mod === 'fin', finSum: fmt(finSum) + ' ' + I.cur, finSumStyle: finSum > F0.bal + 0.001 ? 'color:#A3291D' : '',
+      openFin: function () { set({ modal: 'fin', err: '', m: { date: TODAY_S, held: String(FL.held), avail: String(FL.avail), rec: String(FL.rec), lost: String(FL.lost), loss: FL.lost > 0, decision: '', note: '' } }); },
+      saveFin: function () {
+        var m = self.state.m, v = { held: num(m.held), avail: num(m.avail), rec: num(m.rec), lost: m.loss ? num(m.lost) : 0 };
+        if ([v.held, v.avail, v.rec, v.lost].some(function (x) { return isNaN(x) || x < 0; })) return set({ err: 'المبالغ يجب أن تكون أرقاماً موجبة.' });
+        if (v.held + v.avail + v.rec + v.lost > F0.bal + 0.001) return set({ err: 'المجموع أكبر من الرصيد وقت بداية المشكلة (' + fmt(F0.bal) + ').' });
+        if (m.loss && v.lost > 0 && !String(m.decision || '').trim()) return set({ err: 'لا يُسجَّل مبلغ مفقود بدون نص قرار المدير.' });
+        var note = [m.note, m.loss && v.lost > 0 ? 'قرار المدير: ' + m.decision.trim() : ''].filter(Boolean).join(' · ') || '—';
+        var row = Object.assign({ at: m.date || TODAY_S, note: note, by: 'أحمد' }, v);
+        var body = 'محجوز ' + fmt(v.held) + ' · متاح ' + fmt(v.avail) + ' · مسترد ' + fmt(v.rec) + (v.lost ? ' · مفقود ' + fmt(v.lost) : '') + ' ' + I.cur;
+        set({ fin: self.state.fin.concat([row]), events: self.state.events.concat([sysEv('fin', 'تحديث مالي', body)]), audit: logA('fin', 'تحديث مالي: ' + body), modal: null, m: {} });
+      },
+
+      // status
+      mStatus: mod === 'status', stShowFields: M.mode === 'change',
+      stTitle: M.mode === 'close' ? 'إغلاق المشكلة' : M.mode === 'reopen' ? 'إعادة فتح المشكلة' : 'تغيير الحالة',
+      stSub: M.mode === 'close' ? 'إغلاق الحساب لا يعني إغلاق المشكلة تلقائياً' : 'عند ظهور تطورات جديدة',
+      stNoteLabel: M.mode === 'close' ? 'ملخص النتيجة (إلزامي)' : M.mode === 'reopen' ? 'سبب إعادة الفتح (إلزامي)' : 'ملاحظة',
+      stSave: M.mode === 'close' ? 'إغلاق المشكلة' : M.mode === 'reopen' ? 'إعادة الفتح' : 'حفظ',
+      stOpts: [opt('open', ST.open[0]), opt('canWd', ST.canWd[0])],
+      typeOpts: Object.keys(TYPES).map(function (k) { return opt(k, TYPES[k]); }),
+      detChips: Object.keys(DET).map(function (k) { var on = (M.det || []).indexOf(k) >= 0; return { label: (on ? '✓ ' : '') + DET[k], cls: chip(on), pressed: on ? 'true' : 'false', go: function () { var d = (self.state.m.det || []).slice(), ix = d.indexOf(k); if (ix >= 0) d.splice(ix, 1); else d.push(k); set({ m: Object.assign({}, self.state.m, { det: d }), err: '' }); } }; }),
+      closeWarn: false, closeWarnText: 'ما زال ' + fmt(FL.held + FL.avail) + ' ' + I.cur + ' محجوزاً أو غير مسحوب. تأكد من التحديث المالي قبل الإغلاق، والمبلغ لا يُعتبر خسارة إلا بقرار موثق من المدير.',
+      openStatus: function () { set({ modal: 'status', err: '', m: { mode: 'change', st: I.st, type: I.type, det: (I.det || []).slice(), note: '' } }); },
+      openClose: function () { set({ modal: 'status', err: '', m: { mode: 'close', st: 'closed', type: I.type, det: (I.det || []).slice(), note: '' } }); },
+      openReopen: function () { set({ modal: 'status', err: '', m: { mode: 'reopen', st: 'open', type: I.type, det: (I.det || []).slice(), note: '' } }); },
+      saveStatus: function () {
+        var m = self.state.m, iss = Object.assign({}, self.state.issue), note = String(m.note || '').trim();
+        if ((m.mode === 'close' || m.mode === 'reopen') && !note) return set({ err: m.mode === 'close' ? 'اكتب ملخص النتيجة قبل الإغلاق.' : 'اكتب سبب إعادة الفتح.' });
+        var detSame = (m.det || []).slice().sort().join() === (iss.det || []).slice().sort().join();
+        if (m.st === iss.st && m.type === iss.type && detSame) return set({ err: 'لم يتغير شيء.' });
+        var add = [], aud = self.state.audit, ak = m.mode === 'close' ? 'close' : m.mode === 'reopen' ? 'reopen' : 'status';
+        if (m.type !== iss.type) { add.push(sysEv('accSt', SHORT[iss.type] + ' ← ' + SHORT[m.type], m.st === iss.st ? note : '')); aud = logA('status', 'نوع المشكلة: ' + SHORT[iss.type] + ' ← ' + SHORT[m.type], aud); }
+                if (m.st !== iss.st) { add.push(sysEv('issueSt', (m.mode === 'reopen' ? 'إعادة فتح: ' : '') + ST[iss.st][0] + ' ← ' + ST[m.st][0], note)); aud = logA(ak, ST[iss.st][0] + ' ← ' + ST[m.st][0] + (note ? ' · ' + note : ''), aud); }
+        if (m.st === 'closed') iss.closedAt = TODAY_S; else if (iss.st === 'closed') { iss.closedAt = ''; iss.outcome = ''; }
+        iss.st = m.st; iss.type = m.type; 
+        set({ issue: iss, events: self.state.events.concat(add), audit: aud, modal: null, m: {}, tab: 'tl', order: 'new' });
+      },
+
+      mView: mod === 'view', vTitle: vDoc ? vDoc.name : '', vMeta: vDoc ? vDoc.kind + ' · ' + fd(vDoc.at) + ' · رفعه ' + vDoc.by : '',
+      vDl: function () { if (vDoc) dlDoc(vDoc); }
+    };
+  }
+}
+</script>
+</body>
+</html>

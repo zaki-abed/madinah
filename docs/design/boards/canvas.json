@@ -1,0 +1,474 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "FinChart.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "page": "fin",
+      "title": "مخطط النظام المالي",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "FinMap.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "page": "fin",
+      "title": "الخريطة المالية",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Hub.dc.html": {
+      "h": 1900,
+      "page": "hub",
+      "title": "فهرس المشروع",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "CashPlus.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10و. Cash Plus",
+      "w": 1440,
+      "x": 4560,
+      "y": 7920
+    },
+    "CardsLinks.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10د. البطاقات والربط",
+      "w": 1440,
+      "x": 4560,
+      "y": 6600
+    },
+    "CryptoAccounts.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10ج. منصات USDT",
+      "w": 1440,
+      "x": 4560,
+      "y": 5280
+    },
+    "BankAccounts.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10أ. البنوك",
+      "w": 1440,
+      "x": 4560,
+      "y": 3960
+    },
+    "AddAccount.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "4أ. إضافة حساب — نموذج تجريبي",
+      "w": 1440,
+      "x": 3040,
+      "y": 7920
+    },
+    "PalWallets.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10هـ. المحافظ الفلسطينية",
+      "w": 1440,
+      "x": 1520,
+      "y": 7920
+    },
+    "Wallets.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10ب. المحافظ المصرية",
+      "w": 1440,
+      "x": 0,
+      "y": 5280
+    },
+    "Accounts.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "4. الحسابات والخزائن",
+      "w": 1440,
+      "x": 0,
+      "y": 1320
+    },
+    "BrandDirections.dc.html": {
+      "h": 980,
+      "page": "brand",
+      "title": "01 — اتجاهات الرمز",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Database.dc.html": {
+      "expand": "fill",
+      "h": 8000,
+      "page": "db",
+      "title": "تصميم قاعدة البيانات — PostgreSQL 18",
+      "w": 1575,
+      "x": 0,
+      "y": 0
+    },
+    "DesignSystem.dc.html": {
+      "h": 7000,
+      "page": "identity",
+      "title": "الهوية البصرية — مكتب المدينة للخدمات المالية",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Egp.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "11. صندوق الجنيه",
+      "w": 1440,
+      "x": 1520,
+      "y": 3960
+    },
+    "Icons.dc.html": {
+      "h": 1238,
+      "page": "brand",
+      "title": "04 — الأيقونات بأحجامها الحقيقية",
+      "w": 1440,
+      "x": 0,
+      "y": 4140
+    },
+    "Identity.dc.html": {
+      "h": 1360,
+      "page": "brand",
+      "title": "03 — الألوان والخطوط وقواعد الاستخدام",
+      "w": 1440,
+      "x": 0,
+      "y": 2660
+    },
+    "Internal.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "8. نقل داخلي",
+      "w": 1440,
+      "x": 1520,
+      "y": 2640
+    },
+    "Login.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "1. تسجيل الدخول",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "LogoAnimation.dc.html": {
+      "h": 1400,
+      "is_interactive": true,
+      "page": "brand",
+      "title": "حركة الشعار",
+      "w": 1440,
+      "x": 1760,
+      "y": 0
+    },
+    "LogoSystem.dc.html": {
+      "h": 1440,
+      "page": "brand",
+      "title": "02 — نظام الشعار (الاتجاه 03)",
+      "w": 1440,
+      "x": 0,
+      "y": 1100
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "2. لوحة التحكم",
+      "w": 1440,
+      "x": 1468,
+      "y": -159
+    },
+    "Mark.dc.html": {
+      "h": 160,
+      "page": "brand",
+      "title": "الرمز — مكوّن",
+      "w": 160,
+      "x": 1520,
+      "y": 1100
+    },
+    "Office.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "9. صفحة المكتب",
+      "w": 1440,
+      "x": 3040,
+      "y": 2640
+    },
+    "Paypal.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "10. PayPal",
+      "w": 1440,
+      "x": 0,
+      "y": 3960
+    },
+    "Transfer.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "6. حوالة جديدة",
+      "w": 1440,
+      "x": 3040,
+      "y": 1320
+    },
+    "TransfersList.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "5. سجل الحوالات",
+      "w": 1440,
+      "x": 1520,
+      "y": 1320
+    },
+    "Users.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "12. المستخدمون والصلاحيات",
+      "w": 1440,
+      "x": 3040,
+      "y": 3960
+    },
+    "UsdtVault.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "3أ. تفاصيل خزنة USDT",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Vault.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "3. تفاصيل خزنة الشيكل",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "WeightedAvg.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "7. صندوق USDT",
+      "w": 1440,
+      "x": 0,
+      "y": 2640
+    },
+    "Customer.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "15. ملف الزبون",
+      "w": 1440,
+      "x": 3040,
+      "y": 5280
+    },
+    "Clients.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "13. الزبائن",
+      "w": 1440,
+      "x": 1520,
+      "y": 6600
+    },
+    "Customers.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "14. الديون",
+      "w": 1440,
+      "x": 1520,
+      "y": 5280
+    },
+    "Limits.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "16. حدود الحسابات",
+      "w": 1440,
+      "x": 0,
+      "y": 6600
+    },
+    "Issues.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "18. مشاكل الحسابات",
+      "w": 1440,
+      "x": 3040,
+      "y": 6600
+    },
+    "OfficePortal.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "9أ. صفحة المكتب الخارجية (للمكتب)",
+      "w": 1440,
+      "x": 4560,
+      "y": 2640
+    },
+    "IssueDetail.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "19. تفاصيل المشكلة",
+      "w": 1440,
+      "x": 0,
+      "y": 7920
+    },
+    "DbRules.dc.html": {
+      "h": 4600,
+      "page": "db",
+      "title": "قواعد قاعدة البيانات — مرجع",
+      "w": 1440,
+      "x": 1680,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-10T02:40:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/9MqED9eLyi3BYNKpCgh2fZ",
+      "copiedAt": "2026-11-10T02:40:00Z",
+      "namespace": "madina",
+      "title": "مكتب المدينة",
+      "version": "1794223460-91cd"
+    }
+  ],
+  "launch": {
+    "page": "hub",
+    "view": "canvas"
+  },
+  "notes": {
+    "t1": {
+      "kind": "title1",
+      "maxW": 4480,
+      "page": "screens",
+      "text": "نظام مكتب المدينة للخدمات المالية — الواجهات الجديدة (بيانات تجريبية)",
+      "w": 240,
+      "x": 0,
+      "y": -320
+    }
+  },
+  "order": [
+    "Hub.dc.html",
+    "FinChart.dc.html",
+    "FinMap.dc.html",
+    "DesignSystem.dc.html",
+    "BrandDirections.dc.html",
+    "LogoSystem.dc.html",
+    "Identity.dc.html",
+    "Icons.dc.html",
+    "LogoAnimation.dc.html",
+    "Mark.dc.html",
+    "Database.dc.html",
+    "DbRules.dc.html",
+    "Main.dc.html",
+    "Login.dc.html",
+    "Vault.dc.html",
+    "UsdtVault.dc.html",
+    "Accounts.dc.html",
+    "AddAccount.dc.html",
+    "TransfersList.dc.html",
+    "Transfer.dc.html",
+    "Internal.dc.html",
+    "Office.dc.html",
+    "Paypal.dc.html",
+    "BankAccounts.dc.html",
+    "Wallets.dc.html",
+    "PalWallets.dc.html",
+    "CashPlus.dc.html",
+    "CryptoAccounts.dc.html",
+    "CardsLinks.dc.html",
+    "Egp.dc.html",
+    "Users.dc.html",
+    "WeightedAvg.dc.html",
+    "Clients.dc.html",
+    "Customers.dc.html",
+    "Customer.dc.html",
+    "Limits.dc.html",
+    "Issues.dc.html",
+    "IssueDetail.dc.html",
+    "OfficePortal.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "hub",
+      "name": "فهرس المشروع"
+    },
+    {
+      "id": "fin",
+      "name": "النظام المالي"
+    },
+    {
+      "id": "identity",
+      "name": "الهوية البصرية"
+    },
+    {
+      "id": "brand",
+      "name": "ملف التصميم"
+    },
+    {
+      "id": "screens",
+      "name": "الواجهات الجديدة"
+    },
+    {
+      "id": "db",
+      "name": "قاعدة البيانات"
+    }
+  ],
+  "title": "Madina's Design System"
+}

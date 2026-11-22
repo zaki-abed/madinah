@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>إضافة حساب جديد</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#0B1626;color:#fff}
+.btn.mb{min-height:36px;padding:0 12px;font-size:13px}
+.btn.ghost{border-color:transparent;background:transparent;color:#0E7C70}
+.btn.ghost:hover{background:#F2FBFA;color:#0A5F56}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.chipf{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf:hover{border-color:#9FB0C6}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.chipf.lock{background:#EEF1F5;border-color:#EEF1F5;color:#142B4A;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.search{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #D3DAE5;border-radius:10px;background:#fff;color:#4A5A70;min-width:240px;flex:1 1 280px;max-width:420px;box-sizing:border-box}
+.search input{border:0;outline:0;font:inherit;font-size:14px;background:transparent;width:100%;color:#142B4A}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.flash{background:#E2F4EC;color:#136A43;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600}
+.errb{background:#FBE7E5;color:#A3291D;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600}
+
+.steps{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stp{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 12px;border-radius:999px;border:1px solid #E1E6EE;background:#fff;font:inherit;font-size:14px;font-weight:600;color:#4A5A70;cursor:pointer}
+.stp .n{width:26px;height:26px;border-radius:999px;background:#EEF1F5;color:#3A4A60;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.stp.on{border-color:#142B4A;color:#142B4A;box-shadow:inset 0 0 0 1px #142B4A}
+.stp.on .n{background:#142B4A;color:#fff}
+.stp.done .n{background:#16B8A6;color:#0B1626}
+.stp.lockd{cursor:default;opacity:.6}
+.sline{width:24px;height:2px;background:#D3DAE5;border-radius:2px}
+
+.l2{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.colm{flex:3 1 560px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.cols{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px;position:sticky;top:16px}
+.pgrp{display:flex;flex-direction:column;gap:10px}
+.pgh{font-size:13px;font-weight:700;color:#4A5A70}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.pc{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;border:1px solid #E1E6EE;background:#fff;font:inherit;color:#142B4A;text-align:start;cursor:pointer;min-height:72px;box-sizing:border-box}
+.pc:hover{border-color:#9FB0C6}
+.pc.on{border-color:#142B4A;box-shadow:inset 0 0 0 1px #142B4A}
+.pc.add{border-style:dashed}
+.pav{width:42px;height:42px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex:none;font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif}
+.pcb{display:flex;flex-direction:column;min-width:0}
+.pcb b{font-size:15px;line-height:22px}
+.panel{padding:22px;display:flex;flex-direction:column;gap:14px}
+.tsec{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid #EDF1F5}
+.tsec:first-child{border-top:0}
+.tsec .tl{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14px;font-weight:600}
+.empty{padding:28px 22px;text-align:center;color:#4A5A70;font-size:14px;display:flex;flex-direction:column;gap:8px;align-items:center}
+
+.ws{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.snav{flex:0 1 250px;min-width:220px;display:flex;flex-direction:column;gap:14px;position:sticky;top:16px}
+.sng{display:flex;flex-direction:column;gap:4px}
+.sngt{font-size:12px;font-weight:700;color:#4A5A70;padding:0 4px 2px}
+.sni{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:12px;border:1px solid transparent;background:transparent;font:inherit;font-size:14px;font-weight:600;color:#142B4A;text-align:start;cursor:pointer;width:100%;box-sizing:border-box}
+.sni:hover{background:#fff;border-color:#E1E6EE}
+.sni.on{background:#fff;border-color:#142B4A;box-shadow:inset 0 0 0 1px #142B4A}
+.sni.na{color:#7A889C;font-weight:500}
+.sni .bd{margin-inline-start:auto;min-width:24px;height:24px;padding:0 6px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;box-sizing:border-box}
+.bd.ok{background:#E2F4EC;color:#136A43}.bd.warn{background:#FDF0D5;color:#7A5200}.bd.neutral{background:#EEF1F5;color:#4A5A70}.bd.none{background:transparent}
+.scard{flex:1 1 560px;min-width:0;padding:24px;display:flex;flex-direction:column;gap:18px}
+.sh{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 14px;padding-bottom:14px;border-bottom:1px solid #EDF1F5}
+.sh h2{margin:0;font-size:20px;line-height:30px;font-weight:700}
+.fgrp{display:flex;flex-direction:column;gap:12px}
+.fgrp.boxed{padding:16px;border-radius:16px;border:1px solid #E1E6EE;background:#FAFBFC}
+.fgh{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px 16px}
+.fw{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fw.wide{grid-column:1/-1}
+.flab{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#3A4A60}
+.rq{color:#A3291D;font-weight:700}
+.optl{font-size:11px;font-weight:600;color:#4A5A70;background:#EEF1F5;border-radius:999px;padding:0 8px;line-height:18px}
+.inp{font:inherit;font-size:15px;color:#142B4A;height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;background:#fff;box-sizing:border-box;width:100%}
+.inp.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;text-align:left}
+.inp.area{height:96px;padding:10px 14px;resize:vertical;line-height:1.6}
+.inp:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.hint{font-size:12px;color:#4A5A70;line-height:18px}
+.ferr{font-size:12px;font-weight:600;color:#A3291D;line-height:18px}
+.fwarn{font-size:12px;font-weight:600;color:#7A5200;line-height:18px}
+.note{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:#F5F7FA;font-size:13px;color:#3A4A60;line-height:20px}
+.note.sec2{background:#FFFCF3;color:#7A5200;border:1px solid #F2D9A6}
+.note.lockn{background:#EEF8F6;color:#0A5F56}
+.note svg{flex:none;margin-top:2px}
+.row{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:16px;border:1px solid #E1E6EE;background:#fff}
+.rowh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rowh b{font-size:14px}
+.rowx{margin-inline-start:auto}
+.addr{align-self:flex-start}
+.crow{display:grid;grid-template-columns:minmax(110px,160px) minmax(0,1fr) minmax(0,190px);gap:12px;align-items:end;padding:14px 16px;border-radius:14px;background:#F5F7FA}
+.sfoot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:14px;border-top:1px solid #EDF1F5}
+.lc{background:#fff;border:1px solid #E1E6EE;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px;border-top-width:4px;box-sizing:border-box}
+.lm{display:flex;flex-direction:column;gap:6px}
+.lbar{height:10px;border-radius:999px;background:#EDF1F5;overflow:hidden;position:relative}
+.lbar span{display:block;height:100%;border-radius:999px}
+.lbar i{position:absolute;top:-2px;bottom:-2px;width:2px;background:#142B4A;opacity:.35}
+.drow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 16px;border-radius:14px;border:1px solid #E1E6EE;background:#fff}
+.drow .dn{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.drow .dd{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.dfile{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#142B4A}
+.dsm{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:#4A5A70}
+.dsm input{font:inherit;font-size:13px;height:36px;border:1px solid #D3DAE5;border-radius:9px;padding:0 10px;color:#142B4A;background:#fff}
+
+.prof{padding:0;overflow:hidden}
+.profh{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:20px 22px;background:#142B4A;color:#fff}
+.profh .pav{width:52px;height:52px;font-size:20px}
+.pfs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.pf{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:12px;background:#F5F7FA}
+.pfl{font-size:12px;font-weight:600;color:#4A5A70}
+.pfv{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:30px}
+.pfv b{font-size:15px;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.cpy{flex:none;display:inline-flex;align-items:center;height:30px;padding:0 10px;border-radius:8px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:12px;font-weight:600;color:#0E7C70;cursor:pointer}
+.cpy:hover{background:#F2FBFA}
+.cpy.ok2{background:#E2F4EC;border-color:#BFE3D2;color:#136A43}
+.pblk{display:flex;flex-direction:column;gap:10px;padding:18px 22px;border-top:1px solid #EDF1F5}
+.pblk h3{margin:0;font-size:15px;line-height:24px;font-weight:700}
+.ctab{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:160px;padding:12px 16px;border-radius:14px;border:1px solid #D3DAE5;background:#fff}
+.li{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;border-radius:12px;background:#F5F7FA;font-size:14px}
+.iss{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#FFFCF3;border:1px solid #F2D9A6;font-size:13px}
+.iss .go{margin-inline-start:auto;border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer;min-height:32px;padding:0 6px}
+.svdone{padding:36px 28px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.svdone .ic{width:64px;height:64px;border-radius:999px;background:#E2F4EC;color:#136A43;display:inline-flex;align-items:center;justify-content:center}
+.tpk{display:flex;flex-direction:column;gap:8px}
+.tpk h4{margin:0;font-size:12px;font-weight:700;color:#4A5A70}
+.tstep{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600}
+.tstep i{font-style:normal;width:26px;height:26px;border-radius:999px;background:#142B4A;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+.tchip{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:600}
+.tchip.opt{background:#fff;border:1px solid #D3DAE5;color:#142B4A}
+.tchip.na{background:#F5F7FA;border:1px dashed #C9D2DE;color:#4A5A70}
+.tchip b{color:#0E7C70;font-weight:700}
+.tdiv{height:1px;background:#EDF1F5;margin:2px 0}
+.pmov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:60;overflow:auto}
+.pmd{background:#fff;border-radius:20px;width:100%;max-width:640px;padding:26px;display:flex;flex-direction:column;gap:16px;box-shadow:0 24px 48px rgba(11,22,38,.25)}
+.pmd h2{margin:0;font-size:22px;line-height:32px;font-weight:700}
+.pmsec{display:flex;flex-direction:column;gap:12px;padding-top:14px;border-top:1px solid #EDF1F5}
+.pmsec h3{margin:0;font-size:13px;font-weight:700;color:#4A5A70}
+.newtag{font-size:11px;font-weight:700;color:#0A5F56;background:#DDF5F2;border-radius:999px;padding:0 8px;line-height:18px;margin-inline-start:6px}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div></div>
+  </div>
+</nav>
+
+<main class="main">
+  <header style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;justify-content:space-between">
+    <div>
+      <a href="Accounts.dc.html" class="cap" style="text-decoration:none;font-weight:600">الحسابات والخزائن ›</a>
+      <h1 style="margin:2px 0 0;font-size:32px;line-height:44px;font-weight:700">إضافة حساب جديد</h1>
+      <p class="sub" style="margin:4px 0 0">{{headSub}}</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <sc-if value="{{canDraft}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn" onClick="{{saveDraft}}">حفظ كمسودة</button></sc-if>
+      <a class="btn" href="Accounts.dc.html">إلغاء</a>
+    </div>
+  </header>
+
+  <nav class="steps" aria-label="مراحل الإضافة"><sc-for list="{{steps}}" as="s" hint-placeholder-count="3"><sc-if value="{{s.line}}" hint-placeholder-val="{{ false }}"><span class="sline" aria-hidden="true"></span></sc-if><button type="button" class="{{s.cls}}" onClick="{{s.go}}" aria-current="{{s.cur}}"><span class="n">{{s.n}}</span>{{s.label}}</button></sc-for></nav>
+
+  <sc-if value="{{hasFlash}}" hint-placeholder-val="{{ false }}"><div class="flash" role="status">{{flash}}</div></sc-if>
+  <sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="errb" role="alert">{{err}}</div></sc-if>
+
+  <!-- ========== 1. اختيار الجهة ========== -->
+  <sc-if value="{{isS1}}" hint-placeholder-val="{{ true }}">
+  <div class="l2">
+    <div class="colm">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <label class="search"><span class="vh">بحث عن جهة</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" value="{{q}}" onChange="{{onQ}}" placeholder="ابحث عن بنك أو منصة أو محفظة"></label>
+        <div class="chips" role="group" aria-label="نوع الجهة"><sc-for list="{{catChips}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div>
+      </div>
+      <sc-for list="{{provGroups}}" as="g" hint-placeholder-count="3">
+        <section class="pgrp" aria-label="{{g.name}}">
+          <div class="pgh">{{g.name}}</div>
+          <div class="pgrid"><sc-for list="{{g.provs}}" as="p" hint-placeholder-count="3"><button type="button" class="{{p.cls}}" aria-pressed="{{p.pressed}}" onClick="{{p.go}}"><span class="pav" style="{{p.av}}">{{p.ini}}</span><span class="pcb"><b>{{p.name}}<sc-if value="{{p.isNew}}" hint-placeholder-val="{{ false }}"><span class="newtag">جديدة</span></sc-if></b><span class="cap">{{p.sub}}</span></span></button></sc-for></div>
+        </section>
+      </sc-for>
+      <sc-if value="{{noProvs}}" hint-placeholder-val="{{ false }}"><div class="card empty">لا توجد جهة بهذا الاسم. يمكن اختيار «جهة أخرى» وتحديد قالبها.</div></sc-if>
+    </div>
+
+    <aside class="cols" aria-label="قالب الجهة المختارة">
+      <sc-if value="{{hasProv}}" hint-placeholder-val="{{ true }}">
+      <div class="card panel">
+        <div style="display:flex;align-items:center;gap:12px"><span class="pav" style="{{pv.av}}">{{pv.ini}}</span><div style="display:flex;flex-direction:column"><b style="font-size:18px;line-height:26px">{{pv.name}}</b><span class="cap">{{pv.sub}}</span></div></div>
+        <sc-if value="{{isCustom}}" hint-placeholder-val="{{ false }}">
+          <div class="fw"><div class="flab"><span>اسم الجهة</span><b class="rq" aria-hidden="true">*</b></div><input class="inp" type="text" value="{{customName}}" onChange="{{onCustomName}}" placeholder="مثال: Payoneer" aria-label="اسم الجهة"></div>
+          <div class="cap" style="font-size:13px">تُضاف تحت: <b style="color:#142B4A">{{customGroup}}</b></div>
+          <div class="fw"><div class="flab"><span>قالب الحقول</span></div><div class="chips" role="group" aria-label="أقرب نوع"><sc-for list="{{baseChips}}" as="c" hint-placeholder-count="4"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div><span class="hint">تأخذ الجهة الجديدة أقسام هذا القالب وحقوله، وبعدها تُضاف حساباتها من نفس المكان.</span></div>
+        </sc-if>
+        <div class="tdiv" aria-hidden="true"></div>
+        <div class="tpk"><h4>رح تعبّي</h4><sc-for list="{{tplCore}}" as="t" hint-placeholder-count="3"><div class="tstep"><i aria-hidden="true">{{t.n}}</i><span>{{t.label}}</span></div></sc-for></div>
+        <sc-if value="{{hasTplOpt}}" hint-placeholder-val="{{ true }}"><div class="tpk"><h4>اختياري</h4><div class="chips"><sc-for list="{{tplOpt}}" as="t" hint-placeholder-count="1"><span class="tchip opt">{{t.label}}</span></sc-for></div></div></sc-if>
+        <sc-if value="{{hasTplNa}}" hint-placeholder-val="{{ true }}"><div class="tpk"><h4>{{tplNaTitle}}</h4><div class="chips"><sc-for list="{{tplNa}}" as="t" hint-placeholder-count="3"><span class="tchip na">{{t.label}}<sc-if value="{{t.plus}}" hint-placeholder-val="{{ false }}"> <b aria-hidden="true">+</b></sc-if></span></sc-for></div><sc-if value="{{hasTplPlus}}" hint-placeholder-val="{{ true }}"><span class="cap"><b style="color:#0E7C70">+</b> يمكن تفعيله لحساب واحد عند الحاجة</span></sc-if></div></sc-if>
+        <div class="tdiv" aria-hidden="true"></div>
+        <button type="button" class="btn pri" onClick="{{toS2}}">متابعة إلى البيانات ←</button>
+      </div>
+      </sc-if>
+      <sc-if value="{{noProv}}" hint-placeholder-val="{{ false }}">
+      <div class="card empty"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9FB0C6" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg><b style="color:#142B4A">اختر الجهة أولاً</b><span>تظهر هنا الأقسام المناسبة لها: الأساسي منها والاختياري وما لا ينطبق.</span></div>
+      </sc-if>
+    </aside>
+  </div>
+  </sc-if>
+
+  <!-- ========== 2. البيانات ========== -->
+  <sc-if value="{{isS2}}" hint-placeholder-val="{{ false }}">
+  <div class="card" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 16px">
+    <span class="pav" style="{{pv.av}}">{{pv.ini}}</span>
+    <div style="display:flex;flex-direction:column;min-width:0"><b style="font-size:16px">{{pv.name}}</b><span class="cap">{{pv.catName}}</span></div>
+    <button type="button" class="btn ghost mb" onClick="{{toS1}}">تغيير الجهة</button>
+    <button type="button" class="btn mb" style="margin-inline-start:auto" onClick="{{fillSample}}">تعبئة مثال للتجربة</button>
+  </div>
+
+  <div class="ws">
+    <aside class="snav" aria-label="أقسام النموذج">
+      <sc-for list="{{navGroups}}" as="g" hint-placeholder-count="3">
+        <div class="sng"><div class="sngt">{{g.title}}</div><sc-for list="{{g.items}}" as="i" hint-placeholder-count="3"><button type="button" class="{{i.cls}}" onClick="{{i.go}}" aria-current="{{i.cur}}"><span>{{i.label}}</span><span class="{{i.bcls}}">{{i.badge}}</span></button></sc-for></div>
+      </sc-for>
+    </aside>
+
+    <section class="card scard" aria-label="{{S.title}}">
+      <div class="sh">
+        <div style="flex:1;min-width:240px"><h2>{{S.title}}</h2><div class="cap" style="font-size:13px">{{S.desc}}</div></div>
+        <span class="{{S.pill}}">{{S.lvl}}</span>
+      </div>
+
+      <!-- قسم لا ينطبق -->
+      <sc-if value="{{S.isNa}}" hint-placeholder-val="{{ false }}">
+        <div class="note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>{{S.naNote}}</span></div>
+        <sc-if value="{{S.canEnable}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn addr" onClick="{{enableSec}}">تفعيل القسم لهذا الحساب فقط</button></sc-if>
+      </sc-if>
+
+      <!-- مجموعات الحقول -->
+      <sc-if value="{{S.isForm}}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{S.groups}}" as="g" hint-placeholder-count="1">
+          <div class="{{g.cls}}">
+            <sc-if value="{{g.hasTitle}}" hint-placeholder-val="{{ false }}"><div class="fgh"><span>{{g.title}}</span><sc-if value="{{g.removable}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn ghost mb rowx" onClick="{{g.remove}}">إزالة</button></sc-if></div></sc-if>
+            <sc-if value="{{g.hasHelp}}" hint-placeholder-val="{{ false }}"><div class="note lockn">{{g.help}}</div></sc-if>
+            <div class="fgrid"><sc-for list="{{g.fields}}" as="f" hint-placeholder-count="4">
+              <div class="{{f.wcls}}">
+                <div class="flab"><span>{{f.label}}</span><sc-if value="{{f.req}}" hint-placeholder-val="{{ true }}"><b class="rq" aria-hidden="true">*</b></sc-if><sc-if value="{{f.opt}}" hint-placeholder-val="{{ false }}"><span class="optl">اختياري</span></sc-if></div>
+                <sc-if value="{{f.isText}}" hint-placeholder-val="{{ true }}"><input class="{{f.inCls}}" type="text" value="{{f.val}}" onChange="{{f.on}}" placeholder="{{f.ph}}" aria-label="{{f.label}}"></sc-if>
+                <sc-if value="{{f.isDate}}" hint-placeholder-val="{{ false }}"><input class="inp" type="date" value="{{f.val}}" onChange="{{f.on}}" aria-label="{{f.label}}"></sc-if>
+                <sc-if value="{{f.isArea}}" hint-placeholder-val="{{ false }}"><textarea class="inp area" value="{{f.val}}" onChange="{{f.on}}" placeholder="{{f.ph}}" aria-label="{{f.label}}"></textarea></sc-if>
+                <sc-if value="{{f.isChips}}" hint-placeholder-val="{{ false }}"><div class="chips" role="group" aria-label="{{f.label}}"><sc-for list="{{f.chips}}" as="c" hint-placeholder-count="3"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div></sc-if>
+                <sc-if value="{{f.hasHelp}}" hint-placeholder-val="{{ false }}"><span class="hint">{{f.help}}</span></sc-if>
+                <sc-if value="{{f.hasErr}}" hint-placeholder-val="{{ false }}"><span class="ferr">{{f.err}}</span></sc-if>
+                <sc-if value="{{f.hasWarn}}" hint-placeholder-val="{{ false }}"><span class="fwarn">{{f.warn}}</span></sc-if>
+              </div>
+            </sc-for></div>
+          </div>
+        </sc-for>
+        <sc-if value="{{S.canAddGroup}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn addr" onClick="{{S.addGroup}}">{{S.addGroupLabel}}</button></sc-if>
+      </sc-if>
+
+      <!-- العملات -->
+      <sc-if value="{{S.isCurs}}" hint-placeholder-val="{{ false }}">
+        <div class="fw"><div class="flab"><span>العملات المتاحة في الحساب</span><b class="rq" aria-hidden="true">*</b></div><div class="chips" role="group" aria-label="العملات"><sc-for list="{{curChips}}" as="c" hint-placeholder-count="3"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div></div>
+        <sc-if value="{{curFixed}}" hint-placeholder-val="{{ false }}"><div class="note lockn">{{curFixedNote}}</div></sc-if>
+        <sc-for list="{{curRows}}" as="r" hint-placeholder-count="2">
+          <div class="crow">
+            <div style="display:flex;flex-direction:column"><b class="en" style="font-size:16px">{{r.cur}}</b><span class="cap">{{r.name}}</span></div>
+            <div class="fw"><div class="flab"><span>الرصيد الافتتاحي</span></div><input class="inp en" type="text" value="{{r.val}}" onChange="{{r.on}}" placeholder="0.00" aria-label="{{r.aria}}"><sc-if value="{{r.hasErr}}" hint-placeholder-val="{{ false }}"><span class="ferr">{{r.err}}</span></sc-if></div>
+            <div class="fw"><div class="flab"><span>بتاريخ</span></div><input class="inp" type="date" value="{{r.date}}" onChange="{{r.onDate}}" aria-label="تاريخ الرصيد الافتتاحي"></div>
+          </div>
+        </sc-for>
+        <div class="note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>الرصيد الافتتاحي يظهر كأول سطر في كشف الحساب، ويُحسب ضمن خزنة العملة نفسها في «الحسابات والخزائن».</span></div>
+      </sc-if>
+
+      <!-- الحدود -->
+      <sc-if value="{{S.isLimits}}" hint-placeholder-val="{{ false }}">
+        <div class="l2" style="gap:16px">
+          <div class="colm" style="flex-basis:420px;gap:12px">
+            <div class="chips" role="group" aria-label="وجود ليميت"><sc-for list="{{limModeChips}}" as="c" hint-placeholder-count="2"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div>
+            <sc-if value="{{hasLimRows}}" hint-placeholder-val="{{ true }}">
+              <sc-for list="{{limRows}}" as="l" hint-placeholder-count="2">
+                <div class="row">
+                  <div class="rowh"><b>{{l.title}}</b><span class="cap">{{l.reset}}</span><button type="button" class="btn ghost mb rowx" onClick="{{l.remove}}">إزالة</button></div>
+                  <div class="fgrid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+                    <div class="fw"><div class="flab"><span>الاتجاه</span></div><div class="chips"><sc-for list="{{l.dirs}}" as="c" hint-placeholder-count="2"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div></div>
+                    <div class="fw"><div class="flab"><span>الفترة</span></div><div class="chips"><sc-for list="{{l.pers}}" as="c" hint-placeholder-count="4"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div></div>
+                    <div class="fw"><div class="flab"><span>الحد</span><b class="rq" aria-hidden="true">*</b></div><div style="display:flex;gap:8px;align-items:center"><sc-if value="{{l.known}}" hint-placeholder-val="{{ true }}"><input class="inp en" type="text" value="{{l.max}}" onChange="{{l.onMax}}" placeholder="0" aria-label="قيمة الحد"><div class="chips" style="flex-wrap:nowrap"><sc-for list="{{l.curs}}" as="c" hint-placeholder-count="1"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div></sc-if><button type="button" class="{{l.unkCls}}" aria-pressed="{{l.unkP}}" onClick="{{l.toggleUnk}}">غير معرّف</button></div><sc-if value="{{l.hasErr}}" hint-placeholder-val="{{ false }}"><span class="ferr">{{l.err}}</span></sc-if></div>
+                  </div>
+                </div>
+              </sc-for>
+              <div class="fw"><div class="flab"><span>طريقة الاحتساب</span></div><div class="chips"><sc-for list="{{calcChips}}" as="c" hint-placeholder-count="2"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div><span class="hint">{{calcHint}}</span></div>
+              <sc-if value="{{showWs}}" hint-placeholder-val="{{ true }}"><div class="fw"><div class="flab"><span>بداية الأسبوع</span></div><div class="chips"><sc-for list="{{wsChips}}" as="c" hint-placeholder-count="3"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div><span class="hint">يتجدد الحد الأسبوعي في هذا اليوم. في PayPal يبدأ الأسبوع يوم الاثنين.</span></div></sc-if>
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn mb" onClick="{{addLim}}">+ إضافة حد</button><sc-if value="{{hasPresets}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn ghost mb" onClick="{{applyPresets}}">{{presetLabel}}</button></sc-if></div>
+              <div class="fw"><div class="flab"><span>التنبيه عند الوصول إلى</span></div><div class="chips"><sc-for list="{{thrChips}}" as="c" hint-placeholder-count="3"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div><span class="hint">يتحول الكرت للأصفر عند هذه النسبة، وللأحمر عند الوصول للحد.</span></div>
+            </sc-if>
+            <sc-if value="{{noLimMsg}}" hint-placeholder-val="{{ false }}"><div class="note">سيظهر في صفحة الحساب: «لا يوجد ليميت لهذا الحساب»، ويمكن إضافته لاحقاً من «حدود الحسابات».</div></sc-if>
+            <sc-if value="{{unkLimMsg}}" hint-placeholder-val="{{ false }}"><div class="note sec2">الليميت غير معروف بعد. يُحفظ الحساب، ويظهر في كرت الليميت «غير معرّف»، ويمكن تحديده لاحقاً من «حدود الحسابات».</div></sc-if>
+          </div>
+          <div style="flex:1 1 300px;display:flex;flex-direction:column;gap:8px">
+            <span class="cap" style="font-weight:600">هكذا سيظهر كرت الليميت</span>
+            <div class="lc" style="{{lc.border}}" aria-label="معاينة كرت الليميت">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+                <div><b style="font-size:16px;line-height:24px">{{lc.name}}</b><div style="display:flex;gap:6px;margin-top:4px"><span class="pill teal">{{lc.type}}</span></div></div>
+                <span class="{{lc.statePill}}">{{lc.state}}</span>
+              </div>
+              <sc-if value="{{lc.none}}" hint-placeholder-val="{{ false }}"><div style="background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60;text-align:center">{{lc.noneText}}</div></sc-if>
+              <sc-for list="{{lc.lims}}" as="l" hint-placeholder-count="2">
+                <div class="lm">
+                  <div style="display:flex;justify-content:space-between;font-size:13px"><span><b>{{l.title}}</b> <span class="cap">· {{l.reset}}</span></span><span class="amt" style="color:#136A43;font-weight:600">0%</span></div>
+                  <div class="lbar"><span style="width:0%;background:#16B8A6"></span><i style="{{l.mark}}"></i></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;color:#4A5A70"><span class="amt">{{l.usedTxt}}</span><span>{{l.leftTxt}}</span></div><sc-if value="{{l.hasEff}}" hint-placeholder-val="{{ false }}"><span class="cap" style="color:#7A5200;font-weight:600">{{l.eff}}</span></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- الوثائق -->
+      <sc-if value="{{S.isDocs}}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{S.canDisable}}" hint-placeholder-val="{{ false }}"><div class="note" style="align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:220px">فُعّل هذا القسم لهذا الحساب فقط، لأنه لا ينطبق عادةً على هذه الجهة.</span><button type="button" class="btn mb" onClick="{{disableSec}}">تراجع عن التفعيل</button></div></sc-if>
+        <div class="note sec2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>تُسجَّل الوثيقة المستخدمة بنوعها وباسم مَن، مثل «جواز سفر · أحمد»، بدون رفع الملف. إرفاق الملف اختياري، وتظهر الوثائق في تبويب «التوثيق» داخل صفحة الحساب.</span></div>
+        <sc-if value="{{noDocs}}" hint-placeholder-val="{{ false }}"><div class="note">لم تُضف وثائق بعد.</div></sc-if>
+        <sc-for list="{{docRows}}" as="d" hint-placeholder-count="2">
+          <div class="row">
+            <div class="rowh"><b>وثيقة {{d.n}}</b><span class="{{d.stPill}}">{{d.st}}</span><button type="button" class="btn ghost mb rowx" onClick="{{d.remove}}">حذف من المسودة</button></div>
+            <div class="fgrid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+              <div class="fw"><div class="flab"><span>نوع الوثيقة</span><b class="rq" aria-hidden="true">*</b></div><select class="inp" value="{{d.dtype}}" onChange="{{d.onType}}" aria-label="نوع الوثيقة"><option value="">اختر النوع</option><sc-for list="{{d.typeOpts}}" as="o" hint-placeholder-count="6"><option value="{{o}}">{{o}}</option></sc-for></select></div>
+              <div class="fw"><div class="flab"><span>باسم</span><b class="rq" aria-hidden="true">*</b></div><input class="inp" type="text" value="{{d.who}}" onChange="{{d.onWho}}" placeholder="مثال: أحمد" aria-label="باسم"></div>
+              <div class="fw"><div class="flab"><span>تاريخ الانتهاء</span><span class="optl">اختياري</span></div><input class="inp" type="date" value="{{d.expiry}}" onChange="{{d.onExpiry}}" aria-label="تاريخ الانتهاء"></div>
+            </div>
+            <sc-if value="{{d.hasText}}" hint-placeholder-val="{{ false }}"><div class="note lockn" style="flex-direction:column;gap:2px"><b>✓ تم استخدام {{d.text}}</b><sc-if value="{{d.hasShared}}" hint-placeholder-val="{{ false }}"><span class="cap" style="color:#0A5F56">{{d.shared}}</span></sc-if></div></sc-if>
+            <sc-if value="{{d.showNoteIn}}" hint-placeholder-val="{{ false }}"><div class="fw"><div class="flab"><span>ملاحظة</span><span class="optl">اختياري</span></div><input class="inp" type="text" value="{{d.dnote}}" onChange="{{d.onNote}}" placeholder="مثال: قُدّم عند فتح الحساب" aria-label="ملاحظة"></div></sc-if>
+            <sc-if value="{{d.hasFile}}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="dfile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></svg><span class="en">{{d.file}}</span></span><button type="button" class="btn ghost mb" onClick="{{d.clear}}">إزالة الملف</button></div></sc-if>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-if value="{{d.canAddNote}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn ghost mb" onClick="{{d.addNote}}">+ إضافة ملاحظة</button></sc-if>
+              <sc-if value="{{d.noFile}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn ghost mb" onClick="{{d.upload}}">+ إرفاق ملف</button></sc-if>
+            </div>
+          </div>
+        </sc-for>
+        <button type="button" class="btn addr mb" onClick="{{addDoc}}">+ إضافة وثيقة</button>
+      </sc-if>
+
+      <!-- البطاقات -->
+      <sc-if value="{{S.isCards}}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{S.canDisable}}" hint-placeholder-val="{{ false }}"><div class="note" style="align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:220px">فُعّل هذا القسم لهذا الحساب فقط، لأنه لا ينطبق عادةً على هذه الجهة.</span><button type="button" class="btn mb" onClick="{{disableSec}}">تراجع عن التفعيل</button></div></sc-if>
+        <div class="note sec2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>لا يُسجَّل رقم البطاقة الكامل ولا رمز CVV. يكفي آخر 4 أرقام وتاريخ الانتهاء للتعرّف على البطاقة.</span></div>
+        <sc-for list="{{cardRows}}" as="c" hint-placeholder-count="1">
+          <div class="row">
+            <div class="rowh"><b class="en">{{c.title}}</b><span class="{{c.stPill}}">{{c.status}}</span><button type="button" class="btn ghost mb rowx" onClick="{{c.remove}}">إزالة من المسودة</button></div>
+            <div class="fgrid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+              <div class="fw"><div class="flab"><span>نوع البطاقة</span></div><div class="chips"><sc-for list="{{c.kinds}}" as="k" hint-placeholder-count="2"><button type="button" class="{{k.cls}}" aria-pressed="{{k.pressed}}" onClick="{{k.go}}">{{k.label}}</button></sc-for></div></div>
+              <div class="fw"><div class="flab"><span>الشبكة</span></div><div class="chips"><sc-for list="{{c.nets}}" as="k" hint-placeholder-count="2"><button type="button" class="{{k.cls}}" aria-pressed="{{k.pressed}}" onClick="{{k.go}}">{{k.label}}</button></sc-for></div></div>
+              <div class="fw"><div class="flab"><span>اسم حامل البطاقة</span></div><input class="inp en" type="text" value="{{c.holder}}" onChange="{{c.onHolder}}" placeholder="كما هو مطبوع" aria-label="اسم حامل البطاقة"></div>
+              <div class="fw"><div class="flab"><span>آخر 4 أرقام</span><b class="rq" aria-hidden="true">*</b></div><input class="inp en" type="text" value="{{c.last4}}" onChange="{{c.onLast4}}" placeholder="4821" aria-label="آخر 4 أرقام"><sc-if value="{{c.hasErr4}}" hint-placeholder-val="{{ false }}"><span class="ferr">{{c.err4}}</span></sc-if></div>
+              <div class="fw"><div class="flab"><span>الانتهاء</span><b class="rq" aria-hidden="true">*</b></div><input class="inp en" type="text" value="{{c.exp}}" onChange="{{c.onExp}}" placeholder="MM/YY" aria-label="تاريخ الانتهاء"><sc-if value="{{c.hasErrE}}" hint-placeholder-val="{{ false }}"><span class="ferr">{{c.errE}}</span></sc-if></div>
+              <div class="fw"><div class="flab"><span>الحالة</span></div><div class="chips"><sc-for list="{{c.sts}}" as="k" hint-placeholder-count="3"><button type="button" class="{{k.cls}}" aria-pressed="{{k.pressed}}" onClick="{{k.go}}">{{k.label}}</button></sc-for></div></div>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{noCards}}" hint-placeholder-val="{{ false }}"><div class="note">لا توجد بطاقات بعد.</div></sc-if>
+        <button type="button" class="btn addr mb" onClick="{{addCard}}">+ إضافة بطاقة</button>
+      </sc-if>
+
+      <!-- الربط -->
+      <sc-if value="{{S.isLinks}}" hint-placeholder-val="{{ false }}">
+        <div class="fw"><div class="flab"><span>الحسابات المربوطة بهذا الحساب</span></div><div class="chips" role="group" aria-label="الحسابات المربوطة"><sc-for list="{{linkChips}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div><span class="hint">الربط يظهر في الحسابين معاً، وفي جدول «خريطة الربط» بصفحة البطاقات والربط.</span></div>
+      </sc-if>
+
+      <div class="sfoot">
+        <sc-if value="{{hasPrev}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn" onClick="{{goPrev}}">→ {{prevLabel}}</button></sc-if>
+        <sc-if value="{{noPrev}}" hint-placeholder-val="{{ false }}"><span></span></sc-if>
+        <button type="button" class="btn pri" onClick="{{goNext}}">{{nextLabel}} ←</button>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ========== 3. المراجعة ========== -->
+  <sc-if value="{{isS3}}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{saved}}" hint-placeholder-val="{{ false }}">
+    <div class="card svdone">
+      <span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <h2 style="margin:0;font-size:22px">أُضيف «{{P.title}}»</h2>
+      <p class="sub" style="margin:0;max-width:560px">{{savedLine}}</p>
+      <span class="cap">سجل التدقيق: {{auditLine}}</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px"><a class="btn pri" href="{{pageHref}}">{{pageLabel}}</a><button type="button" class="btn" onClick="{{restart}}">إضافة حساب آخر</button></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{notSaved}}" hint-placeholder-val="{{ true }}">
+  <div class="l2">
+    <div class="colm">
+      <div class="note lockn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>هذه معاينة صفحة الحساب بعد الحفظ. البيانات نفسها التي أُدخلت في النموذج، بلا نسخ ثانية.</span></div>
+      <article class="card prof" aria-label="معاينة صفحة الحساب">
+        <div class="profh">
+          <span class="pav" style="{{pv.av}}">{{pv.ini}}</span>
+          <div style="flex:1;min-width:200px;display:flex;flex-direction:column"><b style="font-size:20px;line-height:30px">{{P.title}}</b><span style="font-size:13px;color:#B8C4D4">{{P.sub}}</span></div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="{{P.stPill}}">{{P.status}}</span><sc-if value="{{P.hasDocBadge}}" hint-placeholder-val="{{ false }}"><span class="{{P.docPill}}">{{P.docBadge}}</span></sc-if></div>
+        </div>
+        <div class="pblk" style="border-top:0">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h3>بيانات الحساب</h3><button type="button" class="{{copyAllCls}}" onClick="{{copyAll}}">{{copyAllTxt}}</button></div>
+          <div class="pfs"><sc-for list="{{P.fields}}" as="f" hint-placeholder-count="4"><div class="pf"><span class="pfl">{{f.label}}</span><div class="pfv"><b class="{{f.vcls}}">{{f.val}}</b><sc-if value="{{f.share}}" hint-placeholder-val="{{ true }}"><button type="button" class="{{f.bcls}}" onClick="{{f.copy}}" aria-label="{{f.aria}}">{{f.btn}}</button></sc-if></div></div></sc-for></div>
+        </div>
+        <div class="pblk"><h3>الأرصدة</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{P.curs}}" as="c" hint-placeholder-count="2"><div class="ctab"><span class="cap" style="font-weight:600">رصيد {{c.cur}}</span><b class="amt" style="font-size:20px;line-height:28px">{{c.bal}}</b><span class="cap">افتتاحي بتاريخ <span class="amt">{{c.date}}</span></span></div></sc-for></div></div>
+        <sc-if value="{{P.showLim}}" hint-placeholder-val="{{ true }}"><div class="pblk"><h3>الليميت</h3><div style="max-width:420px">
+          <div class="lc" style="{{lc.border}}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><b style="font-size:16px;line-height:24px">{{lc.name}}</b><span class="{{lc.statePill}}">{{lc.state}}</span></div>
+            <sc-if value="{{lc.none}}" hint-placeholder-val="{{ false }}"><div style="background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60;text-align:center">{{lc.noneText}}</div></sc-if>
+            <sc-for list="{{lc.lims}}" as="l" hint-placeholder-count="2"><div class="lm"><div style="display:flex;justify-content:space-between;font-size:13px"><span><b>{{l.title}}</b> <span class="cap">· {{l.reset}}</span></span><span class="amt" style="color:#136A43;font-weight:600">0%</span></div><div class="lbar"><span style="width:0%;background:#16B8A6"></span><i style="{{l.mark}}"></i></div><div style="display:flex;justify-content:space-between;font-size:12px;color:#4A5A70"><span class="amt">{{l.usedTxt}}</span><span>{{l.leftTxt}}</span></div><sc-if value="{{l.hasEff}}" hint-placeholder-val="{{ false }}"><span class="cap" style="color:#7A5200;font-weight:600">{{l.eff}}</span></sc-if></div></sc-for>
+          </div></div></div></sc-if>
+        <sc-if value="{{P.showDocs}}" hint-placeholder-val="{{ false }}"><div class="pblk"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>التوثيق</h3><span class="cap">يظهر كاملاً في تبويب «الوثائق والملاحظات»</span></div><div style="display:flex;flex-direction:column;gap:6px"><sc-for list="{{P.docs}}" as="d" hint-placeholder-count="2"><div class="li"><span style="flex:1">{{d.label}}</span><span class="{{d.stPill}}">{{d.st}}</span></div></sc-for></div></div></sc-if>
+        <sc-if value="{{P.showCards}}" hint-placeholder-val="{{ false }}"><div class="pblk"><h3>البطاقات</h3><div style="display:flex;flex-direction:column;gap:6px"><sc-for list="{{P.cards}}" as="c" hint-placeholder-count="1"><div class="li"><b class="en">{{c.title}}</b><span class="cap">{{c.meta}}</span><span class="{{c.stPill}}" style="margin-inline-start:auto">{{c.status}}</span></div></sc-for></div></div></sc-if>
+        <sc-if value="{{P.showLinks}}" hint-placeholder-val="{{ false }}"><div class="pblk"><h3>الحساب مربوط مع</h3><div class="chips"><sc-for list="{{P.links}}" as="l" hint-placeholder-count="2"><span class="pill info">{{l.name}}</span></sc-for></div></div></sc-if>
+        <sc-if value="{{P.showOps}}" hint-placeholder-val="{{ false }}"><div class="pblk"><h3>التشغيل</h3><div class="pfs"><sc-for list="{{P.ops}}" as="f" hint-placeholder-count="2"><div class="pf"><span class="pfl">{{f.label}}</span><b style="font-size:14px">{{f.val}}</b></div></sc-for></div></div></sc-if>
+      </article>
+    </div>
+
+    <aside class="cols" aria-label="قبل الحفظ">
+      <div class="card panel">
+        <b style="font-size:16px">قبل الحفظ</b>
+        <sc-if value="{{hasIssues}}" hint-placeholder-val="{{ true }}">
+          <span class="cap" style="font-size:13px">{{issuesHead}}</span>
+          <sc-for list="{{issues}}" as="i" hint-placeholder-count="2"><div class="iss"><span><b>{{i.sec}}:</b> {{i.label}}</span><button type="button" class="go" onClick="{{i.go}}">اذهب ←</button></div></sc-for>
+        </sc-if>
+        <sc-if value="{{noIssues}}" hint-placeholder-val="{{ false }}"><div class="note lockn">كل الحقول المطلوبة مكتملة.</div></sc-if>
+        <sc-if value="{{hasWarns}}" hint-placeholder-val="{{ false }}">
+          <span class="cap" style="font-size:13px;font-weight:600">تنبيهات لا تمنع الحفظ</span>
+          <sc-for list="{{warns}}" as="w" hint-placeholder-count="1"><div class="li" style="font-size:13px">{{w.t}}</div></sc-for>
+        </sc-if>
+        <div class="li" style="font-size:13px;flex-direction:column;align-items:flex-start;gap:2px"><b>سيظهر الحساب في</b><span>{{appearsIn}}</span></div>
+        <button type="button" class="btn pri" onClick="{{save}}">حفظ الحساب</button>
+        <button type="button" class="btn" onClick="{{backEdit}}">→ رجوع للتعديل</button>
+      </div>
+    </aside>
+  </div>
+  </sc-if>
+  </sc-if>
+
+  <sc-if value="{{isPM}}" hint-placeholder-val="{{ false }}">
+  <div class="pmov" role="dialog" aria-modal="true" aria-label="إضافة جهة">
+    <div class="pmd">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><h2>إضافة جهة</h2><span class="cap" style="font-size:13px">البيانات المشتركة بين كل حسابات هذه الجهة. تُعبّأ مرة واحدة، وبعدها تُضاف الحسابات تحتها.</span></div><button type="button" class="btn mb" onClick="{{pmClose}}" aria-label="إغلاق">×</button></div>
+      <div class="fw"><div class="flab"><span>اسم الجهة</span><b class="rq" aria-hidden="true">*</b></div><input class="inp" type="text" value="{{pm.name}}" onChange="{{pmName}}" placeholder="مثال: بنك القدس" aria-label="اسم الجهة"></div>
+      <div class="fw"><div class="flab"><span>المجموعة</span></div><div class="chips" role="group" aria-label="المجموعة"><sc-for list="{{pmCats}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div></div>
+      <div class="fw"><div class="flab"><span>العملات المتاحة</span><b class="rq" aria-hidden="true">*</b></div><div class="chips" role="group" aria-label="العملات المتاحة"><sc-for list="{{pmCurs}}" as="c" hint-placeholder-count="6"><button type="button" class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.go}}">{{c.label}}</button></sc-for></div><span class="hint">تظهر جاهزة عند إضافة أي حساب تحت هذه الجهة.</span></div>
+      <sc-if value="{{pmHasErr}}" hint-placeholder-val="{{ false }}"><div class="errb" role="alert">{{pmErr}}</div></sc-if>
+      <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button type="button" class="btn" onClick="{{pmClose}}">إلغاء</button><button type="button" class="btn pri" onClick="{{pmSave}}">حفظ الجهة والمتابعة ←</button></div>
+    </div>
+  </div>
+  </sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = this.fresh();
+  }
+  fresh() {
+    return { step: 1, cat: 'all', q: '', prov: '', cBase: 'pay', cCat: 'pay', cName: '', sec: 'basic', v: { status: 'نشط' }, curs: [], open: {}, openD: {}, lims: [], limMode: 'has', thr: 80, dd: {}, xdocs: [], secOn: {}, cards: [], links: [], ib: [1], seq: 2, saved: false, flash: '', err: '', copied: '' };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var set = function (o) { self.setState(Object.assign({ err: '', flash: '' }, o)); };
+    var fmt = function (n) { return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    var num = function (s) { var x = parseFloat(String(s == null ? '' : s).replace(/,/g, '')); return isNaN(x) ? null : x; };
+    var fd = function (d) { return d ? d.split('-').reverse().join('/') : ''; };
+    var TODAY = '2026-11-20';
+    var days = function (d) { return Math.round((new Date(d + 'T00:00:00') - new Date(TODAY + 'T00:00:00')) / 86400000); };
+    var OWN = ['أحمد', 'كرم', 'هبة', 'زكي', 'المكتب'];
+    var CN = { ILS: 'الشيكل', USD: 'الدولار', EUR: 'اليورو', GBP: 'الجنيه الإسترليني', JOD: 'الدينار الأردني', EGP: 'الجنيه المصري', USDT: 'USDT' };
+    var RX = {
+      email: ['^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'بريد إلكتروني غير صحيح'],
+      egPhone: ['^01[0125]\\d{8}$', 'رقم مصري من 11 خانة يبدأ بـ 010 أو 011 أو 012 أو 015'],
+      psPhone: ['^05[69]\\d{7}$', 'رقم فلسطيني من 10 خانات يبدأ بـ 059 أو 056'],
+      psIban: ['^PS\\d{2}[A-Z]{4}\\d{21}$', 'IBAN فلسطيني: يبدأ بـ PS وطوله 29 خانة'],
+      egIban: ['^EG\\d{27}$', 'IBAN مصري: EG يليه 27 رقماً'],
+      iban: ['^[A-Z]{2}\\d{2}[A-Z0-9]{11,30}$', 'صيغة IBAN غير صحيحة'],
+      digits: ['^\\d{5,13}$', 'أرقام فقط، من 5 إلى 13 خانة'],
+      uid: ['^\\d{6,12}$', 'UID أرقام فقط، من 6 إلى 12 خانة'],
+      swift: ['^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$', 'SWIFT من 8 أو 11 خانة'],
+      trc: ['^T[1-9A-HJ-NP-Za-km-z]{33}$', 'عنوان TRC20 يبدأ بـ T وطوله 34 خانة'],
+      evm: ['^0x[0-9a-fA-F]{40}$', 'عنوان يبدأ بـ 0x ويليه 40 خانة'],
+      sol: ['^[1-9A-HJ-NP-Za-km-z]{32,44}$', 'عنوان Solana من 32 إلى 44 خانة'],
+      ipa: ['^[a-z0-9._-]+@instapay$', 'العنوان ينتهي بـ @instapay'],
+      pct: ['^\\d{1,2}(\\.\\d{1,2})?$', 'نسبة مثل 4.4'],
+      routing: ['^\\d{9}$', 'Routing من 9 أرقام']
+    };
+    var EXIST = { '01012345678': 'Vodafone Cash – محفظة أحمد', '01098765432': 'Vodafone Cash – محفظة إضافية', '0599123456': 'JAWWAL Pay – محفظة أحمد', '0599876543': 'JAWWAL Pay – محفظة كرم', '0412345': 'بنك فلسطين – حساب أحمد', '0400990': 'بنك فلسطين – حساب المكتب' };
+    var REG = ['PayPal – حساب المكتب', 'PayPal – حساب زكي', 'KAST – حساب KAST', 'nsave – حساب nsave', 'بنك فلسطين – حساب المكتب'];
+
+    var CATS = [['all', 'الكل'], ['bank', 'البنوك'], ['pay', 'منصات الدفع والتحويل'], ['cards', 'تطبيقات البطاقات'], ['crypto', 'منصات USDT'], ['egw', 'المحافظ المصرية'], ['plw', 'المحافظ الفلسطينية']];
+    var CATN = { bank: 'بنك', pay: 'منصة دفع وتحويل', cards: 'تطبيق بطاقات', cardapp: 'تطبيق بطاقات', crypto: 'منصة USDT', egw: 'محفظة مصرية', plw: 'محفظة فلسطينية' };
+    var AV = { bank: 'background:#E6EEF7;color:#1F3F66', pay: 'background:#DDF5F2;color:#0A5F56', cards: 'background:#EAEAF6;color:#3B3D7A', cardapp: 'background:#EAEAF6;color:#3B3D7A', crypto: 'background:#FDF0D5;color:#7A5200', egw: 'background:#EEF1F5;color:#3A4A60', plw: 'background:#E2F4EC;color:#136A43', custom: 'background:#fff;color:#142B4A;border:1px dashed #9FB0C6' };
+    var PROVS0 = [
+      { id: 'bop', name: 'بنك فلسطين', ini: 'ب', cat: 'bank', tpl: 'bank', page: ['BankAccounts.dc.html', 'البنوك'] },
+      { id: 'arab', name: 'البنك العربي', ini: 'ع', cat: 'bank', tpl: 'bank', page: ['BankAccounts.dc.html', 'البنوك'] },
+      { id: 'pp', name: 'PayPal', ini: 'P', cat: 'pay', tpl: 'paypal', page: ['Paypal.dc.html', 'PayPal'] },
+      { id: 'cashplus', name: 'Cash Plus', ini: 'C', cat: 'pay', tpl: 'emi', curOpts: ['USD', 'JOD', 'EUR', 'GBP'], page: ['CashPlus.dc.html', 'Cash Plus'] },
+      { id: 'kast', name: 'KAST', ini: 'K', cat: 'cards', tpl: 'cardapp', curOpts: ['USD', 'USDT'], page: ['CardsLinks.dc.html', 'البطاقات والربط'] },
+      { id: 'nsave', name: 'nsave', ini: 'n', cat: 'cards', tpl: 'cardapp', curOpts: ['USD', 'EUR', 'USDT'], linksCore: true, page: ['CardsLinks.dc.html', 'البطاقات والربط'] },
+      { id: 'bin', name: 'Binance', ini: 'B', cat: 'crypto', tpl: 'crypto', page: ['CryptoAccounts.dc.html', 'منصات USDT'] },
+      { id: 'byb', name: 'Bybit', ini: 'B', cat: 'crypto', tpl: 'crypto', page: ['CryptoAccounts.dc.html', 'منصات USDT'] },
+      { id: 'krk', name: 'Kraken', ini: 'K', cat: 'crypto', tpl: 'crypto', page: ['CryptoAccounts.dc.html', 'منصات USDT'] },
+      { id: 'vf', name: 'Vodafone Cash', ini: 'V', cat: 'egw', tpl: 'vf', page: ['Wallets.dc.html', 'المحافظ المصرية'] },
+      { id: 'ip', name: 'InstaPay', ini: 'I', cat: 'egw', tpl: 'ip', page: ['Wallets.dc.html', 'المحافظ المصرية'] },
+      { id: 'jw', name: 'JAWWAL Pay', ini: 'J', cat: 'plw', tpl: 'plw', page: ['PalWallets.dc.html', 'المحافظ الفلسطينية'] },
+      { id: 'palpay', name: 'PalPay', ini: 'P', cat: 'plw', tpl: 'plw', page: ['PalWallets.dc.html', 'المحافظ الفلسطينية'] },
+      { id: 'maal', name: 'Maalchat', ini: 'M', cat: 'plw', tpl: 'plw', page: ['PalWallets.dc.html', 'المحافظ الفلسطينية'] }
+    ];
+    var PROVS = PROVS0.concat(st.newProvs || []);
+    var BASES = [['bank', 'حساب بنكي', 'bank'], ['pay', 'منصة دفع وتحويل', 'emi'], ['cardapp', 'تطبيق بطاقات', 'cardapp'], ['crypto', 'منصة USDT', 'crypto'], ['plw', 'محفظة', 'plw']];
+    var DEFBASE = { bank: 'bank', pay: 'pay', cards: 'cardapp', crypto: 'crypto', egw: 'plw', plw: 'plw' };
+
+    // ---- مكتبة الحقول: [مفتاح، تسمية، خيارات]
+    var F = function (k, label, o) { return Object.assign({ k: k, label: label, t: 'text' }, o || {}); };
+    var ch = function (k, label, opts, o) { return F(k, label, Object.assign({ t: 'chips', opts: opts }, o || {})); };
+
+    // ---- القوالب: كل قالب يحدد أقسامه وحقوله ووثائقه وحدوده المقترحة
+    var NOTE_HINT = 'مثلاً: الهدف من فتح الحساب، والعمل أو النشاط، وحجم التعامل المتوقع، والعنوان المسجّل، ومن يحتفظ بكلمة المرور ورمز PIN.';
+    var TPL = {
+      bank: {
+        mergeBasic: true, statusOpts: ['نشط', 'مقيّد', 'مجمّد', 'مغلق'], ownerHelp: 'هو نفسه صاحب تطبيق البنك على جواله', enableable: ['docs', 'cards'],
+        secs: { limits: 'core', docs: 'na', cards: 'na', links: 'na' },
+        naNote: { docs: 'حسب القرار الحالي: البنوك بدون وثائق. يمكن تفعيل القسم لحساب بعينه عند الحاجة.', cards: 'البطاقات لا تُسجَّل عادةً مع الحسابات البنكية. يمكن تفعيل القسم لحساب بعينه عند الحاجة.', links: 'الحساب البنكي لا يُربط ببطاقات أو حسابات أخرى.' },
+        curOpts: ['ILS', 'USD', 'JOD'], curDef: ['ILS', 'USD'], limCur: 'USD',
+        presets: [['both', 'd', 2000, 'cal'], ['both', 'w', null, 'cal'], ['both', 'm', null, 'cal']],
+        ident: function (v, curs) {
+          return [{ fields: [F('branch', 'الفرع', { req: 1, ph: 'مثال: المغازي', copy: 1 }), ch('acctType', 'نوع الحساب', ['جاري', 'توفير'], { req: 1 }), F('holder', 'اسم صاحب الحساب', { req: 1, copy: 1, wide: 1, ph: 'كما هو مسجل في البنك' }), F('accNo', 'رقم الحساب', { req: 1, en: 1, copy: 1, rx: 'digits', ph: '0412345' }), F('swift', 'SWIFT / BIC', { en: 1, copy: 1, rx: 'swift', ph: 'PALSPS22' })] },
+            { title: 'أرقام IBAN', boxed: 1, help: curs.length ? '' : 'اختر العملات أولاً من قسم «العملات والأرصدة»، فيظهر حقل IBAN لكل عملة.', fields: curs.map(function (c) { return F('iban_' + c, 'IBAN ' + CN[c], { req: 1, en: 1, copy: 1, rx: 'psIban', ph: 'PS92PALS…', wide: 1 }); }) }];
+        },
+        docs: function () { return [{ k: 'id', label: 'الهوية الشخصية لصاحب الحساب', req: 1, exp: 1 }, { k: 'open', label: 'نموذج فتح الحساب', req: 0, exp: 0 }]; },
+        sample: function () { return { v: { name: 'حساب المكتب', owner: 'أحمد', status: 'نشط', branch: 'المغازي', acctType: 'جاري', holder: 'مكتب المدينة للخدمات المالية', accNo: '0400991', swift: 'PALSPS22', iban_ILS: 'PS35PALS000000000400400991702', iban_USD: 'PS92PALS000000000400400991701' }, open: { ILS: '12000', USD: '3000' } }; }
+      },
+      paypal: {
+        secs: { limits: 'core', docs: 'core', cards: 'na', links: 'opt' },
+        naNote: { cards: 'PayPal لا يُصدر بطاقات. ربط بطاقات KAST وnsave بحسابات PayPal يتم من صفحة «البطاقات والربط».' },
+        noteHint: NOTE_HINT,
+        curOpts: ['USD', 'EUR'], curDef: ['USD'], limCur: 'USD',
+        presets: [['out', 'd', 8000, 'cal'], ['out', 'w', 16000, 'cal'], ['out', 'm', 50000, 'cal']], weekStart: 'mon',
+        ident: function () { return [{ fields: [F('email', 'البريد الإلكتروني', { req: 1, en: 1, copy: 1, rx: 'email', ph: 'name@example.com' }), F('ppName', 'الاسم في PayPal', { req: 1, en: 1, copy: 1 }), F('ppme', 'رابط PayPal.me', { en: 1, copy: 1, ph: 'paypal.me/…' }), ch('ppType', 'نوع الحساب', ['Personal', 'Business'], { req: 1, help: 'الحساب التجاري يضيف «مستندات تسجيل النشاط» إلى الوثائق' }), F('country', 'دولة التسجيل', { ph: 'مثال: فلسطين' })] }]; },
+        docs: function (v) { var d = [{ k: 'id', label: 'الهوية الشخصية', req: 1, exp: 1 }, { k: 'addr', label: 'إثبات العنوان', req: 1, exp: 0, note: 'يُقبل إذا صدر خلال آخر 3 أشهر' }, { k: 'funds', label: 'إثبات مصدر الأموال', req: 0, exp: 0 }]; if (v.ppType === 'Business') d.push({ k: 'reg', label: 'مستندات تسجيل النشاط', req: 1, exp: 1 }); return d; },
+        sample: function () { return { v: { name: 'حساب المكتب 2', owner: 'زكي', status: 'نشط', email: 'office2.madina@example.com', ppName: 'Madina Office', ppme: 'paypal.me/madinaoffice2', ppType: 'Personal', country: 'فلسطين' }, open: { USD: '0' }, docs: [{ dtype: 'جواز سفر', who: 'أحمد', expiry: '2027-01-05' }], links: ['KAST – حساب KAST'] }; }
+      },
+      emi: {
+        secs: { limits: 'na', docs: 'core', cards: 'na', links: 'opt' },
+        naNote: { limits: 'لا يُسجَّل ليميت لهذا النوع من الحسابات.', cards: 'لا تُسجَّل بطاقات لهذا النوع من الحسابات.' },
+        noteHint: NOTE_HINT,
+        curOpts: ['USD', 'EUR', 'GBP'], curDef: ['USD', 'EUR'], limCur: 'USD', presets: [],
+        ident: function () { return [{ fields: [F('email', 'البريد الإلكتروني', { req: 1, en: 1, copy: 1, rx: 'email' }), F('holder', 'اسم صاحب الحساب', { req: 1, en: 1, copy: 1 })] }]; },
+        docs: function () { return [{ k: 'id', label: 'الهوية الشخصية', req: 1, exp: 1 }, { k: 'addr', label: 'إثبات العنوان', req: 1, exp: 0 }, { k: 'funds', label: 'إثبات مصدر الأموال', req: 0, exp: 0 }]; },
+        sample: function (p) { return { v: { name: 'حساب ' + p.name + ' 2', owner: 'المكتب', status: 'نشط', email: 'office2@example.com', holder: 'Madina Office' }, open: { USD: '500', EUR: '250' }, docs: [{ dtype: 'إقامة', who: 'هبة' }, { dtype: 'إثبات عنوان', who: 'هبة', dnote: 'عقد إيجار', file: 'إثبات_عنوان_هبة.pdf' }] }; }
+      },
+      cardapp: {
+        secs: { curs: 'na', limits: 'na', docs: 'core', cards: 'opt', links: 'na' },
+        naNote: { curs: 'تطبيقات البطاقات بدون أرصدة في النظام. تُسجَّل بيانات الحساب والبطاقات فقط.', limits: 'لا يُسجَّل ليميت لتطبيقات البطاقات.' },
+        noteHint: NOTE_HINT,
+        curOpts: ['USD'], curDef: ['USD'], limCur: 'USD', presets: [],
+        ident: function (v) {
+          var ms = v.rcvM || [], on = function (m) { return ms.indexOf(m) >= 0; }, any = on('SWIFT') || on('ACH');
+          var rf = [ch('rcvM', 'طرق الاستلام', ['SWIFT', 'ACH'], { multi: 1 })];
+          if (any) rf = rf.concat([F('rBank', 'اسم البنك', { en: 1, copy: 1 }), F('rBankAddr', 'عنوان البنك', { en: 1, copy: 1, wide: 1 }), F('rBankCountry', 'دولة البنك', { en: 1, copy: 1 }), F('rAcc', 'رقم الحساب', { en: 1, copy: 1, rx: 'digits' })])
+            .concat(on('ACH') ? [F('rRouting', 'Routing number', { en: 1, copy: 1, rx: 'routing' })] : []).concat(on('SWIFT') ? [F('rSwift', 'SWIFT / BIC', { en: 1, copy: 1, rx: 'swift' })] : [])
+            .concat([F('rBen', 'اسم المستفيد', { en: 1, copy: 1 }), F('rBenAddr', 'عنوان المستفيد', { en: 1, copy: 1, wide: 1 })]);
+          return [{ fields: [F('email', 'البريد الإلكتروني', { req: 1, en: 1, copy: 1, rx: 'email' }), F('phone', 'رقم الجوال المسجل', { en: 1, copy: 1 }), F('holder', 'اسم صاحب الحساب', { req: 1, en: 1, copy: 1 }), F('country', 'دولة التسجيل', {})] },
+            { title: 'تفاصيل استلام الدولار · اختياري', boxed: 1, help: any ? '' : 'اختر الطرق المتوفرة لهذا الحساب، فتظهر حقولها.', fields: rf },
+            { title: 'عناوين الإيداع · اختياري', boxed: 1, help: (v.nets || []).length ? '' : 'اختر الشبكات المتوفرة لهذا الحساب، فيظهر حقل عنوان لكل شبكة.', fields: [ch('nets', 'شبكات الإيداع', ['BEP20', 'TRC20', 'Solana'], { multi: 1 })].concat((v.nets || []).map(function (n) { return F('addr_' + n, 'عنوان ' + n, { req: 1, en: 1, copy: 1, wide: 1, rx: n === 'TRC20' ? 'trc' : n === 'Solana' ? 'sol' : 'evm' }); })) }];
+        },
+        docs: function () { return [{ k: 'id', label: 'الهوية الشخصية', req: 1, exp: 1 }, { k: 'addr', label: 'إثبات العنوان', req: 0, exp: 0 }]; },
+        sample: function (p) { return { v: { name: p.id === 'nsave' ? 'حساب nsave 2' : 'KAST المكتب', owner: 'زكي', status: 'نشط', email: 'zaki.cards@example.com', holder: 'Zaki Al-Madina', country: 'فلسطين', rcvM: ['ACH'], rBank: 'SSB Bank', rBankCountry: 'US', rAcc: '5021004417', rRouting: '043087080', rBen: 'Zaki Al-Madina' }, docs: [{ dtype: 'هوية', who: 'زكي' }], cards: [{ id: 1, kind: 'افتراضية', net: 'Visa', holder: 'ZAKI ALMADINA', last4: '4821', exp: '08/28', status: 'فعّالة' }] }; }
+      },
+      crypto: {
+        secs: { limits: 'na', docs: 'core', cards: 'na', links: 'na' },
+        naNote: { limits: 'منصات USDT بدون ليميت في النظام.', cards: 'منصات USDT في النظام بدون بطاقات.', links: 'لا يوجد ربط مباشر؛ التحويل بين المنصات يُسجَّل كنقل داخلي.' },
+        curOpts: ['USDT'], curDef: ['USDT'], curFixed: 'منصات USDT: عملة واحدة فقط هي USDT.', limCur: 'USDT',
+        presets: [],
+        ident: function (v, curs, p) {
+          var nets = v.nets || [];
+          return [{ fields: [F('uid', 'UID', { req: 1, en: 1, copy: 1, rx: 'uid' }), F('email', 'البريد الإلكتروني', { req: 1, en: 1, copy: 1, rx: 'email' }), ch('nets', 'شبكات الإيداع', ['BEP20', 'TRC20', 'Solana'], { req: 1, multi: 1 })] },
+            { title: 'عناوين الإيداع', boxed: 1, help: nets.length ? '' : 'اختر الشبكات أولاً، فيظهر حقل عنوان لكل شبكة.', fields: nets.map(function (n) { return F('addr_' + n, 'عنوان ' + n, { req: 1, en: 1, copy: 1, wide: 1, rx: n === 'TRC20' ? 'trc' : n === 'Solana' ? 'sol' : 'evm' }); }) }];
+        },
+        docs: function () { return [{ k: 'id', label: 'الهوية الشخصية (KYC)', req: 1, exp: 1 }, { k: 'selfie', label: 'صورة التحقق (سيلفي)', req: 1, exp: 0 }, { k: 'addr', label: 'إثبات العنوان', req: 0, exp: 0 }]; },
+        sample: function (p) { var v = { name: 'حساب ' + p.name + ' 2', owner: 'أحمد', status: 'نشط', uid: '384920175', email: 'otc@example.com', nets: ['TRC20', 'BEP20'] }; v.addr_TRC20 = 'TXk3n9QpW2yZr7VbA5cD8eF1gH4jK6mL9N'; v.addr_BEP20 = '0x8a3F5b2C9d1E7f4A6b0C3d5E8f1A2b4C6d8E0f1A'; return { v: v, open: { USDT: '2500' }, docs: [{ dtype: 'جواز سفر', who: 'أحمد', expiry: '2027-01-05' }, { dtype: 'صورة سيلفي', who: 'أحمد', dnote: 'مع الجواز' }] }; }
+      },
+      vf: {
+        secs: { limits: 'core', docs: 'na', cards: 'na', links: 'na' },
+        naNote: { docs: 'حسب القرار الحالي: المحافظ بدون وثائق.', cards: 'لا توجد بطاقات لهذه المحفظة في النظام.', links: 'المحفظة لا تُربط بحسابات أخرى.' },
+        curOpts: ['EGP'], curDef: ['EGP'], curFixed: 'المحافظ المصرية بالجنيه فقط، وتُحسب ضمن «صندوق الجنيه».', limCur: 'EGP',
+        presets: [['both', 'd', 60000, 'cal'], ['both', 'm', 200000, 'cal']],
+        ident: function () { return [{ fields: [F('no', 'رقم المحفظة', { req: 1, en: 1, copy: 1, rx: 'egPhone', ph: '010…' }), F('line', 'اسم صاحب الخط', { req: 1, copy: 1 })] }]; },
+        docs: function () { return []; },
+        sample: function () { return { v: { name: 'محفظة زكي', owner: 'زكي', status: 'نشط', no: '01155566778', line: 'زكي محمود المدني' }, open: { EGP: '20000' } }; }
+      },
+      ip: {
+        enableable: ['docs'],
+        secs: { limits: 'core', docs: 'na', cards: 'na', links: 'na' },
+        naNote: { docs: 'حسب القرار الحالي: المحافظ بدون وثائق.', cards: 'إنستاباي تطبيق تحويل بدون بطاقات خاصة به.', links: 'الحسابات البنكية المرتبطة تُسجَّل داخل «بيانات الجهة».' },
+        curOpts: ['EGP'], curDef: ['EGP'], curFixed: 'إنستاباي بالجنيه فقط، وتُحسب ضمن «صندوق الجنيه».', limCur: 'EGP',
+        presets: [['out', 'd', 120000, 'cal'], ['out', 'm', 400000, 'cal']],
+        ident: function (v, curs, p, s) {
+          var g = [{ fields: [F('ipa', 'عنوان إنستاباي', { req: 1, en: 1, copy: 1, rx: 'ipa', ph: 'name@instapay' }), F('phone', 'رقم الجوال المربوط', { req: 1, en: 1, copy: 1, rx: 'egPhone' })] }];
+          s.ib.forEach(function (n, i) {
+            g.push({ title: 'الحساب البنكي المربوط ' + (i + 1), boxed: 1, rmId: s.ib.length > 1 ? n : 0, fields: [F('ibBank_' + n, 'اسم البنك', { req: 1, ph: 'مثال: البنك الأهلي المصري' }), F('ibHolder_' + n, 'اسم صاحب الحساب', { req: 1, copy: 1 }), F('ibAcc_' + n, 'رقم الحساب', { req: 1, en: 1, copy: 1, rx: 'digits' }), F('ibIban_' + n, 'IBAN', { req: 1, en: 1, copy: 1, rx: 'egIban', wide: 1 })] });
+          });
+          return g;
+        },
+        addGroup: 'ربط حساب بنكي آخر',
+        docs: function () { return []; },
+        sample: function () { return { v: { name: 'إنستاباي 2', owner: 'هبة', status: 'نشط', ipa: 'heba.madina2@instapay', phone: '01155566778', ibBank_1: 'البنك الأهلي المصري', ibHolder_1: 'هبة خالد المدني', ibAcc_1: '1203040599887', ibIban_1: 'EG380003000412030405998870123' }, open: { EGP: '15000' } }; }
+      },
+      plw: {
+        enableable: ['docs'],
+        secs: { limits: 'core', docs: 'na', cards: 'na', links: 'na' },
+        naNote: { docs: 'حسب القرار الحالي: المحافظ بدون وثائق.', cards: 'لا توجد بطاقات لهذه المحفظة في النظام.', links: 'المحفظة لا تُربط بحسابات أخرى.' },
+        curOpts: ['ILS', 'USD'], curDef: ['ILS', 'USD'], limCur: 'ILS', presets: [], defLim: 'unknown',
+        ident: function () { return [{ fields: [F('no', 'رقم المحفظة', { req: 1, en: 1, copy: 1, rx: 'psPhone', ph: '059…' }), F('holder', 'اسم صاحب الحساب', { req: 1, copy: 1 })] }]; },
+        docs: function () { return []; },
+        sample: function () { return { v: { name: 'محفظة كرم', owner: 'كرم', status: 'نشط', no: '0569112233', holder: 'كرم سالم المدني' }, open: { ILS: '4000', USD: '300' } }; }
+      }
+    };
+    Object.keys(TPL).forEach(function (k) { TPL[k].mergeBasic = true; TPL[k].statusOpts = ['نشط', 'مقيّد', 'مجمّد', 'مغلق']; if (!TPL[k].docsNa) { TPL[k].secs.docs = 'opt'; if (TPL[k].naNote) delete TPL[k].naNote.docs; } TPL[k].enableable = (TPL[k].enableable || []).filter(function (x) { return x !== 'docs'; }); });
+
+    var basicFor = function (t) { return [F('name', 'اسم الحساب في النظام', { req: 1, ph: 'مثال: محفظة أحمد', help: 'يظهر في القوائم والتبويبات وكشف الحساب' }), ch('owner', 'المسؤول عنه في المكتب', OWN, { req: 1, help: (t && t.ownerHelp) || '' }), t && t.statusOpts ? ch('status', 'حالة الحساب', t.statusOpts, { req: 1 }) : ch('status', 'حالة الحساب', ['نشط', 'قيد التفعيل', 'قيد التوثيق'], { req: 1, help: 'الحساب «قيد التفعيل» لا يظهر في الحوالات حتى يصبح نشطاً' })]; };
+    var BKEYS = { name: 1, owner: 1, status: 1 };
+    var OPS = [F('note', 'ملاحظات داخلية', { t: 'area', wide: 1, ph: 'لا تظهر خارج المكتب' })];
+    var SECS = [['basic', 'البيانات الأساسية', 'اسم الحساب وحالته والمسؤول عنه'], ['curs', 'العملات والأرصدة', 'العملات المتاحة والرصيد الافتتاحي لكل عملة'], ['ident', 'بيانات الجهة', 'المعرّفات الخاصة بهذه الجهة، وهي نفسها التي تظهر في صفحة الحساب مع أزرار النسخ'], ['limits', 'الحدود (الليميت)', 'حدود الدخول والخروج وفتراتها وطريقة احتسابها'], ['docs', 'الوثائق والتوثيق', 'الوثائق المطلوبة لهذه الجهة مع تواريخ الإصدار والانتهاء'], ['cards', 'البطاقات', 'البطاقات الصادرة من هذا الحساب'], ['ops', 'الملاحظات', 'ملاحظات داخلية لا تظهر خارج المكتب']];
+    var SECN = {}; SECS.forEach(function (s) { SECN[s[0]] = s[1]; });
+    var MERGED = ['ident', 'بيانات الحساب', 'اسم الحساب وحالته والمسؤول عنه، مع بيانات الجهة التي تظهر في صفحة الحساب ومعها أزرار النسخ'];
+    var LVL = { core: ['أساسي', 'pill info'], opt: ['اختياري', 'pill neutral'], na: ['لا ينطبق', 'pill neutral'] };
+
+    // ---- الجهة المختارة
+    var base = BASES.filter(function (b) { return b[0] === st.cBase; })[0] || BASES[1];
+    var prov = st.prov === 'custom' ? { id: 'custom', name: String(st.cName || '').trim() || 'جهة أخرى', ini: (String(st.cName || '').trim().charAt(0) || '+').toUpperCase(), cat: st.cCat || 'pay', tpl: base[2], custom: true } : PROVS.filter(function (p) { return p.id === st.prov; })[0];
+    var T = prov ? TPL[prov.tpl] : null;
+    if (T && T.noteHint) OPS[0].ph = T.noteHint;
+    var lvl = function (id) {
+      if (id === 'basic' && T.mergeBasic) return 'hide';
+      if (id === 'curs') return T.secs.curs || 'core';
+      if (id === 'basic' || id === 'ident') return 'core';
+      if (id === 'ops') return 'opt';
+      if (id === 'links') return 'hide';
+      var l = T.secs[id];
+      if (l === 'na' && (T.enableable || []).indexOf(id) >= 0 && (st.secOn || {})[id]) return 'opt';
+      return l;
+    };
+    var curOpts = prov ? (prov.curOpts || T.curOpts) : [];
+    var v = st.v;
+
+    // ---- اختيار الجهة: تجهيز النموذج بقيم القالب
+    var initFor = function (pid, b) {
+      var p = pid === 'custom' ? { tpl: (BASES.filter(function (x) { return x[0] === (b || st.cBase); })[0] || BASES[1])[2] } : PROVS.filter(function (x) { return x.id === pid; })[0];
+      var t = TPL[p.tpl], co = p.curOpts || t.curOpts, cd = t.secs.curs === 'opt' || t.secs.curs === 'na' ? [] : t.curDef.filter(function (c) { return co.indexOf(c) >= 0; });
+      if (!cd.length && t.secs.curs !== 'opt' && t.secs.curs !== 'na') cd = [co[0]];
+      var n = 0;
+      return { prov: pid, sec: t.mergeBasic ? 'ident' : 'basic', v: p.swift ? { status: 'نشط', swift: p.swift } : { status: 'نشط' }, curs: cd, open: {}, openD: {}, lims: (p.presets || t.presets).map(function (r) { n += 1; return { id: n, dir: r[0], per: r[1], max: r[2] == null ? '' : String(r[2]), unk: r[2] == null, cur: p.limCur || t.limCur, mode: r[3] }; }), limMode: t.defLim || 'has', limCalc: ((p.presets || t.presets)[0] || [])[3] || 'cal', weekStart: t.weekStart || 'sat', thr: 80, dd: {}, xdocs: [], secOn: {}, cards: [], links: [], ib: [1], seq: 10, saved: false };
+    };
+
+    // ---- عرض حقل + التحقق منه
+    var issues = [], warns = [];
+    var setV = function (k, x) { var o = Object.assign({}, self.state.v); o[k] = x; set({ v: o }); };
+    var rf = function (f, sec, active) {
+      var raw = v[f.k], val = f.multi ? (raw || []) : (raw == null ? '' : String(raw)), s = f.multi ? '' : val.trim();
+      var empty = f.multi ? !val.length : !s, err = '', warn = '';
+      if (!empty && f.rx && !new RegExp(RX[f.rx][0]).test(s)) err = RX[f.rx][1];
+      if (!empty && !err && EXIST[s]) warn = 'هذا الرقم مسجّل مسبقاً في «' + EXIST[s] + '». تأكد قبل المتابعة.';
+      if (active && f.req && empty) issues.push({ sec: sec, label: 'حقل «' + f.label + '» مطلوب' });
+      if (active && err) issues.push({ sec: sec, label: f.label + ': ' + err });
+      return {
+        k: f.k, label: f.label, req: !!f.req, opt: !f.req, wcls: 'fw' + (f.wide ? ' wide' : ''),
+        isText: f.t === 'text', isDate: f.t === 'date', isArea: f.t === 'area', isChips: f.t === 'chips',
+        val: f.multi ? '' : val, ph: f.ph || '', inCls: 'inp' + (f.en ? ' en' : ''),
+        on: function (e) { setV(f.k, e.target.value); },
+        chips: f.t === 'chips' ? f.opts.map(function (o) { var on = f.multi ? val.indexOf(o) >= 0 : val === o; return { label: o, cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { setV(f.k, f.multi ? (on ? val.filter(function (x) { return x !== o; }) : val.concat([o])) : (on && !f.req ? '' : o)); } }; }) : [],
+        help: f.help || '', hasHelp: !!f.help && !err, err: err, hasErr: !!err, warn: warn, hasWarn: !!warn,
+        copy: !!f.copy, filled: !empty, shown: f.multi ? val.join('، ') : s, en: !!f.en
+      };
+    };
+    var buildGroups = function (sec, defs, active) {
+      return defs.map(function (g) {
+        return { title: g.title || '', hasTitle: !!g.title, help: g.help || '', hasHelp: !!g.help, cls: 'fgrp' + (g.boxed ? ' boxed' : ''),
+          removable: !!g.rmId, remove: function () { var o = Object.assign({}, self.state.v); Object.keys(o).forEach(function (k) { if (/_(\d+)$/.test(k) && k.split('_').pop() === String(g.rmId)) delete o[k]; }); set({ ib: self.state.ib.filter(function (x) { return x !== g.rmId; }), v: o }); },
+          fields: g.fields.map(function (f) { return rf(f, sec, active); }) };
+      });
+    };
+
+    var R = {};
+    if (prov) {
+      var G = {
+        basic: T.mergeBasic ? [] : buildGroups('basic', [{ fields: basicFor(T) }], true),
+        ident: buildGroups('ident', (function () { var g = T.ident(v, st.curs, prov, st); if (!T.mergeBasic) return g; return [{ fields: basicFor(T).concat(g[0].fields) }].concat(g.slice(1)); })(), true),
+        ops: buildGroups('ops', [{ fields: OPS }], true)
+      };
+      // العملات
+      if (!st.curs.length && lvl('curs') === 'core') issues.push({ sec: 'curs', label: 'اختر عملة واحدة على الأقل' });
+      var curRows = st.curs.map(function (c) {
+        var raw = st.open[c] == null ? '' : st.open[c], x = num(raw), bad = String(raw).trim() !== '' && x === null;
+        if (bad) issues.push({ sec: 'curs', label: 'الرصيد الافتتاحي ' + c + ' ليس رقماً' });
+        return { cur: c, name: prov.tpl === 'cardapp' && c === 'USDT' ? 'للعلم فقط · لا يُحسب ضمن خزنة USDT' : CN[c], val: raw, aria: 'الرصيد الافتتاحي ' + c, err: 'اكتب رقماً فقط', hasErr: bad, date: st.openD[c] || TODAY,
+          on: function (e) { var o = Object.assign({}, self.state.open); o[c] = e.target.value; set({ open: o }); },
+          onDate: function (e) { var o = Object.assign({}, self.state.openD); o[c] = e.target.value; set({ openD: o }); } };
+      });
+      // الحدود
+      var PN = { d: 'يومي', w: 'أسبوعي', m: 'شهري' }, KN = { out: 'الخروج فقط', both: 'الدخول والخروج' }, KP = KN;
+      var WSN = { sat: 'السبت', sun: 'الأحد', mon: 'الاثنين' }, CALC = st.limCalc || 'cal', WS = st.weekStart || 'sat';
+      var RST = { cal: { d: 'يتجدد منتصف الليل', w: 'يتجدد يوم ' + WSN[WS], m: 'يتجدد أول الشهر' }, roll: { d: 'آخر 24 ساعة', w: 'آخر 7 أيام', m: 'آخر 30 يوماً' } };
+      var limLvl = lvl('limits');
+      var setLim = function (id, p) { set({ lims: self.state.lims.map(function (l) { return l.id === id ? Object.assign({}, l, p) : l; }) }); };
+      var chipSet = function (opts, cur, go) { return opts.map(function (o) { var on = o[0] === cur; return { label: o[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { go(o[0]); } }; }); };
+      var LM = st.limMode || 'has';
+      var limRows = LM !== 'has' ? [] : st.lims.map(function (l) {
+        var lc = st.curs.indexOf(l.cur) >= 0 ? l.cur : (st.curs[0] || l.cur), x = num(l.max), bad = !l.unk && !(x > 0);
+        if (bad && limLvl !== 'na') issues.push({ sec: 'limits', label: 'حد «' + (KN[l.dir] || KN.out) + ' · ' + PN[l.per] + '» بلا قيمة صحيحة' });
+        return { title: (KN[l.dir] || KN.out) + ' · ' + PN[l.per], reset: RST[CALC][l.per], max: l.max, hasErr: bad, known: !l.unk, unkCls: 'chipf' + (l.unk ? ' on' : ''), unkP: l.unk ? 'true' : 'false', toggleUnk: function () { setLim(l.id, { unk: !l.unk }); }, err: 'اكتب قيمة أكبر من صفر',
+          onMax: function (e) { setLim(l.id, { max: e.target.value }); }, remove: function () { set({ lims: self.state.lims.filter(function (y) { return y.id !== l.id; }) }); },
+          dirs: chipSet([['both', 'الدخول والخروج'], ['out', 'الخروج فقط']], l.dir, function (k) { setLim(l.id, { dir: k }); }),
+          pers: chipSet([['d', 'يومي'], ['w', 'أسبوعي'], ['m', 'شهري']], l.per, function (k) { setLim(l.id, { per: k }); }),
+          curs: chipSet(st.curs.map(function (c) { return [c, c]; }), lc, function (k) { setLim(l.id, { cur: k }); }),
+          prev: { title: (KP[l.dir] || KP.out) + ' · ' + PN[l.per], reset: RST[CALC][l.per], max: (x > 0 ? x.toLocaleString('en-US') : '—') + ' ' + lc, mark: 'inset-inline-start:' + st.thr + '%', known: !l.unk, unk: !!l.unk, usedTxt: l.unk ? 'غير معرّف' : '0 / ' + (x > 0 ? x.toLocaleString('en-US') : '—') + ' ' + lc, leftTxt: l.unk ? '' : 'المتبقي ' + (x > 0 ? x.toLocaleString('en-US') : '—') + ' ' + lc, hasEff: false, eff: '' } };
+      });
+      if (limLvl === 'core' && LM === 'has' && !st.lims.length) issues.push({ sec: 'limits', label: 'أضف حداً واحداً على الأقل، أو اختر «غير معرّف» أو «لا يوجد ليميت»' });
+      var lcName = prov.name + ' – ' + (String(v.name || '').trim() || 'الحساب الجديد');
+      var lnone = !limRows.length, lunk = LM === 'unknown';
+      var lcard = { name: lcName, type: CATN[prov.cat], lims: limRows.map(function (r) { return r.prev; }), none: lnone, noneText: lunk ? 'الليميت غير معروف بعد' : 'لا يوجد ليميت لهذا الحساب',
+        state: lunk ? 'غير معرّف' : lnone ? 'بدون ليميت' : 'ضمن الحد', statePill: lunk ? 'pill neutral' : lnone ? 'pill neutral' : 'pill ok',
+        border: 'border-top-color:' + (lunk ? '#E1E6EE' : lnone ? '#E1E6EE' : '#16B8A6') };
+      // الوثائق
+      var docLvl = lvl('docs');
+      var slots = st.xdocs.map(function (k) { return { k: k }; });
+      var setDD = function (k, p) { var o = Object.assign({}, self.state.dd); o[k] = Object.assign({}, o[k] || {}, p); set({ dd: o }); };
+      var USED = { 'جواز سفر أحمد': ['كاست – حساب المكتب', 'PayPal – حساب المكتب', 'Kraken', 'Binance – الحساب الرئيسي'], 'هوية زكي': ['PayPal – حساب زكي'], 'هوية كرم': ['Bybit'] };
+      var DTYPES = ['جواز سفر', 'هوية', 'إقامة', 'رخصة قيادة', 'إثبات عنوان', 'كشف حساب', 'صورة سيلفي', 'سجل تجاري', 'أخرى'];
+      var docName = function (d) { return [d.dtype, String(d.who || '').trim()].filter(Boolean).join(' '); };
+      var docState = function (x) {
+        var d = st.dd[x.k] || {};
+        if (!d.dtype || !String(d.who || '').trim()) return ['غير مكتملة', 'pill warn', 'empty'];
+        if (d.expiry) { var n = days(d.expiry); if (n < 0) return ['منتهية', 'pill bad', 'exp']; if (n <= 60) return ['تنتهي خلال ' + n + ' يوماً', 'pill warn', 'soon']; }
+        return d.file ? ['مع ملف', 'pill ok', 'ok'] : ['مسجّلة', 'pill info', 'ok'];
+      };
+      var docRows = slots.map(function (x, i) {
+        var d = st.dd[x.k] || {}, ds = docState(x), nm = ds[2] === 'empty' ? '' : docName(d), used = USED[nm] || [];
+        if (docLvl !== 'na' && !d.dtype) issues.push({ sec: 'docs', label: 'وثيقة ' + (i + 1) + ': اختر نوع الوثيقة' });
+        if (docLvl !== 'na' && !String(d.who || '').trim()) issues.push({ sec: 'docs', label: 'وثيقة ' + (i + 1) + ': اكتب باسم مَن' });
+        if (docLvl !== 'na' && (ds[2] === 'exp' || ds[2] === 'soon')) warns.push({ t: docName(d) + ': ' + ds[0] });
+        return { n: String(i + 1), dtype: d.dtype || '', typeOpts: DTYPES, who: d.who || '', expiry: d.expiry || '', text: nm, hasText: !!nm,
+          onType: function (e) { setDD(x.k, { dtype: e.target.value }); }, onWho: function (e) { setDD(x.k, { who: e.target.value }); }, onExpiry: function (e) { setDD(x.k, { expiry: e.target.value }); }, st: ds[0], stPill: ds[1], shared: used.length ? 'مستخدمة أيضاً في: ' + used.join('، ') : '', hasShared: used.length > 0,
+          file: d.file || '', hasFile: !!d.file, noFile: !d.file, dnote: d.dnote || '', showNoteIn: !!d.showNote || !!d.dnote, canAddNote: !d.showNote && !d.dnote,
+          addNote: function () { setDD(x.k, { showNote: true }); }, onNote: function (e) { setDD(x.k, { dnote: e.target.value }); }, onLabel: function (e) { setDD(x.k, { label: e.target.value }); },
+          upload: function () { setDD(x.k, { file: ((nm || d.dtype || 'وثيقة').replace(/\s+/g, '_')) + '.pdf' }); }, clear: function () { setDD(x.k, { file: '' }); },
+          remove: function () { var o = Object.assign({}, self.state.dd); delete o[x.k]; set({ dd: o, xdocs: self.state.xdocs.filter(function (y) { return y !== x.k; }) }); } };
+      });
+      var docMiss = [];
+      // البطاقات
+      var cardLvl = lvl('cards');
+      var setCard = function (id, p) { set({ cards: self.state.cards.map(function (c) { return c.id === id ? Object.assign({}, c, p) : c; }) }); };
+      var cardOk = function (c) {
+        var e4 = /^\d{4}$/.test(String(c.last4 || '').trim()) ? '' : 'أربعة أرقام فقط', m = /^(0[1-9]|1[0-2])\/(\d{2})$/.exec(String(c.exp || '').trim()), eE = '';
+        if (!m) eE = 'بصيغة MM/YY'; else if (Number(m[2]) * 100 + Number(m[1]) < 2611) eE = 'البطاقة منتهية';
+        return [e4, eE];
+      };
+      var cardRows = st.cards.map(function (c) {
+        var e = cardOk(c);
+        if (cardLvl !== 'na') { if (e[0]) issues.push({ sec: 'cards', label: 'بطاقة: آخر 4 أرقام ' + e[0] }); if (e[1]) issues.push({ sec: 'cards', label: 'بطاقة: الانتهاء ' + e[1] }); }
+        return { title: (c.net || '') + ' •• ' + (String(c.last4 || '').trim() || '····'), status: c.status, stPill: c.status === 'فعّالة' ? 'pill ok' : c.status === 'مجمّدة' ? 'pill warn' : 'pill neutral',
+          holder: c.holder || '', last4: c.last4 || '', exp: c.exp || '', hasErr4: !!(c.last4 && e[0]), err4: e[0], hasErrE: !!(c.exp && e[1]), errE: e[1],
+          onHolder: function (ev) { setCard(c.id, { holder: ev.target.value }); }, onLast4: function (ev) { setCard(c.id, { last4: ev.target.value }); }, onExp: function (ev) { setCard(c.id, { exp: ev.target.value }); },
+          remove: function () { set({ cards: self.state.cards.filter(function (x) { return x.id !== c.id; }) }); },
+          kinds: chipSet([['افتراضية', 'افتراضية'], ['فعلية', 'فعلية']], c.kind, function (k) { setCard(c.id, { kind: k }); }),
+          nets: chipSet([['Visa', 'Visa'], ['Mastercard', 'Mastercard']], c.net, function (k) { setCard(c.id, { net: k }); }),
+          sts: chipSet([['فعّالة', 'فعّالة'], ['مجمّدة', 'مجمّدة'], ['ملغاة', 'ملغاة']], c.status, function (k) { setCard(c.id, { status: k }); }),
+          meta: [c.kind, c.exp ? 'ينتهي ' + c.exp : '', c.holder].filter(Boolean).join(' · ') };
+      });
+      if (cardLvl === 'core' && !st.cards.length) warns.push({ t: 'لا توجد بطاقات مسجلة لهذا الحساب بعد.' });
+      // الربط
+      var linkChips = REG.filter(function (r) { return r.indexOf(prov.name + ' ') !== 0; }).map(function (r) { var on = st.links.indexOf(r) >= 0; return { label: r, cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set({ links: on ? self.state.links.filter(function (x) { return x !== r; }) : self.state.links.concat([r]) }); } }; });
+
+      // ---- حالة الأقسام والتنقل
+      var has = { cards: st.cards.length > 0, links: st.links.length > 0, docs: slots.length > 0, limits: LM !== 'has' || st.lims.length > 0, ops: OPS.some(function (f) { var x = v[f.k]; return Array.isArray(x) ? x.length : !!x; }) };
+      if (T.mergeBasic) SECN.ident = MERGED[1];
+      var order = T.mergeBasic ? ['ident', 'curs', 'limits', 'docs', 'cards', 'ops'] : SECS.map(function (s) { return s[0]; });
+      var visible = order.filter(function (id) { var l = lvl(id); return l !== 'na' && l !== 'hide'; });
+      var cnt = function (id) { return issues.filter(function (i) { return i.sec === id; }).length; };
+      var cur = st.sec === 'basic' && T.mergeBasic ? 'ident' : st.sec, curL = lvl(cur), idx = visible.indexOf(cur);
+      var navGroups = [['core', 'الأقسام الأساسية'], ['opt', 'أقسام اختيارية'], ['na', 'لا تنطبق على هذه الجهة']].map(function (g) {
+        return { title: g[1], items: order.filter(function (id) { return lvl(id) === g[0]; }).map(function (id) {
+          var n = cnt(id), on = id === cur, na = g[0] === 'na', dm = false;
+          return { label: SECN[id], cls: 'sni' + (on ? ' on' : '') + (na ? ' na' : ''), cur: on ? 'step' : 'false', go: function () { set({ sec: id }); },
+            badge: na ? '' : n ? String(n) : dm ? '!' : (g[0] === 'core' || has[id]) ? '✓' : '—', bcls: 'bd ' + (na ? 'none' : (n || dm) ? 'warn' : (g[0] === 'core' || has[id]) ? 'ok' : 'neutral') };
+        }) };
+      }).filter(function (g) { return g.items.length; });
+      var secMeta = T.mergeBasic && cur === 'ident' ? MERGED : SECS.filter(function (s) { return s[0] === cur; })[0];
+      var S = { title: secMeta[1], desc: secMeta[2], lvl: LVL[curL][0], pill: LVL[curL][1], isNa: curL === 'na', naNote: (T.naNote || {})[cur] || 'هذا القسم لا ينطبق على هذه الجهة.', canEnable: curL === 'na' && (T.enableable || []).indexOf(cur) >= 0, canDisable: T.secs[cur] === 'na' && !!(st.secOn || {})[cur],
+        isForm: curL !== 'na' && (cur === 'basic' || cur === 'ident' || cur === 'ops'), groups: G[cur] || [],
+        isCurs: cur === 'curs' && curL !== 'na', isLimits: cur === 'limits' && curL !== 'na', isDocs: cur === 'docs' && curL !== 'na', isCards: cur === 'cards' && curL !== 'na', isLinks: cur === 'links' && curL !== 'na',
+        canAddGroup: cur === 'ident' && !!T.addGroup, addGroupLabel: '+ ' + (T.addGroup || ''), addGroup: function () { var n = self.state.seq + 1; set({ ib: self.state.ib.concat([n]), seq: n }); } };
+      var prevId = idx > 0 ? visible[idx - 1] : (idx < 0 ? visible[visible.length - 1] : '');
+      var nextId = idx >= 0 && idx < visible.length - 1 ? visible[idx + 1] : (idx < 0 ? visible.filter(function (id) { return order.indexOf(id) > order.indexOf(cur); })[0] : '');
+
+      // ---- معاينة البروفايل (من نفس البيانات)
+      var pFields = [{ label: 'الجهة', shown: prov.name, en: /^[A-Za-z]/.test(prov.name), copy: false, filled: true }].concat([].concat.apply([], G.ident.map(function (g) { return g.fields.map(function (f) { return Object.assign({}, f, { label: (g.hasTitle && /\d$/.test(g.title) ? g.title + ' · ' : '') + f.label }); }); }))).filter(function (f) { return f.filled && !BKEYS[f.k]; })
+        .concat([{ label: 'المسؤول عنه في المكتب', shown: v.owner || '—', copy: false, filled: true }]);
+      var copyKey = function (k) { return 'c:' + k; };
+      var doCopy = function (key, text) { try { if (navigator.clipboard) navigator.clipboard.writeText(text); } catch (e) {} self.setState({ copied: key }); setTimeout(function () { if (self.state.copied === key) self.setState({ copied: '' }); }, 1600); };
+      var allTxt = pFields.filter(function (f) { return f.copy; }).map(function (f) { return f.label + ': ' + f.shown; }).join('\n');
+      var P = { title: lcName, sub: CATN[prov.cat] + ' · المسؤول: ' + (v.owner || '—') + ' · ' + st.curs.join(' · '),
+        status: v.status || 'نشط', stPill: !v.status || v.status === 'نشط' ? 'pill ok' : v.status === 'مجمّد' ? 'pill bad' : v.status === 'مغلق' ? 'pill neutral' : 'pill warn',
+        hasDocBadge: docLvl !== 'na', docBadge: slots.length ? (slots.length === 1 ? 'وثيقة واحدة' : slots.length === 2 ? 'وثيقتان' : slots.length + ' وثائق') : 'لا توجد وثائق', docPill: slots.length ? 'pill info' : 'pill neutral',
+        fields: pFields.map(function (f, i) { var done = st.copied === copyKey(i); return { label: f.label, val: f.shown, vcls: f.en ? 'en' : '', share: !!f.copy, bcls: 'cpy' + (done ? ' ok2' : ''), btn: done ? '✓ نُسخ' : 'نسخ', aria: 'نسخ ' + f.label, copy: function () { doCopy(copyKey(i), f.shown); } }; }),
+        curs: st.curs.map(function (c) { return { cur: c, bal: fmt(num(st.open[c]) || 0) + ' ' + c, date: fd(st.openD[c] || TODAY) }; }),
+        showLim: limLvl !== 'na', showDocs: docLvl !== 'na' && slots.length > 0, docs: slots.map(function (x) { var ds = docState(x), d = st.dd[x.k] || {}; return { label: (ds[2] === 'empty' ? 'وثيقة غير مكتملة' : 'تم استخدام ' + docName(d)) + (d.dnote ? ' · ' + d.dnote : ''), st: ds[0], stPill: ds[1] }; }),
+        showCards: cardLvl !== 'na' && cardRows.length > 0, cards: cardRows,
+        showLinks: false, links: st.links.map(function (l) { return { name: l }; }),
+        showOps: has.ops, ops: OPS.map(function (f) { var x = v[f.k]; return { label: f.label, val: Array.isArray(x) ? x.join('، ') : (f.t === 'date' ? fd(x) : x) }; }).filter(function (o) { return o.val; }) };
+      var appears = ['الحسابات والخزائن'].concat(prov.page ? [prov.page[1]] : []).concat(limLvl !== 'na' && LM === 'has' && st.lims.length ? ['حدود الحسابات'] : []).concat(docLvl !== 'na' && st.xdocs.length ? ['قسم الوثائق في صفحة الحساب'] : []).concat(cardLvl !== 'na' && st.cards.length ? ['البطاقات والربط'] : []);
+      var uniq = appears.filter(function (x, i) { return appears.indexOf(x) === i; });
+      var copyDone = st.copied === 'c:*';
+      R = { G: G, S: S, curRows: curRows, limRows: limRows, lcard: lcard, docRows: docRows, cardRows: cardRows, linkChips: linkChips, navGroups: navGroups, prevId: prevId, nextId: nextId, P: P, uniq: uniq, copyDone: copyDone, allTxt: allTxt, doCopy: doCopy };
+    }
+
+    // ---- الخطوة 1
+    var q = String(st.q || '').trim().toLowerCase();
+    var shown = PROVS.filter(function (p) { return (st.cat === 'all' || p.cat === st.cat) && (!q || p.name.toLowerCase().indexOf(q) >= 0); });
+    var SHORT = { curs: 'عملات', ident: 'بيانات', limits: 'حدود', docs: 'وثائق', cards: 'بطاقات', links: 'ربط' };
+    var pick = function (pid) { if (pid === st.prov) return; set(initFor(pid)); };
+    var provCard = function (p) { var t = TPL[p.tpl], on = st.prov === p.id; return { isNew: !!p.isNew, name: p.name, ini: p.ini, av: AV[p.cat], cls: 'pc' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { pick(p.id); }, sub: ['curs', 'ident', 'limits', 'docs', 'cards'].filter(function (id) { var l = id === 'ident' ? 'core' : id === 'curs' ? (t.secs.curs || 'core') : t.secs[id]; return l === 'core'; }).map(function (id) { return SHORT[id]; }).join(' · ') }; };
+    var CURALL = ['ILS', 'USD', 'JOD', 'EGP', 'EUR', 'GBP', 'USDT'];
+    var CURDEF = { bank: ['ILS', 'USD'], pay: ['USD'], cardapp: ['USD'], crypto: ['USDT'], plw: ['ILS', 'USD'] };
+    var pickNew = function (cat) { var b = DEFBASE[cat] || 'pay'; set({ pm: { cat: cat, base: b, name: '', curs: (cat === 'egw' ? ['EGP'] : CURDEF[b]).slice() }, pmErr: '' }); };
+    var provGroups = CATS.slice(1).filter(function (c) { return st.cat === 'all' || st.cat === c[0]; }).map(function (c) {
+      var on = st.prov === 'custom' && st.cCat === c[0];
+      var list = shown.filter(function (p) { return p.cat === c[0]; }).map(provCard);
+      if (!q) list.push({ name: '+ جهة جديدة', ini: '+', av: AV.custom, cls: 'pc add', pressed: 'false', sub: 'تُضاف تحت ' + c[1], go: function () { pickNew(c[0]); } });
+      return { name: c[1], provs: list };
+    }).filter(function (g) { return g.provs.length; });
+    var tplSecs = prov ? SECS.filter(function (s) { return s[0] !== 'basic' || !T.mergeBasic; }).sort(function (x, y) { return T.mergeBasic ? (x[0] === 'ident' ? -1 : y[0] === 'ident' ? 1 : 0) : 0; }).map(function (s) { var l = lvl(s[0]); return { lv: l, plus: l === 'na' && (T.enableable || []).indexOf(s[0]) >= 0, label: s[0] === 'ident' && T.mergeBasic ? MERGED[1] : s[1], lvl: LVL[l][0], pill: LVL[l][1], note: l === 'na' ? ((T.naNote || {})[s[0]] || '') : s[0] === 'docs' ? T.docs(v).filter(function (d) { return d.req; }).map(function (d) { return d.label; }).join('، ') : s[0] === 'curs' ? curOpts.join(' · ') : '', hasNote: l === 'na' ? !!(T.naNote || {})[s[0]] : (s[0] === 'docs' || s[0] === 'curs') }; }) : [];
+    var toS2 = function () { if (!prov) return set({ err: 'اختر الجهة أولاً.' }); if (prov.custom && !String(st.cName || '').trim()) return set({ err: 'اكتب اسم الجهة الجديدة.' }); set({ step: 2 }); };
+
+    var step = st.step;
+    var goStep = function (n) { if (n === 1) return set({ step: 1 }); if (!prov) return; if (n === 2) return toS2(); if (n === 3) set({ step: 3 }); };
+    var steps = [[1, 'المجموعة والجهة'], [2, 'البيانات'], [3, 'المراجعة والحفظ']].map(function (s, i) { var on = s[0] === step, done = s[0] < step || st.saved, lock = !prov && s[0] > 1; return { n: done && !on ? '✓' : s[0], label: s[1], line: i > 0, cls: 'stp' + (on ? ' on' : done ? ' done' : '') + (lock ? ' lockd' : ''), cur: on ? 'step' : 'false', go: function () { if (!st.saved) goStep(s[0]); } }; });
+
+    var PM = st.pm || {};
+    var setPM = function (o) { set({ pm: Object.assign({}, self.state.pm, o), pmErr: '' }); };
+    var pmChips = function (opts, cur, multi, key) { return opts.map(function (o) { var on = multi ? (cur || []).indexOf(o[0]) >= 0 : cur === o[0]; return { label: o[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { var x = {}; x[key] = multi ? (on ? cur.filter(function (y) { return y !== o[0]; }) : cur.concat([o[0]])) : o[0]; setPM(x); } }; }); };
+    var pmVals = {
+      isPM: !!st.pm, pm: PM, pmErr: st.pmErr || '', pmHasErr: !!st.pmErr,
+      pmClose: function () { set({ pm: null, pmErr: '' }); },
+      pmName: function (e) { setPM({ name: e.target.value }); },
+      pmCats: CATS.slice(1).map(function (c) { var on = PM.cat === c[0]; return { label: c[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { if (on) return; var b = DEFBASE[c[0]] || 'pay'; setPM({ cat: c[0], base: b, curs: (c[0] === 'egw' ? ['EGP'] : CURDEF[b]).slice() }); } }; }),
+      pmCurs: pmChips(CURALL.map(function (c) { return [c, c]; }), PM.curs || [], true, 'curs'),
+      pmSave: function () {
+        var P2 = self.state.pm, nm = String(P2.name || '').trim();
+        if (!nm) return set({ pmErr: 'اكتب اسم الجهة.' });
+        if (PROVS.some(function (x) { return x.name === nm; })) return set({ pmErr: 'توجد جهة بنفس الاسم.' });
+        if (!(P2.curs || []).length) return set({ pmErr: 'اختر عملة واحدة على الأقل.' });
+        var bt = (BASES.filter(function (b) { return b[0] === (DEFBASE[P2.cat] || 'pay'); })[0] || BASES[1])[2];
+        var id = 'np' + ((self.state.newProvs || []).length + 1);
+        var np = { id: id, name: nm, ini: nm.charAt(0).toUpperCase(), cat: P2.cat, tpl: bt, curOpts: P2.curs.slice(), limCur: P2.curs[0], isNew: true };
+        self.setState({ newProvs: (self.state.newProvs || []).concat([np]), pm: null, pmErr: '', cat: 'all', q: '', flash: 'أُضيفت الجهة «' + nm + '» تحت «' + (CATS.filter(function (c) { return c[0] === P2.cat; })[0] || ['', ''])[1] + '». اختر «متابعة» لإضافة أول حساب لها.' });
+        PROVS = PROVS0.concat(self.state.newProvs || []);
+        self.setState(initFor(id));
+      }
+    };
+    var out = {
+      headSub: step === 1 ? 'اختر الجهة من مجموعتها، أو أضف جهة جديدة تحت المجموعة المناسبة' : prov ? prov.name + ' · ' + (step === 2 ? 'النموذج يعرض الأقسام التي تنطبق على هذه الجهة فقط' : 'راجع صفحة الحساب كما ستظهر قبل الحفظ') : '',
+      canDraft: step > 1 && !st.saved, saveDraft: function () { set({ flash: 'حُفظت المسودة. يمكن إكمالها لاحقاً من «الحسابات والخزائن ‹ المسودات».' }); },
+      steps: steps, hasFlash: !!st.flash, flash: st.flash || '', hasErr: !!st.err, err: st.err || '',
+      isS1: step === 1, isS2: step === 2 && !!prov, isS3: step === 3 && !!prov,
+      q: st.q, onQ: function (e) { set({ q: e.target.value }); },
+      catChips: CATS.map(function (c) { var on = st.cat === c[0]; return { label: c[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set({ cat: c[0] }); } }; }),
+      provGroups: provGroups, noProvs: !provGroups.length,
+      hasProv: !!prov, noProv: !prov, isCustom: !!(prov && prov.custom),
+      pv: prov ? { name: prov.name, ini: prov.ini, av: AV[prov.custom ? 'custom' : prov.cat], catName: CATN[prov.cat] + (prov.custom ? ' · جهة جديدة' : ''), sub: ((CATS.filter(function (c) { return c[0] === prov.cat; })[0] || ['', CATN[prov.cat]])[1]) + (prov.custom ? ' · جهة جديدة' : '') + ' · ' + curOpts.join(' ') } : { name: '', ini: '', av: '', sub: '', catName: '' },
+      customName: st.cName, onCustomName: function (e) { set({ cName: e.target.value }); },
+      baseChips: BASES.map(function (b) { var on = st.cBase === b[0]; return { label: b[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set(Object.assign(initFor('custom', b[0]), { cBase: b[0], cCat: st.cCat })); } }; }),
+      customGroup: (CATS.filter(function (c) { return c[0] === st.cCat; })[0] || ['', ''])[1],
+      tplCore: tplSecs.filter(function (t) { return t.lv === 'core'; }).map(function (t, i) { return { n: String(i + 1), label: t.label }; }),
+      tplOpt: tplSecs.filter(function (t) { return t.lv === 'opt'; }), hasTplOpt: tplSecs.some(function (t) { return t.lv === 'opt'; }),
+      tplNa: tplSecs.filter(function (t) { return t.lv === 'na'; }), hasTplNa: tplSecs.some(function (t) { return t.lv === 'na'; }), hasTplPlus: tplSecs.some(function (t) { return t.lv === 'na' && t.plus; }),
+      tplNaTitle: prov ? 'غير مستخدم مع ' + ((CATS.filter(function (c) { return c[0] === prov.cat; })[0] || ['', 'هذه الجهة'])[1]) : '',
+      tplSecs: tplSecs, toS2: toS2, toS1: function () { set({ step: 1 }); },
+      fillSample: function () { if (!prov) return; var s = T.sample(prov); var o = Object.assign({}, s.v); if (prov.custom) o.name = 'حساب ' + prov.name; set({ v: o, open: s.open || {}, curs: self.state.curs.length ? self.state.curs : Object.keys(s.open || {}).filter(function (c) { return curOpts.indexOf(c) >= 0; }), xdocs: (s.docs || []).map(function (d, i) { return 'x' + (i + 1); }), dd: (s.docs || []).reduce(function (o, d, i) { o['x' + (i + 1)] = d; return o; }, {}), seq: 20, cards: s.cards || [], links: s.links || [], ib: [1], lims: s.lims || self.state.lims, limMode: s.lims ? 'has' : (self.state.limMode || 'has'), flash: 'عُبّئ النموذج ببيانات مثال. يمكن تعديل أي حقل.' }); },
+      S: R.S || {}, navGroups: R.navGroups || [],
+      curChips: curOpts.map(function (c) { var on = st.curs.indexOf(c) >= 0, fixed = !!T.curFixed || (curOpts.length === 1 && lvl('curs') !== 'opt'); return { label: c + ' · ' + CN[c], cls: 'chipf' + (fixed ? ' lock' : on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { if (fixed) return; set({ curs: on ? self.state.curs.filter(function (x) { return x !== c; }) : curOpts.filter(function (x) { return x === c || self.state.curs.indexOf(x) >= 0; }) }); } }; }),
+      curFixed: !!(T && (T.curFixed || (curOpts.length === 1 && lvl('curs') !== 'opt'))), curFixedNote: T ? (T.curFixed || 'هذه الجهة تعمل بعملة واحدة: ' + curOpts[0]) : '', curRows: R.curRows || [],
+      limModeChips: [['has', 'للحساب ليميت'], ['unknown', 'غير معرّف'], ['none', 'لا يوجد ليميت']].map(function (o) { var on = (st.limMode || 'has') === o[0]; return { label: o[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set({ limMode: o[0] }); } }; }),
+      hasLimRows: (st.limMode || 'has') === 'has', noLimMsg: st.limMode === 'none', unkLimMsg: st.limMode === 'unknown', limRows: R.limRows || [], lc: R.lcard || {},
+      addLim: function () { var n = self.state.seq + 1; set({ seq: n, lims: self.state.lims.concat([{ id: n, dir: 'both', per: 'd', max: '', cur: (self.state.curs[0] || 'USD') }]) }); },
+      hasPresets: !!(T && (prov.presets || T.presets).length), presetLabel: prov ? 'استخدام القيم المعتادة لـ ' + prov.name : '',
+      applyPresets: function () { var n = self.state.seq; set({ limMode: 'has', lims: (prov.presets || T.presets).map(function (r) { n += 1; return { id: n, dir: r[0], per: r[1], max: r[2] == null ? '' : String(r[2]), unk: r[2] == null, cur: prov.limCur || T.limCur, mode: r[3] }; }), limCalc: ((prov.presets || T.presets)[0] || [])[3] || 'cal', weekStart: T.weekStart || 'sat', seq: n }); },
+      calcChips: [['cal', 'تقويمي'], ['roll', 'متحرك']].map(function (o) { var on = (st.limCalc || 'cal') === o[0]; return { label: o[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set({ limCalc: o[0] }); } }; }),
+      calcHint: (st.limCalc || 'cal') === 'roll' ? 'متحرك: آخر 24 ساعة، آخر 7 أيام، آخر 30 يوماً من لحظة الحركة.' : 'تقويمي: اليومي يتجدد منتصف الليل، والأسبوعي في بداية الأسبوع، والشهري أول الشهر.',
+      showWs: (st.limCalc || 'cal') === 'cal', wsChips: [['sat', 'السبت'], ['sun', 'الأحد'], ['mon', 'الاثنين']].map(function (o) { var on = (st.weekStart || 'sat') === o[0]; return { label: o[1], cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set({ weekStart: o[0] }); } }; }),
+      thrChips: [70, 80, 90].map(function (x) { var on = st.thr === x; return { label: x + '%', cls: 'chipf' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', go: function () { set({ thr: x }); } }; }),
+      docRows: R.docRows || [], noDocs: !st.xdocs.length, addDoc: function () { var n = self.state.seq + 1, k = 'x' + n, o = Object.assign({}, self.state.dd); o[k] = { label: '' }; set({ seq: n, xdocs: self.state.xdocs.concat([k]), dd: o }); },
+      enableSec: function () { var o = Object.assign({}, self.state.secOn || {}); o[self.state.sec] = true; set({ secOn: o }); },
+      disableSec: function () { var k = self.state.sec, o = Object.assign({}, self.state.secOn || {}); delete o[k]; set({ secOn: o, flash: 'أُلغي تفعيل قسم «' + SECN[k] + '» لهذا الحساب.' }); },
+      cardRows: R.cardRows || [], noCards: !st.cards.length, addCard: function () { var n = self.state.seq + 1; set({ seq: n, cards: self.state.cards.concat([{ id: n, kind: 'افتراضية', net: 'Visa', holder: '', last4: '', exp: '', status: 'فعّالة', link: '' }]) }); },
+      linkChips: R.linkChips || [],
+      hasPrev: !!R.prevId, noPrev: !R.prevId, prevLabel: R.prevId ? SECN[R.prevId] : '', goPrev: function () { set({ sec: R.prevId }); },
+      nextLabel: R.nextId ? 'التالي: ' + SECN[R.nextId] : 'المراجعة', goNext: function () { if (R.nextId) set({ sec: R.nextId }); else set({ step: 3 }); },
+      P: R.P || { fields: [], curs: [], docs: [], cards: [], links: [], ops: [] },
+      copyAllCls: 'btn mb' + (R.copyDone ? ' cdone' : ''), copyAllTxt: R.copyDone ? '✓ نُسخت البيانات' : 'نسخ كل البيانات', copyAll: function () { R.doCopy('c:*', R.allTxt); },
+      issues: issues.map(function (i) { return { sec: SECN[i.sec], label: i.label, go: function () { set({ step: 2, sec: i.sec }); } }; }),
+      hasIssues: issues.length > 0, noIssues: !issues.length, issuesHead: issues.length === 1 ? 'بقي حقل واحد يمنع الحفظ' : 'بقيت ' + issues.length + ' نقاط تمنع الحفظ',
+      warns: warns, hasWarns: warns.length > 0, appearsIn: (R.uniq || []).join(' · '),
+      save: function () { if (issues.length) return set({ err: 'لا يمكن الحفظ قبل إكمال ' + (issues.length === 1 ? 'نقطة واحدة' : issues.length + ' نقاط') + ' في القائمة.' }); set({ saved: true }); },
+      backEdit: function () { set({ step: 2 }); },
+      saved: !!st.saved, notSaved: !st.saved,
+      savedLine: prov ? (st.curs.length ? 'أُضيف الحساب بأرصدة افتتاحية ' + st.curs.map(function (c) { return fmt(num(st.open[c]) || 0) + ' ' + c; }).join(' · ') : (lvl('curs') === 'na' ? 'أُضيف الحساب' : 'أُضيف الحساب بدون عملات')) + '، ويظهر الآن في: ' + (R.uniq || []).join(' · ') + '.' : '',
+      auditLine: (st.curs.length ? 'إنشاء الحساب بأرصدة افتتاحية' : 'إنشاء الحساب') + ' · أحمد · ' + fd(TODAY),
+      pageHref: prov && prov.page ? prov.page[0] : 'Accounts.dc.html', pageLabel: prov && prov.page ? 'فتح صفحة ' + prov.page[1] + ' ←' : 'فتح الحسابات والخزائن ←',
+      restart: function () { self.setState(self.fresh()); }
+    };
+    return Object.assign(out, pmVals);
+  }
+}
+</script>
+</body>
+</html>

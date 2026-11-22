@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>PayPal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.acc{background:#16B8A6;border-color:#16B8A6;color:#0B1626}
+.btn.acc:hover{background:#13A595;color:#0B1626}
+.btn svg{width:18px;height:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:14px 16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kpi{padding:20px 24px;display:flex;flex-direction:column;gap:6px}
+.chipf{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-size:13px;font-weight:600;color:#142B4A}
+.f input,.f select{height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;font:inherit;font-size:15px;color:#142B4A;background:#fff;box-sizing:border-box;width:100%}
+.f input:focus,.f select:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.hint{font-size:12px;color:#4A5A70}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#1C3A60;color:#fff}
+.tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:600;color:#3A4A60;background:#fff;border:1px solid #E1E6EE;text-decoration:none;cursor:pointer;font-family:inherit}
+.tab.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.chk{width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.chk.y{background:#DDF5F2;color:#0A5F56}.chk.n{background:#EEF1F5;color:#9FB0C6}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;box-sizing:border-box}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:560px;max-height:100%;overflow:auto;padding:28px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 50px rgba(11,22,38,.25)}
+.mh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.x{width:40px;height:40px;border-radius:10px;border:0;background:#F5F7FA;color:#142B4A;cursor:pointer;font-size:20px;line-height:1}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.note{background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60}
+.bc{padding:20px;display:flex;flex-direction:column;gap:6px;border-radius:20px;background:#fff;border:1px solid #E1E6EE}
+.bc .big{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:28px;line-height:38px;direction:ltr;unicode-bidi:isolate;text-align:end;color:#A3291D}
+.info dt{font-size:12px;color:#4A5A70;margin:0}
+.info dd{margin:0 0 12px;font-size:15px;font-weight:600}
+.ib{width:36px;height:36px;border-radius:9px;border:1px solid #E1E6EE;background:#fff;color:#A3291D;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.ib:hover{background:#FBE7E5}
+.urow{display:grid;grid-template-columns:28px 1fr 120px 130px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #EDF1F5}
+.urow input[type=text]{height:40px;border:1px solid #D3DAE5;border-radius:10px;padding:0 10px;font:inherit;font-family:'IBM Plex Mono',monospace;font-size:14px;width:100%;box-sizing:border-box;text-align:left;direction:ltr}
+textarea{font:inherit;font-size:15px;border:1px solid #D3DAE5;border-radius:10px;padding:10px 14px;min-height:72px;resize:vertical;color:#142B4A;box-sizing:border-box;width:100%}
+.f textarea:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.tp{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;white-space:nowrap;direction:ltr}
+.k{padding:18px 20px;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #E1E6EE;border-radius:18px}
+.k .v{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:24px;line-height:32px;direction:ltr;unicode-bidi:isolate;text-align:end}
+.k .l{font-size:13px;font-weight:600;color:#4A5A70;display:flex;justify-content:space-between;gap:8px}
+.k .s{font-size:12px;color:#4A5A70}
+.panel{padding:20px;display:flex;flex-direction:column;gap:12px;background:#fff;border:1px solid #E1E6EE;border-radius:18px;min-width:0}
+.panel h3{margin:0;font-size:16px;line-height:24px;font-weight:700}
+.stack{display:flex;height:10px;border-radius:999px;overflow:hidden;background:#EDF1F5}
+.lrow{display:flex;align-items:center;gap:10px;font-size:13px;padding:4px 0;border:0;background:transparent;font-family:inherit;color:#142B4A;text-align:start;width:100%;cursor:pointer;border-radius:8px}
+.lrow:hover{background:#F5F7FA}
+.dotc{width:10px;height:10px;border-radius:3px;flex:none}
+.hb{height:8px;border-radius:999px;background:#EDF1F5;overflow:hidden;flex:1}
+.hb span{display:block;height:100%;border-radius:999px;background:#16B8A6}
+table.ltrt th,table.ltrt td{text-align:left}
+table.ltrt thead th{position:sticky;top:0;z-index:2;background:#F8FAFC;box-shadow:inset 0 -1px 0 #E1E6EE}
+.reflink{font:inherit;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#0E7C70;background:transparent;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.reflink:hover{color:#0A5F56}
+.vt{display:flex;flex-direction:column;gap:2px;padding:12px;border-radius:12px;border:1px solid #EDF1F5;background:#FAFBFC;cursor:pointer;font-family:inherit;color:#142B4A;text-align:start}
+.vt:hover{border-color:#D3DAE5;background:#fff}
+.pfs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.pf{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:12px;background:#F5F7FA}
+.pfl{font-size:12px;font-weight:600;color:#4A5A70}
+.pfv{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:32px}
+.pfv b{font-size:15px;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.cpy{flex:none;display:inline-flex;align-items:center;height:30px;padding:0 10px;border-radius:8px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:12px;font-weight:600;color:#0E7C70;cursor:pointer}
+.cpy:hover{background:#F2FBFA}
+.cpy.ok2{background:#E2F4EC;border-color:#BFE3D2;color:#136A43}
+.btn.mb{min-height:36px;padding:0 12px;font-size:13px}
+.btn.cdone{background:#E2F4EC;border-color:#BFE3D2;color:#136A43}
+.calc{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;font-size:12px;color:#4A5A70}
+.calc b{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;color:#142B4A;direction:ltr;unicode-bidi:isolate}
+.grow{display:flex;gap:12px;padding:10px 12px;border-radius:12px;border:1px solid #EDF1F5;border-inline-start-width:4px;background:#fff;cursor:pointer;font-family:inherit;color:#142B4A;text-align:start;width:100%}
+.grow:hover{background:#FAFBFC}
+.mini{height:36px;border:1px solid #D3DAE5;border-radius:9px;padding:0 8px;font:inherit;font-size:13px;color:#142B4A;background:#fff;max-width:170px}
+.mini:disabled{background:#F5F7FA;color:#4A5A70}
+.lk{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#3A4A60;background:#F5F7FA;border-radius:8px;padding:4px 8px;white-space:normal;max-width:240px;line-height:18px}
+.acct{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:6px 16px;border-radius:14px;border:1px solid #E1E6EE;background:#fff;cursor:pointer;font-family:inherit;color:#142B4A;text-align:start}
+.acct.on{border-color:#142B4A;box-shadow:inset 0 0 0 1px #142B4A}
+.mon{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid #E1E6EE;border-radius:12px;padding:4px}
+.mon button{width:36px;height:36px;border:0;border-radius:9px;background:transparent;cursor:pointer;font-size:18px;color:#142B4A}
+.mon button:hover{background:#F5F7FA}
+.ptabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #E1E6EE}
+.ptabs button{font:inherit;font-size:15px;font-weight:600;color:#4A5A70;background:transparent;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;padding:0 18px;min-height:46px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.ptabs button:hover{color:#142B4A}
+.ptabs button.on{color:#142B4A;border-bottom-color:#16B8A6}
+.mlk{border:0;background:transparent;color:#0E7C70;font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:0 4px;min-height:36px;text-decoration:underline;text-underline-offset:3px}
+.mlk:hover{color:#0A5F56}
+.ptn{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;background:#EEF1F5;color:#3A4A60;border-radius:999px;padding:0 8px;line-height:20px}
+.ptabs button.on .ptn{background:#DDF5F2;color:#0A5F56}
+.lc{background:#fff;border:1px solid #E1E6EE;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px;border-top-width:4px;box-sizing:border-box}
+.lm{display:flex;flex-direction:column;gap:6px}
+.lbar{height:10px;border-radius:999px;background:#EDF1F5;overflow:hidden;position:relative}
+.lbar span{display:block;height:100%;border-radius:999px}
+.lbar i{position:absolute;top:-2px;bottom:-2px;width:2px;background:#142B4A;opacity:.35}
+.kfh{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:18px 22px;border-bottom:1px solid #EDF1F5}
+.kfcl{display:flex;align-items:center;gap:8px;padding:10px 22px;background:#EEF1F5;color:#3A4A60;font-size:13px;font-weight:600}
+.kfis{display:flex;align-items:center;gap:8px;padding:10px 22px;background:#FFFCF3;color:#7A5200;font-size:13px;font-weight:600;text-decoration:none;border-bottom:1px solid #F2D9A6}
+.kfg{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.kfb{padding:18px 22px;display:flex;flex-direction:column;gap:12px}
+.kfg .kfb+.kfb{border-inline-start:1px solid #EDF1F5}
+.kfb h3{margin:0;font-size:15px;line-height:24px;font-weight:700}
+.kfkv{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin:0}
+.kfkv div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.kfkv dt{font-size:12px;font-weight:600;color:#4A5A70}
+.kfkv dd{margin:0;font-size:14px;font-weight:600;overflow-wrap:anywhere}
+.kfkv .w{grid-column:1/-1}
+.kfd{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.kfdc{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:14px;border:1px solid #E1E6EE;background:#FAFBFC}
+.kfx{display:none}
+.kfov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:flex-start;justify-content:center;padding:48px 16px;z-index:60}
+.kfmd{background:#fff;border-radius:20px;width:100%;max-width:520px;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 48px rgba(11,22,38,.25)}
+.kflog{width:100%;border-collapse:collapse;font-size:13px}
+.kflog th{text-align:start;font-weight:600;color:#4A5A70;padding:8px 10px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.kflog td{padding:8px 10px;border-bottom:1px solid #EDF1F5}
+.kfempty{padding:28px 22px;text-align:center;color:#4A5A70;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.kflk{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer;padding:0;min-height:32px;align-self:flex-start}
+.kflk:hover{color:#0A5F56}
+.xa-row{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch}
+.xa-sec{flex:1 1 380px;padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.xa-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.xa-h h2{margin:0;font-size:18px;line-height:28px;font-weight:700}
+.xa-empty{background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60;text-align:center}
+.xa-doc{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid #E1E6EE;border-radius:12px}
+.xa-ok{width:24px;height:24px;border-radius:999px;background:#E2F4EC;color:#136A43;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none;font-size:13px}
+.xa-dt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.xa-note{margin:0;font-size:14px;line-height:24px;color:#142B4A;white-space:pre-line}
+.pnote{width:200px;height:34px;border:1px solid #E1E6EE;border-radius:8px;padding:0 10px;font:inherit;font-size:13px;color:#142B4A;background:#fff;box-sizing:border-box}
+.pnote:focus{border-color:#16B8A6;outline:none}
+.pnote::placeholder{color:#9FB0C6}
+.xa-chips{display:flex;flex-wrap:wrap;gap:6px}
+.xa-acc{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:14px;font-weight:600;color:#3A4A60;cursor:pointer}
+.xa-acc:hover{border-color:#9FB0C6;color:#142B4A}
+.xa-acc.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.xa-bal{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;opacity:.75;direction:ltr;unicode-bidi:isolate}
+.xa-seg{display:inline-flex;gap:2px;padding:3px;border-radius:10px;background:#EEF1F5}
+.xa-seg button{font:inherit;font-size:13px;font-weight:600;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:#3A4A60;cursor:pointer}
+.xa-seg button.on{background:#fff;color:#142B4A;box-shadow:0 1px 2px rgba(20,43,74,.12)}
+.tb{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #EDF1F5}
+.tb-f{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tb-a{display:flex;gap:6px;align-items:center}
+.tb .xa-seg button{min-height:34px;padding:0 12px;display:inline-flex;align-items:center;gap:6px}
+.tb-n{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:#4A5A70}
+.xa-seg button.on .tb-n{color:#142B4A}
+.tb-in{height:40px;border:1px solid #E1E6EE;border-radius:10px;background:#fff;font:inherit;font-size:13px;color:#142B4A;padding:0 10px;box-sizing:border-box;min-width:150px}
+.tb-type{direction:ltr;text-align:left;min-width:210px}
+.th-sel{direction:ltr;text-align:left;font:inherit;font-size:12px;font-weight:600;color:#4A5A70;height:26px;max-width:190px;padding:0 6px;border:1px solid #D5DCE6;border-radius:6px;background:#fff;cursor:pointer}
+.th-sel.on{border-color:#0A7C6F;color:#0A5F56;background:#F2FAF6}
+.tb-q{display:flex;align-items:center;gap:6px;color:#4A5A70;min-width:220px}
+.tb-q input{border:0;outline:0;font:inherit;font-size:13px;width:100%;background:transparent;color:#142B4A}
+.tb-b{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;border-radius:10px;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer}
+.tb-b:hover{background:#F2FBFA}
+.sts{display:flex;flex-wrap:wrap;padding:6px 0;overflow:hidden}
+.st{flex:1 1 200px;display:flex;flex-direction:column;gap:2px;padding:10px 22px;border:0;border-top:3px solid var(--c);margin-top:-6px;background:transparent;font:inherit;text-align:start;cursor:pointer;color:#142B4A}
+.st+.st{border-inline-start:1px solid #EDF1F5}
+.st:hover{background:#FAFBFC}
+.st .dot,.sr .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--c,#9FB0C6);margin-inline-end:6px;vertical-align:middle}
+.st b.amt{font-size:24px;line-height:32px;font-weight:600;color:var(--t,#142B4A);text-align:start}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:14px;align-items:start}
+.sp{padding:18px 22px;display:flex;flex-direction:column}
+.sp-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-bottom:8px}
+.sp-h h3{margin:0;font-size:16px;line-height:24px;font-weight:700}
+.sr{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 4px;border:0;border-top:1px solid #EDF1F5;background:transparent;font:inherit;color:#142B4A;text-align:start;cursor:pointer;width:100%}
+.sr:hover{background:#FAFBFC}
+.sr-n{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sr-n b{font-size:14px;line-height:22px}
+.sr > b.amt{font-size:15px;white-space:nowrap}
+.sbar{display:block;height:5px;border-radius:999px;background:#E9EDF2;overflow:hidden;margin-top:6px;max-width:260px}
+.sbar span{display:block;height:100%;border-radius:999px;background:#16B8A6}
+.cl2{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer;padding:6px 8px;border-radius:8px;text-decoration:none;white-space:nowrap}
+.cl2:hover{background:#F2FBFA}
+.lg{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #EDF1F5}
+.lg-c{display:flex;flex-direction:column;gap:4px;padding:14px 12px 4px}
+.lg-c+.lg-c{border-inline-start:1px solid #EDF1F5}
+.lg-c b.amt{font-size:18px;line-height:26px}
+.sr .sv{flex:1;min-width:0;font-size:14px;line-height:22px;overflow-wrap:anywhere;text-align:right;direction:rtl;unicode-bidi:plaintext}
+.tbl.compact .xc{display:none}
+.tbl.ltrt{border-collapse:collapse}
+.tbl.ltrt th,.tbl.ltrt td{border:1px solid #E1E6EE}
+.tbl.ltrt{font-size:13px;line-height:20px}
+.tbl.ltrt td{padding:5px 10px}
+.tbl.ltrt th{padding:6px 10px;font-size:12px}
+.tbl.ltrt .mini,.tbl.ltrt .pnote{height:30px;font-size:12px}
+.tbl.ltrt .tp{height:22px;font-size:11px}
+.tbl.ltrt .pnote{border-color:transparent;background:transparent}
+.tbl.ltrt tr:hover .pnote{border-color:#E1E6EE;background:#fff}
+.tbl.ltrt .pnote:focus{border-color:#16B8A6;background:#fff}
+.tb-type{min-width:170px}
+.tb-q{min-width:180px}
+.tb-in{min-width:130px}
+.tb{flex-wrap:nowrap}
+.tb-f{flex-wrap:nowrap;min-width:0}
+.tb-a{flex:none}
+.tbl.bd{border-collapse:collapse;font-size:13px;line-height:20px}
+.tbl.bd th,.tbl.bd td{border:1px solid #E1E6EE}
+.tbl.bd td{padding:6px 12px}
+.tbl.bd th{padding:7px 12px;font-size:12px}
+.tbl.bd tr.done td{color:#4A5A70;background:#FAFBFC}
+.age{display:inline-flex;align-items:center;font-weight:600;color:#3A4A60}
+.age .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:#9FB0C6;margin-inline-end:6px}
+.age.a-w .dot{background:#E0A12B}.age.a-b{color:#A3291D}.age.a-b .dot{background:#D2493A}.age.a-n .dot{background:#16B8A6}
+.am-act{display:flex;gap:4px}
+.ab{height:30px;padding:0 10px;border:1px solid #E1E6EE;border-radius:8px;background:#fff;font:inherit;font-size:12px;font-weight:600;color:#142B4A;cursor:pointer;white-space:nowrap}
+.tbl.bd .tp{direction:rtl;font-family:inherit}
+.ab:hover{background:#F5F7FA}
+.ab.pri{border-color:#16B8A6;color:#0A5F56;background:#F2FBFA}
+.ab.bad{color:#A3291D;border-color:#F3D3CF}
+.tb-chip{height:34px;padding:0 12px;border-radius:999px;border:1px solid #BFE3D2;background:#F2FAF6;color:#0A5F56;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav on" href="Paypal.dc.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+<header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+ <div><h1 style="margin:0;font-size:32px;line-height:44px;font-weight:700">PayPal</h1><p class="sub" style="margin:4px 0 0">متابعة حركات حسابات PayPal شهرياً · الحركات تُستورد من كشف PayPal ولا تُكتب يدوياً</p></div>
+ <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+  <div class="mon" aria-label="الشهر"><button type="button" aria-label="الشهر السابق">›</button><b style="padding:0 10px;font-size:15px">يوليو 2026</b><button type="button" aria-label="الشهر التالي">‹</button></div>
+  <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;{{monthStyle}}"><span aria-hidden="true" style="width:8px;height:8px;border-radius:999px;background:currentColor"></span>{{monthText}}</span>
+  <sc-if value="{{open}}" hint-placeholder-val="{{ true }}"><span class="cap" aria-hidden="true">·</span><button class="mlk" type="button" onClick="{{closeMonth}}">إغلاق الشهر</button></sc-if>
+  <sc-if value="{{closed}}" hint-placeholder-val="{{ false }}"><span class="cap" aria-hidden="true">·</span><button class="mlk" type="button" onClick="{{reopen}}">إعادة فتح الشهر</button></sc-if>
+ </div>
+</header>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+ <div class="xa-chips" role="tablist" aria-label="حسابات PayPal">
+  <sc-for list="{{accts}}" as="a" hint-placeholder-count="2"><button type="button" role="tab" class="{{a.cls}}" aria-selected="{{a.sel}}" onClick="{{a.go}}">{{a.name}}</button></sc-for>
+ </div>
+</div>
+
+<sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+
+<sc-if value="{{showTabs}}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;border-bottom:1px solid #E1E6EE">
+<div class="ptabs" role="tablist" aria-label="أقسام الصفحة" style="border-bottom:0;flex:1"><sc-for list="{{ptabs}}" as="t" hint-placeholder-count="3"><button type="button" role="tab" class="{{t.cls}}" aria-selected="{{t.sel}}" onClick="{{t.go}}">{{t.label}}<sc-if value="{{t.hasN}}" hint-placeholder-val="{{ true }}"><span class="ptn">{{t.n}}</span></sc-if></button></sc-for></div>
+</div>
+</sc-if>
+<sc-if value="{{showDN}}" hint-placeholder-val="{{ false }}">
+  <div class="xa-row">
+  <section class="card xa-sec" aria-label="الوثائق">
+    <div class="xa-h"><h2>الوثائق</h2><span class="{{xd.pill}}">{{xd.count}}</span></div>
+    <sc-if value="{{xd.none}}" hint-placeholder-val="{{ false }}"><div class="xa-empty">لا توجد وثائق لهذا الحساب</div></sc-if>
+    <sc-for list="{{xd.list}}" as="d" hint-placeholder-count="2"><div class="xa-doc"><span class="xa-ok" aria-hidden="true">✓</span><div class="xa-dt"><b style="font-size:14px;line-height:22px">{{d.title}}</b><span class="cap">{{d.meta}}</span></div><sc-if value="{{d.hasSt}}" hint-placeholder-val="{{ true }}"><span class="{{d.pill}}">{{d.st}}</span></sc-if></div></sc-for>
+  </section>
+  <section class="card xa-sec" aria-label="الملاحظات">
+    <div class="xa-h"><h2>الملاحظات</h2></div>
+    <sc-if value="{{xn.none}}" hint-placeholder-val="{{ false }}"><div class="xa-empty">لا توجد ملاحظات لهذا الحساب</div></sc-if>
+    <sc-if value="{{xn.has}}" hint-placeholder-val="{{ true }}"><p class="xa-note">{{xn.text}}</p></sc-if>
+  </section>
+  </div>
+</sc-if>
+
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+ <section class="card" style="padding:48px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center"><b style="font-size:18px">لا توجد حركات مستوردة لهذا الحساب في يوليو 2026</b><span class="sub">نزّل كشف الحركات (Activity) من PayPal بصيغة CSV واستورده هنا.</span><button class="btn acc" type="button" onClick="{{openImport}}">استيراد كشف PayPal</button></section>
+</sc-if>
+
+<sc-if value="{{tabSum}}" hint-placeholder-val="{{ true }}">
+<section class="card sts" aria-label="الواصل حسب العملة">
+ <div class="st" style="--c:#142B4A;--t:#142B4A;cursor:default"><span class="cap"><i class="dot"></i>المجموع بالدولار</span><b class="amt">{{curTotal}}</b><span class="cap">كل العملات · {{curCount}}</span></div>
+ <sc-for list="{{curCards}}" as="k" hint-placeholder-count="2"><button type="button" class="st" style="--c:#16B8A6;--t:#142B4A" onClick="{{k.go}}"><span class="cap"><i class="dot"></i>{{k.code}}</span><b class="amt">{{k.amt}}</b><span class="cap">{{k.sub}}</span></button></sc-for>
+</section>
+<span class="cap" style="margin-top:-12px">{{curNote}}</span>
+<section class="card sts" aria-label="الحوالات الواردة هذا الشهر">
+ <sc-for list="{{vsList}}" as="s" hint-placeholder-count="3"><button type="button" class="st" style="{{s.css}}" onClick="{{s.go}}"><span class="cap"><i class="dot"></i>{{s.label}}</span><b class="amt">{{s.amt}}</b><span class="cap">{{s.count}} · {{s.pct}}</span></button></sc-for>
+</section>
+</sc-if>
+<sc-if value="{{showAcc}}" hint-placeholder-val="{{ true }}">
+<section class="sg">
+ <div class="card sp" aria-label="بيانات الحساب">
+  <div class="sp-h"><div style="display:flex;align-items:center;gap:8px"><h3>بيانات الحساب</h3><span class="{{stPill}}">{{stTxt}}</span></div><button type="button" class="cl2" onClick="{{copyAll}}">{{copyAllTxt}}</button></div>
+  <sc-for list="{{fields}}" as="f" hint-placeholder-count="6"><div class="sr" style="cursor:default">
+   <span class="cap" style="flex:none;width:150px;font-size:13px">{{f.label}}</span>
+   <b class="sv">{{f.val}}</b>
+   <sc-if value="{{f.share}}" hint-placeholder-val="{{ true }}"><button type="button" class="cl2" onClick="{{f.copy}}" aria-label="{{f.aria}}">{{f.btn}}</button></sc-if>
+  </div></sc-for>
+ </div>
+ <div class="card sp" aria-label="حدود الحساب">
+  <div class="sp-h"><div style="display:flex;align-items:center;gap:8px"><h3>حدود الحساب</h3><span class="{{lc.statePill}}">{{lc.state}}</span></div><a class="cl2" href="{{lc.href}}">تعديل</a></div>
+  <span class="cap" style="padding-bottom:10px">{{lc.sub}}</span>
+  <sc-if value="{{lc.none}}" hint-placeholder-val="{{ false }}"><div class="cap" style="padding:12px 0;border-top:1px solid #EDF1F5">{{lc.noneText}}</div></sc-if>
+  <sc-if value="{{lc.some}}" hint-placeholder-val="{{ true }}"><div class="lg">
+   <sc-for list="{{lc.cols}}" as="x" hint-placeholder-count="3"><div class="lg-c">
+    <span class="cap" style="font-weight:600">{{x.label}}</span>
+    <sc-if value="{{x.has}}" hint-placeholder-val="{{ true }}"><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><b class="amt" style="{{x.leftStyle}}">{{x.left}}</b><span class="cap">من <span class="amt">{{x.max}}</span></span></div><span class="sbar" style="margin-top:2px"><span style="{{x.bar}}"></span></span><span class="cap">{{x.reset}}</span></sc-if>
+    <sc-if value="{{x.none}}" hint-placeholder-val="{{ false }}"><span class="cap">{{x.noneTxt}}</span></sc-if>
+   </div></sc-for>
+  </div></sc-if>
+ </div>
+</section>
+</sc-if>
+<sc-if value="{{has}}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{tabSum}}" hint-placeholder-val="{{ true }}">
+<section class="sg">
+ <div class="card sp">
+  <div class="sp-h"><h3>حركة الحساب حسب الفئة</h3><span class="cap">صافي بالدولار</span></div>
+  <sc-for list="{{groups}}" as="g" hint-placeholder-count="5"><button type="button" class="sr" onClick="{{g.go}}" style="{{g.border}}">
+   <span class="sr-n"><b><i class="dot"></i>{{g.label}}</b><span class="cap">{{g.note}}</span><sc-if value="{{g.hasCalc}}" hint-placeholder-val="{{ false }}"><span class="cap">Gross {{g.cG}} − عمولة {{g.cF}} ({{g.cP}})</span></sc-if></span>
+   <b class="amt" style="{{g.netStyle}}">{{g.net}}</b>
+  </button></sc-for>
+  <span class="cap" style="padding-top:4px">{{fxNote}}</span>
+ </div>
+ <div class="card sp">
+  <div class="sp-h"><h3>الموافق عليه حسب المكتب</h3><span class="cap">{{offCountText}}</span></div>
+  <sc-for list="{{offStats}}" as="o" hint-placeholder-count="3"><div class="sr" style="cursor:default">
+   <span class="sr-n"><b>{{o.name}}</b><span class="cap">{{o.count}} · {{o.pct}}</span><span class="sbar"><span style="{{o.bar}}"></span></span></span>
+   <b class="amt">{{o.amt}}</b>
+  </div></sc-for>
+ </div>
+</section>
+</sc-if>
+
+<sc-if value="{{tabAm}}" hint-placeholder-val="{{ false }}">
+<section class="card sts" aria-label="ملخص الأمانات">
+ <button type="button" class="st" style="--c:#7B5CC4;--t:#4B2E83" onClick="{{amGoOpen}}"><span class="cap"><i class="dot"></i>أمانات مفتوحة</span><b class="amt">{{amTotal}}</b><span class="cap">{{amCount}} · مبالغ لأصحابها عند المكتب</span></button>
+ <button type="button" class="st" style="{{amOldCss}}" onClick="{{amGoOld}}"><span class="cap"><i class="dot"></i>تجاوزت {{amThrText}}</span><b class="amt">{{amOldTotal}}</b><span class="cap">{{amOldCount}} · يمكن إرجاعها أو تحويلها لإيراد</span></button>
+ <div class="st" style="--c:#9FB0C6;cursor:default"><span class="cap"><i class="dot"></i>أقدم أمانة</span><b style="font-size:18px;line-height:32px;font-weight:600">{{amOldest}}</b><span class="cap">{{amOldestWho}}</span></div>
+</section>
+<span class="cap" style="margin-top:-12px">حوالات وصلت ولم يحضر أصحابها لاستلامها · من كل الشهور · للعلم فقط، ولا تدخل في رأس المال</span>
+<section class="card" style="overflow:hidden" aria-label="الأمانات">
+ <div class="tb">
+  <div class="tb-f">
+   <div class="xa-seg" role="tablist" aria-label="عرض الأمانات"><sc-for list="{{amViews}}" as="v" hint-placeholder-count="4"><button type="button" role="tab" class="{{v.cls}}" aria-selected="{{v.sel}}" onClick="{{v.go}}">{{v.label}}<span class="tb-n">{{v.n}}</span></button></sc-for></div>
+   <label class="tb-in tb-q"><span class="vh">بحث في الأمانات</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" value="{{amQ}}" onChange="{{onAmQ}}" placeholder="الاسم أو الإيميل"></label>
+  </div>
+  <div class="tb-a"><label class="cap" style="display:flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap">تُعتبر قديمة بعد<select class="tb-in" style="min-width:0;height:34px" value="{{amThr}}" onChange="{{onAmThr}}"><option value="3">3 أشهر</option><option value="6">6 أشهر</option><option value="12">سنة</option></select></label></div>
+ </div>
+ <div style="overflow-x:auto"><table class="tbl bd">
+  <thead><tr><th>المرسل</th><th>المبلغ</th><th>وصلت في</th><th>عمر الأمانة</th><th>الحالة</th><th>إجراء</th></tr></thead>
+  <tbody><sc-for list="{{amRows}}" as="a" hint-placeholder-count="4"><tr class="{{a.rowCls}}">
+   <td><b class="en">{{a.name}}</b><div class="cap en">{{a.email}}</div></td>
+   <td><b class="amt">{{a.amt}}</b></td>
+   <td><span class="amt">{{a.date}}</span><div class="cap">{{a.month}}</div></td>
+   <td><span class="{{a.ageCls}}"><i class="dot"></i>{{a.age}}</span></td>
+   <td><span class="tp" style="{{a.stCss}}">{{a.state}}</span><sc-if value="{{a.hasNote}}" hint-placeholder-val="{{ false }}"><div class="cap" style="white-space:normal;max-width:240px">{{a.note}}</div></sc-if></td>
+   <td><sc-if value="{{a.open}}" hint-placeholder-val="{{ true }}"><div class="am-act"><button class="ab pri" type="button" onClick="{{a.deliver}}">تسليم</button><button class="ab" type="button" onClick="{{a.refund}}">إرجاع للمرسل</button><sc-if value="{{a.canInc}}" hint-placeholder-val="{{ false }}"><button class="ab bad" type="button" onClick="{{a.income}}">تحويل لإيراد</button></sc-if></div></sc-if><sc-if value="{{a.closed}}" hint-placeholder-val="{{ false }}"><span class="cap">—</span></sc-if></td>
+  </tr></sc-for></tbody></table></div>
+ <sc-if value="{{amEmpty}}" hint-placeholder-val="{{ false }}"><div class="sub" style="padding:20px;text-align:center">لا توجد أمانات مطابقة</div></sc-if>
+</section>
+
+</sc-if>
+
+<sc-if value="{{tabTx}}" hint-placeholder-val="{{ false }}">
+<section class="card" style="overflow:hidden">
+ <div class="tb">
+  <div class="tb-f">
+   <div class="xa-seg" role="tablist" aria-label="اتجاه الحركة"><sc-for list="{{dirOpts}}" as="d" hint-placeholder-count="3"><button type="button" role="tab" class="{{d.cls}}" aria-selected="{{d.sel}}" onClick="{{d.go}}">{{d.label}}<span class="tb-n">{{d.n}}</span></button></sc-for></div>
+   <select class="tb-in" value="{{offF}}" onChange="{{onOffF}}" aria-label="تصفية حسب المكتب"><option value="all">كل المكاتب</option><option value="none">غير محدد</option><sc-for list="{{offAllOpts}}" as="o" hint-placeholder-count="4"><option value="{{o.k}}">{{o.n}}</option></sc-for></select>
+   <select class="tb-in" value="{{curSel}}" onChange="{{onCurF}}" aria-label="تصفية حسب العملة"><option value="">كل العملات</option><sc-for list="{{curOpts}}" as="o" hint-placeholder-count="2"><option value="{{o.k}}">{{o.n}}</option></sc-for></select>
+   <label class="tb-in tb-q"><span class="vh">بحث</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" value="{{q}}" onChange="{{onQ}}" placeholder="اسم المرسل أو رقم الحركة"></label>
+  </div>
+  <div class="tb-a">
+   <button class="tb-b" type="button" onClick="{{toggleCols}}" aria-pressed="{{colsP}}">{{colsTxt}}</button>
+   <button class="tb-b" type="button" onClick="{{openImport}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7 9l5-5 5 5M5 20h14"/></svg>استيراد كشف</button>
+   <button class="tb-b" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>تصدير Excel</button>
+  </div>
+ </div>
+ <div style="overflow:auto;direction:ltr;max-height:640px" class="ltr" id="pp-scroll"><table class="{{tblCls}}">
+  <thead><tr><th>Date</th><th>Name</th><th><select class="{{typeCls}}" value="{{typeF}}" onChange="{{onTypeF}}" aria-label="Type · تصفية حسب النوع"><sc-for list="{{typeOpts}}" as="o" hint-placeholder-count="6"><option value="{{o.k}}">{{o.n}}</option></sc-for></select></th><th style="text-align:right">Net</th><th>Verification Status</th><th>Office</th><th>Note</th><th class="xc">Status</th><th class="xc">Currency</th><th class="xc">Gross</th><th class="xc">Fee</th><th class="xc">From Email Address</th><th class="xc">To Email Address</th><th class="xc">Transaction ID</th><th class="xc">Reference Txn ID</th></tr></thead>
+  <tbody><sc-for list="{{rows}}" as="r" hint-placeholder-count="10"><tr id="{{r.rowId}}" style="{{r.rowStyle}}">
+   <td><span class="amt">{{r.date}}</span> <span class="cap amt">{{r.time}}</span></td>
+   <td style="font-weight:600">{{r.name}}</td>
+   <td><span class="tp" style="{{r.tStyle}}">{{r.type}}</span><sc-if value="{{r.arNote}}" hint-placeholder-val="{{ false }}"><div class="cap" dir="rtl" style="text-align:left;margin-top:3px;white-space:normal;max-width:260px">{{r.arNote}}</div></sc-if></td>
+   <td style="text-align:right"><b class="amt" style="font-size:14px">{{r.n}}</b> <span class="cap">{{r.curTag}}</span></td>
+   <td dir="rtl" style="text-align:right">
+    <sc-if value="{{r.isIn}}" hint-placeholder-val="{{ true }}">
+     <sc-if value="{{r.auto}}" hint-placeholder-val="{{ false }}"><span class="{{r.autoPill}}" style="{{r.autoCss}}">{{r.autoText}}</span></sc-if>
+     <sc-if value="{{r.manual}}" hint-placeholder-val="{{ true }}"><select class="mini" style="{{r.vsStyle}}" value="{{r.vs}}" onChange="{{r.onVs}}" disabled="{{r.closed}}" aria-label="حالة التحقق"><option value="pend">قيد التقدم</option><option value="ok">موافق عليها</option><option value="ref">مُرجَعة</option></select></sc-if>
+    </sc-if>
+    <sc-if value="{{r.notIn}}" hint-placeholder-val="{{ false }}"><span class="cap">—</span></sc-if>
+   </td>
+   <td dir="rtl" style="text-align:right">
+    <sc-if value="{{r.offSel}}" hint-placeholder-val="{{ true }}"><select class="mini" style="{{r.offStyle}}" value="{{r.off}}" onChange="{{r.onOff}}" disabled="{{r.closed}}" aria-label="المكتب"><option value="">غير محدد</option><sc-for list="{{r.offOpts}}" as="o" hint-placeholder-count="4"><option value="{{o.k}}">{{o.n}}</option></sc-for></select></sc-if>
+    <sc-if value="{{r.offText}}" hint-placeholder-val="{{ false }}"><span class="{{r.offPill}}">{{r.offLabel}}</span></sc-if>
+    <sc-if value="{{r.dash}}" hint-placeholder-val="{{ false }}"><span class="cap">—</span></sc-if>
+   </td>
+   <td dir="rtl" style="text-align:right"><input type="text" class="pnote" value="{{r.note}}" onChange="{{r.onNote}}" placeholder="أضف ملاحظة" aria-label="ملاحظة على الحركة"></td>
+   <td class="xc"><span style="{{r.psStyle}}">{{r.ps}}</span></td>
+   <td class="xc">{{r.cur}}</td>
+   <td class="xc"><b class="amt" style="{{r.gStyle}}">{{r.g}}</b></td>
+   <td class="xc amt" style="color:#4A5A70">{{r.f}}</td>
+   <td class="xc sub">{{r.from}}</td>
+   <td class="xc sub">{{r.to}}</td>
+   <td class="xc amt sub">{{r.id}}</td>
+   <td class="xc amt sub"><sc-if value="{{r.canJump}}" hint-placeholder-val="{{ false }}"><button type="button" class="reflink" onClick="{{r.jump}}" title="الذهاب للحوالة الأصلية">{{r.ref}} ↑</button></sc-if><sc-if value="{{r.noJump}}" hint-placeholder-val="{{ true }}">{{r.ref}}<sc-if value="{{r.prevMonth}}" hint-placeholder-val="{{ false }}"><div class="cap" dir="rtl">حوالة من شهر سابق</div></sc-if></sc-if></td>
+  </tr></sc-for></tbody></table></div>
+ <div style="padding:16px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;border-top:1px solid #EDF1F5">
+  <span class="cap" style="font-size:13px">{{pageText}} · الأسماء والإيميلات في التصميم غير حقيقية</span>
+  <sc-if value="{{hasMore}}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:8px"><button class="btn" type="button" onClick="{{more}}">{{moreText}}</button><button class="btn" type="button" onClick="{{showAll}}">عرض الكل</button></div></sc-if>
+ </div>
+</section>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{isCloseM}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="إغلاق الشهر"><div class="modal">
+ <div class="mh"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">إغلاق شهر يوليو 2026</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{impAcc}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{cancelClose}}">×</button></div>
+ <p style="margin:0;font-size:14px">{{closeMsg}}</p>
+ <div style="display:flex;flex-direction:column;border:1px solid #EDF1F5;border-radius:12px;max-height:220px;overflow:auto">
+  <sc-for list="{{closePend}}" as="p" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #EDF1F5;font-size:14px"><span class="en"><b>{{p.name}}</b> <span class="cap">· {{p.date}}</span></span><b class="amt">{{p.amt}}</b></div></sc-for>
+ </div>
+ <div class="note">بعد الإغلاق تنتقل هذه الحوالات إلى «الأمانات غير المستلمة» وتبقى ظاهرة هناك في كل الشهور حتى تُسلَّم أو تُرجَع أو تُحوَّل لإيراد. لا يمكن تعديل حركات الشهر بعد إغلاقه.</div>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{cancelClose}}">تراجع</button><button class="btn pri" type="button" onClick="{{confirmClose}}">{{closeBtn}}</button></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{isAmM}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="إجراء على أمانة"><div class="modal" style="max-width:500px">
+ <div class="mh"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">{{amMTitle}}</h2><p class="cap en" style="margin:2px 0 0;font-size:13px">{{amMWho}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{amMClose}}">×</button></div>
+ <div class="row note"><span>المبلغ</span><b class="amt">{{amMAmt}}</b></div>
+ <sc-if value="{{amMIsDeliver}}" hint-placeholder-val="{{ true }}"><label class="f"><label>المكتب المستلم</label><select value="{{amMOff}}" onChange="{{onAmMOff}}"><option value="">اختر المكتب</option><sc-for list="{{offOpts}}" as="o" hint-placeholder-count="3"><option value="{{o.k}}">{{o.n}}</option></sc-for></select><span class="hint">تُسجَّل كحوالة موافق عليها في شهر التسليم، مع ملاحظة أنها أمانة من {{amMMonth}}</span></label></sc-if>
+ <sc-if value="{{amMIsRefund}}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:14px">يجب إرجاع المبلغ من موقع PayPal. عند استيراد الكشف وظهور صف Payment Refund يُربط تلقائياً بهذه الأمانة.</p></sc-if>
+ <sc-if value="{{amMIsIncome}}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:14px">يُسجَّل المبلغ إيراداً للمكتب في الشهر الحالي، ويخرج من الالتزامات.</p></sc-if>
+ <label class="f"><label>{{amMNoteLabel}}</label><textarea value="{{amMNote}}" onChange="{{onAmMNote}}" placeholder="{{amMNotePh}}"></textarea></label>
+ <sc-if value="{{hasAmErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{amErr}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{amMClose}}">تراجع</button><button class="btn pri" type="button" onClick="{{amMSave}}">تأكيد</button></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{isImport}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="استيراد كشف PayPal"><div class="modal">
+ <div class="mh"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">استيراد كشف PayPal</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{impAcc}} · يوليو 2026</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{closeImport}}">×</button></div>
+ <div style="border:2px dashed #D3DAE5;border-radius:16px;padding:28px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center"><b>اسحب ملف CSV هنا أو اختره من جهازك</b><span class="cap">من PayPal: Activity ← Download ← CSV · نفس الأعمدة: Date, Time, Name, Type, Status, Currency, Gross, Fee, Net…</span><button class="btn" type="button" style="margin-top:6px">اختيار ملف</button></div>
+ <div class="note" style="display:flex;flex-direction:column;gap:6px">
+  <b style="color:#142B4A">ماذا يحدث عند الاستيراد؟</b>
+  <span>• الحركة المكررة (نفس Transaction ID) لا تُستورد مرتين، فيمكن استيراد الكشف أكثر من مرة خلال الشهر.</span>
+  <span>• الحوالات الواردة تدخل بحالة «قيد التقدم» والمكتب «غير محدد».</span>
+  <span>• المرتجعات والنزاعات وتحويل العملة تُربط تلقائياً بالحوالة الأصلية عبر Reference Txn ID.</span>
+  <span>• يُقرأ التاريخ بصيغة PayPal الأصلية، فلا يتبدّل اليوم والشهر.</span>
+ </div>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{closeImport}}">إلغاء</button><button class="btn acc" type="button" onClick="{{closeImport}}">استيراد</button></div>
+</div></div>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+var PP_DATA = [[0,"2026-07-01","06:53","Anna Weber","Mobile Payment","Completed","USD",500.0,-22.3,477.7,"80M•••22S","","ok","faiz","k0","","anna.weber@example.com","zak•••@gmail.com"],[1,"2026-07-01","09:11","Lucas Martin","Mobile Payment","Completed","USD",250.0,-13.8,236.2,"6KA•••14J","","ref","","k1","","lucas.martin@example.com","zak•••@gmail.com"],[2,"2026-07-01","10:00","Sara Haddad","Mobile Payment","Completed","USD",84.0,-4.84,79.16,"13M•••92M","","ok","karim","k2","","sara.haddad@example.com","zak•••@gmail.com"],[3,"2026-07-01","11:52","Omar Kassem","Mobile Payment","Completed","USD",128.93,-5.97,122.96,"1PB•••50A","","ref","","k3","","omar.kassem@example.com","zak•••@gmail.com"],[4,"2026-07-01","12:35","Emily Clark","Mobile Payment","Completed","USD",60.0,-2.94,57.06,"49P•••74J","","ref","","k4","","emily.clark@example.com","zak•••@gmail.com"],[5,"2026-07-01","13:36","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"6DL•••11R","","","","k5","","zak•••@gmail.com",""],[6,"2026-07-01","13:47","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"0KE•••84C","","","","k6","","zak•••@gmail.com",""],[7,"2026-07-01","13:47","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"4BW•••803","","","","k7","","zak•••@gmail.com",""],[8,"2026-07-01","13:48","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"1WT•••54H","","","","k8","","zak•••@gmail.com",""],[9,"2026-07-01","13:51","Emily Clark","Payment Refund","Completed","USD",-60.0,2.94,-57.06,"6FD•••84H","49P•••74J","","","k9","k4","zak•••@gmail.com","emily.clark@example.com"],[10,"2026-07-01","13:55","Noah Becker","Payment Refund","Completed","USD",-131.06,6.07,-124.99,"6TC•••40T","6XU•••81P","","","k10","x","zak•••@gmail.com","noah.becker@example.com"],[11,"2026-07-01","13:55","Lina Saleh","Payment Refund","Completed","USD",-109.22,5.11,-104.11,"0LK•••929","89V•••02L","","","k11","x","zak•••@gmail.com","lina.saleh@example.com"],[12,"2026-07-01","17:58","Hugo Laurent","Payment Refund","Completed","USD",-100.0,4.7,-95.3,"11S•••00T","5N4•••234","","","k12","x","zak•••@gmail.com","hugo.laurent@example.com"],[13,"2026-07-01","17:59","Omar Kassem","Payment Refund","Completed","USD",-128.93,5.97,-122.96,"8CU•••63V","1PB•••50A","","","k13","k3","zak•••@gmail.com","omar.kassem@example.com"],[14,"2026-07-01","19:35","Maya Cohen","Mobile Payment","Completed","USD",40.0,-2.06,37.94,"8NW•••040","","ok","mohammad","k14","","maya.cohen@example.com","zak•••@gmail.com"],[15,"2026-07-01","20:54","Maya Cohen","Mobile Payment","Completed","USD",40.0,-2.06,37.94,"1JH•••50A","","ok","mohammad","k15","","maya.cohen@example.com","zak•••@gmail.com"],[16,"2026-07-01","21:35","Jonas Vogel","Mobile Payment","Completed","USD",50.0,-3.0,47.0,"34M•••236","","ref","karim","k16","","jonas.vogel@example.com","zak•••@gmail.com"],[17,"2026-07-02","03:07","Rania Aziz","General Payment","Completed","USD",200.0,-9.1,190.9,"7ML•••20J","","ok","karim","k17","","rania.aziz@example.com","zak•••@gmail.com"],[18,"2026-07-02","18:17","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"5KC•••30W","","","","k18","","zak•••@gmail.com",""],[19,"2026-07-02","18:17","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"9CE•••11F","","","","k19","","zak•••@gmail.com",""],[20,"2026-07-02","18:17","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"8LH•••23N","","","","k20","","zak•••@gmail.com",""],[21,"2026-07-02","18:27","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"54G•••84L","","","","k21","","zak•••@gmail.com",""],[22,"2026-07-02","18:44","Jonas Vogel","Payment Refund","Completed","USD",-50.0,3.0,-47.0,"5DH•••011","34M•••236","","","k22","k16","zak•••@gmail.com","jonas.vogel@example.com"],[23,"2026-07-02","18:53","Lucas Martin","Payment Refund","Completed","USD",-250.0,13.8,-236.2,"4UE•••25H","6KA•••14J","","","k23","k1","zak•••@gmail.com","lucas.martin@example.com"],[24,"2026-07-03","13:01","Ethan Brooks","Mass Pay Payment","Completed","USD",270.0,0,270.0,"96H•••45D","","ok","karim","k24","","ethan.brooks@example.com","zak•••@gmail.com"],[25,"2026-07-03","18:48","Maya Cohen","Mobile Payment","Completed","USD",25.0,-1.4,23.6,"4AF•••410","","ref","","k25","","maya.cohen@example.com","zak•••@gmail.com"],[26,"2026-07-03","19:06","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"2AA•••50V","","","","k26","","zak•••@gmail.com",""],[27,"2026-07-03","19:06","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"9JJ•••332","","","","k27","","zak•••@gmail.com",""],[28,"2026-07-03","19:07","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"5JE•••941","","","","k28","","zak•••@gmail.com",""],[29,"2026-07-03","19:07","","General Card Withdrawal","Completed","USD",-2000.0,-5.0,-2005.0,"5UC•••41U","","","","k29","","zak•••@gmail.com",""],[30,"2026-07-04","15:08","Clara Rossi","General Payment","Completed","USD",100.0,-4.7,95.3,"6YS•••15P","","ok","karim","k30","","clara.rossi@example.com","zak•••@gmail.com"],[31,"2026-07-04","16:03","Yusuf Demir","Mobile Payment","Completed","USD",100.0,-4.7,95.3,"1K7•••63S","","ref","","k31","","yusuf.demir@example.com","zak•••@gmail.com"],[32,"2026-07-04","21:42","PayPal","Hold on Balance for Dispute Investigation","Pending","USD",-23.6,0,-23.6,"7H3•••05H","4AF•••410","","","k34","k25","zak•••@gmail.com","maya.cohen@example.com"],[33,"2026-07-04","22:27","Maya Cohen","Payment Refund","Completed","USD",-25.0,1.4,-23.6,"91R•••34U","4AF•••410","","","k33","k25","zak•••@gmail.com","maya.cohen@example.com"],[34,"2026-07-04","22:27","PayPal","Cancellation of Hold for Dispute Resolution","Denied","USD",23.6,0,23.6,"7H3•••05H","4AF•••410","","","k34","k25","maya.cohen@example.com","zak•••@gmail.com"],[35,"2026-07-05","00:46","Nora Jensen","General Payment","Completed","USD",67.54,-3.27,64.27,"2NM•••123","","ref","","k35","","nora.jensen@example.com","zak•••@gmail.com"],[36,"2026-07-05","01:08","Adam Fischer","Mobile Payment","Completed","USD",70.0,-4.08,65.92,"0CG•••22Y","","ref","","k36","","adam.fischer@example.com","zak•••@gmail.com"],[37,"2026-07-05","18:22","Adam Fischer","Payment Refund","Completed","USD",-70.0,4.08,-65.92,"45A•••80S","0CG•••22Y","","","k37","k36","zak•••@gmail.com","adam.fischer@example.com"],[38,"2026-07-05","18:22","Nora Jensen","Payment Refund","Completed","USD",-67.54,3.27,-64.27,"541•••216","2NM•••123","","","k38","k35","zak•••@gmail.com","nora.jensen@example.com"],[39,"2026-07-05","18:27","Yusuf Demir","Payment Refund","Completed","USD",-100.0,4.7,-95.3,"6TU•••116","1K7•••63S","","","k39","k31","zak•••@gmail.com","yusuf.demir@example.com"],[40,"2026-07-05","20:49","PayPal","Hold on Balance for Dispute Investigation","Pending","USD",-477.7,0,-477.7,"19M•••21E","80M•••22S","","","k41","k0","zak•••@gmail.com","anna.weber@example.com"],[41,"2026-07-05","21:24","PayPal","Cancellation of Hold for Dispute Resolution","Denied","USD",477.7,0,477.7,"19M•••21E","80M•••22S","","","k41","k0","anna.weber@example.com","zak•••@gmail.com"],[42,"2026-07-06","14:36","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"0JN•••63J","","","","k42","","zak•••@gmail.com",""],[43,"2026-07-06","14:49","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"3FH•••939","","","","k43","","zak•••@gmail.com",""],[44,"2026-07-06","23:22","Leila Nasser","Mobile Payment","Completed","USD",300.0,-15.93,284.07,"812•••51T","","ok","mohammad","k44","","leila.nasser@example.com","zak•••@gmail.com"],[45,"2026-07-07","21:16","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"3C8•••425","","","","k45","","zak•••@gmail.com",""],[46,"2026-07-07","21:17","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"9N3•••41Y","","","","k46","","zak•••@gmail.com",""],[47,"2026-07-08","16:01","Tom Wilson","Mobile Payment","Completed","USD",200.0,-10.74,189.26,"5P0•••148","","ok","mohammad","k47","","tom.wilson@example.com","zak•••@gmail.com"],[48,"2026-07-08","16:14","Ines Duarte","Mobile Payment","Completed","USD",100.0,-5.55,94.45,"93P•••235","","ok","ahmad","k48","","ines.duarte@example.com","zak•••@gmail.com"],[49,"2026-07-08","16:21","Karim Benali","Mobile Payment","Completed","USD",100.0,-5.55,94.45,"85B•••64B","","ok","ahmad","k49","","karim.benali@example.com","zak•••@gmail.com"],[50,"2026-07-08","17:21","Julia Novak","Mobile Payment","Completed","USD",245.0,-13.07,231.93,"9WL•••84T","","ok","mohammad","k50","","julia.novak@example.com","zak•••@gmail.com"],[51,"2026-07-08","19:56","Maya Cohen","Mobile Payment","Completed","USD",55.0,-3.21,51.79,"4EY•••60R","","ok","mohammad","k51","","maya.cohen@example.com","zak•••@gmail.com"],[52,"2026-07-08","21:05","","General Card Withdrawal","Completed","OMR",-217.53,-2.36,-219.89,"46K•••216","","","","k52","","zak•••@gmail.com",""],[53,"2026-07-08","21:05","","General Currency Conversion","Completed","CHF",-477.45,0,-477.45,"4R4•••70H","46K•••216","","","k53","k52","zak•••@gmail.com",""],[54,"2026-07-08","21:05","","General Currency Conversion","Completed","OMR",219.89,0,219.89,"97M•••84T","46K•••216","","","k54","k52","","zak•••@gmail.com"],[55,"2026-07-08","21:22","","General Card Withdrawal","Completed","OMR",-59.69,-2.36,-62.05,"4M7•••22B","","","","k55","","zak•••@gmail.com",""],[56,"2026-07-08","21:22","","General Currency Conversion","Completed","GBP",-124.76,0,-124.76,"4UN•••31E","4M7•••22B","","","k56","k55","zak•••@gmail.com",""],[57,"2026-07-08","21:22","","General Currency Conversion","Completed","OMR",62.05,0,62.05,"3TV•••442","4M7•••22B","","","k57","k55","","zak•••@gmail.com"],[58,"2026-07-08","21:24","","General Card Withdrawal","Completed","OMR",-80.35,-2.36,-82.71,"0VL•••00T","","","","k58","","zak•••@gmail.com",""],[59,"2026-07-08","21:24","","General Currency Conversion","Completed","EUR",-194.55,0,-194.55,"4J7•••00C","0VL•••00T","","","k59","k58","zak•••@gmail.com",""],[60,"2026-07-08","21:24","","General Currency Conversion","Completed","OMR",82.71,0,82.71,"779•••41F","0VL•••00T","","","k60","k58","","zak•••@gmail.com"],[61,"2026-07-08","21:25","","General Card Withdrawal","Completed","OMR",-38.53,-2.36,-40.89,"7NX•••44J","","","","k61","","zak•••@gmail.com",""],[62,"2026-07-08","21:25","","General Currency Conversion","Completed","ILS",-334.32,0,-334.32,"04R•••01N","7NX•••44J","","","k62","k61","zak•••@gmail.com",""],[63,"2026-07-08","21:25","","General Currency Conversion","Completed","OMR",40.89,0,40.89,"04Y•••928","7NX•••44J","","","k63","k61","","zak•••@gmail.com"],[64,"2026-07-09","18:47","Samir Toumi","Mobile Payment","Completed","USD",54.67,-3.2,51.47,"274•••711","","ok","ahmad","k64","","samir.toumi@example.com","zak•••@gmail.com"],[65,"2026-07-09","19:06","Grace Miller","Mobile Payment","Completed","USD",1400.0,-73.04,1326.96,"925•••23X","","ref","karim","k65","","grace.miller@example.com","zak•••@gmail.com"],[66,"2026-07-09","21:30","Samir Toumi","Mobile Payment","Completed","USD",54.67,-3.2,51.47,"012•••30D","","ok","ahmad","k66","","samir.toumi@example.com","zak•••@gmail.com"],[67,"2026-07-10","03:45","Nora Jensen","General Payment","Completed","USD",40.59,-2.47,38.12,"5CP•••22P","","ok","mohammad","k67","","nora.jensen@example.com","zak•••@gmail.com"],[68,"2026-07-10","18:22","Elif Kaya","Mobile Payment","Completed","USD",100.0,-6.73,93.27,"9VF•••15X","","ok","ahmad","k68","","elif.kaya@example.com","zak•••@gmail.com"],[69,"2026-07-10","19:43","Paul Girard","Mobile Payment","Completed","USD",37.89,-2.77,35.12,"77W•••52W","","ok","mohammad","k69","","paul.girard@example.com","zak•••@gmail.com"],[70,"2026-07-10","20:00","Hana Mori","General Payment","Completed","USD",80.0,-4.51,75.49,"7P8•••707","","ok","mohammad","k70","","hana.mori@example.com","zak•••@gmail.com"],[71,"2026-07-10","23:33","Maya Cohen","Mobile Payment","Completed","USD",120.0,-6.58,113.42,"7KT•••34P","","ok","mohammad","k71","","maya.cohen@example.com","zak•••@gmail.com"],[72,"2026-07-11","17:23","Victor Lopez","General Payment","Completed","USD",54.77,-3.2,51.57,"2A4•••70Y","","ok","mohammad","k72","","victor.lopez@example.com","zak•••@gmail.com"],[73,"2026-07-11","20:38","Mona Fares","Mobile Payment","Completed","USD",100.0,-4.37,95.63,"6YP•••748","","ok","mohammad","k73","","mona.fares@example.com","zak•••@gmail.com"],[74,"2026-07-11","22:48","Felix Braun","Mobile Payment","Completed","USD",40.0,-2.43,37.57,"399•••25M","","ok","mohammad","k74","","maya.cohen@example.com","zak•••@gmail.com"],[75,"2026-07-11","23:57","Grace Miller","Payment Refund","Completed","USD",-1400.0,73.04,-1326.96,"8GY•••92E","925•••23X","","","k75","k65","zak•••@gmail.com","grace.miller@example.com"],[76,"2026-07-12","03:45","Mona Fares","Mobile Payment","Completed","USD",40.0,-1.96,38.04,"6WJ•••423","","ok","mohammad","k76","","mona.fares@example.com","zak•••@gmail.com"],[77,"2026-07-12","13:20","Dana White","General Payment","Completed","USD",257.01,-13.7,243.31,"1DG•••05X","","ok","mohammad","k77","","dana.white@example.com","zak•••@gmail.com"],[78,"2026-07-12","21:46","Maya Cohen","Mobile Payment","Completed","USD",25.0,-1.65,23.35,"99B•••52P","","ok","mohammad","k78","","maya.cohen@example.com","zak•••@gmail.com"],[79,"2026-07-13","01:10","Ali Rahman","General Payment","Completed","USD",200.0,-13.1,186.9,"2JU•••82M","","ok","karim","k79","","ali.rahman@example.com","zak•••@gmail.com"],[80,"2026-07-13","13:09","Zoe Turner","Mobile Payment","Completed","USD",119.37,-6.55,112.82,"483•••73V","","ok","mohammad","k80","","zoe.turner@example.com","zak•••@gmail.com"],[81,"2026-07-13","15:51","Rami Khoury","Mobile Payment","Completed","USD",142.4,-7.75,134.65,"7CC•••63T","","ok","mohammad","k81","","rami.khoury@example.com","zak•••@gmail.com"],[82,"2026-07-13","21:20","Eva Lind","Mobile Payment","Completed","USD",80.0,-4.51,75.49,"21S•••33P","","ok","mohammad","k82","","eva.lind@example.com","zak•••@gmail.com"],[83,"2026-07-14","19:10","Sami Haddad","Mobile Payment","Completed","USD",215.0,-11.52,203.48,"5B1•••44Y","","ok","karim","k83","","sami.haddad@example.com","zak•••@gmail.com"],[84,"2026-07-14","22:54","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"6GF•••92S","","","","k84","","zak•••@gmail.com",""],[85,"2026-07-15","02:58","Luca Bianchi","Mobile Payment","Completed","USD",132.63,-8.8,123.83,"9L2•••81T","","ok","mohammad","k85","","luca.bianchi@example.com","zak•••@gmail.com"],[86,"2026-07-15","04:15","Eva Lind","Mobile Payment","Completed","USD",162.0,-8.77,153.23,"5MF•••33P","","ok","mohammad","k86","","eva.lind@example.com","zak•••@gmail.com"],[87,"2026-07-15","15:30","Amira Zaki","Mobile Payment","Completed","USD",76.83,-4.34,72.49,"8Y8•••01Y","","ok","mohammad","k87","","amira.zaki@example.com","zak•••@gmail.com"],[88,"2026-07-15","15:50","Maya Cohen","Mobile Payment","Completed","USD",40.0,-2.43,37.57,"33J•••02A","","ok","mohammad","k88","","maya.cohen@example.com","zak•••@gmail.com"],[89,"2026-07-15","17:22","Ben Carter","Mobile Payment","Completed","USD",100.0,-4.37,95.63,"72W•••451","","ok","mohammad","k89","","ben.carter@example.com","zak•••@gmail.com"],[90,"2026-07-16","07:14","Sami Haddad","Mobile Payment","Completed","USD",837.27,-43.83,793.44,"8P0•••42G","","ok","mohammad","k90","","sami.haddad@example.com","zak•••@gmail.com"],[91,"2026-07-16","11:54","Nadia Omar","Mobile Payment","Completed","USD",54.74,-3.2,51.54,"8DG•••45N","","ok","mohammad","k91","","nadia.omar@example.com","zak•••@gmail.com"],[92,"2026-07-16","14:19","Leo Dubois","Mobile Payment","Completed","USD",50.0,-2.95,47.05,"544•••445","","ok","mohammad","k92","","leo.dubois@example.com","zak•••@gmail.com"],[93,"2026-07-16","17:43","Sofia Marin","Mobile Payment","Completed","USD",131.0,-8.7,122.3,"6RT•••52P","","ok","ahmad","k93","","sofia.marin@example.com","zak•••@gmail.com"],[94,"2026-07-16","21:19","Tariq Said","General Payment","Completed","USD",62.73,-3.61,59.12,"05S•••81K","","ok","mohammad","k94","","tariq.said@example.com","zak•••@gmail.com"],[95,"2026-07-16","22:56","Maya Cohen","Mobile Payment","Completed","USD",45.0,-2.69,42.31,"6MC•••62E","","ok","mohammad","k95","","maya.cohen@example.com","zak•••@gmail.com"],[96,"2026-07-16","23:07","Ivy Chen","Mobile Payment","Completed","USD",54.74,-3.2,51.54,"5BJ•••42U","","ok","mohammad","k96","","ivy.chen@example.com","zak•••@gmail.com"],[97,"2026-07-16","23:28","Max Keller","Mobile Payment","Completed","USD",100.12,-5.56,94.56,"8G4•••104","","ok","mohammad","k97","","max.keller@example.com","zak•••@gmail.com"],[98,"2026-07-17","14:43","Reem Daher","Mobile Payment","Completed","USD",108.92,-6.01,102.91,"0B4•••43U","","ok","ahmad","k98","","reem.daher@example.com","zak•••@gmail.com"],[99,"2026-07-17","14:46","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"0SM•••12H","","","","k99","","zak•••@gmail.com",""],[100,"2026-07-17","17:47","Oscar Hall","General Payment","Completed","USD",109.73,-6.05,103.68,"61T•••233","","ok","mohammad","k100","","oscar.hall@example.com","zak•••@gmail.com"],[101,"2026-07-17","20:15","Zoe Turner","Mobile Payment","Completed","USD",147.15,-7.99,139.16,"198•••64W","","ok","mohammad","k101","","zoe.turner@example.com","zak•••@gmail.com"],[102,"2026-07-17","21:43","Lara Mansour","Mobile Payment","Completed","USD",78.0,-5.32,72.68,"5X1•••50C","","ok","mohammad","k102","","lara.mansour@example.com","zak•••@gmail.com"],[103,"2026-07-17","22:39","Maya Cohen","Mobile Payment","Completed","USD",20.0,-1.39,18.61,"538•••025","","ok","mohammad","k103","","maya.cohen@example.com","zak•••@gmail.com"],[104,"2026-07-17","22:43","Maya Cohen","Mobile Payment","Completed","USD",55.0,-3.21,51.79,"0KD•••14W","","ok","mohammad","k104","","maya.cohen@example.com","zak•••@gmail.com"],[105,"2026-07-18","17:03","Finn Weber","Mobile Payment","Completed","USD",51.55,-3.03,48.52,"8EN•••339","","ok","mohammad","k105","","finn.weber@example.com","zak•••@gmail.com"],[106,"2026-07-18","18:52","Rami Khoury","Mobile Payment","Completed","USD",54.84,-3.2,51.64,"9T7•••446","","ok","mohammad","k106","","rami.khoury@example.com","zak•••@gmail.com"],[107,"2026-07-18","20:01","Hiba Kamal","Mobile Payment","Completed","USD",500.0,-32.21,467.79,"9J5•••517","","ok","ahmad","k107","","hiba.kamal@example.com","zak•••@gmail.com"],[108,"2026-07-18","21:34","Jack Reed","General Payment","Completed","USD",449.65,-23.7,425.95,"0M4•••731","","ok","mohammad","k108","","jack.reed@example.com","zak•••@gmail.com"],[109,"2026-07-19","08:43","Elif Kaya","Mobile Payment","Completed","USD",290.0,-18.83,271.17,"60Y•••54H","","ok","ahmad","k109","","elif.kaya@example.com","zak•••@gmail.com"],[110,"2026-07-19","11:39","Mira Sabbagh","Mobile Payment","Completed","USD",50.0,-2.36,47.64,"4FT•••20M","","ok","mohammad","k110","","mira.sabbagh@example.com","zak•••@gmail.com"],[111,"2026-07-19","13:50","Theo Klein","Mobile Payment","Completed","USD",109.67,-6.05,103.62,"1T7•••51B","","ok","ahmad","k111","","theo.klein@example.com","zak•••@gmail.com"],[112,"2026-07-19","17:31","Sofia Marin","Mobile Payment","Completed","USD",86.0,-5.83,80.17,"88Y•••13Y","","ok","ahmad","k112","","sofia.marin@example.com","zak•••@gmail.com"],[113,"2026-07-19","17:39","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"1L3•••946","","","","k113","","zak•••@gmail.com",""],[114,"2026-07-19","20:30","Ines Duarte","Mobile Payment","Completed","USD",100.0,-5.55,94.45,"3XP•••141","","ok","ahmad","k114","","ines.duarte@example.com","zak•••@gmail.com"],[115,"2026-07-20","00:00","Yara Hamdan","Mobile Payment","Completed","USD",200.0,-10.74,189.26,"4P0•••426","","ok","mohammad","k115","","yara.hamdan@example.com","zak•••@gmail.com"],[116,"2026-07-20","19:00","Mira Sabbagh","Mobile Payment","Completed","USD",110.0,-4.77,105.23,"1AX•••94V","","ok","mohammad","k116","","mira.sabbagh@example.com","zak•••@gmail.com"],[117,"2026-07-20","20:01","Ben Carter","Mobile Payment","Completed","USD",100.0,-4.37,95.63,"8JT•••358","","ok","mohammad","k117","","ben.carter@example.com","zak•••@gmail.com"],[118,"2026-07-21","00:02","Owen Price","Mobile Payment","Completed","ILS",2326.96,-122.24,2204.72,"06V•••42L","","ok","mohammad","k118","","owen.price@example.com","zak•••@gmail.com"],[119,"2026-07-21","01:05","","General Card Withdrawal","Completed","USD",-692.08,-5.9,-697.98,"56U•••73A","","","","k119","","zak•••@gmail.com",""],[120,"2026-07-21","01:05","","General Currency Conversion","Completed","ILS",-2198.58,0,-2198.58,"2.1•••+16","56U•••73A","","","k120","k119","zak•••@gmail.com",""],[121,"2026-07-21","01:05","","General Currency Conversion","Completed","USD",697.98,0,697.98,"1BN•••948","56U•••73A","","","k121","k119","","zak•••@gmail.com"],[122,"2026-07-21","13:50","Salma Nour","Mobile Payment","Completed","USD",79.24,-3.53,75.71,"8YX•••43E","","ok","mohammad","k122","","salma.nour@example.com","zak•••@gmail.com"],[123,"2026-07-21","16:28","PayPal","Hold on Balance for Dispute Investigation","Pending","USD",-95.3,0,-95.3,"98Y•••80J","6YS•••15P","","karim","k126","k30","zak•••@gmail.com","clara.rossi@example.com"],[124,"2026-07-21","17:54","Sofia Marin","Mobile Payment","Completed","USD",131.0,-8.7,122.3,"5PX•••10F","","ok","ahmad","k124","","sofia.marin@example.com","zak•••@gmail.com"],[125,"2026-07-21","20:48","Clara Rossi","Payment Refund","Completed","USD",-100.0,4.7,-95.3,"8CA•••840","6YS•••15P","","","k125","k30","zak•••@gmail.com","clara.rossi@example.com"],[126,"2026-07-21","20:48","PayPal","Cancellation of Hold for Dispute Resolution","Denied","USD",95.3,0,95.3,"98Y•••80J","6YS•••15P","","","k126","k30","clara.rossi@example.com","zak•••@gmail.com"],[127,"2026-07-22","14:31","Zoe Turner","Mobile Payment","Completed","USD",256.46,-13.67,242.79,"7UX•••10F","","ref","mohammad","k127","","zoe.turner@example.com","zak•••@gmail.com"],[128,"2026-07-22","14:31","","Payment Review Hold","Completed","USD",-242.79,0,-242.79,"3G8•••054","7UX•••10F","","","k128","k127","zak•••@gmail.com",""],[129,"2026-07-22","14:37","Zoe Turner","Mobile Payment","Completed","USD",91.04,-5.09,85.95,"1JS•••32E","","ok","mohammad","k129","","zoe.turner@example.com","zak•••@gmail.com"],[130,"2026-07-22","16:38","Zoe Turner","Payment Refund","Completed","USD",-256.46,13.67,-242.79,"4YA•••432","7UX•••10F","","","k130","k127","zak•••@gmail.com","zoe.turner@example.com"],[131,"2026-07-22","16:38","","Payment Review Release","Completed","USD",242.79,0,242.79,"9YF•••25H","7UX•••10F","","","k131","k127","","zak•••@gmail.com"],[132,"2026-07-22","16:40","Erik Holm","Mobile Payment","Completed","USD",100.0,-5.55,94.45,"0AG•••40U","","ok","mohammad","k132","","erik.holm@example.com","zak•••@gmail.com"],[133,"2026-07-22","17:16","Dina Yassin","Mobile Payment","Completed","USD",125.0,-6.84,118.16,"9TK•••70G","","ok","mohammad","k133","","dina.yassin@example.com","zak•••@gmail.com"],[134,"2026-07-23","13:48","Ryan Ford","Mobile Payment","Completed","USD",32.81,-2.05,30.76,"996•••44W","","ok","mohammad","k134","","ryan.ford@example.com","zak•••@gmail.com"],[135,"2026-07-23","21:17","Maya Cohen","Mobile Payment","Completed","USD",110.0,-6.07,103.93,"5JT•••70U","","ok","mohammad","k135","","maya.cohen@example.com","zak•••@gmail.com"],[136,"2026-07-23","22:44","Nour Habib","General Payment","Completed","USD",203.65,-10.93,192.72,"8FU•••62C","","ok","mohammad","k136","","nour.habib@example.com","zak•••@gmail.com"],[137,"2026-07-23","22:56","Maya Cohen","Mobile Payment","Completed","USD",30.0,-1.91,28.09,"9GC•••31T","","ok","mohammad","k137","","maya.cohen@example.com","zak•••@gmail.com"],[138,"2026-07-24","14:44","Zoe Turner","Mobile Payment","Completed","USD",204.23,-10.96,193.27,"4S6•••00K","","ok","mohammad","k138","","zoe.turner@example.com","zak•••@gmail.com"],[139,"2026-07-24","20:20","Kai Schmidt","General Payment","Completed","USD",850.59,-44.52,806.07,"7AL•••426","","ok","ahmad","k139","","kai.schmidt@example.com","zak•••@gmail.com"],[140,"2026-07-25","16:07","Layla Amin","General Payment","Completed","USD",350.0,-18.53,331.47,"7NJ•••72J","","ok","mohammad","k140","","layla.amin@example.com","zak•••@gmail.com"],[141,"2026-07-25","18:44","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"1E9•••64Y","","","","k141","","zak•••@gmail.com",""],[142,"2026-07-26","11:04","Maya Cohen","Mobile Payment","Completed","USD",60.0,-3.47,56.53,"71Y•••82E","","ok","mohammad","k142","","maya.cohen@example.com","zak•••@gmail.com"],[143,"2026-07-26","20:43","Carl Berg","Mobile Payment","Completed","USD",185.46,-9.98,175.48,"0Y1•••45S","","ok","mohammad","k143","","carl.berg@example.com","zak•••@gmail.com"],[144,"2026-07-27","05:24","Jana Fakhoury","Mobile Payment","Completed","USD",165.0,-8.92,156.08,"3BY•••42P","","ok","ahmad","k144","","jana.fakhoury@example.com","zak•••@gmail.com"],[145,"2026-07-27","13:38","Zoe Turner","Mobile Payment","Completed","USD",146.69,-7.97,138.72,"112•••631","","ok","mohammad","k145","","zoe.turner@example.com","zak•••@gmail.com"],[146,"2026-07-27","20:07","Maya Cohen","Mobile Payment","Completed","USD",20.0,-1.39,18.61,"2U7•••408","","ok","mohammad","k146","","maya.cohen@example.com","zak•••@gmail.com"],[147,"2026-07-27","20:22","Layla Amin","General Payment","Completed","USD",102.82,-5.69,97.13,"4R1•••40H","","ok","mohammad","k147","","layla.amin@example.com","zak•••@gmail.com"],[148,"2026-07-27","21:24","Seth Young","Mobile Payment","Completed","USD",1.0,-0.4,0.6,"7CJ•••74S","","ok","ahmad","k148","","seth.young@example.com","zak•••@gmail.com"],[149,"2026-07-27","23:14","Sofia Marin","Mobile Payment","Completed","USD",103.0,-6.92,96.08,"7WS•••73H","","ok","ahmad","k149","","sofia.marin@example.com","zak•••@gmail.com"],[150,"2026-07-28","00:49","Seth Young","Mobile Payment","Completed","USD",844.4,-44.19,800.21,"773•••233","","ok","ahmad","k150","","seth.young@example.com","zak•••@gmail.com"],[151,"2026-07-28","11:57","Nora Jensen","General Payment","Completed","USD",102.31,-5.66,96.65,"0GK•••209","","ok","mohammad","k151","","nora.jensen@example.com","zak•••@gmail.com"],[152,"2026-07-28","15:53","Huda Rashid","General Payment","Completed","USD",100.0,-6.73,93.27,"3X1•••418","","ok","ahmad","k152","","huda.rashid@example.com","zak•••@gmail.com"],[153,"2026-07-28","18:55","Ian Moore","General Payment","Completed","USD",120.0,-8.0,112.0,"7VS•••54N","","ok","ahmad","k153","","ian.moore@example.com","zak•••@gmail.com"],[154,"2026-07-28","19:42","Rana Issa","Mobile Payment","Completed","USD",30.6,-1.95,28.65,"9NF•••33G","","ok","mohammad","k154","","rana.issa@example.com","zak•••@gmail.com"],[155,"2026-07-28","21:07","Rami Khoury","Mobile Payment","Completed","USD",109.11,-6.02,103.09,"5UY•••52F","","ok","mohammad","k155","","rami.khoury@example.com","zak•••@gmail.com"],[156,"2026-07-28","22:00","","General Card Withdrawal","Completed","USD",-2000.0,-5.9,-2005.9,"1BJ•••516","","","","k156","","zak•••@gmail.com",""],[157,"2026-07-29","15:02","Alex Kim","Mobile Payment","Completed","USD",-200.0,0,-200.0,"3H4•••93M","","ok","mohammad","k157","","zak•••@gmail.com","alex.kim@example.com"],[158,"2026-07-29","21:34","Eva Lind","Mobile Payment","Completed","USD",190.0,-10.22,179.78,"2Y6•••51M","","ok","mohammad","k158","","eva.lind@example.com","zak•••@gmail.com"],[159,"2026-07-30","14:19","Zoe Turner","Mobile Payment","Completed","USD",137.64,-7.5,130.14,"2KU•••828","","ok","mohammad","k159","","zoe.turner@example.com","zak•••@gmail.com"],[160,"2026-07-30","16:39","Maya Cohen","Mobile Payment","Completed","USD",50.0,-2.95,47.05,"19A•••722","","pend","","k160","","maya.cohen@example.com","zak•••@gmail.com"],[161,"2026-07-30","17:17","Maya Cohen","Mobile Payment","Completed","USD",135.0,-7.35,127.65,"8EK•••10T","","pend","","k161","","maya.cohen@example.com","zak•••@gmail.com"],[162,"2026-07-30","17:34","Farah Jaber","Mobile Payment","Completed","USD",100.0,-5.55,94.45,"9PG•••43N","","pend","","k162","","farah.jaber@example.com","zak•••@gmail.com"],[163,"2026-07-30","19:58","Maya Cohen","Mobile Payment","Completed","USD",23.0,-1.55,21.45,"9PS•••413","","pend","","k163","","maya.cohen@example.com","zak•••@gmail.com"],[164,"2026-07-31","02:14","Dana White","Mobile Payment","Completed","USD",242.89,-12.97,229.92,"2B7•••74H","","pend","","k164","","dana.white@example.com","zak•••@gmail.com"],[165,"2026-07-31","19:52","Mark Stone","Mobile Payment","Completed","USD",54.87,-3.2,51.67,"4S1•••01L","","pend","","k165","","mark.stone@example.com","zak•••@gmail.com"]];
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { copied: '', acct: 'zaki', ptab: 'tx', cat: 'all', offF: 'all', q: '', shown: 10, hl: null, closeM: false, amThr: '6', amQ: '', amV: 'open', amM: null, amOff: '', amNote: '', amErr: '',
+      amanat: [
+        { id: 'a1', name: 'Ruth Adler', email: 'ruth.adler@example.com', amt: 180, date: '2026-01-18', month: 'يناير 2026', st: 'held' },
+        { id: 'a2', name: 'Ivy Chen', email: 'ivy.chen@example.com', amt: 95.3, date: '2026-03-02', month: 'مارس 2026', st: 'held' },
+        { id: 'a3', name: 'Max Keller', email: 'max.keller@example.com', amt: 250, date: '2026-04-10', month: 'أبريل 2026', st: 'delivered', note: 'سُلّمت في 03/06/2026 · محمد أبو حامدة' },
+        { id: 'a4', name: 'Oscar Hall', email: 'oscar.hall@example.com', amt: 420, date: '2026-05-21', month: 'مايو 2026', st: 'held' },
+        { id: 'a5', name: 'Seth Young', email: 'seth.young@example.com', amt: 64.5, date: '2026-06-29', month: 'يونيو 2026', st: 'held' }
+      ],
+      offM: false, newOff: '', offErr: '', editK: null, editName: '',
+      offices: [{ k: 'mohammad', n: 'محمد أبو حامدة', on: true, since: '01/2026' }, { k: 'karim', n: 'أبو كريم – مكتب القاسم', on: true, since: '03/2026' }, { k: 'amal', n: 'مكتب الأمل', on: true, since: '01/2026' }, { k: 'faiz', n: 'فايز عرفات', on: false, since: '06/2026', until: '07/2026' }, { k: 'ahmad', n: 'أحمد (المكتب)', on: true, since: '01/2026' }],
+      vs: {}, off: {}, wd: {}, closed: false, err: '', imp: false };
+    try { var h = String((typeof location !== 'undefined' && location.hash) || '').replace('#', ''); if (['zaki', 'office'].indexOf(h) >= 0) this.state.acct = h; } catch (e) {}
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var set = function (o) { self.setState(o); };
+    var m2 = function (n) { var s = Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); return (n < -0.004 ? '−' : '') + s; };
+    var cnt = function (n, one, few) { return n + ' ' + (n >= 3 && n <= 10 ? few : one); };
+    var usd = function (n) { return m2(n) + ' $'; };
+    var IN = { 'Mobile Payment': 1, 'General Payment': 1, 'Mass Pay Payment': 1 };
+    var TYPE = {
+      'Mobile Payment': ['حوالة واردة', 'background:#136A43;color:#fff', '#136A43'],
+      'General Payment': ['حوالة واردة', 'background:#136A43;color:#fff', '#136A43'],
+      'Mass Pay Payment': ['حوالة واردة', 'background:#136A43;color:#fff', '#136A43'],
+      'Payment Refund': ['إرجاع للمرسل', 'background:#FBE7E5;color:#A3291D', '#D9534A'],
+      'General Card Withdrawal': ['سحب على بطاقة', 'background:#142B4A;color:#fff', '#142B4A'],
+      'General Currency Conversion': ['تحويل عملة', 'background:#FDF0D5;color:#7A5200', '#F2B84B'],
+      'Hold on Balance for Dispute Investigation': ['نزاع: حجز مبلغ', 'background:#FDE6D3;color:#8A3B00', '#E07B2E'],
+      'Cancellation of Hold for Dispute Resolution': ['نزاع: فك الحجز', 'background:#FDE6D3;color:#8A3B00', '#E07B2E'],
+      'Payment Review Hold': ['مراجعة PayPal: حجز', 'background:#EEF1F5;color:#3A4A60', '#9FB0C6'],
+      'Payment Review Release': ['مراجعة PayPal: إفراج', 'background:#EEF1F5;color:#3A4A60', '#9FB0C6']
+    };
+    var OFFS = st.offices;
+    var ACTIVE = OFFS.filter(function (o) { return o.on; });
+    var offName = {}; OFFS.forEach(function (o) { offName[o.k] = o.n; });
+    var accts = [{ k: 'zaki', name: 'حساب زكي', mail: 'zak•••@gmail.com', ini: 'ز', bal: '4,180.00 USD' }, { k: 'office', name: 'حساب المكتب', mail: 'off•••@gmail.com', ini: 'م', bal: '2,500.00 USD' }]
+      .map(function (a) { return Object.assign({}, a, { cls: 'xa-acc' + (st.acct === a.k ? ' on' : ''), sel: st.acct === a.k ? 'true' : 'false', go: function () { set({ acct: a.k, shown: 10, err: '', kfDoc: null, curF: '' }); } }); });
+    var KA = { holder: 'أحمد (كما في الجواز)', address: 'غزة – الرمال، شارع الوحدة', country: 'فلسطين', zip: 'P1150', phone: '+970 599 ••• 214', phoneOwner: 'أحمد' };
+    var KD = function (type, name, num, exp, note, file) { return { type: type, name: name, num: num || '', exp: exp || '', note: note || '', file: !!file }; };
+    var KFALL = {
+      zaki: { id: 'pz', owner: 'زكي', updated: '20/10/2026', kyc: 'موثّق', holder: 'زكي', job: 'تجارة إلكترونية', volume: 'شهرياً حتى 10,000 USD', opened: '2023-11', address: 'غزة – النصر', country: 'فلسطين', zip: 'P1180', email: 'zaki.paypal@example.com', phone: '+970 592 ••• 880', phoneOwner: 'زكي', pw: [1, 'زكي'], pin: [0, ''], ga: [0, 'التحقق برسالة SMS'],
+        docs: [KD('هوية', 'هوية زكي', '4••••••37', '2030-06-14')], shared: '', iss: 'على هذا الحساب مشكلة مفتوحة · ISS-011 · تقييد', log: [['20/10/2026 09:30', 'أحمد', 'edit', 'رقم الجوال المربوط']] },
+      office: Object.assign({ id: 'po', owner: 'أحمد', updated: '18/09/2026', kyc: 'موثّق', job: 'صرافة وتحويل أموال', volume: 'شهرياً 30,000 – 60,000 USD', opened: '2023-04', email: 'madina.office.pp@example.com', pw: [1, 'أحمد'], pin: [0, ''], ga: [1, 'جوال أحمد (iPhone)'],
+        docs: [KD('جواز سفر', 'جواز سفر أحمد', 'P•••••4821', '2027-01-05'), KD('إثبات عنوان', 'كشف بنكي', '', '', '08/2026', 1)], shared: 'نفس الجواز مستخدم أيضاً في: كاست، Kraken، Binance', iss: 'على هذا الحساب مشكلة مفتوحة · ISS-014 · تقييد', log: [['18/09/2026 09:30', 'أحمد', 'edit', 'إثبات العنوان']] }, KA)
+    };
+    var kfMake = function (F, tab, go, tabs) {
+      var LK = { edit: ['تعديل', 'pill neutral'], doc: ['عرض وثيقة', 'pill info'], add: ['إضافة', 'pill teal'] };
+      var cur = st.kfT || 'acc';
+      var base = { kfTab: tab, kfMain: !tab, kfGo: go, kfHas: !!F, kfNone: !F, kfIsDoc: false, kfShowLog: false, kfLogExp: 'false', kfLogLabel: '', kf: { docs: [], sec: [], log: [] }, kfDocName: '', kfDocMeta: '', kfCloseDoc: function () {}, kfToggleLog: function () {},
+        kfTabs: (tabs || [['acc', 'الحساب'], ['doc', 'التوثيق']]).map(function (t) { var on = cur === t[0]; return { label: t[1], cls: on ? 'on' : '', sel: on ? 'true' : 'false', go: function () { self.setState({ kfT: t[0] }); } }; }) };
+      if (!F) return base;
+      var fd = function (d) { return d ? d.split('-').reverse().join('/') : ''; };
+      var TD = new Date('2026-11-20T00:00:00');
+      var pad = function (x) { return String(x).padStart(2, '0'); };
+      var stamp = function () { var n = new Date(); return pad(n.getDate()) + '/' + pad(n.getMonth() + 1) + '/' + n.getFullYear() + ' ' + pad(n.getHours()) + ':' + pad(n.getMinutes()); };
+      var log = ((st.kfX && st.kfX[F.id]) || []).concat(F.log), D = st.kfDoc;
+      return Object.assign(base, {
+        kf: { owner: F.owner, updated: F.updated, kyc: F.kyc, kycPill: F.kyc === 'موثّق' ? 'pill ok' : 'pill warn', isClosed: !!F.closed, closed: fd(F.closed), hasIss: !!F.iss, iss: F.iss || '',
+          holder: F.holder || '—', job: F.job || '—', volume: F.volume || '—', opened: F.opened ? F.opened.split('-').reverse().join('/') : '—', address: [F.address, F.country, F.zip].filter(Boolean).join(' · ') || '—',
+          email: F.email || '—', phone: F.phone || '—', phoneOwner: F.phoneOwner ? '· باسم ' + F.phoneOwner : '',
+          sec: [['كلمة المرور', F.pw, 'موجودة', 'لا يوجد', 'محفوظة عند '], ['رمز PIN', F.pin, 'موجود', 'لا يوجد', 'محفوظ عند '], ['Google Authenticator', F.ga, 'مفعّل', 'غير مفعّل', 'على ']].map(function (s) { var on = !!s[1][0], who = s[1][1] || ''; return { label: s[0], pill: on ? 'pill ok' : 'pill neutral', state: on ? s[2] : s[3], who: on && who ? s[4] + who : (!on ? who : '') }; }),
+          docCount: String(F.docs.length), hasShared: !!F.shared, shared: F.shared || '',
+          docs: F.docs.map(function (d) {
+            var n = d.exp ? Math.round((new Date(d.exp + 'T00:00:00') - TD) / 86400000) : null;
+            var s2 = n === null ? (d.file ? ['مرفوع', 'pill ok'] : ['مسجّلة · بدون ملف', 'pill info']) : n < 0 ? ['منتهية', 'pill bad'] : n <= 60 ? ['تنتهي خلال ' + n + ' يوماً', 'pill warn'] : ['سارية', 'pill ok'];
+            return { type: d.type, name: d.name, title: d.file ? d.name : 'تم استخدام ' + d.name, hasFile: !!d.file, meta: [d.num ? 'رقم ' + d.num : '', d.exp ? 'تنتهي ' + fd(d.exp) : '', d.note].filter(Boolean).join(' · ') || '—', st: s2[0], pill: s2[1],
+              view: function () { var o = Object.assign({}, self.state.kfX || {}); o[F.id] = [[stamp(), 'أحمد', 'doc', d.name, 'Chrome · Windows']].concat(o[F.id] || []); self.setState({ kfDoc: d, kfX: o }); } };
+          }),
+          log: log.map(function (l) { var k = LK[l[2]] || LK.edit; return { t: l[0], u: l[1], kind: k[0], pill: k[1], what: l[3], dev: l[4] || 'Chrome · Windows' }; }) },
+        kfShowLog: !!st.kfLog, kfLogExp: st.kfLog ? 'true' : 'false', kfLogLabel: st.kfLog ? 'إخفاء سجل الاطلاع والتعديل' : 'عرض سجل الاطلاع والتعديل (' + log.length + ')', kfToggleLog: function () { self.setState({ kfLog: !self.state.kfLog }); },
+        kfIsDoc: !!D, kfDocName: D ? D.name : '', kfDocMeta: D ? [D.type, D.num ? 'رقم ' + D.num : ''].filter(Boolean).join(' · ') : '', kfCloseDoc: function () { self.setState({ kfDoc: null }); }
+      });
+    };
+    var KF = {};
+    var OFFRET = { impAcc: (st.acct === 'office' ? 'حساب المكتب' : 'حساب زكي'), accts: accts, empty: true, has: false, open: false, closed: false, monthPill: 'pill neutral', monthStyle: 'color:#4A5A70', monthText: 'لا توجد بيانات', hasErr: false, isImport: st.imp, openImport: function () { set({ imp: true }); }, closeImport: function () { set({ imp: false }); }, closeMonth: function () {}, reopen: function () {} };
+
+    var limCard = function (a) {
+      var M0 = function (n) { return Number(n).toLocaleString('en-US', { maximumFractionDigits: 2 }); };
+      var PN = { d: 'يومي', w: 'أسبوعي', m: 'شهري' }, KN = { out: 'الخروج فقط', both: 'الدخول والخروج' }, WSN = { sat: 'السبت', sun: 'الأحد', mon: 'الاثنين' };
+      var G = { pp: ['PayPal', 'pill info'], bank: ['بنك', 'pill neutral'], wallet: ['محفظة', 'pill teal'], crypto: ['منصة رقمية', 'pill warn'] };
+      var RESET = { cal: { d: 'يتجدد منتصف الليل', w: 'يتجدد يوم ' + WSN[a.ws || 'sat'], m: 'يتجدد أول الشهر' }, roll: { d: 'آخر 24 ساعة', w: 'آخر 7 أيام', m: 'آخر 30 يوماً' } };
+      var worst = 0, all = a.lims || [], anyUnk = all.some(function (l) { return l.unk; });
+      var lims = all.map(function (l) {
+        var title = (KN[l.k] || KN.out) + ' · ' + PN[l.p], reset = RESET[a.mode][l.p];
+        if (l.unk) return { title: title, reset: reset, pct: '—', pctStyle: 'color:#4A5A70;font-weight:600', bar: 'width:0%', mark: 'inset-inline-start:' + a.thr + '%', usedTxt: 'غير معرّف', left: '', hasEff: false, eff: '' };
+        var pct = l.max > 0 ? l.used / l.max * 100 : 0, lvl = pct >= 100 ? 2 : pct >= a.thr ? 1 : 0; worst = Math.max(worst, lvl);
+        var col = lvl === 2 ? '#D9534A' : lvl === 1 ? '#F2B84B' : '#16B8A6', left = Math.max(0, l.max - l.used);
+        return { title: title, reset: reset, pct: pct.toFixed(0) + '%', pctStyle: 'color:' + (lvl === 2 ? '#A3291D' : lvl === 1 ? '#7A5200' : '#136A43') + ';font-weight:600',
+          bar: 'width:' + Math.min(100, pct).toFixed(1) + '%;background:' + col, mark: 'inset-inline-start:' + a.thr + '%',
+          usedTxt: M0(l.used) + ' / ' + M0(l.max) + ' ' + a.cur, left: lvl === 2 ? 'لا يوجد متبقٍ' : 'المتبقي ' + M0(left) + ' ' + a.cur, hasEff: false, eff: '' };
+      });
+      var unk = !!a.unknown, CPN = { d: 'يومي', w: 'أسبوعي', m: 'شهري' };
+      var cols = ['d', 'w', 'm'].map(function (p) {
+        var l = all.filter(function (x) { return x.p === p; })[0];
+        if (!l) return { label: CPN[p], has: false, none: true, noneTxt: 'لا يوجد حد' };
+        if (l.unk) return { label: CPN[p], has: false, none: true, noneTxt: 'غير معرّف' };
+        var pc = l.max > 0 ? l.used / l.max * 100 : 0, cl = pc >= 100 ? 2 : pc >= a.thr ? 1 : 0;
+        return { label: CPN[p], has: true, none: false, left: M0(Math.max(0, l.max - l.used)), max: M0(l.max), reset: RESET[a.mode][p], leftStyle: 'color:' + ['#142B4A', '#7A5200', '#A3291D'][cl], bar: 'width:' + Math.min(100, pc).toFixed(1) + '%;background:' + ['#16B8A6', '#F2B84B', '#D9534A'][cl] };
+      });
+      var subTxt = [all.length ? KN[all[0].k] : '', a.cur, a.mode === 'roll' ? 'متحرك' : 'تقويمي' + (all.some(function (x) { return x.p === 'w'; }) ? ' · الأسبوع يبدأ ' + WSN[a.ws || 'sat'] : '')].filter(Boolean).join(' · ');
+      return { sub: subTxt, cols: cols, some: !!all.length && !unk, href: 'Limits.dc.html' + (a.lid ? '#' + a.lid : ''), name: a.name, cur: a.cur, type: G[a.g][0], typeCls: G[a.g][1], lims: lims, none: !lims.length, noneText: unk ? 'الليميت غير معروف بعد' : 'لا يوجد ليميت لهذا الحساب',
+        state: unk ? 'غير معرّف' : !lims.length ? 'بدون ليميت' : worst === 2 ? 'وصل للحد' : worst === 1 ? 'قريب من الحد' : anyUnk ? 'معرّف جزئياً' : 'ضمن الحد',
+        statePill: unk || !lims.length ? 'pill neutral' : worst === 2 ? 'pill bad' : worst === 1 ? 'pill warn' : anyUnk ? 'pill neutral' : 'pill ok',
+        border: 'border-top-color:' + (unk || !lims.length ? '#E1E6EE' : worst === 2 ? '#D9534A' : worst === 1 ? '#F2B84B' : '#16B8A6') };
+    };
+    var XST = { 'نشط': 'pill ok', 'مقيّد': 'pill warn', 'مجمّد': 'pill info', 'مغلق': 'pill neutral' };
+    var xExtra = function (A) {
+      var TD = new Date('2026-11-21T00:00:00'), sts = A.st || 'نشط';
+      var docs = (A.docs || []).map(function (d) {
+        var n = d.exp ? Math.round((new Date(d.exp + 'T00:00:00') - TD) / 86400000) : null;
+        var s = n === null ? null : n < 0 ? ['منتهية', 'pill bad'] : n <= 60 ? ['تنتهي خلال ' + n + ' يوماً', 'pill warn'] : ['سارية', 'pill ok'];
+        return { title: 'تم استخدام ' + d.type + ' ' + d.who, meta: [d.exp ? 'تنتهي ' + d.exp.split('-').reverse().join('/') : 'بدون تاريخ انتهاء', d.note || '', d.file ? 'ملف: ' + d.file : ''].filter(Boolean).join(' · '), hasSt: !!s, st: s ? s[0] : '', pill: s ? s[1] : '' };
+      });
+      var c = docs.length;
+      return { stTxt: sts, stPill: XST[sts] || 'pill neutral',
+        xd: { none: !c, list: docs, count: c === 0 ? 'لا توجد وثائق' : c === 1 ? 'وثيقة واحدة' : c === 2 ? 'وثيقتان' : c + ' وثائق', pill: c ? 'pill info' : 'pill neutral' },
+        xn: { has: !!A.note, none: !A.note, text: A.note || '' } };
+    };
+    var doCopy = function (key, text) { try { if (navigator.clipboard) navigator.clipboard.writeText(text); } catch (e) {} set({ copied: key }); setTimeout(function () { if (self.state.copied === key) self.setState({ copied: '' }); }, 1600); };
+    var PACC = {
+      zaki: { k: 'pz', st: 'نشط', owner: 'زكي', email: 'zaki.madina.pay@gmail.com', ppName: 'Zaki Al-Madina', ppme: 'paypal.me/zakimadina', type: 'Personal', country: 'فلسطين',
+        docs: [{ type: 'هوية', who: 'زكي', exp: '2030-06-14' }],
+        note: 'الهدف من فتح الحساب: استلام دفعات البيع الإلكتروني.\nالعمل أو النشاط: تجارة إلكترونية · حجم التعامل المتوقع: حتى 10,000 USD شهرياً.\nالعنوان المسجّل: غزة – النصر · كلمة المرور ورمز PIN عند زكي.' },
+      office: { k: 'po', st: 'نشط', owner: 'أحمد', email: 'madina.office.pp@example.com', ppName: 'Madina Office', ppme: '', type: 'Business', country: 'فلسطين',
+        docs: [{ type: 'جواز سفر', who: 'أحمد', exp: '2027-01-05' }, { type: 'إثبات عنوان', who: 'أحمد', note: 'كشف بنكي', file: 'كشف_بنكي.pdf' }],
+        note: 'الهدف من فتح الحساب: استلام حوالات المكاتب بالدولار.\nالعمل أو النشاط: صرافة وتحويل أموال · حجم التعامل المتوقع: 30,000 – 60,000 USD شهرياً.' }
+    };
+    var PA = PACC[st.acct] || PACC.zaki;
+    var PDEF = [['البريد الإلكتروني', PA.email, true, true], ['الاسم في PayPal', PA.ppName, true, true], ['رابط PayPal.me', PA.ppme, true, true], ['نوع الحساب', PA.type, true, true], ['دولة التسجيل', PA.country, false, true], ['المسؤول عنه في المكتب', PA.owner, false, false]];
+    var pfFields = PDEF.map(function (f) { var done = st.copied === PA.k + f[0]; return { label: f[0], val: f[1] || '—', vcls: f[2] ? 'en' : '', share: !!f[3] && !!f[1], bcls: 'cpy' + (done ? ' ok2' : ''), btn: done ? '✓ نُسخ' : 'نسخ', aria: 'نسخ ' + f[0], copy: function () { doCopy(PA.k + f[0], f[1]); } }; });
+    var allDone = st.copied === PA.k + '*';
+    var ACCV = Object.assign(xExtra(PA), { fields: pfFields, copyAllCls: 'btn mb' + (allDone ? ' cdone' : ''), copyAllTxt: allDone ? '✓ نُسخت' : 'نسخ الكل', copyAll: function () { doCopy(PA.k + '*', PDEF.filter(function (f) { return f[3] && f[1]; }).map(function (f) { return f[0] + ': ' + f[1]; }).join('\n')); } });
+    var offTab = ['sum', 'tx', 'am', 'doc'].indexOf(st.ptab) >= 0 ? st.ptab : 'tx';
+    var offTabs = [['sum', 'الملخص', ''], ['tx', 'الحركات', '0'], ['am', 'الأمانات', '0'], ['doc', 'الوثائق والملاحظات', '']].map(function (x) { var on = offTab === x[0]; return { label: x[1], n: x[2], hasN: !!x[2], cls: on ? 'on' : '', sel: on ? 'true' : 'false', go: function () { set({ ptab: x[0] }); } }; });
+    if (st.acct !== 'zaki') return Object.assign({}, OFFRET, ACCV, { showTabs: true, ptabs: offTabs, empty: offTab === 'tx' || offTab === 'am', showAcc: offTab === 'sum', showDN: offTab === 'doc', lc: limCard({ lid: 'po', name: 'PayPal – المكتب', g: 'pp', cur: 'USD', thr: 80, mode: 'cal', ws: 'mon', lims: [{ p: 'd', k: 'out', max: 8000, used: 0 }, { p: 'w', k: 'out', max: 16000, used: 0 }, { p: 'm', k: 'out', max: 50000, used: 0 }] }) });
+    // rows with overrides
+    var all = PP_DATA.map(function (a) {
+      return { i: a[0], date: a[1], time: a[2], name: a[3], type: a[4], ps: a[5], cur: a[6], g: a[7], f: a[8], n: a[9], id: a[10], ref: a[11],
+        vs: st.vs[a[14]] !== undefined ? st.vs[a[14]] : a[12], off: st.off[a[14]] !== undefined ? st.off[a[14]] : a[13], key: a[14], refKey: a[15], wd: st.wd[a[14]] || '', from: a[16], to: a[17] };
+    });
+    var byKey = {}; all.forEach(function (r) { byKey[r.key] = r; });
+    var refundOf = {}; all.forEach(function (r) { if (r.type === 'Payment Refund' && byKey[r.refKey]) refundOf[r.refKey] = r; });
+    all.forEach(function (r) {
+      r.isIn = !!IN[r.type];
+      if (r.isIn && refundOf[r.key]) { r.autoRef = true; r.lateRef = r.vs === 'ok' && !!r.off; if (!r.lateRef) { r.vs = 'ref'; } }
+    });
+    var U = all.filter(function (r) { return r.cur === 'USD'; });
+    var sum = function (list, f) { return list.reduce(function (s, r) { return s + r[f]; }, 0); };
+    var inc = U.filter(function (r) { return r.isIn; });
+    var inG = sum(inc, 'g'), inF = sum(inc, 'f');
+    var refs = U.filter(function (r) { return r.type === 'Payment Refund'; });
+    var wds = U.filter(function (r) { return r.type === 'General Card Withdrawal'; });
+    var incAll = all.filter(function (r) { return r.isIn; });
+    // الواصل حسب العملة · سعر تقريبي من الإنترنت
+    var RATE = { USD: 1, ILS: 0.27, EUR: 1.08, GBP: 1.27, JOD: 1.41, CAD: 0.73, AUD: 0.66, OMR: 2.6, CHF: 1.13 };
+    var arrived = incAll.filter(function (r) { return r.vs !== 'ref'; }), byCur = {}, curOrder = [];
+    arrived.forEach(function (r) { if (!byCur[r.cur]) { byCur[r.cur] = { n: 0, c: 0 }; curOrder.push(r.cur); } byCur[r.cur].n += r.n; byCur[r.cur].c += 1; });
+    curOrder.sort(function (x, y) { return byCur[y].n * (RATE[y] || 0) - byCur[x].n * (RATE[x] || 0); });
+    var curUsd = curOrder.reduce(function (s3, k) { return s3 + byCur[k].n * (RATE[k] || 0); }, 0);
+    var grp = { ok: [], pend: [], ref: [], aman: [] };
+    incAll.forEach(function (r) { (grp[r.lateRef ? 'ok' : r.vs] || grp.pend).push(r); });
+    var tot = (incAll.length - grp.ref.length) || 1;
+    var pc = function (k) { return (grp[k].length / tot * 100).toFixed(2) + '%'; };
+    var pend = grp.pend.slice().sort(function (a, b) { return (a.date + a.time) < (b.date + b.time) ? -1 : 1; });
+    var noOff = grp.ok.filter(function (r) { return !r.off; }).length;
+    var fmtD = function (d) { var p = d.split('-'); return p[2] + '/' + p[1]; };
+
+    var tcount = {}; all.forEach(function (r) { var t = tcount[r.type] || (tcount[r.type] = { c: 0, n: 0 }); t.c += 1; if (r.cur === 'USD') t.n += r.n; });
+    var offStats = OFFS.map(function (o) {
+      var l = grp.ok.filter(function (r) { return r.off === o.k && r.cur === 'USD'; });
+      return { name: o.n, count: cnt(l.length, 'حوالة', 'حوالات'), v: sum(l, 'n') };
+    });
+    offStats = offStats.filter(function (o) { return o.v > 0; }).sort(function (a, b) { return b.v - a.v; });
+    var offTot = offStats.reduce(function (s2, o) { return s2 + o.v; }, 0) || 1;
+    offStats.forEach(function (o) { o.amt = usd(o.v); o.pct = (o.v / offTot * 100).toFixed(1) + '% من الموافق عليه'; o.bar = 'width:' + (o.v / offTot * 100).toFixed(1) + '%'; });
+    var GDEF = [
+      ['in', 'الحوالات الواردة', ['Mobile Payment', 'General Payment', 'Mass Pay Payment'], '#136A43'],
+      ['ref', 'المرتجعات للمرسل', ['Payment Refund'], '#D9534A'],
+      ['wd', 'سحب على بطاقة', ['General Card Withdrawal'], '#142B4A'],
+      ['fx', 'تحويل عملة', ['General Currency Conversion'], '#F2B84B'],
+      ['disp', 'نزاعات ومراجعات PayPal', ['Hold on Balance for Dispute Investigation', 'Cancellation of Hold for Dispute Resolution', 'Payment Review Hold', 'Payment Review Release'], '#E07B2E']
+    ];
+    var SHORT = { 'Mobile Payment': 'Mobile', 'General Payment': 'General', 'Mass Pay Payment': 'Mass Pay', 'Payment Refund': 'Refund', 'General Card Withdrawal': 'Card Withdrawal', 'General Currency Conversion': 'Conversion', 'Hold on Balance for Dispute Investigation': 'Dispute Hold', 'Cancellation of Hold for Dispute Resolution': 'Hold Cancel', 'Payment Review Hold': 'Review Hold', 'Payment Review Release': 'Review Release' };
+    var groups = GDEF.map(function (g) {
+      var l = all.filter(function (r) { return g[2].indexOf(r.type) >= 0; }), lu = l.filter(function (r) { return r.cur === 'USD'; }), net = sum(lu, 'n');
+      var note = cnt(l.length, 'حركة', 'حركات');
+      if (g[0] === 'disp') { var held = net; note += held < -0.004 ? ' · محجوز حالياً ' + usd(-held) : ' · لا يوجد مبلغ محجوز'; }
+      if (g[0] === 'wd') note += ' · رسوم ' + usd(-sum(lu, 'f'));
+      if (g[0] === 'ref') note += ' · عمولة راجعة ' + usd(sum(lu, 'f'));
+      var isIn = g[0] === 'in', gG = sum(lu, 'g'), gF = sum(lu, 'f');
+      return { hasCalc: isIn, cG: usd(gG), cF: usd(-gF), cP: (gG ? (-gF / gG * 100).toFixed(2) : '0') + '%', cN: usd(gG + gF), label: g[1], net: m2(net) + ' $', netStyle: net > 0.004 ? 'color:#136A43' : net < -0.004 ? 'color:#A3291D' : '', note: note, border: '--c:' + g[3],
+        types: g[2].filter(function (t) { return tcount[t]; }).map(function (t) { return { label: SHORT[t] + ' ' + tcount[t].c, style: TYPE[t][1] }; }),
+        go: function () { set({ cat: g[0], shown: 10, ptab: 'tx' }); } };
+    }).filter(function (g) { return g.types.length; });
+
+    var typeStats = Object.keys(TYPE).filter(function (t) { return tcount[t]; }).map(function (t) { return { type: t, ar: TYPE[t][0], style: TYPE[t][1], count: String(tcount[t].c), net: m2(tcount[t].n) }; });
+    var fx = all.filter(function (r) { return r.cur !== 'USD'; });
+    var fxCurs = fx.map(function (r) { return r.cur; }).filter(function (c, i, a) { return a.indexOf(c) === i; });
+
+    // filters
+    var CATS = [
+      ['all', 'الكل', function () { return true; }],
+      ['in', 'الوارد', function (r) { return r.isIn; }],
+      ['pend', 'قيد التقدم', function (r) { return r.isIn && r.vs === 'pend'; }],
+      ['ref', 'المرتجعات', function (r) { return r.type === 'Payment Refund' || (r.isIn && (r.vs === 'ref' || r.lateRef)); }],
+      ['wd', 'سحب إلى كاست', function (r) { return r.type === 'General Card Withdrawal'; }],
+      ['fx', 'تحويل عملة', function (r) { return r.type === 'General Currency Conversion'; }],
+      ['disp', 'نزاعات ومراجعات', function (r) { return /Dispute|Review/.test(r.type); }]
+    ];
+    var GRP = {}; [['in', ['Mobile Payment', 'General Payment', 'Mass Pay Payment']], ['ref', ['Payment Refund']], ['wd', ['General Card Withdrawal']], ['fx', ['General Currency Conversion']], ['disp', ['Hold on Balance for Dispute Investigation', 'Cancellation of Hold for Dispute Resolution', 'Payment Review Hold', 'Payment Review Release']]].forEach(function (g) { GRP[g[0]] = g[1]; });
+    var catF = st.cat === 'all' ? function () { return true; } : GRP[st.cat] ? function (r) { return GRP[st.cat].indexOf(r.type) >= 0; } : function (r) { return r.type === st.cat; };
+    var q = String(st.q).trim().toLowerCase();
+    var list = all.filter(function (r) {
+      if (!catF(r)) return false;
+      if (st.dirF === 'in' && !r.isIn) return false;
+      if (st.curF && r.cur !== st.curF) return false;
+      if (st.dirF === 'out' && !(r.n < 0)) return false;
+      if (st.offF !== 'all') { if (!r.isIn) return false; if (st.offF === 'none' ? !!r.off : r.off !== st.offF) return false; }
+      if (q && r.name.toLowerCase().indexOf(q) < 0 && r.id.toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    }).sort(function (a, b) { return (a.date + a.time) === (b.date + b.time) ? b.i - a.i : ((a.date + a.time) < (b.date + b.time) ? 1 : -1); });
+    var shownN = Math.min(st.shown, list.length);
+    var upd = function (field, key, val, extra) { var o = Object.assign({}, st[field]); o[key] = val; var s = {}; s[field] = o; return Object.assign(s, extra || {}); };
+    var rows = list.slice(0, shownN).map(function (r) {
+      var T = TYPE[r.type] || ['', '', ''];
+      var orig = byKey[r.refKey];
+      var link = '';
+      if (r.type === 'Payment Refund') link = orig ? '↩ إرجاع لحوالة ' + orig.name + ' · ' + fmtD(orig.date) : '↩ إرجاع لحوالة من شهر سابق';
+      else if (/Dispute/.test(r.type)) link = (r.type.indexOf('Cancellation') === 0 ? 'فك حجز النزاع على حوالة ' : 'حجز نزاع على حوالة ') + (orig ? orig.name : 'من شهر سابق');
+      else if (/Review/.test(r.type)) link = 'مراجعة من PayPal' + (orig ? ' · ' + orig.name : '');
+      else if (r.type === 'General Currency Conversion') link = 'تحويل ' + r.cur + ' ضمن عملية سحب';
+      var isAman = r.isIn && r.vs === 'aman' && !r.autoRef; var auto = r.isIn && (r.autoRef || isAman), manual = r.isIn && !auto;
+      var vsStyle = r.vs === 'ok' ? 'border-color:#BFE3D2;background:#F2FAF6;color:#136A43;font-weight:600' : r.vs === 'ref' ? 'border-color:#F3D3CF;background:#FFF8F7;color:#A3291D;font-weight:600' : 'border-color:#F2D9A6;background:#FFFCF3;color:#7A5200;font-weight:600';
+      var needOff = r.isIn && r.vs === 'ok' && !r.off;
+      return {
+        date: fmtD(r.date), time: r.time, type: r.type, ar: T[0], tStyle: 'background:' + T[2] + '1A;color:' + T[2], name: r.name || '—',
+        ps: r.ps, cur: r.cur, from: r.from || '—', to: r.to || '—', psStyle: r.ps === 'Completed' ? '' : 'color:#7A5200;font-weight:600',
+        curTag: r.cur === 'USD' ? '' : r.cur, g: m2(r.g), gStyle: 'font-weight:500', f: m2(r.f), n: m2(r.n),
+        id: r.id, ref: r.ref || '—', canJump: !!orig, noJump: !orig, prevMonth: !!r.ref && !orig,
+        jump: function () {
+          var idx = all.filter(function () { return true; }).sort(function (a, b) { return (a.date + a.time) === (b.date + b.time) ? b.i - a.i : ((a.date + a.time) < (b.date + b.time) ? 1 : -1); }).indexOf(orig);
+          set({ cat: 'all', offF: 'all', q: '', hl: orig.key, shown: Math.max(st.shown, idx + 1) });
+          setTimeout(function () { var el = document.getElementById('pp-' + orig.key); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60);
+        },
+        rowStyle: (st.hl === r.key ? 'outline:2px solid #F2B84B;outline-offset:-2px;' : ''),
+        rowId: 'pp-' + r.key,
+        isIn: r.isIn, auto: auto, manual: manual,
+        autoPill: isAman ? 'pill' : (r.lateRef ? 'pill warn' : 'pill bad'), autoText: isAman ? 'أمانة غير مستلمة' : (r.lateRef ? 'أُرجعت بعد الموافقة' : 'مُرجَعة · تلقائياً'),
+        autoCss: isAman ? 'background:#EEE8F8;color:#4B2E83' : '',
+        vs: r.vs, vsStyle: vsStyle,
+        onVs: function (e) { var v = e.target.value; set(upd('vs', r.key, v, v !== 'ok' ? upd('off', r.key, '', { err: '' }) : { err: '' })); },
+        isLink: !!link && !r.isIn, link: link, notIn: !r.isIn, arNote: !r.isIn && link ? link : r.type === 'General Card Withdrawal' ? 'نقل داخلي: سحب على بطاقة' : (IN[r.type] ? '' : T[0]),
+        note: (st.notes || {})[r.key] || '', onNote: function (e) { var o = Object.assign({}, self.state.notes || {}); var v = String(e.target.value || '').trim(); if (v) o[r.key] = v; else delete o[r.key]; set({ notes: o }); },
+        isWd: r.type === 'General Card Withdrawal', wd: r.wd, onWd: function (e) { set(upd('wd', r.key, e.target.value)); },
+        offSel: r.isIn && r.vs === 'ok' && !r.lateRef, off: r.off, offStyle: needOff ? 'border-color:#F2B84B;background:#FFFCF3' : '',
+        onOff: function (e) { set(upd('off', r.key, e.target.value)); },
+        offText: r.isIn && (r.vs === 'aman' || r.lateRef), offPill: r.lateRef ? 'pill warn' : 'pill neutral',
+        offLabel: r.lateRef ? 'يُخصم من ' + offName[r.off] : (r.vs === 'pend' ? 'غير محدد' : r.vs === 'aman' ? 'بانتظار صاحبها' : '—'),
+        dash: !r.isIn || (r.vs !== 'ok' && r.vs !== 'aman' && !r.lateRef), closed: st.closed, offOpts: ACTIVE.concat(OFFS.filter(function (o) { return !o.on && o.k === r.off; }).map(function (o) { return { k: o.k, n: o.n + ' (موقوف)' }; }))
+      };
+    });
+    var typeList = []; all.forEach(function (r) { if (typeList.indexOf(r.type) < 0) typeList.push(r.type); });
+    var GRPN = { in: 'Mobile / General / Mass Pay Payment', ref: 'Payment Refund', wd: 'General Card Withdrawal', fx: 'General Currency Conversion', disp: 'Dispute / Review' };
+    var typeOpts = [{ k: 'all', n: 'Type · الكل (' + all.length + ')' }].concat(GRP[st.cat] && GRP[st.cat].length > 1 ? [{ k: st.cat, n: GRPN[st.cat] + ' (' + all.filter(catF).length + ')' }] : []).concat(typeList.map(function (ty) { return { k: ty, n: ty + ' (' + all.filter(function (r) { return r.type === ty; }).length + ')' }; }));
+    var cats = CATS.map(function (c) { return { label: c[1], n: String(all.filter(c[2]).length), cls: 'chipf' + (st.cat === c[0] ? ' on' : ''), go: function () { set({ cat: c[0], shown: 10 }); } }; });
+    var vsList = [['ok', 'موافق عليها', 'background:#136A43', '--c:#16B8A6;--t:#0A5F56'], ['pend', 'قيد التقدم', 'background:#F2B84B', '--c:#F2B84B;--t:#7A5200'], ['aman', 'أمانات', 'background:#7A5BC0', '--c:#9B85D6;--t:#4B2E83']].filter(function (s) { return s[0] !== 'aman' || grp.aman.length; }).map(function (s) {
+      return { label: s[1], dot: s[2], css: s[3], count: cnt(grp[s[0]].length, 'حوالة', 'حوالات'), pct: (grp[s[0]].length / tot * 100).toFixed(0) + '%', amt: (grp[s[0]].some(function (r) { return r.cur !== 'USD'; }) ? '≈ ' : '') + usd(grp[s[0]].reduce(function (a2, r) { return a2 + r.n * (RATE[r.cur] || 0); }, 0)), go: function () { set({ cat: 'all', dirF: 'in', shown: 10, ptab: 'tx' }); } };
+    });
+
+    // ---- الأمانات
+    var TODAY = new Date('2026-11-12T00:00:00');
+    var plural = function (n, one, two, few, many) { return n === 1 ? one : n === 2 ? two : (n <= 10 ? n + ' ' + few : n + ' ' + many); };
+    var ageParts = function (d) {
+      var a = new Date(d + 'T00:00:00'), b = TODAY, y = b.getFullYear() - a.getFullYear(), mo = b.getMonth() - a.getMonth(), dd = b.getDate() - a.getDate();
+      if (dd < 0) { mo -= 1; dd += new Date(b.getFullYear(), b.getMonth(), 0).getDate(); }
+      if (mo < 0) { y -= 1; mo += 12; }
+      var w = Math.floor(dd / 7); dd = dd % 7; var parts = [];
+      if (y) parts.push(plural(y, 'سنة', 'سنتان', 'سنوات', 'سنة')); if (mo) parts.push(plural(mo, 'شهر', 'شهران', 'أشهر', 'شهراً'));
+      if (w) parts.push(plural(w, 'أسبوع', 'أسبوعان', 'أسابيع', 'أسبوعاً')); if (dd) parts.push(plural(dd, 'يوم', 'يومان', 'أيام', 'يوماً'));
+      return { months: y * 12 + mo, text: parts.length ? parts.slice(0, 3).join(' و') : 'اليوم' };
+    };
+    var thr = parseInt(st.amThr, 10);
+    var STC = { held: 'background:#7B5CC41A;color:#4B2E83', delivered: 'background:#16B8A61A;color:#0A5F56', refunded: 'background:#E0A12B1F;color:#8A5A00', income: 'background:#9FB0C633;color:#3A4A60' };
+    var AST = { held: ['أمانة مفتوحة', 'pill', 'background:#EEE8F8;color:#4B2E83'], delivered: ['سُلّمت', 'pill ok', ''], refunded: ['بانتظار الإرجاع من PayPal', 'pill warn', ''], income: ['حُوّلت لإيراد', 'pill neutral', ''] };
+    var held = st.amanat.filter(function (a) { return a.st === 'held'; });
+    var amq = String(st.amQ).trim().toLowerCase();
+    var amV = st.amV || 'open', isOld = function (a) { return a.st === 'held' && ageParts(a.date).months >= thr; };
+    var amList = st.amanat.filter(function (a) { return (amV === 'all' || (amV === 'open' && a.st === 'held') || (amV === 'old' && isOld(a)) || (amV === 'closed' && a.st !== 'held')) && (!amq || a.name.toLowerCase().indexOf(amq) >= 0 || a.email.toLowerCase().indexOf(amq) >= 0); })
+      .sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var oldList = held.filter(function (a) { return ageParts(a.date).months >= thr; });
+    var heldSorted = held.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var setAm = function (id, ch) { return st.amanat.map(function (a) { return a.id === id ? Object.assign({}, a, ch) : a; }); };
+    var amRows = amList.map(function (a) {
+      var ag = ageParts(a.date), old = ag.months >= thr, S2 = AST[a.st];
+      var openM = function (act) { return function () { set({ amM: { id: a.id, act: act }, amOff: '', amNote: '', amErr: '' }); }; };
+      return { name: a.name, email: a.email, amt: usd(a.amt), date: a.date.split('-').reverse().join('/'), month: a.month,
+        age: ag.text, ageCls: 'age' + (a.st !== 'held' ? '' : old ? ' a-b' : ag.months >= 1 ? ' a-w' : ' a-n'),
+        state: S2[0], stCss: STC[a.st], note: a.note || '', hasNote: !!a.note,
+        rowCls: a.st === 'held' ? '' : 'done', open: a.st === 'held', closed: a.st !== 'held', canInc: old && a.st === 'held',
+        deliver: openM('deliver'), refund: openM('refund'), income: old ? openM('income') : function () {},
+        incStyle: 'min-height:36px;padding:0 12px;font-size:13px;' + (old ? 'color:#A3291D' : 'opacity:.45;cursor:not-allowed'), incTitle: old ? '' : 'متاح بعد مرور ' + st.amThr + ' أشهر' };
+    });
+    var amSel = st.amM ? st.amanat.filter(function (a) { return a.id === st.amM.id; })[0] : null;
+    var ACT = { deliver: 'تسليم أمانة', refund: 'إرجاع للمرسل', income: 'تحويل الأمانة لإيراد' };
+    var closePend = grp.pend.map(function (r) { return { name: r.name, date: fmtD(r.date) + ' ' + r.time, amt: usd(r.n), key: r.key, r: r }; });
+    var pendNote = pend.length ? ('أقدم حوالة بانتظار الوصل: ' + pend[0].name + ' · ' + fmtD(pend[0].date) + ' ' + pend[0].time + (noOff ? ' · ' + noOff + ' موافق عليها بدون مكتب' : '')) : (noOff ? noOff + ' حوالات موافق عليها بدون مكتب' : 'كل الحوالات الواردة تمت مراجعتها ✓');
+
+    return Object.assign({}, KF, ACCV, {
+      accts: accts, empty: false, has: true, showTabs: true,
+      showAcc: st.ptab === 'sum', showDN: st.ptab === 'doc',
+      ptabs: [['sum', 'الملخص', ''], ['tx', 'الحركات', String(all.length)], ['am', 'الأمانات', String(held.length)], ['doc', 'الوثائق والملاحظات', '']].map(function (t) { var on = st.ptab === t[0]; return { label: t[1], n: t[2], hasN: !!t[2], cls: on ? 'on' : '', sel: on ? 'true' : 'false', go: function () { set({ ptab: t[0] }); } }; }),
+      tabSum: st.ptab === 'sum', goAm: function () { set({ ptab: 'am' }); }, tabTx: st.ptab === 'tx', tabAm: st.ptab === 'am',
+      open: !st.closed, closed: st.closed,
+      monthPill: st.closed ? 'pill neutral' : 'pill teal', monthStyle: st.closed ? 'color:#4A5A70' : 'color:#0A5F56', monthText: st.closed ? 'الشهر مغلق' : 'الشهر مفتوح',
+      hasErr: !!st.err, err: st.err,
+      closeMonth: function () {
+        if (noOff) return set({ err: 'لا يمكن إغلاق الشهر: ' + noOff + ' حوالات موافق عليها بدون مكتب.' });
+        set({ closeM: true, err: '' });
+      },
+      amThr: st.amThr, onAmThr: function (e) { set({ amThr: e.target.value }); }, amQ: st.amQ, onAmQ: function (e) { set({ amQ: e.target.value }); },
+      amViews: [['open', 'مفتوحة', held.length], ['old', 'تجاوزت المدة', oldList.length], ['closed', 'المغلقة', st.amanat.length - held.length], ['all', 'الكل', st.amanat.length]].map(function (v) { var on = amV === v[0]; return { label: v[1], n: String(v[2]), cls: on ? 'on' : '', sel: on ? 'true' : 'false', go: function () { set({ amV: v[0] }); } }; }),
+      amGoOpen: function () { set({ amV: 'open' }); }, amGoOld: function () { set({ amV: 'old' }); },
+      amThrText: ({ '3': '3 أشهر', '6': '6 أشهر', '12': 'سنة' })[st.amThr] || st.amThr + ' أشهر',
+      amOldCss: oldList.length ? '--c:#D2493A;--t:#A3291D' : '--c:#9FB0C6;--t:#142B4A', amRows: amRows, amEmpty: !amRows.length,
+      amCount: cnt(held.length, 'أمانة', 'أمانات'), amTotal: usd(sum(held, 'amt')),
+      amOldest: heldSorted.length ? ageParts(heldSorted[0].date).text : '—', amOldestWho: heldSorted.length ? heldSorted[0].name + ' · ' + heldSorted[0].month : 'لا توجد أمانات',
+      amOldCount: cnt(oldList.length, 'أمانة', 'أمانات'), amOldTotal: usd(sum(oldList, 'amt')), amOldBox: oldList.length ? 'border-color:#F3D3CF;background:#FFF8F7' : '',
+      isCloseM: st.closeM, closePend: closePend,
+      closeMsg: closePend.length ? ('يوجد ' + cnt(closePend.length, 'حوالة', 'حوالات') + ' قيد التقدم لم يحضر أصحابها بعد، بمجموع ' + usd(sum(grp.pend, 'n')) + ':') : 'كل الحوالات الواردة تمت مراجعتها. هل تريد إغلاق الشهر؟',
+      closeBtn: closePend.length ? 'تحويلها لأمانات وإغلاق الشهر' : 'إغلاق الشهر',
+      cancelClose: function () { set({ closeM: false }); },
+      confirmClose: function () {
+        var vs = Object.assign({}, st.vs), add = [];
+        grp.pend.forEach(function (r) { vs[r.key] = 'aman'; add.push({ id: 'm' + r.key, name: r.name, email: r.from, amt: r.n, date: r.date, month: 'يوليو 2026', st: 'held' }); });
+        set({ vs: vs, amanat: st.amanat.concat(add), closed: true, closeM: false, err: '' });
+      },
+      isAmM: !!amSel, amMTitle: amSel ? ACT[st.amM.act] : '', amMWho: amSel ? amSel.name + ' · ' + amSel.email : '', amMAmt: amSel ? usd(amSel.amt) : '', amMMonth: amSel ? amSel.month : '',
+      amMIsDeliver: !!amSel && st.amM.act === 'deliver', amMIsRefund: !!amSel && st.amM.act === 'refund', amMIsIncome: !!amSel && st.amM.act === 'income',
+      amMOff: st.amOff, onAmMOff: function (e) { set({ amOff: e.target.value }); },
+      amMNote: st.amNote, onAmMNote: function (e) { set({ amNote: e.target.value }); },
+      amMNoteLabel: st.amM && st.amM.act === 'income' ? 'سبب التحويل لإيراد (إلزامي)' : 'ملاحظة', amMNotePh: st.amM && st.amM.act === 'income' ? 'مثال: لم يتواصل صاحبها منذ وصولها' : 'اختياري',
+      hasAmErr: !!st.amErr, amErr: st.amErr, amMClose: function () { set({ amM: null }); },
+      amMSave: function () {
+        var act = st.amM.act, note;
+        if (act === 'deliver') { if (!st.amOff) return set({ amErr: 'اختر المكتب المستلم.' }); note = 'سُلّمت في 12/11/2026 · ' + offName[st.amOff]; }
+        if (act === 'refund') note = 'قرار إرجاع في 12/11/2026' + (st.amNote ? ' · ' + st.amNote : '');
+        if (act === 'income') { if (!String(st.amNote).trim()) return set({ amErr: 'اكتب سبب التحويل لإيراد.' }); note = 'حُوّلت لإيراد في 12/11/2026 · ' + st.amNote; }
+        set({ amanat: setAm(amSel.id, { st: act === 'deliver' ? 'delivered' : act === 'refund' ? 'refunded' : 'income', note: note }), amM: null, amErr: '' });
+      },
+      reopen: function () { set({ closed: false, err: '' }); },
+      impAcc: st.acct === 'office' ? 'حساب المكتب' : 'حساب زكي', isImport: st.imp, openImport: function () { set({ imp: true }); }, closeImport: function () { set({ imp: false }); },
+      inCount: cnt(inc.length, 'حوالة', 'حوالات'), inG: usd(inG), inF: usd(inF), feePct: (inG ? (-inF / inG * 100).toFixed(2) : '0') + '%', inN: usd(inG + inF),
+      refCount: cnt(refs.length, 'حركة', 'حركات'), refN: usd(sum(refs, 'n')), refNote: 'منها ' + usd(sum(refs, 'f')) + ' عمولة رجعت من PayPal',
+      wdCount: cnt(wds.length, 'عملية', 'عمليات'), wdN: usd(-sum(wds, 'n')), wdNote: 'منها ' + usd(-sum(wds, 'f')) + ' رسوم سحب',
+      barOk: 'width:' + pc('ok') + ';background:#136A43', barPend: 'width:' + pc('pend') + ';background:#F2B84B', barRef: 'width:' + pc('ref') + ';background:#D9534A', barAman: 'width:' + pc('aman') + ';background:#7A5BC0',
+      vsList: vsList, pendNote: pendNote, pendNoteStyle: pend.length || noOff ? 'background:#FFFCF3;color:#7A5200' : 'background:#F2FAF6;color:#136A43',
+      offStats: offStats, typeStats: typeStats, groups: groups, inAllText: cnt(incAll.length - grp.ref.length, 'حوالة', 'حوالات') + ' هذا الشهر', offCountText: offStats.length ? cnt(offStats.length, 'مكتب', 'مكاتب') + ' عليها حوالات' : 'لا توجد حوالات موافق عليها بعد',
+      fxNote: 'الأرقام بالدولار فقط · ' + cnt(fx.length, 'حركة', 'حركات') + ' بعملات أخرى (' + fxCurs.join('، ') + ') تظهر في الجدول ولا تدخل في المجاميع',
+      tblCls: 'tbl ltrt' + (st.allCols ? '' : ' compact'), colsP: st.allCols ? 'true' : 'false', colsTxt: st.allCols ? 'إخفاء الأعمدة الإضافية' : 'عرض كل الأعمدة', toggleCols: function () { set({ allCols: !st.allCols }); },
+      curTotal: '≈ ' + m2(curUsd) + ' $', curCount: curOrder.length === 1 ? 'عملة واحدة' : curOrder.length === 2 ? 'عملتان' : curOrder.length + ' عملات',
+      curCards: curOrder.map(function (k) { var v = byCur[k]; return { code: k, amt: m2(v.n), sub: (k === 'USD' ? '' : '≈ ' + m2(v.n * (RATE[k] || 0)) + ' $ · ') + cnt(v.c, 'حوالة', 'حوالات'), go: function () { set({ curF: k, dirF: 'in', cat: 'all', shown: 10, ptab: 'tx' }); } }; }),
+      curNote: 'الواصل هذا الشهر بعد العمولة، بدون المُرجَع · التحويل للدولار بسعر تقريبي من الإنترنت · آخر تحديث 22/11/2026 07:00',
+      curF: st.curF || '', clearCurF: function () { set({ curF: '' }); }, curSel: st.curF || '',
+      curOpts: (function () { var c = {}, o = []; all.forEach(function (r) { if (!c[r.cur]) { c[r.cur] = 0; o.push(r.cur); } c[r.cur]++; }); o.sort(function (x, y) { return c[y] - c[x]; }); return o.map(function (k) { return { k: k, n: k + ' (' + c[k] + ')' }; }); })(),
+      onCurF: function (e) { set({ curF: e.target.value, shown: 10 }); },
+      dirOpts: [['all', 'الكل', all.length], ['in', 'الوارد', all.filter(function (r) { return r.isIn; }).length], ['out', 'الخارج', all.filter(function (r) { return r.n < 0; }).length]].map(function (d) { var on = (st.dirF || 'all') === d[0]; return { label: d[1], n: String(d[2]), cls: on ? 'on' : '', sel: on ? 'true' : 'false', go: function () { set({ dirF: d[0], shown: 10 }); } }; }),
+      cats: cats, typeOpts: typeOpts, typeCls: 'th-sel' + (st.cat !== 'all' ? ' on' : ''), typeF: GRP[st.cat] && GRP[st.cat].length === 1 ? GRP[st.cat][0] : st.cat, onTypeF: function (e) { set({ cat: e.target.value, shown: 10 }); }, offOpts: ACTIVE, offAllOpts: OFFS.map(function (o) { return { k: o.k, n: o.n + (o.on ? '' : ' (موقوف)') }; }),
+      lc: limCard({ lid: 'pz', name: 'PayPal – زكي', g: 'pp', cur: 'USD', thr: 80, mode: 'cal', ws: 'mon', lims: [{ p: 'd', k: 'out', max: 8000, used: 4200 }, { p: 'w', k: 'out', max: 16000, used: 13050 }, { p: 'm', k: 'out', max: 50000, used: 42811 }] }),
+      lims: [['اليومي', 'يتجدد منتصف الليل', 4200, 8000], ['الأسبوعي', 'يتجدد يوم الاثنين', 13050, 16000], ['الشهري', 'يتجدد أول الشهر', 42811, 50000]].map(function (l) {
+        var p = l[2] / l[3] * 100, lvl = p >= 100 ? 2 : p >= 80 ? 1 : 0, c = ['#16B8A6', '#F2B84B', '#D9534A'][lvl];
+        return { t: 'السحب ' + l[0], short: l[0], pctTxt: p.toFixed(0) + '%', r: l[1], used: m2(l[2]) + ' $', max: m2(l[3]) + ' $', left: m2(Math.max(0, l[3] - l[2])) + ' $',
+          leftStyle: 'color:' + ['#0A5F56', '#7A5200', '#A3291D'][lvl],
+          state: ['متاح · ', 'قريب من الحد · ', 'تم الوصول للحد · '][lvl] + p.toFixed(0) + '%', pill: ['pill ok', 'pill warn', 'pill bad'][lvl],
+          bar: 'height:100%;border-radius:999px;width:' + Math.min(100, p).toFixed(1) + '%;background:' + c,
+          box: 'display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:14px;border:1px solid ' + ['#E1E6EE', '#F2D9A6', '#F3D3CF'][lvl] + ';background:' + ['#FAFBFC', '#FFFCF3', '#FFF8F7'][lvl] };
+      }),
+      isOffM: st.offM, openOffM: function () { set({ offM: true, offErr: '', newOff: '', editK: null }); }, closeOffM: function () { set({ offM: false, editK: null }); },
+      newOff: st.newOff, onNewOff: function (e) { set({ newOff: e.target.value }); }, hasOffErr: !!st.offErr, offErr: st.offErr,
+      addOff: function () {
+        var n = String(st.newOff).trim();
+        if (!n) return set({ offErr: 'أدخل اسم المكتب.' });
+        if (OFFS.some(function (o) { return o.n === n; })) return set({ offErr: 'يوجد مكتب بنفس الاسم. إذا كان موقوفاً يمكن تفعيله بدلاً من إضافته من جديد.' });
+        set({ offices: OFFS.concat([{ k: 'o' + Date.now(), n: n, on: true, since: '07/2026' }]), newOff: '', offErr: '' });
+      },
+      offRows: OFFS.map(function (o) {
+        var used = all.filter(function (r) { return r.off === o.k; }).length;
+        var upd2 = function (ch) { return OFFS.map(function (x) { return x.k === o.k ? Object.assign({}, x, ch) : x; }); };
+        return { n: o.n, editing: st.editK === o.k, viewing: st.editK !== o.k, draft: st.editName,
+          meta: (o.on ? 'نشط منذ ' + o.since : 'كان نشط ' + o.since + ' – ' + (o.until || '')) + ' · ' + used + ' حوالة هذا الشهر',
+          state: o.on ? 'نشط' : 'موقوف', pill: o.on ? 'pill ok' : 'pill neutral', rowStyle: o.on ? '' : 'opacity:.75',
+          toggleText: o.on ? 'إيقاف' : 'تفعيل', toggleStyle: 'min-height:36px;padding:0 12px;font-size:13px;' + (o.on ? 'color:#A3291D' : 'color:#136A43'),
+          toggle: function () { set({ offices: upd2(o.on ? { on: false, until: '07/2026' } : { on: true, since: '07/2026', until: '' }), offErr: '' }); },
+          edit: function () { set({ editK: o.k, editName: o.n, offErr: '' }); },
+          onDraft: function (e) { set({ editName: e.target.value }); },
+          cancelEdit: function () { set({ editK: null }); },
+          saveName: function () { var n = String(st.editName).trim(); if (!n) return set({ offErr: 'لا يمكن أن يكون الاسم فارغاً.' }); if (OFFS.some(function (x) { return x.k !== o.k && x.n === n; })) return set({ offErr: 'يوجد مكتب بنفس الاسم.' }); set({ offices: upd2({ n: n }), editK: null, offErr: '' }); } };
+      }), offF: st.offF, onOffF: function (e) { set({ offF: e.target.value, shown: 10 }); },
+      q: st.q, onQ: function (e) { set({ q: e.target.value, shown: 10 }); },
+      rows: rows, closedAttr: st.closed,
+      pageText: 'معروض ' + shownN + ' من ' + cnt(list.length, 'حركة', 'حركات') + ' · الأحدث أولاً',
+      hasMore: shownN < list.length, moreText: 'عرض ' + Math.min(10, list.length - shownN) + ' حركات إضافية',
+      more: function () { set({ shown: st.shown + 10 }); }, showAll: function () { set({ shown: list.length }); }
+    });
+  }
+}
+</script>
+</body>
+</html>

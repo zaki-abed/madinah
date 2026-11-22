@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>قواعد قاعدة البيانات</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.pg{direction:rtl;width:1440px;box-sizing:border-box;padding:56px 64px;background:#F5F7FA;color:#142B4A;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;font-size:15px;line-height:1.6;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px}
+h1{margin:0;font-size:32px;line-height:44px;font-weight:700}
+h2{margin:0;font-size:18px;line-height:28px;font-weight:700}
+h3{margin:6px 0 0;font-size:15px;line-height:24px;font-weight:700}
+.sub{margin:0;color:#4A5A70;font-size:14px}
+.cap{font-size:12px;color:#4A5A70}
+.m{font-family:'IBM Plex Mono',monospace;font-weight:500;direction:ltr;unicode-bidi:isolate}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;line-height:20px}
+.tbl th{text-align:start;font-size:12px;font-weight:600;color:#4A5A70;background:#F8FAFC;padding:8px 12px;border:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid #E1E6EE;vertical-align:top}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.li{display:flex;gap:10px;font-size:14px;line-height:1.7}
+.dot{flex:none;width:6px;height:6px;border-radius:999px;background:#16B8A6;margin-top:10px}
+.dot.r{background:#D2493A}.dot.a{background:#E0A12B}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap}
+.ok{background:#16B8A61A;color:#0A5F56}.wr{background:#E0A12B1F;color:#7A5200}.nw{background:#6E86A81F;color:#1F3F66}
+.hero{background:#142B4A;color:#fff;border-radius:16px;padding:32px 36px;display:flex;flex-direction:column;gap:8px}
+.hero p{margin:0;color:#D6DEE8}
+.st{display:flex;flex-wrap:wrap;background:#fff;border:1px solid #E1E6EE;border-radius:16px;overflow:hidden}
+.st>div{flex:1 1 160px;padding:12px 20px 14px;border-top:3px solid var(--c);display:flex;flex-direction:column;gap:2px}
+.st>div+div{border-inline-start:1px solid #EDF1F5}
+.st b{font-family:'IBM Plex Mono',monospace;font-size:22px;line-height:30px}
+</style>
+</helmet>
+<div class="pg">
+
+<section class="hero">
+  <span style="font-size:13px;font-weight:600;color:#9FE8DF">مرجع · PostgreSQL 18 · محدَّث 22/11/2026</span>
+  <h1>قواعد قاعدة البيانات — مكتب المدينة للخدمات المالية</h1>
+  <p>ملخّص ملزم لكل ما يخص البيانات: الجداول، العلاقات، القيود، التحقق، تسجيل الحركات، الإلغاء والتعديل، وسلامة البيانات. مبني على لوحة «تصميم قاعدة البيانات» الحالية، ومعه القواعد التي اعتُمدت في الواجهات ولم تُضَف للقاعدة بعد، مميّزة بوسم «مطلوب».</p>
+</section>
+
+<div class="st">
+  <div style="--c:#142B4A"><span class="cap">جداول قائمة</span><b>20</b><span class="cap">في التصميم الحالي</span></div>
+  <div style="--c:#6E86A8"><span class="cap">أنواع ثابتة (ENUM)</span><b>11</b><span class="cap">user_role … audit_action</span></div>
+  <div style="--c:#16B8A6"><span class="cap">عروض ودوال</span><b>10</b><span class="cap">أرصدة، كشوف، رأس مال، صناديق</span></div>
+  <div style="--c:#E0A12B"><span class="cap">جداول مطلوبة</span><b>9</b><span class="cap">معتمدة 22/11/2026 · تحتاج إضافة للقاعدة</span></div>
+</div>
+
+<section class="card">
+  <h2>1. المبادئ الحاكمة</h2>
+  <div class="g2">
+    <div class="li"><span class="dot"></span><span><b>الرصيد يُحسب ولا يُخزَّن.</b> كل حركة تولّد قيوداً في <span class="m">ledger_entries</span> عبر Triggers، والرصيد = الافتتاحي + مجموع القيود. لا يوجد عمود رصيد في أي جدول.</span></div>
+    <div class="li"><span class="dot"></span><span><b>لا حذف نهائي.</b> الحركة المالية تُلغى بسبب إلزامي وتبقى في السجل. الحساب أو الزبون أو المكتب الذي له حركات يُعطَّل ولا يُحذف.</span></div>
+    <div class="li"><span class="dot"></span><span><b>دقة عشرية ثابتة.</b> المبالغ <span class="m">numeric(18,4)</span>، الكميات <span class="m">(18,6)</span>، الأسعار <span class="m">(18,8)</span>. ممنوع float.</span></div>
+    <div class="li"><span class="dot"></span><span><b>لا كاش في النظام.</b> كل المال في حسابات (بنوك، PayPal، محافظ، منصات، تطبيقات بطاقات). الصرافة لا تمر بخزنة نقدية.</span></div>
+    <div class="li"><span class="dot"></span><span><b>العملات لا تُخلط.</b> كل رصيد ودين وحد لكل عملة. أي جمع بين عملات يكون بتحويل صريح بسعر مسجّل (توحيد الديون) أو عرضاً تقريبياً في الواجهة فقط.</span></div>
+    <div class="li"><span class="dot"></span><span><b>الأرشيف مقفل والتدقيق تلقائي.</b> لا تعديل داخل فترة مؤرشفة، وكل إضافة/تعديل/حذف في الجداول المهمة يُسجَّل قبل وبعد.</span></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>2. الكيانات والعلاقات</h2>
+  <table class="tbl">
+    <thead><tr><th>الكيان</th><th>الجدول</th><th>يرتبط بـ</th><th>ملاحظة</th></tr></thead>
+    <tbody>
+      <tr><td>الحسابات (الخزن)</td><td class="m">accounts</td><td>currencies · users · ledger_entries</td><td>كل حساب بعملة واحدة. الخزنة = مجموع حسابات عملة (عرض لا جدول).</td></tr>
+      <tr><td>الزبائن</td><td class="m">customers</td><td>debts · transfers · customer_adjustments · ledger_entries</td><td>الذمم تُحسب في <span class="m">v_customer_balances</span>.</td></tr>
+      <tr><td>الحوالات والنقل الداخلي</td><td class="m">operation_groups → transfers</td><td>accounts · customers · archive_periods</td><td>الحوالة = مجموعة حركات IN/OUT/INTERNAL برقم واحد.</td></tr>
+      <tr><td>الديون والتسديدات</td><td class="m">debts → debt_payments</td><td>customers · accounts · transfers</td><td>المتبقي والحالة محسوبان في <span class="m">v_debts</span>.</td></tr>
+      <tr><td>التسويات</td><td class="m">customer_adjustments</td><td>customers · accounts</td><td>«له علينا» والأرصدة الافتتاحية للزبون.</td></tr>
+      <tr><td>المصاريف</td><td class="m">expenses</td><td>expense_categories · accounts</td><td>قيد خروج على الحساب.</td></tr>
+      <tr><td>صناديق التداول</td><td class="m">funds → fund_transactions</td><td>archive_periods</td><td>USDT، الدولار البنكي، الجنيه، حاسبة USDT المرجّحة.</td></tr>
+      <tr><td>الأرشفة</td><td class="m">archive_periods → archive_snapshot_items</td><td>transfers · fund_transactions</td><td>فترات لا تتداخل لنفس النطاق.</td></tr>
+      <tr><td>الجرد</td><td class="m">inventory_counts → inventory_count_items</td><td>accounts</td><td>الفرق = الفعلي − رصيد النظام.</td></tr>
+      <tr><td>المستخدمون والتدقيق</td><td class="m">users · user_permissions · audit_logs</td><td>كل الجداول عبر created_by</td><td>هوية المستخدم من <span class="m">app.user_id</span> في كل transaction.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card">
+  <h2>3. الجداول والحقول والمفاتيح</h2>
+  <table class="tbl">
+    <thead><tr><th style="width:190px">الجدول</th><th>المفتاح الأساسي</th><th>الحقول الأساسية وأنواعها</th><th>المفاتيح الأجنبية</th><th>القيود</th></tr></thead>
+    <tbody>
+      <tr><td class="m">currencies</td><td class="m">code text</td><td>name_ar text · symbol · decimals smallint=2 · is_cash bool</td><td>—</td><td class="m">code ~ '^[A-Z]{3,5}$'</td></tr>
+      <tr><td class="m">users</td><td class="m">id uuidv7</td><td>username citext UNIQUE · password_hash (bcrypt) · full_name · role user_role · is_active · last_login_at</td><td>—</td><td>UNIQUE(username)</td></tr>
+      <tr><td class="m">user_permissions</td><td class="m">user_id</td><td>can_edit · can_delete · view_reports · manage_users · view_balances · view_profit (bool)</td><td class="m">→ users CASCADE</td><td>صف لكل مستخدم</td></tr>
+      <tr><td class="m">accounts</td><td class="m">id uuidv7</td><td>name · type account_type · currency · initial_balance (18,4) · color · is_active</td><td class="m">→ currencies, users</td><td>UNIQUE(name) · color hex</td></tr>
+      <tr><td class="m">customers</td><td class="m">id uuidv7</td><td>full_name · phone · notes · is_active</td><td class="m">→ users</td><td>—</td></tr>
+      <tr><td class="m">operation_groups</td><td class="m">id uuidv7</td><td>kind operation_kind · label · notes</td><td class="m">→ users</td><td>—</td></tr>
+      <tr><td class="m">transfers</td><td class="m">id uuidv7</td><td>type movement_direction · amount (18,4)&gt;0 · currency · commission ≥0 · commission_currency · transfer_at · business_date (GENERATED, Asia/Jerusalem) · sender/receiver · cancelled_at/by · cancel_reason</td><td class="m">→ operation_groups CASCADE, customers, accounts ×2, archive_periods SET NULL</td><td>accounts_by_type · cancel_complete · internal_discount · commission_currency</td></tr>
+      <tr><td class="m">expense_categories</td><td class="m">id identity</td><td>name UNIQUE</td><td>—</td><td>—</td></tr>
+      <tr><td class="m">expenses</td><td class="m">id uuidv7</td><td>title · amount&gt;0 · currency · expense_date · notes</td><td class="m">→ expense_categories, accounts</td><td>—</td></tr>
+      <tr><td class="m">debts</td><td class="m">id uuidv7</td><td>type debt_type · amount&gt;0 · currency · debt_date · label · notes</td><td class="m">→ customers, accounts, transfers SET NULL, operation_groups SET NULL</td><td>direct_debt يحتاج حساباً مصدراً · transfer_debt بدونه</td></tr>
+      <tr><td class="m">debt_payments</td><td class="m">id uuidv7</td><td>amount&gt;0 · payment_date · notes</td><td class="m">→ debts CASCADE, accounts</td><td>لا يتجاوز المتبقي (Trigger)</td></tr>
+      <tr><td class="m">customer_adjustments</td><td class="m">id uuidv7</td><td>currency · amount ≠0 (موجب = لنا) · reason NOT NULL</td><td class="m">→ customers, accounts</td><td>—</td></tr>
+      <tr><td class="m">ledger_entries</td><td class="m">id identity</td><td>entry_at · currency · amount ≠0 · source_type ledger_source · source_id · description</td><td class="m">→ accounts أو customers</td><td>حساب أو زبون، ليس الاثنين</td></tr>
+      <tr><td class="m">funds</td><td class="m">key archive_scope</td><td>asset_code · cost_currency · rate_mode · reset_on_empty · cap_sell_to_stock · buy_first_same_day</td><td>—</td><td>key ≠ 'transfers'</td></tr>
+      <tr><td class="m">fund_transactions</td><td class="m">id uuidv7</td><td>tx_date · type BUY/SELL · amount (18,6) · rate (18,8) · party · is_draft</td><td class="m">→ funds, archive_periods SET NULL</td><td>غير المسودة: amount&gt;0 و rate&gt;0 · المسودة لا تؤرشف</td></tr>
+      <tr><td class="m">archive_periods</td><td class="m">id uuidv7</td><td>scope · from/to_date · period daterange · opening/closing stock و avg_cost · period_profit</td><td class="m">→ users</td><td>from ≤ to · EXCLUDE تداخل الفترات</td></tr>
+      <tr><td class="m">archive_snapshot_items</td><td class="m">id identity</td><td>source_id · position · data jsonb</td><td class="m">→ archive_periods CASCADE</td><td>—</td></tr>
+      <tr><td class="m">inventory_counts / _items</td><td class="m">id · (count_id, account_id)</td><td>system_balance · actual_balance · difference GENERATED</td><td class="m">→ accounts</td><td>PK مركّب</td></tr>
+      <tr><td class="m">audit_logs</td><td class="m">id identity</td><td>action audit_action · entity · entity_id · before/after jsonb</td><td class="m">→ users SET NULL</td><td>بدون password_hash</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="g2">
+  <section class="card">
+    <h2>4. قواعد التحقق من البيانات</h2>
+    <div class="li"><span class="dot"></span><span>عملة الحساب = عملة الحركة في الحوالات والمصاريف والديون والتسديدات والتسويات (Trigger validate).</span></div>
+    <div class="li"><span class="dot"></span><span>الحوالة OUT لها حساب مصدر فقط، IN لها وجهة فقط، INTERNAL لها الاثنان ومختلفان.</span></div>
+    <div class="li"><span class="dot"></span><span>خصم النقل الداخلي لا يتجاوز المبلغ، ولا عملة عمولة للنقل الداخلي.</span></div>
+    <div class="li"><span class="dot"></span><span>التسديد لا يتجاوز المتبقي من الدين، مع قفل صف الدين أثناء التحقق (FOR UPDATE).</span></div>
+    <div class="li"><span class="dot"></span><span>مبلغ الدين لا يصير أقل من المسدَّد، ولا تتغير عملة دين عليه تسديدات.</span></div>
+    <div class="li"><span class="dot"></span><span>التسديد بنفس عملة الدين فقط؛ أي تحويل بين العملات يكون عبر «توحيد بالدولار» بسعر مسجّل.</span></div>
+    <div class="li"><span class="dot"></span><span>الزبون العابر يدفع كامل المبلغ؛ تسجيل دين يتطلب زبوناً مسجلاً.</span></div>
+    <div class="li"><span class="dot"></span><span>أسماء الحسابات فريدة، واسم المستخدم فريد بلا حساسية لحالة الأحرف.</span></div>
+  </section>
+  <section class="card">
+    <h2>5. قواعد تسجيل الحركات المالية</h2>
+    <table class="tbl">
+      <thead><tr><th>المصدر</th><th>القيود الناتجة (موجب = دخل/لنا)</th></tr></thead>
+      <tbody>
+        <tr><td class="m">transfer OUT</td><td>−المبلغ على الحساب المصدر</td></tr>
+        <tr><td class="m">transfer IN</td><td>+المبلغ على الحساب الوجهة</td></tr>
+        <tr><td class="m">transfer INTERNAL</td><td>−المبلغ من المصدر، +(المبلغ − الخصم) للوجهة. الخصم ليس ربحاً.</td></tr>
+        <tr><td class="m">expense</td><td>−المبلغ على الحساب</td></tr>
+        <tr><td class="m">debt</td><td>+المبلغ على الزبون؛ والدين المباشر −المبلغ على الحساب المصدر</td></tr>
+        <tr><td class="m">debt_payment</td><td>−المبلغ على الزبون، +المبلغ على الحساب المستلم</td></tr>
+        <tr><td class="m">customer_adjustment</td><td>المبلغ على الزبون، وإن وُجد حساب فـ −المبلغ عليه</td></tr>
+      </tbody>
+    </table>
+    <div class="li"><span class="dot"></span><span>أي تعديل على حركة يحذف قيودها ويعيد كتابتها في نفس الـ transaction.</span></div>
+    <div class="li"><span class="dot"></span><span>الربح يُسجَّل يدوياً مع الحوالة وخارج رأس المال والخزائن: لـ «صندوق ربح USDT» إن كانت الحوالة فيها USDT، وإلا للأرباح العادية بالدولار.</span></div>
+  </section>
+</div>
+
+<div class="g2">
+  <section class="card">
+    <h2>6. قواعد الإلغاء والتعديل</h2>
+    <div class="li"><span class="dot r"></span><span>لا DELETE على الحركات المالية من التطبيق. الإلغاء = تعبئة <span class="m">cancelled_at</span> و<span class="m">cancelled_by</span> و<span class="m">cancel_reason</span> معاً (قيد cancel_complete)، فتُحذف قيودها ويبقى الصف.</span></div>
+    <div class="li"><span class="dot r"></span><span>سبب الإلغاء إلزامي لكل إلغاء في كل الأقسام بلا استثناء.</span></div>
+    <div class="li"><span class="dot"></span><span>إلغاء دين له تسديدات لاحقة ممنوع حتى تُلغى التسديدات أولاً. إلغاء توحيد يُلغي كل حركات مجموعته معاً.</span></div>
+    <div class="li"><span class="dot"></span><span>لا تعديل ولا إلغاء لعملية داخل فترة مؤرشفة (guard_archived). إعادة فتح الفترة للمدير فقط.</span></div>
+    <div class="li"><span class="dot"></span><span>الحساب أو الزبون أو المكتب الذي له حركات: تعطيل/إيقاف/إغلاق فقط. الحذف مسموح فقط لسجل بلا أي حركة.</span></div>
+    <div class="li"><span class="dot"></span><span>تغيير نسبة عمولة المكتب لا يمس الحوالات السابقة: نسبة جديدة بتاريخ سريان لاحق.</span></div>
+    <div class="li"><span class="dot"></span><span>عملة حساب المكتب لا تتغير بعد إنشائه.</span></div>
+  </section>
+  <section class="card">
+    <h2>7. سلامة البيانات</h2>
+    <div class="li"><span class="dot"></span><span>كل كتابة مالية داخل transaction واحدة مع <span class="m">SET LOCAL app.user_id</span>.</span></div>
+    <div class="li"><span class="dot"></span><span>القيود تُكتب بالـ Triggers فقط؛ لا صلاحية INSERT مباشرة على <span class="m">ledger_entries</span> للتطبيق.</span></div>
+    <div class="li"><span class="dot"></span><span>سجل التدقيق لـ 14 جدولاً قبل/بعد، ويتوقف فقط أثناء الاستيراد بـ <span class="m">app.skip_audit</span>.</span></div>
+    <div class="li"><span class="dot"></span><span>التاريخ التجاري بتوقيت <span class="m">Asia/Jerusalem</span>، والأوقات <span class="m">timestamptz</span>.</span></div>
+    <div class="li"><span class="dot"></span><span>الأرقام بالأرقام الغربية، والعرض بفواصل الآلاف ورقمين عشريين ثم رمز العملة.</span></div>
+    <div class="li"><span class="dot"></span><span>الجرد يقارن رصيد النظام بالفعلي ويسجّل الفرق، ولا يعدّل الرصيد مباشرة؛ أي تسوية تكون حركة مسجلة.</span></div>
+    <div class="li"><span class="dot"></span><span>استيراد كشف PayPal: كل صف بمعرّف المعاملة (Transaction ID) فريد لكل حساب، فلا يُستورد مرتين.</span></div>
+  </section>
+</div>
+
+<section class="card">
+  <h2>8. العروض والدوال</h2>
+  <table class="tbl">
+    <thead><tr><th>الاسم</th><th>ماذا يعرض</th></tr></thead>
+    <tbody>
+      <tr><td class="m">v_account_balances</td><td>رصيد كل حساب = الافتتاحي + القيود. الخزنة في الواجهة = مجموع حسابات عملتها (PayPal خزنة مستقلة).</td></tr>
+      <tr><td class="m">v_customer_balances / v_customers</td><td>ذمة كل زبون لكل عملة، وأعمدة جاهزة للواجهة.</td></tr>
+      <tr><td class="m">v_debts</td><td>الدين مع المسدد والمتبقي والحالة UNPAID/PARTIAL/PAID.</td></tr>
+      <tr><td class="m">v_account_statement / v_customer_statement</td><td>كشوف برصيد متراكم (رصيد افتتاحي، مدين، دائن، ختامي).</td></tr>
+      <tr><td class="m">v_capital_summary</td><td>صافي رأس المال لكل عملة: أرصدة الحسابات + لنا − علينا.</td></tr>
+      <tr><td class="m">v_transfer_profit_daily</td><td>أرباح العمولات اليومية للحوالات غير الملغاة.</td></tr>
+      <tr><td class="m">fund_ledger(fund) / v_fund_summary</td><td>المخزون ومتوسط التكلفة والربح المحقق لكل صندوق (MULTIPLY / DIVIDE / PERCENT).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card" style="border-color:#F2D9A6">
+  <div style="display:flex;align-items:center;gap:10px"><h2>9. قواعد معتمدة في الواجهات وغير موجودة في القاعدة بعد</h2><span class="tag ok">معتمد 22/11/2026 · جاهز للتنفيذ</span></div>
+  <p class="sub">هذه اعتُمدت في شاشات النظام خلال المراجعات، والتصميم الحالي للقاعدة لا يغطيها. لم تُضَف للوحة «تصميم قاعدة البيانات» كجداول نهائية حتى تعتمديها.</p>
+  <table class="tbl">
+    <thead><tr><th>الموضوع</th><th>المطلوب في القاعدة</th><th>مصدره في الواجهة</th></tr></thead>
+    <tbody>
+      <tr><td><b>المكاتب</b></td><td>جدول <span class="m">offices</span> (اسم، جوال، عملة حساب ثابتة، موقوف، رابط الصفحة الخارجية token + تفعيل العرض) و<span class="m">office_commission_rates</span> (نسبة + تاريخ سريان)، وقيود المكتب في دفتر القيود (له/عليه).</td><td>صفحة المكاتب، حوالة جديدة</td></tr>
+      <tr><td><b>عمولة المكتب</b></td><td>على المكاتب فقط. نسبة ثابتة لكل مكتب تُحدَّد وتُعدَّل من صفحة المكاتب فقط (لا تُعدَّل داخل الحوالة)، وتُحتسب عندما يكون الحساب المستلم PayPal بنسبة المكتب السارية بتاريخ الحوالة.</td><td>حوالة جديدة</td></tr>
+      <tr><td><b>أنواع الحسابات</b></td><td>توسيع <span class="m">account_type</span>: بنك، منصة دفع، محفظة مصرية، محفظة فلسطينية، منصة USDT، تطبيق بطاقات. <b>حذف CASH نهائياً</b>: لا يوجد كاش في النظام (قرار 22/11/2026). وحالة الحساب: نشط/مقيّد/مجمّد/مغلق مع سجل تغيير الحالة. والمسؤول عنه في المكتب.</td><td>الحسابات والخزائن، إضافة حساب</td></tr>
+      <tr><td><b>عملة الدينار</b></td><td>إضافة JOD إلى <span class="m">currencies</span> (موجودة في الواجهات وغير موجودة في البيانات الأساسية).</td><td>البنوك، Cash Plus، الديون</td></tr>
+      <tr><td><b>حدود الحسابات</b></td><td>جدول <span class="m">account_limits</span>: الاتجاه (الدخول والخروج / الخروج فقط)، الفترة (يومي/أسبوعي/شهري)، الحد أو «غير معرّف»، طريقة الاحتساب (تقويمي/متحرك)، بداية الأسبوع.</td><td>حدود الحسابات</td></tr>
+      <tr><td><b>كشوف PayPal والأمانات</b></td><td><span class="m">paypal_transactions</span> (الأعمدة الأصلية + المكتب + ملاحظة + حالة التحقق) و<span class="m">amanat</span> (مفتوحة/سُلّمت/بانتظار الإرجاع/حُوّلت لإيراد) مع منع التحويل لإيراد قبل المدة.</td><td>PayPal</td></tr>
+      <tr><td><b>البطاقات والربط</b></td><td><span class="m">cards</span> (الحساب، النوع، آخر 4، الحالة: فعّالة/مجمّدة/ملغاة) و<span class="m">card_links</span> مع حسابات PayPal.</td><td>البطاقات والربط</td></tr>
+      <tr><td><b>بيانات الزبون</b></td><td>إضافة السكن ومجال العمل للزبون، والملاحظة للدين.</td><td>الزبائن، ملف الزبون</td></tr>
+      <tr><td><b>وثائق وملاحظات الحساب، ومشاكل الحسابات</b></td><td><span class="m">account_documents</span>، <span class="m">account_notes</span>، و<span class="m">account_issues</span> مع المراسلات وسجل التدقيق.</td><td>صفحات الحسابات، مشاكل الحسابات (قريباً)</td></tr>
+      <tr><td><b>إلغاء صفقات الصناديق</b></td><td>إضافة <span class="m">cancelled_at / cancelled_by / cancel_reason</span> إلى <span class="m">fund_transactions</span> بنفس قاعدة الحوالات: لا إلغاء بدون سبب إلزامي (قرار 22/11/2026، ومطبّق في الواجهتين).</td><td>صندوق الجنيه، صندوق USDT</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>حوالة جديدة</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#0B1626;color:#fff}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#4A5A70}
+.f input,.f select,.f textarea{font:inherit;font-size:15px;font-weight:400;color:#142B4A;height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;background:#fff;box-sizing:border-box;width:100%}
+.f textarea{height:80px;padding:10px 14px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.hint{font-size:12px;font-weight:400;color:#4A5A70}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.seg{display:inline-flex;flex-wrap:wrap;background:#EEF1F5;border-radius:12px;padding:4px;gap:4px}
+.seg button{font:inherit;font-size:14px;border:0;border-radius:9px;min-height:36px;padding:0 20px;background:transparent;color:#3A4A60;cursor:pointer}
+.seg button.on{background:#fff;color:#142B4A;font-weight:600;box-shadow:0 1px 2px rgba(20,43,74,.08)}
+.dot{width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex:none}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;font-size:15px}
+.ostrip{display:flex;flex-wrap:wrap;align-items:stretch;background:#fff;border:1px solid #D9E0EA;border-radius:14px;overflow:hidden}
+.ostrip .c{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:12px 18px;border-inline-start:1px solid #EDF1F5}
+.ostrip .c:first-child{border-inline-start:0}
+.ostrip .k{font-size:12px;line-height:18px;color:#4A5A70;font-weight:600}
+.ostrip .v{display:flex;align-items:center;gap:8px;font-size:20px;line-height:28px;font-weight:600}
+.ostrip .go{margin-inline-start:auto;display:flex;align-items:center;padding:0 18px;font-size:13px;font-weight:600;text-decoration:none}
+.calc{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;background:#fff;border:1px dashed #C9D2DF;border-radius:12px;padding:10px 14px;font-size:14px}
+.note{border-radius:12px;padding:12px 14px;font-size:14px}
+.ro{background:#F5F7FA!important;cursor:default}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.fs{border:1px solid #E1E6EE;border-radius:16px;background:#fff;margin:0;padding:20px;display:flex;flex-direction:column;gap:16px}
+.fs.in{--c:#16B8A6;border-color:#CDEBDD;background:#FBFEFC}
+.fs.out{--c:#D9826F;border-color:#F3D3CF;background:#FFFCFB}
+.fs legend{padding:0 8px}
+.rb{display:flex;flex-direction:column;gap:12px;padding:18px 20px;border-radius:16px;background:#fff;border:1px solid #E1E6EE;border-top:3px solid var(--c)}
+.rbh{margin:0;font-size:16px;line-height:26px;font-weight:700;color:#142B4A}
+.srow{flex-wrap:wrap;align-items:baseline;border-bottom:1px solid #EDF1F5;font-size:14px;padding:9px 0}
+.srow>.sub{flex:1 1 auto}
+.srow .sv{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-inline-start:auto;white-space:nowrap}
+.srow .sv .amt{font-size:13px}
+.topsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:stretch}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+.pair .grid3{grid-template-columns:2fr 1fr;gap:12px}
+.pair .grid3>:first-child{grid-column:1/-1}
+.pair .seg button{padding:0 10px;font-size:13px}
+.pair .ostrip .v{font-size:17px}
+@media (max-width:1100px){.pair{grid-template-columns:1fr}}
+.res{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.res .rb{padding:16px 18px}
+.res .row{flex-wrap:wrap;align-items:baseline;font-size:13px!important;gap:4px 10px}
+.res .row>:first-child{flex:1 1 auto}
+.res .row>:last-child{margin-inline-start:auto;white-space:nowrap}
+.res .row .amt{font-size:13px}
+.res:empty{display:none}
+@media (max-width:1100px){.res{grid-template-columns:1fr}}
+.ost{display:flex;flex-wrap:wrap;background:#fff;border:1px solid #E1E6EE;border-radius:14px;overflow:hidden}
+.oc{flex:1 1 160px;min-width:0;display:flex;flex-direction:column;gap:2px;padding:10px 16px 12px;border-top:3px solid var(--c)}
+.oc+.oc{border-inline-start:1px solid #EDF1F5}
+.oc .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--c);margin-inline-end:6px;vertical-align:middle;position:static;flex:none}
+.oc b.amt{font-size:20px;line-height:30px;font-weight:600;text-align:start}
+.olnk{font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap}
+.oc.dc{flex:1 1 100px;padding:8px 12px 10px}
+.oc.dc b.amt{font-size:16px;line-height:24px}
+.pcol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.pcol .rb{padding:16px 18px}
+.sbs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.sbs .srow{font-size:13px}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav on" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+  <nav aria-label="مسار الصفحة" style="font-size:14px" class="sub"><a href="TransfersList.dc.html" style="text-decoration:none;font-weight:600">الحوالات</a> <span aria-hidden="true">‹</span> حوالة جديدة</nav>
+  <header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+    <div>
+      <h1 style="margin:0;font-size:32px;line-height:44px;font-weight:700">حوالة جديدة</h1>
+      <p class="sub" style="margin:4px 0 0">كل حوالة حركتان مربوطتان برقم واحد: دخول إلى حساب، وخروج من حساب.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span class="cap">رقم الحوالة</span><span class="en" style="font-size:14px;font-weight:600;padding:5px 12px;border-radius:8px;background:#EEF1F5;color:#142B4A">TR-1043</span>
+    </div>
+  </header>
+
+  <div>
+    <form class="card" style="padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end">
+        <label class="f" style="flex:0 1 220px">تاريخ ووقت العملية<input type="text" value="10/11/2026 · 11:06 م" class="amt" style="text-align:right"></label>
+      </div>
+
+      <div class="pair">
+      <fieldset class="fs in">
+        <legend style="padding:0 8px;display:flex;align-items:center;gap:10px"><span class="dot" style="background:#E2F4EC;color:#136A43" aria-hidden="true">+</span><span style="font-size:18px;font-weight:700;color:#136A43">استلمنا من</span><span class="hint">أموال دخلت حسابات المكتب</span></legend>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#4A5A70">الطرف</span><div class="seg" role="group" aria-label="نوع الطرف المستلَم منه"><button type="button" class="{{fromParty}}" onClick="{{setFromParty}}">مكتب</button><button type="button" class="{{fromCustomer}}" onClick="{{setFromCustomer}}">زبون</button></div></div>
+          <sc-if value="{{fromIsCustomer}}" hint-placeholder-val="{{ false }}">
+            <div class="f" style="flex:1 1 170px;min-width:0;position:relative"><span style="display:flex;align-items:center;gap:6px;height:20px">الزبون<span class="{{fTagCls}}" style="height:20px;font-size:11px;padding:0 8px">{{fTag}}</span><sc-if value="{{showKind}}" hint-placeholder-val="{{ false }}"><a class="olnk" href="Customer.dc.html" style="margin-inline-start:auto">ملف الزبون ←</a></sc-if></span>
+              <div style="position:relative"><input type="search" value="{{fQ}}" onChange="{{fOnQ}}" onClick="{{fOpen}}" placeholder="الاسم أو رقم الجوال" autocomplete="off"></div>
+              <sc-if value="{{fShow}}" hint-placeholder-val="{{ false }}">
+                <div role="listbox" style="position:absolute;top:100%;inset-inline:0;margin-top:4px;background:#fff;border:1px solid #D3DAE5;border-radius:12px;box-shadow:0 12px 28px rgba(11,22,38,.14);z-index:20;overflow:hidden">
+                  <sc-for list="{{fMatches}}" as="m" hint-placeholder-count="3"><button type="button" role="option" onClick="{{m.pick}}" style="display:flex;width:100%;align-items:center;gap:10px;padding:10px 14px;border:0;border-bottom:1px solid #EDF1F5;background:#fff;font:inherit;font-size:14px;color:#142B4A;cursor:pointer;text-align:start"><b style="flex:1">{{m.name}}</b><span class="cap en">{{m.phone}}</span><span class="cap">{{m.debt}}</span></button></sc-for>
+                  <sc-if value="{{fNoMatch}}" hint-placeholder-val="{{ false }}"><div class="cap" style="padding:10px 14px">لا يوجد زبون مسجّل بهذا الاسم</div></sc-if>
+                  <button type="button" onClick="{{fUseWalk}}" style="display:flex;width:100%;align-items:center;gap:8px;padding:10px 14px;border:0;background:#F5F7FA;font:inherit;font-size:13px;color:#3A4A60;cursor:pointer;text-align:start">{{fWalkText}}</button>
+                  <a href="Clients.dc.html" style="display:block;padding:10px 14px;font-size:13px;font-weight:600;border-top:1px solid #EDF1F5">+ إضافة زبون جديد</a>
+                </div>
+              </sc-if>
+              <span class="hint" style="{{fHintStyle}}">{{fHint}}</span>
+            </div>
+            <sc-if value="{{fIsWalk}}" hint-placeholder-val="{{ false }}"><label class="f" style="flex:0 1 150px;min-width:0">جوال الزبون العابر<input type="text" class="en" style="text-align:left" value="{{fPhone}}" onChange="{{fOnPhone}}" placeholder="اختياري"><span class="hint">يفيد إذا تكرر التعامل معه</span></label></sc-if>
+          </sc-if>
+          <sc-if value="{{fromIsParty}}" hint-placeholder-val="{{ true }}">
+            <label class="f" style="flex:1 1 240px"><span style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:20px">المكتب<a class="olnk" href="Office.dc.html">كشف المكتب ←</a></span><select value="{{fromOff}}" onChange="{{onFromOff}}"><sc-for list="{{offNames}}" as="o" hint-placeholder-count="3"><option value="{{o}}">{{o}}</option></sc-for></select></label>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{fromIsParty}}" hint-placeholder-val="{{ true }}">
+          <div class="ost"><div class="oc" style="{{fOffLine}}"><span class="cap"><i class="dot"></i>رصيده لدينا الآن</span><b class="amt" style="{{fOffBalStyle}}">{{fOffBal}}</b><span class="cap">{{fOffSideText}}</span></div><sc-if value="{{showOffIn}}" hint-placeholder-val="{{ true }}"><div class="oc" style="--c:#C9D2DE"><span class="cap"><i class="dot"></i>العمولة على التحويل</span><b class="amt">{{fOffPct}}</b><span class="cap">{{fOffPctNote}}</span></div></sc-if></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#4A5A70">من أين المبلغ؟</span><div class="seg" role="group" aria-label="مصدر المبلغ"><button type="button" class="{{omIn}}" onClick="{{setOmIn}}">حوّل لنا مبلغاً</button><button type="button" class="{{omBal}}" onClick="{{setOmBal}}">خصم من رصيده لدينا</button></div></div>
+        </sc-if>
+
+        <sc-if value="{{fromWalk}}" hint-placeholder-val="{{ false }}"><div class="hint" style="background:#F5F7FA;border-radius:10px;padding:10px 12px">الزبون العابر يدفع كامل المبلغ. لتسجيل دين على شخص، أضفه كزبون أولاً.</div></sc-if>
+
+        <sc-if value="{{showKind}}" hint-placeholder-val="{{ false }}">
+          <div class="ost"><sc-for list="{{custDebtCells}}" as="d" hint-placeholder-count="3"><div class="oc dc" style="--c:#E0A12B"><span class="cap"><i class="dot"></i>عليه دين · <span class="en">{{d.cur}}</span></span><b class="amt">{{d.amt}}</b></div></sc-for></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#4A5A70">نوع العملية</span><div class="seg" role="group" aria-label="نوع العملية"><button type="button" class="{{kNormal}}" onClick="{{setKNormal}}">حوالة</button><button type="button" class="{{kRepay}}" onClick="{{setKRepay}}">سداد دين</button></div></div>
+        </sc-if>
+
+        <sc-if value="{{showRecvQ}}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#4A5A70">هل استلمنا المبلغ؟</span><div class="seg" role="group" aria-label="حالة الاستلام"><button type="button" class="{{rFull}}" onClick="{{setFull}}">استلمنا كامل المبلغ</button><button type="button" class="{{rPart}}" onClick="{{setPart}}">استلمنا جزءاً</button><button type="button" class="{{rNone}}" onClick="{{setNone}}">لم نستلم شيئاً</button></div></div>
+        </sc-if>
+
+        <sc-if value="{{showTotal}}" hint-placeholder-val="{{ false }}">
+          <div class="grid3">
+            <label class="f">المبلغ الكلي للحوالة<input type="text" value="{{total}}" onChange="{{onTotal}}" class="amt" style="text-align:left" placeholder="0.00"><span class="hint">ما يجب أن يدفعه الزبون مقابل الحوالة</span></label>
+            <sc-if value="{{isNone}}" hint-placeholder-val="{{ false }}"><label class="f">عملة المبلغ<select value="{{totalCur}}" onChange="{{onTotalCur}}"><sc-for list="{{curList}}" as="c" hint-placeholder-count="5"><option value="{{c}}">{{c}}</option></sc-for></select><span class="hint">لا يوجد حساب مستلِم، فاختر العملة</span></label></sc-if>
+            <sc-if value="{{isPart}}" hint-placeholder-val="{{ false }}"><div class="f">العملة<input type="text" value="{{fromCur}}" readonly class="en ro" style="font-weight:600"><span class="hint">نفس عملة الحساب المستلِم</span></div></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{showNone}}" hint-placeholder-val="{{ false }}"><div class="note" style="background:#FFFCF3;border:1px solid #F2D9A6;color:#7A5200">لم يدخل أي مبلغ. المبلغ الكلي كله يُسجَّل ديناً على <b>{{cust}}</b>.</div></sc-if>
+        <sc-if value="{{showFromBal}}" hint-placeholder-val="{{ false }}"><div class="note" style="background:#EEF3FA;border:1px solid #CFDCEC;color:#1F3F66">لا يدخل أي مبلغ لحساباتنا. ما نسلّمه في الأسفل يُخصم من رصيد <b>{{fromOff}}</b> لدينا.</div></sc-if>
+
+        <sc-if value="{{showRecv}}" hint-placeholder-val="{{ true }}">
+        <div class="grid3">
+          <label class="f">الحساب الذي دخلت عليه<select value="{{fromAcc}}" onChange="{{onFromAcc}}"><sc-for list="{{groups}}" as="g" hint-placeholder-count="5"><optgroup label="{{g.label}}"><sc-for list="{{g.accs}}" as="a" hint-placeholder-count="3"><option value="{{a}}">{{a}}</option></sc-for></optgroup></sc-for></select><span class="hint">كل الحسابات، مجمّعة حسب العملة</span></label>
+          <label class="f">{{fromAmtLbl}}<input type="text" value="{{fromAmt}}" onChange="{{onFromAmt}}" class="amt" style="text-align:left"><span class="hint">{{fromAmtHint}}</span></label>
+          <label class="f">العملة<input type="text" value="{{fromCur}}" readonly class="en ro" style="font-weight:600"><span class="hint">تتحدد تلقائياً من الحساب</span></label>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{isPart}}" hint-placeholder-val="{{ false }}"><div class="calc"><span>المبلغ الكلي <b class="amt">{{totalFmt}}</b></span><span class="sub">−</span><span>دفع الزبون <b class="amt">{{fromAmtFmt}}</b></span><span class="sub">=</span><span>الباقي ديناً <b class="amt" style="color:#A3291D">{{remainFmt}} {{fromCur}}</b></span></div></sc-if>
+
+        <sc-if value="{{showOffIn}}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{hasComm}}" hint-placeholder-val="{{ true }}"><div class="calc"><span>المحوَّل <b class="amt">{{grossFmt}}</b></span><span class="sub">−</span><span>العمولة {{fOffPct}} <b class="amt">{{commFmt}}</b></span><span class="sub">=</span><span>الصافي للمكتب <b class="amt" style="color:#136A43">{{netFmt}} {{fOffCur}}</b></span></div></sc-if>
+          <sc-if value="{{noComm}}" hint-placeholder-val="{{ false }}"><div class="calc"><span>المحوَّل <b class="amt">{{grossFmt}}</b></span><span class="sub">=</span><span>الصافي للمكتب <b class="amt" style="color:#136A43">{{netFmt}} {{fOffCur}}</b></span><span class="cap">بدون عمولة · العمولة على التحويل عبر PayPal فقط</span></div></sc-if>
+          <sc-if value="{{curMismatch}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">عملة الحساب المستلِم ({{fromCur}}) تختلف عن عملة حساب المكتب ({{fOffCur}}). اختر حساباً بعملة المكتب.</div></sc-if>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#4A5A70">ماذا يريد المكتب بالصافي؟</span><div class="seg" role="group" aria-label="التصرف بالصافي"><button type="button" class="{{ouAll}}" onClick="{{setOuAll}}">نسلّمه كاملاً</button><button type="button" class="{{ouPart}}" onClick="{{setOuPart}}">نسلّم جزءاً والباقي لرصيده</button><button type="button" class="{{ouBal}}" onClick="{{setOuBal}}">كله يُضاف لرصيده</button></div></div>
+        </sc-if>
+      </fieldset>
+
+
+
+      <div class="pcol">
+      <fieldset class="fs out">
+        <legend style="padding:0 8px;display:flex;align-items:center;gap:10px"><span class="dot" style="background:#FBE7E5;color:#A3291D" aria-hidden="true">−</span><span style="font-size:18px;font-weight:700;color:#A3291D">سلّمنا إلى</span><span class="hint">أموال خرجت من حسابات المكتب</span></legend>
+        <sc-if value="{{noDeliver}}" hint-placeholder-val="{{ false }}"><div class="note" style="background:#F8FAFC;border:1px dashed #D3DAE5;color:#4A5A70">{{noDeliverText}}</div></sc-if>
+        <sc-if value="{{showDeliver}}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#4A5A70">الطرف</span><div class="seg" role="group" aria-label="نوع الطرف المسلَّم إليه"><button type="button" class="{{toParty}}" onClick="{{setToParty}}">مكتب</button><button type="button" class="{{toCustomer}}" onClick="{{setToCustomer}}">زبون</button></div></div>
+          <sc-if value="{{toIsCustomer}}" hint-placeholder-val="{{ true }}">
+            <div class="f" style="flex:1 1 170px;min-width:0;position:relative"><span style="display:flex;align-items:center;gap:6px;height:20px">الزبون<span class="{{tTagCls}}" style="height:20px;font-size:11px;padding:0 8px">{{tTag}}</span></span>
+              <div style="position:relative"><input type="search" value="{{tQ}}" onChange="{{tOnQ}}" onClick="{{tOpen}}" placeholder="الاسم أو رقم الجوال" autocomplete="off"></div>
+              <sc-if value="{{tShow}}" hint-placeholder-val="{{ false }}">
+                <div role="listbox" style="position:absolute;top:100%;inset-inline:0;margin-top:4px;background:#fff;border:1px solid #D3DAE5;border-radius:12px;box-shadow:0 12px 28px rgba(11,22,38,.14);z-index:20;overflow:hidden">
+                  <sc-for list="{{tMatches}}" as="m" hint-placeholder-count="3"><button type="button" role="option" onClick="{{m.pick}}" style="display:flex;width:100%;align-items:center;gap:10px;padding:10px 14px;border:0;border-bottom:1px solid #EDF1F5;background:#fff;font:inherit;font-size:14px;color:#142B4A;cursor:pointer;text-align:start"><b style="flex:1">{{m.name}}</b><span class="cap en">{{m.phone}}</span><span class="cap">{{m.debt}}</span></button></sc-for>
+                  <sc-if value="{{tNoMatch}}" hint-placeholder-val="{{ false }}"><div class="cap" style="padding:10px 14px">لا يوجد زبون مسجّل بهذا الاسم</div></sc-if>
+                  <button type="button" onClick="{{tUseWalk}}" style="display:flex;width:100%;align-items:center;gap:8px;padding:10px 14px;border:0;background:#F5F7FA;font:inherit;font-size:13px;color:#3A4A60;cursor:pointer;text-align:start">{{tWalkText}}</button>
+                  <a href="Clients.dc.html" style="display:block;padding:10px 14px;font-size:13px;font-weight:600;border-top:1px solid #EDF1F5">+ إضافة زبون جديد</a>
+                </div>
+              </sc-if>
+              <span class="hint" style="{{tHintStyle}}">{{tHint}}</span>
+            </div>
+            <sc-if value="{{tIsWalk}}" hint-placeholder-val="{{ false }}"><label class="f" style="flex:0 1 150px;min-width:0">جوال الزبون العابر<input type="text" class="en" style="text-align:left" value="{{tPhone}}" onChange="{{tOnPhone}}" placeholder="اختياري"><span class="hint">يفيد إذا تكرر التعامل معه</span></label></sc-if>
+          </sc-if>
+          <sc-if value="{{toIsParty}}" hint-placeholder-val="{{ false }}">
+            <label class="f" style="flex:1 1 240px"><span style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:20px">المكتب<a class="olnk" href="Office.dc.html">كشف المكتب ←</a></span><select value="{{toOff}}" onChange="{{onToOff}}"><sc-for list="{{offNames}}" as="o" hint-placeholder-count="3"><option value="{{o}}">{{o}}</option></sc-for></select></label>
+          </sc-if>
+        </div>
+        <sc-if value="{{showToStrip}}" hint-placeholder-val="{{ false }}"><div class="ost"><div class="oc" style="{{tOffLine}}"><span class="cap"><i class="dot"></i>رصيده لدينا الآن</span><b class="amt" style="{{tOffBalStyle}}">{{tOffBal}}</b><span class="cap">{{tOffSideText}}</span></div><div class="oc" style="--c:#C9D2DE"><span class="cap"><i class="dot"></i>العمولة</span><b style="font-size:15px;line-height:30px">بدون عمولة</b><span class="cap">ما نسلّمه يُنقص رصيده لدينا</span></div></div></sc-if>
+        <div class="grid3">
+          <label class="f">الحساب الذي خرجت منه<select value="{{toAcc}}" onChange="{{onToAcc}}"><sc-for list="{{groups}}" as="g" hint-placeholder-count="5"><optgroup label="{{g.label}}"><sc-for list="{{g.accs}}" as="a" hint-placeholder-count="3"><option value="{{a}}">{{a}}</option></sc-for></optgroup></sc-for></select><span class="hint">كل الحسابات، مجمّعة حسب العملة</span></label>
+          <sc-if value="{{toAmtRo}}" hint-placeholder-val="{{ false }}"><div class="f">المبلغ المسلَّم<input type="text" value="{{toAmtShown}}" readonly class="amt ro" style="text-align:left"><span class="hint">{{toAmtHint}}</span></div></sc-if>
+          <sc-if value="{{toAmtEd}}" hint-placeholder-val="{{ true }}"><label class="f">المبلغ المسلَّم<input type="text" value="{{toAmtShown}}" onChange="{{onToAmt}}" class="amt" style="text-align:left"><span class="hint">{{toAmtHint}}</span></label></sc-if>
+          <label class="f">العملة<input type="text" value="{{toCur}}" readonly class="en ro" style="font-weight:600"><span class="hint">تتحدد تلقائياً من الحساب</span></label>
+        </div>
+        <sc-if value="{{needRate}}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end">
+            <label class="f" style="flex:0 1 260px"><span>{{rateLbl}}</span><input type="text" value="{{offRate}}" onChange="{{onOffRate}}" class="amt" style="text-align:left" placeholder="0.00"></label>
+            <sc-if value="{{hasRate}}" hint-placeholder-val="{{ true }}"><div class="calc" style="flex:1 1 280px"><span><b class="amt">{{toAmtFmt}} {{toCur}}</b> ÷ <b class="amt">{{offRateFmt}}</b></span><span class="sub">=</span><span>يُحسب على المكتب <b class="amt" style="color:#A3291D">{{convFmt}} {{offCurX}}</b></span></div></sc-if><sc-if value="{{noRate}}" hint-placeholder-val="{{ false }}"><div class="calc" style="flex:1 1 280px;color:#4A5A70">اكتب سعر الصرف ليُحسب المبلغ بعملة المكتب تلقائياً</div></sc-if>
+          </div>
+        </sc-if>
+        </sc-if>
+      </fieldset>
+      <div class="sbs"><div class="rb" style="--c:#C9D2DE">
+        <h2 class="rbh">ملخص الحوالة</h2>
+        <sc-for list="{{sumRows}}" as="r" hint-placeholder-count="4"><div class="row srow"><span class="sub">{{r.k}}</span><span class="sv"><b class="amt" style="{{r.s}}">{{r.v}}</b><sc-if value="{{r.hasSide}}" hint-placeholder-val="{{ false }}"><span class="{{r.sidePill}}">{{r.side}}</span></sc-if></span></div></sc-for>
+      </div>
+      <div class="rb" style="--c:#C9D2DE">
+        <h2 class="rbh">الحركات التي ستُنشأ</h2>
+        <sc-for list="{{moves}}" as="m" hint-placeholder-count="3"><div style="display:flex;gap:12px;align-items:flex-start"><span class="dot" style="{{m.dot}}" aria-hidden="true">{{m.sym}}</span><div style="flex:1;font-size:14px"><b style="font-weight:600">{{m.t}}</b> · {{m.where}}<div class="amt cap" style="font-size:13px;text-align:end">{{m.amt}}</div></div></div></sc-for>
+      </div></div>
+      </div>
+      </div>
+
+      <div class="res">
+      <sc-if value="{{showOffBox}}" hint-placeholder-val="{{ true }}">
+      <section class="rb" style="--c:#6E86A8" aria-labelledby="off-t">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px">
+          <h2 id="off-t" class="rbh">رصيد {{offBoxName}}</h2>
+          <a href="Office.dc.html" style="font-size:13px;font-weight:600">كشف المكتب ←</a>
+        </div>
+        <sc-for list="{{offLines}}" as="l" hint-placeholder-count="3"><div class="row" style="padding:4px 0;font-size:14px"><span class="sub">{{l.k}}</span><b class="amt" style="{{l.s}}">{{l.v}}</b></div></sc-for>
+        <div class="row" style="border-top:1px solid #EDF1F5;padding-top:10px"><span style="font-weight:600">رصيده بعد الحوالة</span><span><b class="amt">{{offBefore}}</b> ← <b class="amt" style="{{offAfterStyle}}">{{offAfter}}</b> <span class="{{offAfterPill}}">{{offAfterSide}}</span></span></div>
+        <sc-if value="{{offErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{offErr}}</div></sc-if>
+        <span class="hint">تظهر الحوالة تلقائياً في كشف المكتب بنفس الرقم TR-1043.</span>
+      </section>
+      </sc-if>
+
+      <sc-if value="{{hasDebt}}" hint-placeholder-val="{{ false }}">
+      <section class="rb" style="--c:#E0A12B" aria-labelledby="debt-t">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px">
+          <h2 id="debt-t" class="rbh">دين على الزبون</h2>
+          <a href="Customer.dc.html" style="font-size:13px;font-weight:600">ملف {{cust}} ←</a>
+        </div>
+        <sc-if value="{{debtIsEgp}}" hint-placeholder-val="{{ false }}">
+          <label class="f" style="max-width:320px">سعر الصرف (جنيه لكل 1 دولار)<input type="text" value="{{debtRate}}" onChange="{{onDebtRate}}" class="amt" style="text-align:left"><span class="hint">الدين بالجنيه يُسجَّل بالدولار</span></label>
+        </sc-if>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:15px"><span>يُسجَّل على <b>{{cust}}</b> دين</span><b class="amt" style="font-size:20px;color:#A3291D">{{debtFinal}}</b></div>
+        <div class="row" style="font-size:14px"><span class="sub">دينه الحالي بـ {{debtFinalCur}}</span><span><b class="amt">{{debtBefore}}</b> ← <b class="amt" style="color:#A3291D">{{debtAfter}}</b></span></div>
+        <sc-if value="{{debtError}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{debtError}}</div></sc-if>
+        <span class="hint">بعد الحفظ تظهر الحوالة في ملف الزبون كحركة «أخذ» بنفس رقم الحوالة TR-1043.</span>
+      </section>
+      </sc-if>
+
+      <sc-if value="{{isRepay}}" hint-placeholder-val="{{ false }}">
+      <section class="rb" style="--c:#16B8A6" aria-labelledby="rep-t">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px">
+          <h2 id="rep-t" class="rbh">سداد دين</h2>
+          <a href="Customer.dc.html" style="font-size:13px;font-weight:600">ملف {{cust}} ←</a>
+        </div>
+        <div class="row" style="font-size:15px"><span>دين {{cust}} بـ {{fromCur}}</span><span><b class="amt">{{repBefore}}</b> ← <b class="amt" style="color:#136A43">{{repAfter}}</b></span></div>
+        <sc-if value="{{repError}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{repError}}</div></sc-if>
+        <span class="hint">التسديد بنفس عملة الدين. تظهر الدفعة في ملف الزبون وفي سجل الحوالات بشارة «سداد دين».</span>
+      </section>
+      </sc-if>
+
+      <sc-if value="{{showProfit}}" hint-placeholder-val="{{ true }}">
+      <section class="rb" style="--c:#16B8A6" aria-labelledby="pr-t">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px">
+          <h2 id="pr-t" class="rbh">الربح <span class="hint" style="font-weight:600">اختياري</span></h2>
+          <span class="cap">للمعلومة · خارج رأس المال والخزائن</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end">
+          <label class="f" style="flex:0 1 240px">قيمة الربح<span style="position:relative"><input type="text" value="{{profit}}" onChange="{{onProfit}}" class="amt" style="text-align:left;padding-right:64px" placeholder="0.00"><span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#4A5A70">{{profitUnit}}</span></span></label>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:6px"><span style="font-size:14px;font-weight:600;color:#142B4A">يُسجَّل في: {{profitDest}}</span><span class="hint">{{profitWhy}}</span></div>
+        </div>
+        <sc-if value="{{hasDiff}}" hint-placeholder-val="{{ false }}"><span class="hint">للمساعدة: الفرق بين المستلم والمسلَّم <b class="amt">{{diffFmt}} USDT</b></span></sc-if>
+        <sc-if value="{{profitError}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{profitError}}</div></sc-if>
+      </section>
+      </sc-if>
+
+      
+      </div>
+
+      <label class="f">ملاحظات<textarea placeholder="أي ملاحظة عن الحوالة"></textarea></label>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;border-top:1px solid #EDF1F5;padding-top:20px">
+        <a class="btn" href="TransfersList.dc.html">إلغاء</a>
+        <a class="btn pri" href="TransfersList.dc.html">حفظ الحوالة</a>
+      </div>
+    </form>
+
+
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { from: 'party', to: 'customer', fromOff: 'محمد أبو حامدة', toOff: 'محمد أبو حامدة', offMode: 'in', offUse: 'part', offRate: '', fromCur: 'USD', toCur: 'USD', fromAmt: '2,000.00', toAmt: '1,000.00', fromAcc: 'PayPal – الحساب الرئيسي', toAcc: 'بنك فلسطين – أحمد (USD)', profit: '', recv: 'full', kind: 'normal', total: '', totalCur: 'USD', cust: '@walk', toCust: '@walk', walkName: '', toWalkName: 'يوسف ن.', fQ: '', tQ: 'يوسف ن.', fOpen: false, tOpen: false, debtRate: '50.00' };
+  }
+  renderVals() {
+    var self = this, st = this.state, from = st.from, to = st.to;
+    var ACC = {
+      USD: ['PayPal – الحساب الرئيسي', 'بنك فلسطين – أحمد (USD)', 'بنك فلسطين – كرم (USD)'],
+      USDT: ['Binance', 'Bybit', 'Kraken'],
+      ILS: ['بنك فلسطين – أحمد (ILS)', 'بنك فلسطين – كرم (ILS)', 'بنك فلسطين – هبة (ILS)'],
+      EGP: ['فودافون كاش 1', 'فودافون كاش 2', 'إنستاباي 1'],
+      EUR: ['Wise', 'Revolut']
+    };
+    var OFF = { 'محمد أبو حامدة': { cur: 'USD', bal: 4077.04, pct: 7 }, 'أبو كريم – مكتب القاسم': { cur: 'USDT', bal: -300, pct: 2 }, 'مكتب الأمل': { cur: 'USD', bal: 15.12, pct: 3 } };
+    var num = function (v) { var n = parseFloat(String(v).replace(/,/g, '')); return isNaN(n) ? 0 : n; };
+    var m2 = function (n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    var CUST = { 'علاء منصور': { USD: 4000, ILS: 2000, JOD: 1000 }, 'سامر خليل': { USD: 600 }, 'ياسر أبو شعبان': { ILS: 7500 }, 'منى الحلو': { USD: 1250 }, 'أبو محمد السقا': { USD: 9000, EUR: 1000 }, 'رامي عوض': { JOD: 450 }, 'خالد درويش': { USD: 2300 }, 'هيثم الأغا': {} };
+    var PHONE = { 'علاء منصور': '+970 599 123 456', 'سامر خليل': '+970 597 220 118', 'ياسر أبو شعبان': '+970 592 640 331', 'منى الحلو': '+20 100 455 7781', 'أبو محمد السقا': '+970 599 870 042', 'رامي عوض': '+970 598 015 660', 'خالد درويش': '+970 599 302 774', 'هيثم الأغا': '+970 595 777 210' };
+    var combo = function (p, custKey, walkKey) {
+      var q = String(st[p + 'Q']).trim(), qn = q.replace(/\s/g, '');
+      var names = Object.keys(CUST).filter(function (n) { return !q || n.indexOf(q) >= 0 || PHONE[n].replace(/\s/g, '').indexOf(qn) >= 0; }).slice(0, 6);
+      var reg = st[custKey] !== '@walk', o = {};
+      var set1 = function (ch) { self.setState(ch); };
+      o[p + 'Q'] = st[p + 'Q'];
+      o[p + 'OnQ'] = function (e) { var ch = { recv: 'full', kind: 'normal' }; ch[p + 'Q'] = e.target.value; ch[p + 'Open'] = true; ch[custKey] = '@walk'; ch[walkKey] = e.target.value; set1(ch); };
+      o[p + 'Open'] = function () { var ch = {}; ch[p + 'Open'] = true; set1(ch); };
+      o[p + 'Show'] = !!st[p + 'Open'];
+      o[p + 'Matches'] = names.map(function (n) { var d = CUST[n], ks = Object.keys(d); return { name: n, phone: PHONE[n], debt: ks.length ? 'عليه دين' : '', pick: function () { var ch = {}; ch[custKey] = n; ch[p + 'Q'] = n; ch[p + 'Open'] = false; set1(ch); } }; });
+      o[p + 'NoMatch'] = !names.length;
+      o[p + 'UseWalk'] = function () { if (!q) return; var ch = {}; ch[custKey] = '@walk'; ch[walkKey] = q; ch[p + 'Open'] = false; ch.recv = 'full'; ch.kind = 'normal'; set1(ch); };
+      o[p + 'WalkText'] = q ? 'استخدام «' + q + '» كزبون عابر (بدون حفظ في القائمة)' : 'اكتب اسم الزبون العابر أولاً';
+      o[p + 'Tag'] = reg ? 'زبون مسجّل' : 'زبون عابر'; o[p + 'TagCls'] = reg ? 'pill ok' : 'pill neutral';
+      var needName = !reg && !q;
+      o[p + 'Hint'] = reg ? (PHONE[st[custKey]] || '') + ' · من قائمة الزبائن' : (needName ? 'اسم الزبون إلزامي، حتى لو كان عابراً' : 'زبون عابر: الاسم يُحفظ مع الحوالة ويظهر في السجل، ولا يُضاف لقائمة الزبائن');
+      o[p + 'HintStyle'] = needName ? 'color:#A3291D;font-weight:600' : '';
+      o[p + 'IsWalk'] = !reg;
+      o[p + 'Phone'] = st[p + 'Phone'] || ''; o[p + 'OnPhone'] = function (e) { var ch = {}; ch[p + 'Phone'] = e.target.value; set1(ch); };
+      return o;
+    };
+    var side = function (b) { return b > 0.004 ? 'له' : b < -0.004 ? 'عليه' : 'صفر'; };
+    var sidePill = function (b) { return b > 0.004 ? 'pill ok' : b < -0.004 ? 'pill bad' : 'pill neutral'; };
+    var balCol = function (b) { return b > 0.004 ? 'color:#136A43' : b < -0.004 ? 'color:#A3291D' : ''; };
+
+    /* parties */
+    var fromOffice = from === 'party', toOffice = to === 'party';
+    var FO = OFF[st.fromOff], TO = OFF[st.toOff];
+    var D = CUST[st.cust] || {}, debtKeys = Object.keys(D);
+    var isCust = from === 'customer' && st.cust !== '@walk';
+    var repay = isCust && debtKeys.length > 0 && st.kind === 'repay';
+    var recv = isCust && !repay ? st.recv : 'full';
+    var offBal = fromOffice && st.offMode === 'bal', offIn = fromOffice && st.offMode === 'in';
+    var showRecv = !offBal && recv !== 'none';
+    var showDeliver = !repay && !(offIn && st.offUse === 'bal');
+    var fa = showRecv ? num(st.fromAmt) : 0;
+
+    /* office in */
+    var viaPP = String(st.fromAcc || '').indexOf('PayPal') === 0, pctEff = viaPP ? FO.pct : 0;
+    var gross = offIn ? fa : 0, comm = offIn ? gross * pctEff / 100 : 0, net = gross - comm;
+    var curMismatch = offIn && st.fromCur !== FO.cur;
+    var toAmtRo = offIn && st.offUse === 'all' && st.toCur === FO.cur;
+    var ta = !showDeliver ? 0 : (toAmtRo ? net : num(st.toAmt));
+    var offCurX = fromOffice ? FO.cur : (toOffice ? TO.cur : '');
+    var needRate = showDeliver && !!offCurX && st.toCur !== offCurX;
+    var rate = num(st.offRate), conv = !showDeliver ? 0 : (st.toCur === offCurX ? ta : (rate > 0 ? ta / rate : 0));
+
+    /* office box */
+    var showOffBox = fromOffice || (toOffice && showDeliver), offLines = [], offBefore = 0, offAfter = 0, offErr = '', offName = '';
+    if (fromOffice) {
+      offName = st.fromOff; offBefore = FO.bal;
+      if (offIn) {
+        offLines.push({ k: 'المحوَّل منه', v: '+' + m2(gross) + ' ' + FO.cur, s: 'color:#136A43' });
+        if (pctEff) offLines.push({ k: 'العمولة ' + pctEff + '% من المبلغ كله', v: '−' + m2(comm) + ' ' + FO.cur, s: 'color:#A3291D' });
+        if (showDeliver) offLines.push({ k: 'سلّمناه' + (needRate ? ' (بعد سعر الصرف)' : ''), v: '−' + m2(conv) + ' ' + FO.cur, s: 'color:#A3291D' });
+        offAfter = offBefore + net - conv;
+        if (st.offUse === 'part' && conv > net + 0.004) offErr = 'المسلَّم أكبر من الصافي. الزيادة ستُخصم من رصيده السابق.';
+      } else {
+        offLines.push({ k: 'سلّمناه من رصيده' + (needRate ? ' (بعد سعر الصرف)' : ''), v: '−' + m2(conv) + ' ' + FO.cur, s: 'color:#A3291D' });
+        offAfter = offBefore - conv;
+        if (offAfter < -0.004 && offBefore >= 0) offErr = 'المبلغ أكبر من رصيده لدينا، وسيصبح عليه ' + m2(-offAfter) + ' ' + FO.cur + '.';
+      }
+    } else if (toOffice && showDeliver) {
+      offName = st.toOff; offBefore = TO.bal;
+      offLines.push({ k: 'سلّمناه' + (needRate ? ' (بعد سعر الصرف)' : ''), v: '−' + m2(conv) + ' ' + TO.cur, s: 'color:#A3291D' });
+      offAfter = offBefore - conv;
+    }
+    if (needRate && rate <= 0) offErr = 'أدخل سعر الصرف.';
+    var oc = fromOffice ? FO.cur : (toOffice ? TO.cur : '');
+
+    /* customer total / debt */
+    var isPart = recv === 'part', isNone = recv === 'none';
+    var total = num(st.total), totalCur = isNone ? st.totalCur : st.fromCur;
+    var rawDebt = isNone ? total : (isPart ? Math.max(0, total - fa) : 0);
+    var hasDebt = isCust && !repay && recv !== 'full';
+    var debtIsEgp = hasDebt && totalCur === 'EGP', dRate = num(st.debtRate);
+    var finalCur = debtIsEgp ? 'USD' : totalCur, finalAmt = debtIsEgp ? (dRate > 0 ? rawDebt / dRate : 0) : rawDebt;
+    var dBefore = D[finalCur] || 0, debtError = '';
+    if (hasDebt) {
+      if (total <= 0) debtError = 'أدخل المبلغ الكلي للحوالة.';
+      else if (isPart && fa <= 0) debtError = 'أدخل المبلغ الذي دفعه الزبون، أو اختر «لم نستلم شيئاً».';
+      else if (isPart && fa >= total) debtError = 'المبلغ المدفوع يساوي الكلي أو أكبر منه. اختر «استلمنا كامل المبلغ».';
+      else if (debtIsEgp && dRate <= 0) debtError = 'أدخل سعر صرف صحيح.';
+    }
+
+    /* repay */
+    var repBefore = D[st.fromCur] || 0, repError = '';
+    if (repay) { if (!repBefore) repError = 'لا يوجد على الزبون دين بـ ' + st.fromCur + '. اختر حساباً بعملة الدين (' + debtKeys.join('، ') + ').'; else if (fa <= 0) repError = 'أدخل المبلغ المسدَّد.'; else if (fa > repBefore + 0.004) repError = 'المبلغ أكبر من الدين (' + m2(repBefore) + ' ' + st.fromCur + ').'; }
+
+    /* profit */
+    var hasUsdt = (showRecv && st.fromCur === 'USDT') || (showDeliver && st.toCur === 'USDT');
+    var pv = num(st.profit), profitError = String(st.profit).trim() && pv < 0 ? 'الربح لا يمكن أن يكون سالباً.' : '';
+    var hasDiff = showRecv && showDeliver && st.fromCur === 'USDT' && st.toCur === 'USDT';
+    var diff = fa - ta;
+
+    var impact;
+    if (hasDiff) impact = 'لا أثر: حوالة USDT مقابل USDT لا تدخل في متوسط التكلفة.';
+    else if (showRecv && st.fromCur === 'USDT') impact = 'يدخل ' + m2(fa) + ' USDT كشراء في متوسط تكلفة USDT.';
+    else if (showDeliver && st.toCur === 'USDT') impact = 'يخرج ' + m2(ta) + ' USDT كبيع من مخزون USDT.';
+    else impact = 'لا أثر: لا يوجد USDT في طرفي الحوالة.';
+
+    /* summary + moves */
+    var sumRows = [], moves = [];
+    var G = 'color:#136A43', R = 'color:#A3291D', Y = 'color:#7A5200', T = 'color:#0A5F56', B = 'color:#1F3F66';
+    sumRows.push({ k: 'استلمنا', v: offBal ? 'من رصيد المكتب' : isNone ? 'لم نستلم شيئاً' : '+' + m2(fa) + ' ' + st.fromCur, s: offBal || isNone ? '' : G });
+    if (offIn && pctEff) sumRows.push({ k: 'عمولة من ' + st.fromOff, v: m2(comm) + ' ' + FO.cur, s: B });
+    sumRows.push({ k: 'سلّمنا', v: showDeliver ? '−' + m2(ta) + ' ' + st.toCur : 'لا يوجد تسليم', s: showDeliver ? R : '' });
+    if (showOffBox) sumRows.push({ k: 'رصيد ' + offName, v: m2(Math.abs(offAfter)) + ' ' + oc + ' ← ' + m2(Math.abs(offBefore)) + ' ' + oc, s: balCol(offAfter), hasSide: true, side: side(offAfter), sidePill: sidePill(offAfter) });
+    if (hasDebt) sumRows.push({ k: 'دين على ' + st.cust, v: '+' + m2(finalAmt) + ' ' + finalCur, s: Y });
+    if (repay) sumRows.push({ k: 'سداد دين ' + st.cust, v: '−' + m2(fa) + ' ' + st.fromCur, s: G });
+    if (!repay && pv > 0) sumRows.push({ k: 'الربح ← ' + (hasUsdt ? 'صندوق ربح USDT' : 'الأرباح العادية'), v: '+' + m2(pv) + ' ' + (hasUsdt ? 'USDT' : 'USD'), s: T });
+    if (showRecv) moves.push({ t: 'دخول', where: st.fromAcc, amt: '+' + m2(fa) + ' ' + st.fromCur, sym: '+', dot: 'background:#E2F4EC;color:#136A43' });
+    if (showDeliver) moves.push({ t: 'خروج', where: st.toAcc, amt: '−' + m2(ta) + ' ' + st.toCur, sym: '−', dot: 'background:#FBE7E5;color:#A3291D' });
+    if (showOffBox) { var dl = offAfter - offBefore; moves.push({ t: 'رصيد المكتب', where: 'كشف ' + offName, amt: (dl >= 0 ? '+' : '−') + m2(Math.abs(dl)) + ' ' + oc, sym: 'م', dot: 'background:#E6EEF7;color:#1F3F66' }); }
+    if (hasDebt) moves.push({ t: 'دين', where: 'ملف ' + st.cust, amt: '+' + m2(finalAmt) + ' ' + finalCur, sym: 'د', dot: 'background:#FDF0D5;color:#7A5200' });
+    if (repay) moves.push({ t: 'سداد', where: 'ملف ' + st.cust, amt: '−' + m2(fa) + ' ' + st.fromCur, sym: 'د', dot: 'background:#E2F4EC;color:#136A43' });
+    if (!repay && pv > 0) moves.push({ t: 'ربح', where: hasUsdt ? 'صندوق ربح USDT' : 'الأرباح العادية', amt: '+' + m2(pv) + ' ' + (hasUsdt ? 'USDT' : 'USD') + ' · خارج رأس المال', sym: '★', dot: 'background:#DDF5F2;color:#0A5F56' });
+
+    var CURS = ['USD', 'USDT', 'ILS', 'EGP', 'EUR'], NAMES = { USD: 'دولار أمريكي', USDT: 'تيثر', ILS: 'شيكل', EGP: 'جنيه مصري', EUR: 'يورو' };
+    var groups = CURS.map(function (c) { return { label: c + ' — ' + NAMES[c], accs: ACC[c] }; });
+    var curOf = function (a) { for (var c in ACC) { if (ACC[c].indexOf(a) >= 0) return c; } return null; };
+    var seg = function (on) { return on ? 'on' : ''; };
+    var fromAmtLbl = offIn ? (pctEff ? 'المبلغ المحوَّل (قبل العمولة)' : 'المبلغ المحوَّل') : isPart ? 'المبلغ الذي دفعه الزبون' : repay ? 'المبلغ المسدَّد' : 'المبلغ المستلم';
+    var noDeliverText = repay ? 'سداد دين: لا يوجد تسليم في هذه العملية.' : 'لا يوجد تسليم: الصافي كله يُضاف لرصيد ' + st.fromOff + ' لدينا.';
+    var CB = Object.assign({}, combo('f', 'cust', 'walkName'), combo('t', 'toCust', 'toWalkName'));
+    return Object.assign(CB, {
+      groups: groups, curList: CURS, offNames: Object.keys(OFF),
+      fromCur: st.fromCur, toCur: st.toCur, fromAmt: st.fromAmt, fromAcc: st.fromAcc, toAcc: st.toAcc,
+      fromAmtLbl: fromAmtLbl, fromAmtHint: offIn ? (pctEff ? 'العمولة تُخصم من المبلغ كله' : 'بدون عمولة لأن الحساب ليس PayPal') : 'الصافي بعد رسوم المنصة',
+      fromAmtFmt: m2(fa), toAmtFmt: m2(ta),
+      onFromAcc: function (e) { self.setState({ fromAcc: e.target.value, fromCur: curOf(e.target.value) }); },
+      onToAcc: function (e) { self.setState({ toAcc: e.target.value, toCur: curOf(e.target.value) }); },
+      onFromAmt: function (e) { self.setState({ fromAmt: e.target.value }); },
+      onToAmt: function (e) { self.setState({ toAmt: e.target.value }); },
+      /* parties */
+      fromParty: seg(fromOffice), fromCustomer: seg(!fromOffice), toParty: seg(toOffice), toCustomer: seg(!toOffice),
+      fromIsCustomer: !fromOffice, fromIsParty: fromOffice, toIsCustomer: !toOffice, toIsParty: toOffice,
+      setFromParty: function () { self.setState({ from: 'party' }); }, setFromCustomer: function () { self.setState({ from: 'customer' }); },
+      setToParty: function () { self.setState({ to: 'party' }); }, setToCustomer: function () { self.setState({ to: 'customer' }); },
+      fromOff: st.fromOff, toOff: st.toOff,
+      onFromOff: function (e) { self.setState({ fromOff: e.target.value }); }, onToOff: function (e) { self.setState({ toOff: e.target.value }); },
+      fOffBal: m2(Math.abs(FO.bal)) + ' ' + FO.cur, fOffSide: side(FO.bal), fOffSidePill: sidePill(FO.bal), fOffBalStyle: balCol(FO.bal), fOffPct: pctEff + '%', fOffPctNote: viaPP ? 'نسبة ثابتة للمكتب · تُعدَّل من صفحة المكاتب' : 'لا عمولة · العمولة على التحويل عبر PayPal فقط', hasComm: offIn && pctEff > 0, noComm: offIn && !pctEff, fOffCur: FO.cur, fOffLine: FO.bal > 0.004 ? '--c:#2FAE73' : FO.bal < -0.004 ? '--c:#D2493A' : '--c:#9FB0C6', fOffSideText: FO.bal > 0.004 ? 'له · مستحق للمكتب' : FO.bal < -0.004 ? 'عليه · مستحق لنا' : 'لا يوجد رصيد', fOffBg: FO.bal > 0.004 ? 'background:#F6FCF9' : FO.bal < -0.004 ? 'background:#FFF8F7' : '', tOffLine: TO.bal > 0.004 ? '--c:#2FAE73' : TO.bal < -0.004 ? '--c:#D2493A' : '--c:#9FB0C6', tOffSideText: TO.bal > 0.004 ? 'له · مستحق للمكتب' : TO.bal < -0.004 ? 'عليه · مستحق لنا' : 'لا يوجد رصيد', tOffBg: TO.bal > 0.004 ? 'background:#F6FCF9' : TO.bal < -0.004 ? 'background:#FFF8F7' : '',
+      tOffBal: m2(Math.abs(TO.bal)) + ' ' + TO.cur, tOffSide: side(TO.bal), tOffSidePill: sidePill(TO.bal), tOffBalStyle: balCol(TO.bal), tOffCur: TO.cur,
+      showToStrip: toOffice && !fromOffice,
+      omIn: seg(st.offMode === 'in'), omBal: seg(st.offMode === 'bal'),
+      setOmIn: function () { self.setState({ offMode: 'in' }); }, setOmBal: function () { self.setState({ offMode: 'bal' }); },
+      showOffIn: offIn, curMismatch: curMismatch, grossFmt: m2(gross), commFmt: m2(comm), netFmt: m2(net),
+      ouAll: seg(st.offUse === 'all'), ouPart: seg(st.offUse === 'part'), ouBal: seg(st.offUse === 'bal'),
+      setOuAll: function () { self.setState({ offUse: 'all' }); }, setOuPart: function () { self.setState({ offUse: 'part' }); }, setOuBal: function () { self.setState({ offUse: 'bal' }); },
+      showFromBal: offBal,
+      /* deliver */
+      showDeliver: showDeliver, noDeliver: !showDeliver, noDeliverText: noDeliverText,
+      toAmtRo: toAmtRo, toAmtEd: !toAmtRo, toAmtShown: toAmtRo ? m2(net) : st.toAmt,
+      toAmtHint: toAmtRo ? (pctEff ? 'يساوي الصافي بعد العمولة' : 'يساوي المبلغ المحوَّل') : (offIn && st.offUse === 'part' ? 'الباقي من الصافي يُضاف لرصيد المكتب' : ''),
+      needRate: needRate, offCurX: offCurX, offRate: st.offRate, onOffRate: function (e) { self.setState({ offRate: e.target.value }); }, offRateFmt: rate > 0 ? m2(rate) : '—', convFmt: m2(conv), hasRate: rate > 0, noRate: !(rate > 0), rateLbl: 'سعر الصرف (' + st.toCur + ' لكل 1 ' + offCurX + ')',
+      /* office box */
+      showOffBox: showOffBox, offBoxName: offName, offLines: offLines,
+      offBefore: m2(Math.abs(offBefore)) + ' ' + oc, offAfter: m2(Math.abs(offAfter)) + ' ' + oc, offAfterSide: side(offAfter), offAfterPill: sidePill(offAfter), offAfterStyle: balCol(offAfter), offErr: offErr,
+      /* customer */
+      cust: st.cust === '@walk' ? (st.walkName || 'زبون عابر') : st.cust,
+      fromWalk: !fromOffice && st.cust === '@walk',
+      showKind: isCust && debtKeys.length > 0, custDebts: debtKeys.map(function (k) { return m2(D[k]) + ' ' + k; }).join(' · '), custDebtCells: debtKeys.map(function (k) { return { cur: k, amt: m2(D[k]) }; }),
+      kNormal: seg(!repay), kRepay: seg(repay),
+      setKNormal: function () { self.setState({ kind: 'normal' }); }, setKRepay: function () { self.setState({ kind: 'repay', recv: 'full' }); },
+      showRecvQ: isCust && !repay,
+      rFull: seg(recv === 'full'), rPart: seg(isPart), rNone: seg(isNone),
+      setFull: function () { self.setState({ recv: 'full' }); }, setPart: function () { self.setState({ recv: 'part' }); }, setNone: function () { self.setState({ recv: 'none' }); },
+      showRecv: showRecv, showNone: isCust && isNone, isPart: isCust && isPart, isNone: isCust && isNone, showTotal: hasDebt,
+      total: st.total, onTotal: function (e) { self.setState({ total: e.target.value }); },
+      totalCur: st.totalCur, onTotalCur: function (e) { self.setState({ totalCur: e.target.value }); },
+      totalFmt: m2(total), remainFmt: m2(Math.max(0, total - fa)),
+      hasDebt: hasDebt, debtIsEgp: debtIsEgp, debtRate: st.debtRate, onDebtRate: function (e) { self.setState({ debtRate: e.target.value }); },
+      debtFinal: m2(finalAmt) + ' ' + finalCur, debtFinalCur: finalCur, debtBefore: m2(dBefore), debtAfter: m2(dBefore + finalAmt) + ' ' + finalCur, debtError: debtError,
+      isRepay: repay, repBefore: m2(repBefore) + ' ' + st.fromCur, repAfter: m2(Math.max(0, repBefore - fa)) + ' ' + st.fromCur, repError: repError,
+      /* profit */
+      showProfit: !repay, profit: st.profit, onProfit: function (e) { self.setState({ profit: e.target.value }); }, profitError: profitError,
+      profitUnit: hasUsdt ? 'USDT' : 'USD', profitDest: hasUsdt ? 'صندوق ربح USDT' : 'الأرباح العادية',
+      profitWhy: hasUsdt ? 'في الحوالة USDT، فالربح بالـ USDT' : 'لا يوجد USDT في الحوالة، فالربح بالدولار',
+      hasDiff: hasDiff, diffFmt: m2(diff),
+      sumRows: sumRows, moves: moves, usdtImpact: impact
+    });
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سجل الحوالات</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.acc{background:#16B8A6;border-color:#16B8A6;color:#0B1626}
+.btn.acc:hover{background:#13A595;color:#0B1626}
+.btn svg{width:18px;height:18px}
+.search{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #D3DAE5;border-radius:10px;background:#fff;color:#4A5A70;min-width:240px;flex:1 1 240px;box-sizing:border-box}
+.search input{border:0;outline:0;font:inherit;font-size:14px;background:transparent;width:100%;color:#142B4A}
+.search svg{width:18px;height:18px;flex:none}
+.sel{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#4A5A70}
+.sel select,.sel input{font:inherit;font-size:14px;font-weight:400;height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 12px;background:#fff;color:#142B4A}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:14px 16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.stat{padding:18px 20px;display:flex;flex-direction:column;gap:4px}
+.chipf{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#1C3A60;color:#fff}
+.btn[disabled]{background:#C9D1DC;border-color:#C9D1DC;color:#4A5A70;cursor:not-allowed}
+.scrim{position:fixed;inset:0;background:rgba(11,22,38,.45);z-index:20;display:flex;justify-content:flex-end}
+.drawer{width:min(540px,100%);height:100%;background:#F5F7FA;box-sizing:border-box;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(11,22,38,.25)}
+.dh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:22px 24px;background:#fff;border-bottom:1px solid #E1E6EE}
+.db{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:18px}
+.df{padding:16px 24px;background:#fff;border-top:1px solid #E1E6EE;display:flex;gap:10px}
+.ibtn{width:44px;height:44px;border-radius:10px;border:1px solid #D3DAE5;background:#fff;color:#142B4A;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.cur{display:flex;flex-wrap:wrap;gap:6px}
+.cur button{font:inherit;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;min-width:60px;height:40px;border-radius:10px;border:1px solid #D3DAE5;background:#fff;color:#3A4A60;cursor:pointer}
+.cur button.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.lbl{font-size:13px;font-weight:600;color:#142B4A}
+.inp{height:46px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;font:inherit;font-size:15px;color:#142B4A;background:#fff;box-sizing:border-box;width:100%}
+.inp:focus{outline:2px solid #16B8A6;outline-offset:1px;border-color:#16B8A6}
+.inp.err{border-color:#A3291D}
+.money{position:relative}
+.money .inp{font-family:'IBM Plex Mono',monospace;font-weight:500;direction:ltr;text-align:left;padding-right:64px}
+.money span{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#4A5A70}
+.acct{background:#fff;border:1px solid #E1E6EE;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.bal{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#F5F7FA;border-radius:10px;padding:8px 12px;font-size:13px;color:#4A5A70}
+.bal b{font-size:15px;color:#142B4A}
+.srow{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #EDF1F5;font-size:14px}
+.srow:last-child{border-bottom:0}
+.sgn{width:26px;height:26px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;box-sizing:border-box}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:480px;padding:28px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px;box-shadow:0 20px 50px rgba(11,22,38,.25)}
+.x{width:40px;height:40px;border-radius:10px;border:0;background:#F5F7FA;color:#142B4A;cursor:pointer;font-size:20px}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.note{background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60}
+textarea{font:inherit;font-size:15px;border:1px solid #D3DAE5;border-radius:10px;padding:10px 14px;min-height:80px;resize:vertical;color:#142B4A;box-sizing:border-box;width:100%}
+.ib{min-height:34px;padding:0 12px;border-radius:9px;border:1px solid #F3D3CF;background:#fff;color:#A3291D;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.ib:hover{background:#FBE7E5}
+.sticky thead th{position:sticky;top:0;z-index:2;box-shadow:inset 0 -1px 0 #E1E6EE}
+.chipf.sm{height:32px;padding:0 12px;font-size:12px}
+.plink{color:#142B4A;text-decoration:none;font-weight:600}
+.plink:hover{color:#0E7C70;text-decoration:underline}
+.tot{display:flex;flex-wrap:wrap;gap:6px}
+.sts{display:flex;flex-wrap:wrap;overflow:hidden}
+.st{flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:2px;padding:12px 22px 14px;border-top:3px solid var(--c);color:#142B4A}
+.st+.st{border-inline-start:1px solid #EDF1F5}
+.st .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--c);margin-inline-end:6px;vertical-align:middle}
+.st b.amt{font-size:22px;line-height:32px;font-weight:600;text-align:start}
+.tb{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;padding:12px 20px;border-bottom:1px solid #EDF1F5}
+.tb-q{display:flex;align-items:center;gap:6px;height:36px;padding:0 10px;border:1px solid #E1E6EE;border-radius:10px;background:#fff;color:#4A5A70;min-width:200px;flex:1 1 220px;max-width:340px;box-sizing:border-box}
+.tb-q input{border:0;outline:0;font:inherit;font-size:13px;width:100%;background:transparent;color:#142B4A}
+.tsel{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#4A5A70;white-space:nowrap}
+.tsel select,.tsel input[type=text]{font:inherit;font-size:13px;font-weight:500;height:36px;border:1px solid #E1E6EE;border-radius:10px;padding:0 10px;background:#fff;color:#142B4A;min-width:96px}
+.xa-seg{display:inline-flex;gap:2px;padding:3px;border-radius:10px;background:#EEF1F5}
+.xa-seg button{font:inherit;font-size:13px;font-weight:600;min-height:30px;padding:0 11px;border:0;border-radius:8px;background:transparent;color:#3A4A60;cursor:pointer;white-space:nowrap}
+.xa-seg button.on{background:#fff;color:#142B4A;box-shadow:0 1px 2px rgba(20,43,74,.12)}
+.tb-b{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:0;border-radius:8px;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer;text-decoration:none;white-space:nowrap}
+.tb-b:hover{background:#F2FBFA}
+.tbl.bd{font-size:13px;line-height:20px}
+.tbl.bd th,.tbl.bd td{border:1px solid #E1E6EE}
+.tbl.bd th{padding:7px 12px;font-size:12px;background:#F8FAFC}
+.tbl.bd td{padding:7px 12px;vertical-align:top}
+.tbl.bd tbody tr:hover td{background:#FAFBFC}
+.tbl.bd tr.cx td{background:#FCF8F7;color:#6A7A90}
+.tbl.bd tr.cx td:first-child{box-shadow:inset -3px 0 0 #D2493A}
+.tbl.bd tr.cx .plink,.tbl.bd tr.cx b{color:#6A7A90}
+.tbl.bd tr.cx .tp.tr,.tbl.bd tr.cx .tp.in{opacity:.6}
+.cxr{margin-top:4px;font-size:11px;line-height:16px;color:#A3291D;white-space:normal;max-width:150px}
+.pty{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.tp{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap}
+.tp.tr{background:#EEF1F5;color:#3A4A60}.tp.in{background:#6E86A81F;color:#1F3F66}.tp.cn{gap:4px;background:#D2493A14;color:#A3291D}.tp.dbt{background:#E0A12B1F;color:#7A5200}
+.acts{display:flex;gap:2px;align-items:center;justify-content:flex-end}
+.ib{width:30px;height:30px;min-height:0;padding:0;border-radius:8px;border:1px solid #E1E6EE;color:#9FB0C6;display:inline-flex;align-items:center;justify-content:center}
+.ib:hover{color:#A3291D;background:#FBE7E5}
+.tfoot{padding:12px 20px;border-top:1px solid #EDF1F5;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;background:#FAFBFC}
+.sumr{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font-size:13px}
+.sumr .cap{min-width:72px}
+.si{color:#136A43}.so{color:#A3291D}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav on" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+  <header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+    <div>
+      <h1 style="margin:0;font-size:32px;line-height:44px;font-weight:700">الحوالات</h1>
+      <p class="sub" style="margin:4px 0 0">كل حركات الأموال: الحوالات والنقل الداخلي بين حسابات المكتب</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="Internal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3l3 3-3 3M20 6H9a5 5 0 0 0-5 5M7 21l-3-3 3-3M4 18h11a5 5 0 0 0 5-5"/></svg>نقل داخلي</a>
+      <a class="btn acc" href="Transfer.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>حوالة جديدة</a>
+    </div>
+  </header>
+
+  <section class="card sts" aria-label="ملخص اليوم">
+    <div class="st" style="--c:#142B4A"><span class="cap"><i class="dot"></i>حركات اليوم</span><b class="amt">{{tCount}}</b><span class="cap">{{tSplit}} · {{tCountNote}}</span></div>
+    <div class="st" style="--c:#16B8A6"><span class="cap"><i class="dot"></i>الربح الصافي اليوم · <span class="en">USDT</span></span><b class="amt" style="color:#136A43">{{tProfit}}</b><span class="cap">{{tProfitN}}</span></div>
+  </section>
+
+  <section class="card" style="overflow:hidden" aria-label="سجل الحركات">
+    <div class="tb">
+      <label class="tb-q"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="vh">بحث</span><input type="search" value="{{q}}" onChange="{{onQ}}" placeholder="رقم الحوالة، اسم الزبون أو المكتب، الحساب"></label>
+      <label class="tsel"><span>الطرف</span><select value="{{party}}" onChange="{{onParty}}"><option value="">الكل</option><option value="@office">كل المكاتب</option><option value="@customer">الزبائن المسجّلون</option><option value="@walk">الزبائن العابرون</option><sc-for list="{{officeOpts}}" as="o" hint-placeholder-count="2"><option value="{{o}}">{{o}}</option></sc-for></select></label>
+      <label class="tsel"><span>الحساب / المنصة</span><select value="{{plat}}" onChange="{{onPlat}}"><option value="">الكل</option><sc-for list="{{platOpts}}" as="o" hint-placeholder-count="5"><option value="{{o}}">{{o}}</option></sc-for></select></label>
+      <label class="tsel"><span>العملة</span><select value="{{cur}}" onChange="{{onCur}}"><option value="">الكل</option><sc-for list="{{curOpts}}" as="o" hint-placeholder-count="5"><option value="{{o}}">{{o}}</option></sc-for></select></label>
+    </div>
+    <div class="tb">
+      <div class="xa-seg" role="group" aria-label="التاريخ"><sc-for list="{{dateChips}}" as="d" hint-placeholder-count="5"><button type="button" class="{{d.cls}}" aria-pressed="{{d.pressed}}" onClick="{{d.go}}">{{d.label}}</button></sc-for></div>
+      <sc-if value="{{isCustom}}" hint-placeholder-val="{{ false }}"><label class="tsel"><span>من</span><input type="text" value="{{from}}" onChange="{{onFrom}}" class="amt" style="width:110px" placeholder="01/11/2026"></label><label class="tsel"><span>إلى</span><input type="text" value="{{to}}" onChange="{{onTo}}" class="amt" style="width:110px" placeholder="14/11/2026"></label></sc-if>
+      <div class="xa-seg" role="group" aria-label="النوع"><sc-for list="{{types}}" as="ty" hint-placeholder-count="3"><button type="button" class="{{ty.cls}}" aria-pressed="{{ty.pressed}}" onClick="{{ty.pick}}">{{ty.label}}</button></sc-for></div>
+      <label class="tsel" style="cursor:pointer"><input type="checkbox" checked="{{showCancelled}}" onChange="{{toggleCancelled}}" style="width:16px;height:16px;accent-color:#16B8A6">إظهار الملغاة</label>
+      <button class="tb-b" type="button" style="margin-inline-start:auto"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>تصدير Excel</button>
+    </div>
+    <div style="overflow:auto;max-height:640px">
+      <table class="tbl bd sticky">
+        <thead><tr><th>الرقم</th><th>التاريخ</th><th>النوع</th><th>استلمنا من</th><th>سلّمنا إلى</th><th>ربح صافي / خصم</th><th>المنفّذ</th><th><span class="vh">إجراءات</span></th></tr></thead>
+        <tbody>
+          <sc-for list="{{rows}}" as="t" hint-placeholder-count="8">
+            <tr class="{{t.rowCls}}">
+              <td><span class="en" style="font-weight:600">{{t.id}}</span><sc-if value="{{t.cancelled}}" hint-placeholder-val="{{ false }}"><div style="margin-top:4px"><span class="tp cn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg>ملغاة</span></div><div class="cxr">{{t.reason}}</div></sc-if></td>
+              <td><span class="amt">{{t.date}}</span><div class="cap amt">{{t.time}}</div></td>
+              <td><span class="{{t.tcls}}">{{t.type}}</span></td>
+              <td><div class="pty"><sc-if value="{{t.fLink}}" hint-placeholder-val="{{ true }}"><a class="plink" href="{{t.fHref}}">{{t.fName}}</a></sc-if><sc-if value="{{t.fNoLink}}" hint-placeholder-val="{{ false }}"><b>{{t.fName}}</b></sc-if><span class="cap">· {{t.fKind}}</span></div><span class="amt" style="{{t.inStyle}}">{{t.inAmt}}</span><div class="cap">{{t.inAcc}}</div></td>
+              <td><div class="pty"><sc-if value="{{t.tLink}}" hint-placeholder-val="{{ true }}"><a class="plink" href="{{t.tHref}}">{{t.tName}}</a></sc-if><sc-if value="{{t.tNoLink}}" hint-placeholder-val="{{ false }}"><b>{{t.tName}}</b></sc-if><span class="cap">· {{t.tKind}}</span></div><span class="amt" style="{{t.outStyle}}">{{t.outAmt}}</span><div class="cap">{{t.outAcc}}</div><sc-if value="{{t.hasDebt}}" hint-placeholder-val="{{ false }}"><div style="margin-top:2px"><span class="tp dbt">{{t.debt}}</span></div></sc-if></td>
+              <td><span class="amt" style="{{t.pStyle}}">{{t.pAmt}}</span><div class="cap">{{t.pNote}}</div></td>
+              <td class="sub">أحمد</td>
+              <td><div class="acts"><a class="tb-b" href="{{t.link}}">عرض</a><sc-if value="{{t.active}}" hint-placeholder-val="{{ true }}"><button class="ib" type="button" onClick="{{t.cancel}}" aria-label="إلغاء الحركة" title="إلغاء مع سبب"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg></button></sc-if></div></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><div class="sub" style="padding:28px;text-align:center">لا توجد حركات مطابقة للفلتر</div></sc-if>
+    </div>
+    <div class="tfoot">
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+        <span class="cap" style="font-size:13px;font-weight:600">{{countText}}</span>
+        <div class="sumr"><span class="cap" style="font-weight:600">مجموع الدخل</span><sc-for list="{{sumIn}}" as="x" hint-placeholder-count="3"><span class="amt si">+{{x}}</span></sc-for></div>
+        <div class="sumr"><span class="cap" style="font-weight:600">مجموع الخرج</span><sc-for list="{{sumOut}}" as="x" hint-placeholder-count="3"><span class="amt so">−{{x}}</span></sc-for></div>
+      </div>
+      <sc-if value="{{hasMore}}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:6px"><button class="tb-b" type="button" onClick="{{more}}">{{moreText}}</button><button class="tb-b" type="button" onClick="{{showAll}}">عرض الكل</button></div></sc-if>
+    </div>
+  </section>
+
+<sc-if value="{{isCancel}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="إلغاء حوالة"><div class="modal">
+ <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">إلغاء {{cId}}</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{cDesc}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{closeCancel}}">×</button></div>
+ <div class="note">لا تُحذف الحركة، بل تبقى في السجل بحالة «ملغاة» ويُعكس أثرها على أرصدة الحسابات.</div>
+ <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#142B4A">سبب الإلغاء (إلزامي)<textarea value="{{cReason}}" onChange="{{onReason}}" placeholder="مثال: سُجّلت مرتين بالخطأ"></textarea></label>
+ <sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{closeCancel}}">تراجع</button><button class="btn" type="button" style="background:#A3291D;border-color:#A3291D;color:#fff" onClick="{{saveCancel}}">تأكيد الإلغاء</button></div>
+</div></div>
+</sc-if>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+var TL_DATA = [{"id":"TR-1066","k":"tr","date":"2026-11-14","time":"13:40","pt":"walk","party":"أبو سليم","ia":1200,"ic":"ILS","iacc":"بنك فلسطين – هبة (ILS)","oa":330,"oc":"USD","oacc":"بنك فلسطين – كرم (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"walk","tparty":"أبو سليم"},{"id":"TR-1065","k":"tr","date":"2026-11-14","time":"13:05","pt":"office","party":"محمد أبو حامد","ia":900,"ic":"USD","iacc":"PayPal – زكي","oa":900,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"محمد أبو حامد"},{"id":"TR-1064","k":"tr","date":"2026-11-14","time":"12:20","pt":"customer","party":"أبو محمد السقا","ia":4000,"ic":"ILS","iacc":"بنك فلسطين – أحمد (ILS)","oa":1100,"oc":"USD","oacc":"بنك فلسطين – أحمد (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"أبو محمد السقا"},{"id":"TR-1063","k":"tr","date":"2026-11-14","time":"11:45","pt":"office","party":"أبو كريم – مكتب القاسم","ia":600,"ic":"USDT","iacc":"Bybit","oa":585,"oc":"USDT","oacc":"Kraken","profit":15,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"أبو كريم – مكتب القاسم"},{"id":"TR-1062","k":"tr","date":"2026-11-14","time":"11:20","pt":"office","party":"أبو كريم – مكتب القاسم","ia":1000,"ic":"USDT","iacc":"Binance","oa":950,"oc":"USDT","oacc":"Bybit","profit":50,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"أبو كريم – مكتب القاسم"},{"id":"NT-0224","k":"int","date":"2026-11-14","time":"10:55","pt":"internal","party":"","ia":1000,"ic":"USD","iacc":"PayPal – زكي","oa":980,"oc":"USD","oacc":"بنك فلسطين – أحمد (USD)","profit":null,"disc":20,"debt":"","pay":"","cancel":"","tpt":"internal","tparty":""},{"id":"TR-1061","k":"tr","date":"2026-11-14","time":"10:30","pt":"office","party":"محمد أبو حامد","ia":1500,"ic":"USD","iacc":"PayPal – زكي","oa":1500,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"walk","tparty":"يوسف ن."},{"id":"TR-1060","k":"tr","date":"2026-11-14","time":"09:48","pt":"customer","party":"علاء منصور","ia":0,"ic":"","iacc":"","oa":800,"oc":"USD","oacc":"بنك فلسطين – كرم (USD)","profit":null,"disc":null,"debt":"800 USD","pay":"","cancel":"","tpt":"customer","tparty":"علاء منصور"},{"id":"TR-1059","k":"tr","date":"2026-11-14","time":"09:15","pt":"customer","party":"سامر خليل","ia":15000,"ic":"EGP","iacc":"فودافون كاش 1","oa":300,"oc":"USD","oacc":"بنك فلسطين – أحمد (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"سامر خليل"},{"id":"TR-1058","k":"tr","date":"2026-11-14","time":"08:40","pt":"customer","party":"منى الحلو","ia":250,"ic":"USD","iacc":"PayPal – زكي","oa":12400,"oc":"EGP","oacc":"إنستاباي 1","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"منى الحلو"},{"id":"TR-1057","k":"tr","date":"2026-11-13","time":"19:05","pt":"office","party":"أبو كريم – مكتب القاسم","ia":2000,"ic":"USD","iacc":"PayPal – زكي","oa":2000,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"رامي عوض"},{"id":"TR-1056","k":"tr","date":"2026-11-13","time":"17:30","pt":"customer","party":"ياسر أبو شعبان","ia":3500,"ic":"ILS","iacc":"بنك فلسطين – كرم (ILS)","oa":1000,"oc":"USD","oacc":"بنك فلسطين – أحمد (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"ياسر أبو شعبان"},{"id":"TR-1055","k":"tr","date":"2026-11-13","time":"15:12","pt":"office","party":"محمد أبو حامد","ia":500,"ic":"USDT","iacc":"Bybit","oa":480,"oc":"USDT","oacc":"Binance","profit":20,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"محمد أبو حامد"},{"id":"NT-0223","k":"int","date":"2026-11-13","time":"13:00","pt":"internal","party":"","ia":500,"ic":"ILS","iacc":"بنك فلسطين – هبة (ILS)","oa":500,"oc":"ILS","oacc":"بنك فلسطين – كرم (ILS)","profit":null,"disc":0,"debt":"","pay":"","cancel":"","tpt":"internal","tparty":""},{"id":"TR-1054","k":"tr","date":"2026-11-13","time":"11:44","pt":"customer","party":"رامي عوض","ia":700,"ic":"JOD","iacc":"بنك فلسطين – أحمد (JOD)","oa":985,"oc":"USD","oacc":"بنك فلسطين – كرم (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"رامي عوض"},{"id":"TR-1053","k":"tr","date":"2026-11-13","time":"10:02","pt":"walk","party":"خالد م.","ia":500,"ic":"USD","iacc":"PayPal – زكي","oa":1640,"oc":"ILS","oacc":"بنك فلسطين – أحمد (ILS)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"walk","tparty":"خالد م."},{"id":"TR-1052","k":"tr","date":"2026-11-12","time":"18:20","pt":"walk","party":"سارة ع.","ia":700,"ic":"USD","iacc":"PayPal – زكي","oa":2400,"oc":"ILS","oacc":"بنك فلسطين – أحمد (ILS)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"walk","tparty":"سارة ع."},{"id":"TR-1051","k":"tr","date":"2026-11-12","time":"16:05","pt":"office","party":"محمد أبو حامد","ia":400,"ic":"USD","iacc":"PayPal – زكي","oa":400,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"سُجّلت مرتين بالخطأ","tpt":"office","tparty":"محمد أبو حامد"},{"id":"TR-1050","k":"tr","date":"2026-11-12","time":"12:30","pt":"walk","party":"أم مالك","ia":135,"ic":"USDT","iacc":"Binance","oa":133.65,"oc":"USD","oacc":"بنك فلسطين – أحمد (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"walk","tparty":"أم مالك"},{"id":"TR-1049","k":"tr","date":"2026-11-11","time":"20:10","pt":"office","party":"أبو كريم – مكتب القاسم","ia":2000,"ic":"USDT","iacc":"Kraken","oa":1940,"oc":"USDT","oacc":"Binance","profit":60,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"أبو كريم – مكتب القاسم"},{"id":"TR-1048","k":"tr","date":"2026-11-11","time":"14:00","pt":"customer","party":"أبو محمد السقا","ia":6000,"ic":"ILS","iacc":"بنك فلسطين – كرم (ILS)","oa":1650,"oc":"USD","oacc":"بنك فلسطين – كرم (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"أبو محمد السقا"},{"id":"NT-0222","k":"int","date":"2026-11-10","time":"18:40","pt":"internal","party":"","ia":3000,"ic":"USD","iacc":"PayPal – زكي","oa":2975,"oc":"USD","oacc":"بنك فلسطين – كرم (USD)","profit":null,"disc":25,"debt":"","pay":"","cancel":"","tpt":"internal","tparty":""},{"id":"TR-1047","k":"tr","date":"2026-11-10","time":"09:30","pt":"customer","party":"منى الحلو","ia":1000,"ic":"EUR","iacc":"Wise","oa":1080,"oc":"USD","oacc":"بنك فلسطين – أحمد (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"منى الحلو"},{"id":"TR-1046","k":"tr","date":"2026-11-09","time":"16:20","pt":"office","party":"محمد أبو حامد","ia":3000,"ic":"USD","iacc":"PayPal – زكي","oa":3000,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"walk","tparty":"أبو أحمد الحلبي"},{"id":"TR-1045","k":"tr","date":"2026-11-08","time":"13:15","pt":"customer","party":"علاء منصور","ia":300,"ic":"USD","iacc":"بنك فلسطين – أحمد (USD)","oa":0,"oc":"","oacc":"","profit":null,"disc":null,"debt":"","pay":"سداد دين 300 USD","cancel":"","tpt":"customer","tparty":"علاء منصور"},{"id":"TR-1044","k":"tr","date":"2026-11-07","time":"10:45","pt":"office","party":"أبو كريم – مكتب القاسم","ia":1200,"ic":"USDT","iacc":"Bybit","oa":1170,"oc":"USDT","oacc":"Kraken","profit":30,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"أبو كريم – مكتب القاسم"},{"id":"TR-1043","k":"tr","date":"2026-11-05","time":"12:00","pt":"customer","party":"ياسر أبو شعبان","ia":2000,"ic":"ILS","iacc":"بنك فلسطين – هبة (ILS)","oa":2000,"oc":"ILS","oacc":"بنك فلسطين – أحمد (ILS)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"ياسر أبو شعبان"},{"id":"TR-1042","k":"tr","date":"2026-11-03","time":"11:10","pt":"customer","party":"رامي عوض","ia":50000,"ic":"EGP","iacc":"إنستاباي 1","oa":1000,"oc":"USD","oacc":"بنك فلسطين – كرم (USD)","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"customer","tparty":"رامي عوض"},{"id":"NT-0221","k":"int","date":"2026-11-02","time":"09:00","pt":"internal","party":"","ia":10000,"ic":"EGP","iacc":"فودافون كاش 1","oa":10000,"oc":"EGP","oacc":"إنستاباي 1","profit":null,"disc":0,"debt":"","pay":"","cancel":"","tpt":"internal","tparty":""},{"id":"TR-1041","k":"tr","date":"2026-11-01","time":"15:40","pt":"office","party":"محمد أبو حامد","ia":2500,"ic":"USD","iacc":"PayPal – زكي","oa":2500,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"محمد أبو حامد"},{"id":"TR-1040","k":"tr","date":"2026-10-30","time":"10:00","pt":"office","party":"فايز عرفات","ia":2000,"ic":"USD","iacc":"PayPal – زكي","oa":2000,"oc":"USD","oacc":"رصيد المكتب","profit":null,"disc":null,"debt":"","pay":"","cancel":"","tpt":"office","tparty":"فايز عرفات"}];
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { q: '', party: '', plat: '', cur: '', date: 'month', from: '01/11/2026', to: '14/11/2026', filter: 'all', showCancelled: false, shown: 20, cancelled: {}, cId: null, cReason: '', err: '' };
+  }
+  renderVals() {
+    var self = this, st = this.state, set = function (o) { self.setState(o); };
+    var m2 = function (n) { return Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    var TODAY = '2026-11-14', YEST = '2026-11-13', WEEK = '2026-11-08', MONTH = '2026-11-01';
+    var toIso = function (d) { var p = String(d).split('/'); return p.length === 3 ? p[2] + '-' + p[1] + '-' + p[0] : ''; };
+    var PLATS = ['بنك فلسطين', 'PayPal', 'فودافون كاش', 'إنستاباي', 'Wise', 'Binance', 'Bybit', 'Kraken', 'رصيد المكتب'];
+    var platOf = function (acc) { for (var i = 0; i < PLATS.length; i++) { if (acc && acc.indexOf(PLATS[i]) === 0) return PLATS[i]; } return ''; };
+    var OFFICES = ['محمد أبو حامد', 'أبو كريم – مكتب القاسم'];
+    var all = TL_DATA.map(function (r) { var c = st.cancelled[r.id]; return Object.assign({}, r, { cancel: c || r.cancel }); });
+    var inRange = function (r) {
+      if (st.date === 'today') return r.date === TODAY;
+      if (st.date === 'yesterday') return r.date === YEST;
+      if (st.date === 'week') return r.date >= WEEK && r.date <= TODAY;
+      if (st.date === 'month') return r.date >= MONTH && r.date <= TODAY;
+      var f = toIso(st.from), t = toIso(st.to); return (!f || r.date >= f) && (!t || r.date <= t);
+    };
+    var q = String(st.q).trim().toLowerCase();
+    var list = all.filter(function (r) {
+      if (!inRange(r)) return false;
+      if (st.filter !== 'all' && r.k !== st.filter) return false;
+      if (!st.showCancelled && r.cancel) return false;
+      var has = function (pt) { return r.pt === pt || r.tpt === pt; };
+      if (st.party === '@office' && !has('office')) return false;
+      if (st.party === '@customer' && !has('customer')) return false;
+      if (st.party === '@walk' && !has('walk')) return false;
+      if (st.party && st.party[0] !== '@' && r.party !== st.party && r.tparty !== st.party) return false;
+      if (st.plat && platOf(r.iacc) !== st.plat && platOf(r.oacc) !== st.plat) return false;
+      if (st.cur && r.ic !== st.cur && r.oc !== st.cur) return false;
+      if (q && (r.id + ' ' + r.party + ' ' + r.tparty + ' ' + r.iacc + ' ' + r.oacc).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    }).sort(function (a, b) { return (a.date + a.time) < (b.date + b.time) ? 1 : -1; });
+    var sums = function (arr, side) { var o = {}; arr.forEach(function (r) { if (r.cancel || r.k === 'int') return; var a = side === 'in' ? r.ia : r.oa, c = side === 'in' ? r.ic : r.oc; if (a && c) o[c] = (o[c] || 0) + a; }); return Object.keys(o).map(function (c) { return m2(o[c]) + ' ' + c; }); };
+    var shownN = Math.min(st.shown, list.length);
+    var strike = 'text-decoration:line-through;color:#4A5A70';
+    var rows = list.slice(0, shownN).map(function (r) {
+      var x = !!r.cancel, isInt = r.k === 'int';
+      var pAmt = '', pNote = '', pStyle = '';
+      if (r.profit) { pAmt = '+' + m2(r.profit) + ' USDT'; pNote = 'ربح صافي · صندوق الربح'; pStyle = 'color:#136A43;font-weight:600'; }
+      else if (isInt && r.disc) { pAmt = m2(r.disc) + ' ' + r.ic; pNote = 'خصم · ليس ربحاً'; }
+      else if (isInt) { pAmt = '—'; pNote = 'بدون خصم'; }
+      if (x) pStyle = strike;
+      var KN = { office: 'مكتب', customer: 'زبون مسجّل', walk: 'زبون عابر' };
+      var hrefOf = function (pt) { return pt === 'office' ? 'Office.dc.html' : pt === 'customer' ? 'Customer.dc.html' : ''; };
+      var href = hrefOf(r.pt);
+      var fName = isInt ? 'حساب المكتب' : (r.pt === 'none' ? '—' : r.party), tName = isInt ? 'حساب المكتب' : r.tparty;
+      var fKind = isInt ? r.ic : KN[r.pt], tKind = isInt ? r.oc : KN[r.tpt];
+      return { id: r.id, type: isInt ? 'نقل داخلي' : 'حوالة', tcls: isInt ? 'tp in' : 'tp tr',
+        date: r.date.split('-').reverse().join('/'), time: r.time,
+        party: isInt ? 'بين حسابات المكتب' : r.party, kind: isInt ? r.ic : (r.pt === 'office' ? 'مكتب' : r.pt === 'walk' ? 'زبون عابر' : 'زبون مسجّل'),
+        hasLink: !!href, noLink: !href, href: href || '#',
+        fName: fName, fKind: fKind, fLink: !isInt && !!hrefOf(r.pt), fNoLink: isInt || !hrefOf(r.pt), fHref: hrefOf(r.pt) || '#',
+        tName: tName, tKind: tKind, tLink: !isInt && !!hrefOf(r.tpt), tNoLink: isInt || !hrefOf(r.tpt), tHref: hrefOf(r.tpt) || '#', hasDebt: !!(r.debt || r.pay) && !x, debt: r.debt ? 'عليها دين ' + r.debt : r.pay,
+        inAmt: r.ia ? m2(r.ia) + ' ' + r.ic : '—', inAcc: r.ia ? r.iacc : (r.debt ? 'لم نستلم · سُجّل ديناً' : ''),
+        outAmt: r.oa ? m2(r.oa) + ' ' + r.oc : '—', outAcc: r.oa ? r.oacc : (r.pay ? 'دفعة على دين' : ''), reason: x ? 'السبب: ' + r.cancel : '',
+        inStyle: x ? strike : 'color:#136A43', outStyle: x ? strike : 'color:#A3291D',
+        pAmt: pAmt, pNote: pNote, pStyle: pStyle,
+        cancelled: x, active: !x, rowCls: x ? 'cx' : '', link: isInt ? 'Internal.dc.html' : 'Transfer.dc.html',
+        cancel: function () { set({ cId: r.id, cReason: '', err: '' }); } };
+    });
+    var today = all.filter(function (r) { return r.date === TODAY; }), todayLive = today.filter(function (r) { return !r.cancel; });
+    var tProfit = todayLive.reduce(function (s, r) { return s + (r.profit || 0); }, 0);
+    var chip = function (key, val, label, extra) { return { label: label, cls: st[key] === val ? 'on' : '', pressed: st[key] === val ? 'true' : 'false', go: function () { var o = { shown: 20 }; o[key] = val; set(o); }, pick: function () { var o = { shown: 20 }; o[key] = val; set(o); } }; };
+    var cT = all.filter(function (r) { return r.id === st.cId; })[0];
+    var hiddenC = all.filter(function (r) { return r.cancel && inRange(r); }).length;
+    return {
+      tCount: String(todayLive.length), tCountNote: (today.length - todayLive.length) ? (today.length - todayLive.length) + ' ملغاة' : 'بدون ملغاة',
+      tIn: sums(today, 'in'), tOut: sums(today, 'out'), tProfit: '+' + m2(tProfit) + ' USDT',
+      tProfitN: (function (n) { return n === 1 ? 'حوالة USDT واحدة' : n === 2 ? 'حوالتان USDT' : n + ' حوالات USDT'; })(todayLive.filter(function (r) { return r.profit; }).length),
+      tSplit: todayLive.filter(function (r) { return r.k === 'tr'; }).length + ' حوالات · ' + todayLive.filter(function (r) { return r.k === 'int'; }).length + ' نقل داخلي',
+      tByCur: (function () { var o = {}, ord = ['USD', 'ILS', 'EGP', 'EUR', 'JOD', 'USDT']; todayLive.forEach(function (r) { if (r.k === 'int') return; if (r.ia && r.ic) { o[r.ic] = o[r.ic] || { i: 0, o: 0 }; o[r.ic].i += r.ia; } if (r.oa && r.oc) { o[r.oc] = o[r.oc] || { i: 0, o: 0 }; o[r.oc].o += r.oa; } });
+        return ord.filter(function (c) { return o[c]; }).map(function (c) { var n = o[c].i - o[c].o; var mx = Math.max(o[c].i, o[c].o) || 1; return { cur: c, in: o[c].i ? '+' + m2(o[c].i) : '—', out: o[c].o ? '−' + m2(o[c].o) : '—', net: (n > 0.004 ? '▲ +' : n < -0.004 ? '▼ −' : '') + m2(Math.abs(n)), netStyle: n > 0.004 ? 'color:#136A43' : n < -0.004 ? 'color:#A3291D' : 'color:#4A5A70', netPill: n > 0.004 ? 'pill ok' : n < -0.004 ? 'pill bad' : 'pill neutral', chip: 'display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 12px;border-radius:10px;border:1px solid ' + (n > 0.004 ? '#BFE3D2;background:#F2FAF6' : n < -0.004 ? '#F3D3CF;background:#FFF8F7' : '#E1E6EE;background:#F5F7FA'), aria: c + ': دخل ' + m2(o[c].i) + ' · خرج ' + m2(o[c].o), inBar: 'height:100%;border-radius:0 999px 999px 0;background:#2FAE73;width:' + (o[c].i / mx * 100).toFixed(1) + '%', outBar: 'height:100%;border-radius:999px 0 0 999px;background:#E0695F;width:' + (o[c].o / mx * 100).toFixed(1) + '%' }; }); })(),
+      q: st.q, onQ: function (e) { set({ q: e.target.value, shown: 20 }); },
+      party: st.party, onParty: function (e) { set({ party: e.target.value, shown: 20 }); }, officeOpts: OFFICES,
+      plat: st.plat, onPlat: function (e) { set({ plat: e.target.value, shown: 20 }); }, platOpts: PLATS,
+      cur: st.cur, onCur: function (e) { set({ cur: e.target.value, shown: 20 }); }, curOpts: ['USD', 'ILS', 'EGP', 'EUR', 'JOD', 'USDT'],
+      dateChips: [chip('date', 'today', 'اليوم'), chip('date', 'yesterday', 'أمس'), chip('date', 'week', 'آخر 7 أيام'), chip('date', 'month', 'هذا الشهر'), chip('date', 'custom', 'تاريخ مخصص')],
+      isCustom: st.date === 'custom', from: st.from, to: st.to, onFrom: function (e) { set({ from: e.target.value }); }, onTo: function (e) { set({ to: e.target.value }); },
+      types: [chip('filter', 'all', 'الكل'), chip('filter', 'tr', 'حوالات'), chip('filter', 'int', 'نقل داخلي')],
+      showCancelled: st.showCancelled, toggleCancelled: function () { set({ showCancelled: !st.showCancelled }); },
+      rows: rows, empty: !rows.length,
+      countText: 'معروض ' + shownN + ' من ' + list.length + ' حركة' + (!st.showCancelled && hiddenC ? ' · ' + hiddenC + ' ملغاة مخفية' : '') + ' · المجاميع بدون الملغاة والنقل الداخلي',
+      sumIn: sums(list, 'in'), sumOut: sums(list, 'out'),
+      hasMore: shownN < list.length, moreText: 'عرض ' + Math.min(20, list.length - shownN) + ' إضافية', more: function () { set({ shown: st.shown + 20 }); }, showAll: function () { set({ shown: list.length }); },
+      isCancel: !!cT, cId: st.cId || '', cDesc: cT ? ((cT.party || cT.tparty) || 'نقل داخلي') + ' · ' + cT.date.split('-').reverse().join('/') : '', cReason: st.cReason,
+      onReason: function (e) { set({ cReason: e.target.value }); }, hasErr: !!st.err, err: st.err, closeCancel: function () { set({ cId: null, err: '' }); },
+      saveCancel: function () { if (!String(st.cReason).trim()) return set({ err: 'اكتب سبب الإلغاء.' }); var o = Object.assign({}, st.cancelled); o[st.cId] = String(st.cReason).trim(); set({ cancelled: o, cId: null, err: '' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

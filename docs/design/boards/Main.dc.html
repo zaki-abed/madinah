@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>لوحة التحكم</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#0B1626;color:#fff}
+.btn.acc{background:#16B8A6;border-color:#16B8A6;color:#0B1626}
+.btn.acc:hover{background:#13A595;color:#0B1626}
+.btn svg{width:18px;height:18px}
+.ibtn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #D3DAE5;background:#fff;color:#142B4A;cursor:pointer}
+.ibtn svg{width:20px;height:20px}
+.search{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #D3DAE5;border-radius:10px;background:#fff;color:#4A5A70;min-width:240px;box-sizing:border-box}
+.search input{border:0;outline:0;font:inherit;font-size:14px;background:transparent;width:100%;color:#142B4A}
+.search svg{width:18px;height:18px;flex:none}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:14px 16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.code{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:#EEF1F5;color:#142B4A;direction:ltr;unicode-bidi:isolate}
+.bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#EDF1F5;gap:2px}
+.sbar{display:flex;height:10px;gap:2px;position:relative}
+.sbar.empty{background:#EDF1F5;border-radius:999px}
+.seg{position:relative;height:100%;min-width:4px;cursor:default;outline:none}
+.seg:first-child{border-start-start-radius:999px;border-end-start-radius:999px}
+.seg:last-child{border-start-end-radius:999px;border-end-end-radius:999px}
+.seg:hover,.seg:focus-visible{filter:brightness(1.12);box-shadow:0 0 0 2px #fff,0 0 0 4px currentColor}
+.tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#0B1626;color:#fff;border-radius:10px;padding:8px 12px;white-space:nowrap;font-size:12px;line-height:18px;display:flex;flex-direction:column;gap:2px;opacity:0;pointer-events:none;transition:opacity .12s;z-index:5;box-shadow:0 6px 16px rgba(11,22,38,.25)}
+.tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0B1626}
+.seg:hover .tip,.seg:focus-visible .tip{opacity:1}
+.tip b{font-weight:600;font-size:13px}
+.tip .amt{color:#B9E9E3}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.vault{display:flex;flex-direction:column;gap:16px;padding:24px;text-decoration:none;color:#142B4A}
+.vault:hover{color:#142B4A;border-color:#16B8A6}
+.alrt{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;text-decoration:none;color:#142B4A;font-size:14px;border:1px solid transparent}
+.alrt:hover{color:#142B4A;border-color:#D3DAE5}
+.alrt .ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;font-weight:700}
+.cap-card{background:#fff;border:1px solid #E1E6EE;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.cl{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:#4A5A70}
+.cl b{font-family:'IBM Plex Mono',monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;color:#142B4A}
+.mini-card{background:#fff;border:1px solid #E1E6EE;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#142B4A}
+.mini-card:hover{border-color:#16B8A6;color:#142B4A}
+.h2{margin:0;font-size:20px;line-height:30px;font-weight:700}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;box-sizing:border-box}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:480px;padding:28px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px;box-shadow:0 20px 50px rgba(11,22,38,.25)}
+.x{width:40px;height:40px;border-radius:10px;border:0;background:#F5F7FA;color:#142B4A;cursor:pointer;font-size:20px}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.note{background:#F5F7FA;border-radius:12px;padding:12px 14px;font-size:13px;color:#3A4A60}
+.secthead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.secthead .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.ib{min-height:34px;padding:0 12px;border-radius:9px;border:1px solid #F3D3CF;background:#fff;color:#A3291D;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.ib:hover{background:#FBE7E5}
+textarea{font:inherit;font-size:15px;border:1px solid #D3DAE5;border-radius:10px;padding:10px 14px;min-height:80px;resize:vertical;color:#142B4A;box-sizing:border-box;width:100%}
+.lt{display:flex;flex-direction:column;overflow-x:auto}
+.lt-r{display:grid;grid-template-columns:minmax(220px,1.6fr) repeat(3,minmax(130px,1fr)) 120px;gap:16px;align-items:center;padding:12px 4px;border-bottom:1px solid #EDF1F5;min-width:760px}
+.lt-r:last-child{border-bottom:0}
+.lt-h{padding-top:0;font-size:12px;font-weight:600;color:#4A5A70}
+.lt-c{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lt-c b.amt{font-size:15px;line-height:22px}
+.lt-bar{height:5px;border-radius:999px;background:#E9EDF2;overflow:hidden}
+.tp.cn{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap;background:#D2493A14;color:#A3291D}
+.cxr{margin-top:4px;font-size:11px;line-height:16px;color:#A3291D;white-space:normal;max-width:150px}
+tr.cx td{background:#FCF8F7;color:#6A7A90}
+tr.cx td:first-child{box-shadow:inset -3px 0 0 #D2493A}
+tr.cx a,tr.cx td span[style*="font-weight:600"]{color:#6A7A90 !important}
+.vt{font-size:22px;line-height:30px;font-weight:600;text-align:end}
+.vault{gap:12px;padding:18px 20px}
+.vf{display:flex;flex-direction:column;gap:4px;border-top:1px solid #EDF1F5;padding-top:10px;margin-top:auto}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"></path><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"></path><circle cx="32" cy="12" r="4.5" fill="#F2B84B"></circle></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav on" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav" href="Users.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>المستخدمون والصلاحيات<span class="tag">قريباً</span></a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg></a></div>
+  </div>
+</nav>
+
+<main class="main">
+  <header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+    <div>
+      <h1 style="margin:0;font-size:32px;line-height:44px;font-weight:700">صباح الخير، أحمد</h1>
+      <p class="sub" style="margin:4px 0 0;font-size:15px">السبت، 14 نوفمبر 2026</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+      <a class="btn" href="Internal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3l3 3-3 3M20 6H9a5 5 0 0 0-5 5M7 21l-3-3 3-3M4 18h11a5 5 0 0 0 5-5"></path></svg>نقل داخلي</a>
+      <a class="btn acc" href="Transfer.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>حوالة جديدة</a>
+    </div>
+  </header>
+
+
+
+  <div class="secthead" style="margin-bottom:-8px">
+    <span class="ic" style="background:#EEF1F5;color:#142B4A"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg></span>
+    <div style="flex:1"><h2 class="h2">الخزائن</h2><p class="cap" style="margin:2px 0 0;font-size:13px">الأرصدة الموجودة في الحسابات الآن: مجموع أرصدة حسابات كل عملة كما هي في البنوك والمحافظ والمنصات · لا تشمل الديون ولا الأمانات</p></div>
+  </div>
+  <section aria-label="الخزائن" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
+    <a class="card vault" href="UsdtVault.dc.html">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-weight:600;font-size:16px">خزنة USDT</span><span class="code">USDT</span></div>
+      <div><div class="amt vt">{{usdt.total}}</div><div class="cap" style="margin-top:4px;font-size:12px">التكلفة <span class="amt">10,017.00 USD</span> · متوسط الشراء <span class="amt">5.17%</span></div></div>
+      <sc-if value="{{usdt.hasBal}}" hint-placeholder-val="{{ true }}"><div class="sbar" role="list" aria-label="توزيع الرصيد على الحسابات"><sc-for list="{{usdt.parts}}" as="p" hint-placeholder-count="3"><span class="seg" role="listitem" tabindex="0" style="{{p.style}}" aria-label="{{p.aria}}"><span class="tip"><b>{{p.name}}</b><span class="amt">{{p.bal}}</span><span>{{p.pct}} من الخزنة</span></span></span></sc-for></div></sc-if>
+        <sc-if value="{{usdt.noBal}}" hint-placeholder-val="{{ false }}"><div class="sbar empty" aria-hidden="true"></div><span class="cap">لا يوجد رصيد في حسابات هذه الخزنة</span></sc-if>
+      <div class="vf"><div class="cl"><span>الحسابات</span><span style="color:#142B4A">Binance · Bybit · Kraken</span></div><div class="cl"><span>العدد</span><span style="color:#142B4A">3 حسابات</span></div></div>
+    </a>
+    <sc-for list="{{vaults}}" as="v" hint-placeholder-count="5">
+      <a class="card vault" href="Vault.dc.html">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-weight:600;font-size:16px">{{v.name}}</span><span class="code">{{v.code}}</span></div>
+        <div><div class="amt vt">{{v.total}}</div><div class="cap" style="margin-top:4px;font-size:12px">{{v.sub}}</div></div>
+        <sc-if value="{{v.hasBal}}" hint-placeholder-val="{{ true }}"><div class="sbar" role="list" aria-label="توزيع الرصيد على الحسابات"><sc-for list="{{v.parts}}" as="p" hint-placeholder-count="3"><span class="seg" role="listitem" tabindex="0" style="{{p.style}}" aria-label="{{p.aria}}"><span class="tip"><b>{{p.name}}</b><span class="amt">{{p.bal}}</span><span>{{p.pct}} من الخزنة</span></span></span></sc-for></div></sc-if>
+        <sc-if value="{{v.noBal}}" hint-placeholder-val="{{ false }}"><div class="sbar empty" aria-hidden="true"></div><span class="cap">لا يوجد رصيد في حسابات هذه الخزنة</span></sc-if>
+        <div class="vf"><div class="cl"><span>دخل الشهر</span><b style="{{v.inC}}">{{v.in}}</b></div><div class="cl"><span>خرج الشهر</span><b style="{{v.outC}}">{{v.out}}</b></div></div>
+      </a>
+    </sc-for>
+  </section>
+
+  <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
+    <aside class="card" style="flex:1 1 100%;padding:22px;display:flex;flex-direction:column;gap:14px" aria-label="حدود الحسابات">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap">
+        <div><h2 class="h2">حدود الحسابات</h2><p class="cap" style="margin:2px 0 0;font-size:13px">المتبقي في كل حساب قبل الوصول للحد · الأقرب للحد أولاً</p></div>
+        <a href="Limits.dc.html" class="btn" style="min-height:36px;padding:0 12px;font-size:13px">كل الحدود ←</a>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px" role="group" aria-label="تصفية حسب الجهة"><sc-for list="{{platChips}}" as="p" hint-placeholder-count="5"><button type="button" onClick="{{p.go}}" style="{{p.style}}">{{p.label}}</button></sc-for></div>
+      <sc-if value="{{limEmpty}}" hint-placeholder-val="{{ false }}"><div class="note" style="text-align:center">لا توجد حسابات بليميت ضمن هذا الاختيار</div></sc-if>
+      <div class="lt" role="table" aria-label="حدود الحسابات">
+        <div class="lt-r lt-h" role="row"><span role="columnheader">الحساب</span><span role="columnheader">يومي</span><span role="columnheader">أسبوعي</span><span role="columnheader">شهري</span><span role="columnheader">الحالة</span></div>
+        <sc-for list="{{limAccs}}" as="a" hint-placeholder-count="5">
+          <div class="lt-r" role="row">
+            <div role="cell" style="display:flex;flex-direction:column;min-width:0"><b style="font-size:14px;line-height:22px">{{a.name}}</b><span class="cap">{{a.sub}}</span></div>
+            <sc-for list="{{a.cols}}" as="c" hint-placeholder-count="3">
+              <div role="cell" class="lt-c">
+                <sc-if value="{{c.has}}" hint-placeholder-val="{{ true }}"><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><b class="amt" style="{{c.leftStyle}}">{{c.left}}</b><span class="cap">من <span class="amt">{{c.max}}</span></span></div><div class="lt-bar"><div style="{{c.bar}}"></div></div></sc-if>
+                <sc-if value="{{c.none}}" hint-placeholder-val="{{ false }}"><span class="cap">{{c.noneTxt}}</span></sc-if>
+              </div>
+            </sc-for>
+            <div role="cell"><span class="{{a.pill}}">{{a.state}}</span></div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{limMore}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{toggleLims}}" class="btn" style="min-height:38px;font-size:13px;align-self:flex-start">{{limMoreText}}</button></sc-if>
+    </aside>
+  <section class="card" hidden style="display:none">
+    <div>
+      <h2 class="h2">حوالات اليوم</h2>
+      <a href="TransfersList.dc.html" style="font-size:14px;font-weight:600;text-decoration:none">كل الحوالات</a>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>رقم الحوالة</th><th>استلمنا من</th><th>سلّمنا إلى</th><th><span class="vh">إجراءات</span></th></tr></thead>
+        <tbody>
+          <sc-for list="{{transfers}}" as="t" hint-placeholder-count="5">
+            <tr class="{{t.rowCls}}">
+              <td><span class="en" style="font-weight:600">{{t.id}}</span><div class="cap amt" style="text-align:end">{{t.time}}</div><sc-if value="{{t.cancelled}}" hint-placeholder-val="{{ false }}"><div style="margin-top:4px"><span class="tp cn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg>ملغاة</span></div><div class="cxr">{{t.reason}}</div></sc-if></td>
+              <td><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px"><sc-if value="{{t.fLink}}" hint-placeholder-val="{{ true }}"><a href="{{t.fHref}}" style="color:#142B4A;font-weight:600;text-decoration:none">{{t.fName}}</a></sc-if><sc-if value="{{t.fNoLink}}" hint-placeholder-val="{{ false }}"><span style="font-weight:600">{{t.fName}}</span></sc-if><span class="cap">· {{t.fKind}}</span></div><span class="amt" style="{{t.inStyle}}">{{t.inAmt}}</span><div class="cap">{{t.inAcc}}</div></td>
+              <td><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px"><sc-if value="{{t.tLink}}" hint-placeholder-val="{{ true }}"><a href="{{t.tHref}}" style="color:#142B4A;font-weight:600;text-decoration:none">{{t.tName}}</a></sc-if><sc-if value="{{t.tNoLink}}" hint-placeholder-val="{{ false }}"><span style="font-weight:600">{{t.tName}}</span></sc-if><span class="cap">· {{t.tKind}}</span></div><span class="amt" style="{{t.outStyle}}">{{t.outAmt}}</span><div class="cap">{{t.outAccShown}}</div><sc-if value="{{t.hasDebt}}" hint-placeholder-val="{{ false }}"><div style="margin-top:4px"><span class="pill warn">{{t.debt}}</span></div></sc-if></td>
+              <td><sc-if value="{{t.active}}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:6px;justify-content:flex-end"><a class="btn" href="TransfersList.dc.html" style="min-height:34px;padding:0 12px;font-size:13px">عرض</a><button class="ib" type="button" onClick="{{t.cancel}}">إلغاء</button></div></sc-if></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:auto;padding:14px 24px;border-top:1px solid #EDF1F5;display:flex;justify-content:space-between;align-items:center" class="sub"><span style="font-size:13px">{{trCount}}</span><a href="TransfersList.dc.html" style="font-size:14px;font-weight:600;text-decoration:none">عرض كل حوالات اليوم ←</a></div>
+  </section>
+  </div>
+
+  <section class="card" style="display:flex;flex-direction:column;gap:14px;padding:22px" aria-label="صافي رأس المال">
+    <div class="secthead">
+      <span class="ic" style="background:#EEF1F5;color:#142B4A"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg></span>
+      <div style="flex:1"><h2 class="h2">صافي رأس المال</h2><p class="cap" style="margin:2px 0 0;font-size:13px">ما يملكه المكتب فعلياً: أرصدة الحسابات + ما لنا عند الزبائن والمكاتب − ما علينا للمكاتب · التغير مقارنة بأول الشهر (تقديري حتى إغلاق الشهر)</p></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+      <div class="cap-card" style="border-top:3px solid #16B8A6">
+        <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:15px">أرباح الشهر</b><span class="cap">تُسجَّل يدوياً</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span class="cap">صندوق ربح USDT</span><span class="amt" style="font-size:20px;line-height:28px;font-weight:600;color:#136A43;text-align:end">+320.00 USDT</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px;border-top:1px solid #EDF1F5;padding-top:8px"><span class="cap">الأرباح العادية</span><span class="amt" style="font-size:20px;line-height:28px;font-weight:600;color:#136A43;text-align:end">+1,240.00 USD</span></div>
+        <span class="cap">من حوالات فيها USDT · ومن باقي الحوالات بالدولار · خارج رأس المال والخزائن</span>
+      </div>
+      <sc-for list="{{capital}}" as="c" hint-placeholder-count="5">
+        <div class="cap-card">
+          <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:15px">{{c.name}}</b><span class="code">{{c.cur}}</span></div>
+          <span class="amt" style="font-size:22px;line-height:30px;text-align:end;font-weight:600">{{c.net}}</span>
+          <span class="{{c.chPill}}" style="align-self:flex-end">{{c.ch}}</span>
+          <div style="border-top:1px solid #EDF1F5;padding-top:8px;display:flex;flex-direction:column;gap:4px">
+            <div class="cl"><span>أرصدة الحسابات</span><b>{{c.acc}}</b></div>
+            <div class="cl"><span>+ لنا (زبائن ومكاتب)</span><b style="{{c.plusC}}">{{c.plus}}</b></div>
+            <div class="cl"><span>− علينا (للمكاتب)</span><b style="{{c.minusC}}">{{c.minus}}</b></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+<sc-if value="{{isCancel}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-label="إلغاء حوالة"><div class="modal">
+ <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">إلغاء {{cId}}</h2><p class="cap" style="margin:2px 0 0;font-size:13px">{{cDesc}}</p></div><button class="x" type="button" aria-label="إغلاق" onClick="{{closeCancel}}">×</button></div>
+ <div class="note">لا تُحذف الحوالة، بل تبقى في السجل بحالة «ملغاة» ويُعكس أثرها على أرصدة الحسابات.</div>
+ <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#142B4A">سبب الإلغاء (إلزامي)<textarea value="{{cReason}}" onChange="{{onReason}}" placeholder="مثال: سُجّلت مرتين بالخطأ"></textarea></label>
+ <sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{closeCancel}}">تراجع</button><button class="btn" type="button" style="background:#A3291D;border-color:#A3291D;color:#fff" onClick="{{saveCancel}}">تأكيد الإلغاء</button></div>
+</div></div>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { all: false, limAll: false, plat: 'all', limAcc: '', cancelled: {}, cId: null, cReason: '', err: '' }; }
+  renderVals() {
+    var self = this, st = this.state;
+    var fmt = function (n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    var share = function (code, accounts) {
+      var shown = accounts.filter(function (a) { return a.bal > 0; });
+      var total = accounts.reduce(function (s, a) { return s + a.bal; }, 0), base = shown.reduce(function (s, a) { return s + a.bal; }, 0), parts = [];
+      if (base > 0) {
+        var raw = shown.map(function (a) { return a.bal / base * 1000; }), fl = raw.map(Math.floor), left = 1000 - fl.reduce(function (s, x) { return s + x; }, 0);
+        raw.map(function (r, i) { return { i: i, r: r - fl[i] }; }).sort(function (x, y) { return y.r - x.r; }).slice(0, left).forEach(function (o) { fl[o.i] += 1; });
+        parts = shown.map(function (a, i) { var pct = (fl[i] / 10).toFixed(1) + '%'; return { name: a.name, bal: fmt(a.bal) + ' ' + code, pct: pct, aria: a.name + '، ' + fmt(a.bal) + ' ' + code + '، ' + pct, style: 'flex:' + a.bal + ' 1 0;background:' + a.color + ';color:' + a.color }; });
+      }
+      return { total: fmt(total) + ' ' + code, parts: parts, hasBal: base > 0, noBal: !(base > 0) };
+    };
+    var z0 = function (x) { return /^[+−-]?0\.00$/.test(x) ? '0.00' : x; };
+    var vault = function (o) { o.in = z0(o.in); o.out = z0(o.out); o.inC = o.in === '0.00' ? 'color:#8795A8' : 'color:#136A43'; o.outC = o.out === '0.00' ? 'color:#8795A8' : 'color:#A3291D'; var r = share(o.code, o.accounts); o.total = r.total; o.parts = r.parts; o.hasBal = r.hasBal; o.noBal = r.noBal; return o; };
+    var TR = [{"id":"TR-1066","time":"13:40","int":false,"fName":"أبو سليم","fKind":"زبون عابر","fPt":"walk","tName":"أبو سليم","tKind":"زبون عابر","tPt":"walk","inAmt":"1,200.00 ILS","inAcc":"بنك فلسطين – هبة (ILS)","outAmt":"330.00 USD","outAcc":"بنك فلسطين – كرم (USD)","debt":""},{"id":"TR-1065","time":"13:05","int":false,"fName":"محمد أبو حامد","fKind":"مكتب","fPt":"office","tName":"محمد أبو حامد","tKind":"مكتب","tPt":"office","inAmt":"900.00 USD","inAcc":"PayPal – زكي","outAmt":"900.00 USD","outAcc":"رصيد المكتب","debt":""},{"id":"TR-1064","time":"12:20","int":false,"fName":"أبو محمد السقا","fKind":"زبون مسجّل","fPt":"customer","tName":"أبو محمد السقا","tKind":"زبون مسجّل","tPt":"customer","inAmt":"4,000.00 ILS","inAcc":"بنك فلسطين – أحمد (ILS)","outAmt":"1,100.00 USD","outAcc":"بنك فلسطين – أحمد (USD)","debt":""},{"id":"TR-1063","time":"11:45","int":false,"fName":"أبو كريم – مكتب القاسم","fKind":"مكتب","fPt":"office","tName":"أبو كريم – مكتب القاسم","tKind":"مكتب","tPt":"office","inAmt":"600.00 USDT","inAcc":"Bybit","outAmt":"585.00 USDT","outAcc":"Kraken · ربح صافي 15","debt":""},{"id":"TR-1062","time":"11:20","int":false,"fName":"أبو كريم – مكتب القاسم","fKind":"مكتب","fPt":"office","tName":"أبو كريم – مكتب القاسم","tKind":"مكتب","tPt":"office","inAmt":"1,000.00 USDT","inAcc":"Binance","outAmt":"950.00 USDT","outAcc":"Bybit · ربح صافي 50","debt":""},{"id":"NT-0224","time":"10:55","int":true,"fName":"حساب المكتب","fKind":"USD","fPt":"","tName":"حساب المكتب","tKind":"USD","tPt":"","inAmt":"1,000.00 USD","inAcc":"PayPal – زكي","outAmt":"980.00 USD","outAcc":"بنك فلسطين – أحمد (USD)","debt":""},{"id":"TR-1061","time":"10:30","int":false,"fName":"محمد أبو حامد","fKind":"مكتب","fPt":"office","tName":"يوسف ن.","tKind":"زبون عابر","tPt":"walk","inAmt":"1,500.00 USD","inAcc":"PayPal – زكي","outAmt":"1,500.00 USD","outAcc":"رصيد المكتب","debt":""},{"id":"TR-1060","time":"09:48","int":false,"fName":"علاء منصور","fKind":"زبون مسجّل · لم نستلم","fPt":"customer","tName":"علاء منصور","tKind":"زبون مسجّل","tPt":"customer","inAmt":"—","inAcc":"سُجّل ديناً","outAmt":"800.00 USD","outAcc":"بنك فلسطين – كرم (USD)","debt":"عليها دين 800 USD"},{"id":"TR-1059","time":"09:15","int":false,"fName":"سامر خليل","fKind":"زبون مسجّل","fPt":"customer","tName":"سامر خليل","tKind":"زبون مسجّل","tPt":"customer","inAmt":"15,000.00 EGP","inAcc":"فودافون كاش 1","outAmt":"300.00 USD","outAcc":"بنك فلسطين – أحمد (USD)","debt":""},{"id":"TR-1058","time":"08:40","int":false,"fName":"منى الحلو","fKind":"زبون مسجّل","fPt":"customer","tName":"منى الحلو","tKind":"زبون مسجّل","tPt":"customer","inAmt":"250.00 USD","inAcc":"PayPal – زكي","outAmt":"12,400.00 EGP","outAcc":"إنستاباي 1","debt":""}];
+    TR.sort(function (x, y) { return x.time < y.time ? 1 : -1; });
+    var cT = TR.filter(function (t) { return t.id === st.cId; })[0];
+    var m0 = function (n) { return n.toLocaleString('en-US', { maximumFractionDigits: 0 }); };
+    var LACC = [
+      { name: 'PayPal – حساب زكي', plat: 'PayPal', cur: 'USD', l: { d: ['الخروج فقط', 4200, 8000], w: ['الخروج فقط', 13050, 16000], m: ['الخروج فقط', 42811, 50000] } },
+      { name: 'PayPal – حساب المكتب', plat: 'PayPal', cur: 'USD', l: { d: ['الخروج فقط', 0, 8000], w: ['الخروج فقط', 0, 16000], m: ['الخروج فقط', 0, 50000] } },
+      { name: 'بنك فلسطين – حساب أحمد', plat: 'بنك فلسطين', cur: 'USD', l: { d: ['الدخول والخروج', 1500, 2000], w: ['الدخول والخروج', 0, 0, 'unk'], m: ['الدخول والخروج', 0, 0, 'unk'] } },
+      { name: 'بنك فلسطين – حساب كرم', plat: 'بنك فلسطين', cur: 'USD', l: { d: ['الدخول والخروج', 1900, 2000], w: ['الدخول والخروج', 0, 0, 'unk'], m: ['الدخول والخروج', 0, 0, 'unk'] } },
+      { name: 'بنك فلسطين – حساب هبة', plat: 'بنك فلسطين', cur: 'USD', l: { d: ['الدخول والخروج', 400, 2000], w: ['الدخول والخروج', 0, 0, 'unk'], m: ['الدخول والخروج', 0, 0, 'unk'] } },
+      { name: 'بنك فلسطين – حساب المكتب', plat: 'بنك فلسطين', cur: 'USD', l: { d: ['الدخول والخروج', 0, 2000], w: ['الدخول والخروج', 0, 0, 'unk'], m: ['الدخول والخروج', 0, 0, 'unk'] } },
+      { name: 'Vodafone Cash – محفظة أحمد', plat: 'Vodafone Cash', cur: 'EGP', l: { d: ['الدخول والخروج', 27600, 60000], m: ['الدخول والخروج', 164000, 200000] } },
+      { name: 'Vodafone Cash – محفظة إضافية', plat: 'Vodafone Cash', cur: 'EGP', l: { d: ['الدخول والخروج', 8000, 60000], m: ['الدخول والخروج', 90000, 200000] } },
+      { name: 'InstaPay – إنستاباي 1', plat: 'InstaPay', cur: 'EGP', l: { d: ['الخروج فقط', 20000, 120000], m: ['الخروج فقط', 122000, 400000] } }
+    ].map(function (a) { a.worst = Object.keys(a.l).reduce(function (m, k) { return a.l[k][3] === 'unk' ? m : Math.max(m, a.l[k][1] / a.l[k][2] * 100); }, 0); return a; })
+     .sort(function (x, y) { return y.worst - x.worst; });
+    var PN = { d: 'يومي', w: 'أسبوعي', m: 'شهري' };
+    var PLATS = ['PayPal', 'بنك فلسطين', 'Vodafone Cash', 'InstaPay'];
+    var byPlat = LACC.filter(function (a) { return st.plat === 'all' || a.plat === st.plat; });
+    var LF = byPlat.filter(function (a) { return !st.limAcc || a.name === st.limAcc; });
+    var chip = function (on) { return 'height:32px;padding:0 12px;border-radius:999px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;border:1px solid ' + (on ? '#142B4A;background:#142B4A;color:#fff' : '#D3DAE5;background:#fff;color:#3A4A60'); };
+    var platChips = [{ k: 'all', label: 'كل المنصات' }].concat(PLATS.map(function (p) { return { k: p, label: p }; })).map(function (p) {
+      var n = p.k === 'all' ? LACC.length : LACC.filter(function (a) { return a.plat === p.k; }).length;
+      return { label: p.label + ' ' + n, style: chip(st.plat === p.k), go: function () { self.setState({ plat: p.k, limAcc: '' }); } };
+    });
+    var limAccs = (st.limAll || st.limAcc ? LF : LF.slice(0, 5)).map(function (a) {
+      var dir = a.l[Object.keys(a.l)[0]][0];
+      var lvl = a.worst >= 100 ? 2 : a.worst >= 80 ? 1 : 0;
+      return { name: a.name, cur: a.cur, sub: dir + ' · ' + a.cur, state: ['ضمن الحد', 'قريب من الحد', 'وصل للحد'][lvl], pill: ['pill ok', 'pill warn', 'pill bad'][lvl],
+        box: 'display:flex;flex-direction:column;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid ' + ['#EDF1F5', '#F2D9A6', '#F3D3CF'][lvl] + ';background:' + ['#FAFBFC', '#FFFCF3', '#FFF8F7'][lvl],
+        cols: ['d', 'w', 'm'].map(function (k) {
+          var x = a.l[k]; if (!x) return { label: PN[k], has: false, none: true, noneTxt: 'لا يوجد حد' };
+          if (x[3] === 'unk') return { label: x[0] + ' · ' + PN[k], has: false, none: true, noneTxt: 'غير معرّف' };
+          var p = x[1] / x[2] * 100, cl = p >= 100 ? 2 : p >= 80 ? 1 : 0;
+          return { label: x[0] + ' · ' + PN[k], has: true, none: false, noneTxt: '', left: m0(Math.max(0, x[2] - x[1])),
+            leftStyle: 'color:' + ['#142B4A', '#7A5200', '#A3291D'][cl], pct: p.toFixed(0) + '%', max: m0(x[2]),
+            bar: 'height:100%;border-radius:999px;width:' + Math.min(100, p).toFixed(1) + '%;background:' + ['#16B8A6', '#F2B84B', '#D9534A'][cl] };
+        }) };
+    });
+    var ALERTS = [
+      { lvl: 2, title: 'PayPal – حساب المكتب وصل لحد الاستلام الشهري', sub: '30,000 / 30,000 $ · لا يقبل استلاماً جديداً', href: 'Limits.dc.html', go: 'الليميت' },
+      { lvl: 2, title: 'إثبات العنوان في Binance منتهٍ', sub: 'فاتورة كهرباء 01/2025 · الحالة: مطلوب تحديث العنوان', href: 'CryptoAccounts.dc.html', go: 'توثيق Binance' },
+      { lvl: 1, title: '6 حوالات PayPal قيد التقدم بانتظار الوصل', sub: 'أقدمها Maya Cohen · 30/07 · المجموع 572.18 $', href: 'Paypal.dc.html', go: 'PayPal' },
+      { lvl: 1, title: 'PayPal – زكي قريب من حد السحب اليومي', sub: 'مستخدم 84% · المتبقي 800.00 $', href: 'Limits.dc.html', go: 'الليميت' },
+      { lvl: 1, title: 'أمانتان تجاوزتا مدة 6 أشهر', sub: 'المجموع 275.30 $ · يمكن إرجاعهما أو تحويلهما لإيراد', href: 'Paypal.dc.html', go: 'الأمانات' },
+      { lvl: 1, title: 'جواز سفر أحمد ينتهي بعد 52 يوماً', sub: 'مستخدم في: كاست – حساب المكتب، Binance – أحمد', href: 'CryptoAccounts.dc.html', go: 'توثيق Binance' },
+      { lvl: 1, title: '3 زبائن عليهم ديون أقدم من 60 يوماً', sub: 'أقدمها خالد درويش · 3 سنوات و8 أشهر', href: 'Customers.dc.html', go: 'الديون' }
+    ];
+    var IA = [
+      { lvl: 1, id: 'ISS-014', title: 'PayPal – حساب المكتب: بانتظار رد المنصة منذ 9 أيام', sub: 'آخر حركة: طلب رسمي بالبريد لسحب جزئي · محجوز 8,420.00 USD' },
+      { lvl: 2, id: 'ISS-013', title: 'Binance – الحساب الرئيسي: طلبت المنصة مستندات ولم تُرسل بعد', sub: 'تقييد · مراجعة مصدر الأموال · منذ 4 أيام' },
+      { lvl: 1, id: 'ISS-011', title: 'PayPal – زكي: المنصة سمحت بسحب الرصيد', sub: 'قرار من المنصة قبل 3 أيام · الرصيد المتوقف 1,940.00 USD' },
+      { lvl: 2, id: 'ISS-012', title: 'Wise: لا يوجد أي إجراء منذ 21 يوماً', sub: 'الحساب مغلق وما زال 2,150.00 EUR غير مسترد' }
+    ];
+    var shownA = ALERTS;
+    var CAP = [
+      ['الدولار', 'USD', 39880, 15250, 3999.80, 49780],
+      ['الشيكل', 'ILS', 122500, 9500, 0, 130700],
+      ['الجنيه', 'EGP', 70000, 0, 0, 73500],
+      ['اليورو', 'EUR', 10000, 1000, 0, 11000],
+      ['الدينار', 'JOD', 2000, 1450, 0, 3450],
+      ['USDT', 'USDT', 10500, 0, 0, 10100]
+    ].map(function (c) {
+      var net = c[2] + c[3] - c[4], ch = net - c[5];
+      return { name: c[0], cur: c[1], acc: fmt(c[2]), plus: c[3] ? '+' + fmt(c[3]) : '0.00', minus: c[4] ? '−' + fmt(c[4]) : '0.00', plusC: c[3] ? 'color:#136A43' : 'color:#8795A8', minusC: c[4] ? 'color:#A3291D' : 'color:#8795A8', net: fmt(net),
+        ch: Math.abs(ch) < 0.005 ? 'بدون تغيير منذ أول الشهر' : (ch > 0 ? '▲ +' : '▼ −') + fmt(Math.abs(ch)) + ' منذ أول الشهر',
+        chPill: Math.abs(ch) < 0.005 ? 'pill neutral' : ch > 0 ? 'pill ok' : 'pill bad' };
+    });
+    return {
+      alerts: shownA.map(function (a) { return { title: a.title, sub: a.sub, href: a.href, go: a.go, bg: a.lvl === 2 ? 'background:#FFF8F7' : 'background:#FFFCF3', icStyle: a.lvl === 2 ? 'background:#FBE7E5;color:#A3291D' : 'background:#FDF0D5;color:#7A5200' }; }),
+      hasAlerts: ALERTS.length > 0, noAlerts: !ALERTS.length,
+      badCount: ALERTS.filter(function (a) { return a.lvl === 2; }).length + ' عاجل', warnCount: ALERTS.filter(function (a) { return a.lvl === 1; }).length + ' للمتابعة',
+      hasMore: ALERTS.length > 4, moreText: st.all ? 'إخفاء ▲' : 'عرض التنبيهات ▼', expanded: st.all ? 'true' : 'false', expandedB: st.all, firstAlert: ALERTS.length ? ALERTS[0].title : 'كل شيء تمام', toggleAll: function () { self.setState({ all: !st.all }); },
+      limits: [
+        { acc: 'فودافون كاش 1', pct: '82%', style: 'width:82%;background:#F2B84B;border-radius:999px', txt: '164,000 / 200,000 EGP' },
+        { acc: 'إنستاباي 1', pct: '61%', style: 'width:61%;background:#16B8A6;border-radius:999px', txt: '122,000 / 200,000 EGP' },
+        { acc: 'بنك فلسطين – كرم', pct: '83%', style: 'width:83%;background:#F2B84B;border-radius:999px', txt: '41,500 / 50,000 ILS' }
+      ],
+      issAlerts: (st.iaAll ? IA : IA.slice(0, 3)).map(function (a) { return { id: a.id, title: a.title, sub: a.sub, bg: a.lvl === 2 ? 'background:#FFF8F7' : 'background:#FFFCF3', icStyle: a.lvl === 2 ? 'background:#FBE7E5;color:#A3291D' : 'background:#FDF0D5;color:#7A5200' }; }),
+      iaBad: IA.length + ' تحتاج متابعة', iaWarn: IA.filter(function (a) { return a.lvl === 1; }).length + ' للمتابعة',
+      iaMore: IA.length > 3, iaExp: st.iaAll ? 'true' : 'false', iaMoreText: st.iaAll ? 'عرض أقل' : 'عرض كل التذكيرات (' + IA.length + ')', iaToggle: function () { self.setState({ iaAll: !st.iaAll }); },
+      capital: CAP, limAccs: limAccs, limMore: !st.limAcc && LF.length > 5, limMoreText: st.limAll ? 'عرض أقل' : 'عرض كل الحسابات (' + LF.length + ')', limEmpty: !LF.length,
+      platChips: platChips, accOpts: byPlat.map(function (a) { return a.name; }), limAcc: st.limAcc, onLimAcc: function (e) { self.setState({ limAcc: e.target.value }); }, toggleLims: function () { self.setState({ limAll: !st.limAll }); },
+      usdt: share('USDT', [
+        { name: 'Binance', bal: 6000, color: '#16B8A6' },
+        { name: 'Bybit', bal: 3000, color: '#B9E9E3' },
+        { name: 'Kraken', bal: 1500, color: '#F2B84B' }
+      ]),
+      vaults: [
+        vault({ name: 'خزنة الشيكل', code: 'ILS', sub: '3 حسابات بنك فلسطين · 4 محافظ فلسطينية', in: '+42,000.00', out: '−31,500.00', note: '', accounts: [
+          { name: 'بنك فلسطين – حساب أحمد', bal: 40000, color: '#142B4A' }, { name: 'بنك فلسطين – حساب كرم', bal: 30000, color: '#16B8A6' }, { name: 'بنك فلسطين – حساب هبة', bal: 30000, color: '#7FA3C9' },
+          { name: 'JAWWAL Pay – محفظة أحمد', bal: 8000, color: '#F2B84B' }, { name: 'PalPay – محفظة أحمد', bal: 6500, color: '#0E7C70' }, { name: 'JAWWAL Pay – محفظة كرم', bal: 5000, color: '#B9E9E3' }, { name: 'Maalchat – محفظة هبة', bal: 3000, color: '#9FB0C6' } ] }),
+        vault({ name: 'خزنة الدولار', code: 'USD', sub: 'البنوك وCash Plus والمحافظ الفلسطينية · بدون PayPal', in: '+18,200.00', out: '−14,950.00', note: '', accounts: [
+          { name: 'بنك فلسطين – حساب أحمد', bal: 10000, color: '#142B4A' }, { name: 'بنك فلسطين – حساب كرم', bal: 8500, color: '#16B8A6' }, { name: 'بنك فلسطين – حساب هبة', bal: 6000, color: '#7FA3C9' }, { name: 'بنك فلسطين – حساب المكتب', bal: 3200, color: '#F2B84B' },
+          { name: 'البنك العربي – حساب المكتب', bal: 2000, color: '#0E7C70' }, { name: 'المحافظ الفلسطينية', bal: 3500, color: '#B9E9E3' }, { name: 'Cash Plus – محفظة Cash Plus', bal: 0, color: '#9FB0C6' } ] }),
+        vault({ name: 'خزنة الدينار', code: 'JOD', sub: 'حساب واحد · Cash Plus', in: '+0.00', out: '−0.00', note: '', accounts: [
+          { name: 'Cash Plus – محفظة Cash Plus', bal: 2000, color: '#142B4A' } ] }),
+        vault({ name: 'خزنة الجنيه', code: 'EGP', sub: '2 Vodafone Cash · 1 InstaPay', in: '+164,000.00', out: '−150,000.00', note: '', accounts: [
+          { name: 'Vodafone Cash – محفظة أحمد', bal: 30000, color: '#142B4A' }, { name: 'Vodafone Cash – محفظة إضافية', bal: 25000, color: '#16B8A6' }, { name: 'InstaPay – إنستاباي 1', bal: 15000, color: '#F2B84B' } ] }),
+        vault({ name: 'خزنة اليورو', code: 'EUR', sub: 'Wise · Revolut', in: '+2,000.00', out: '−1,200.00', note: '', accounts: [
+          { name: 'Wise', bal: 6000, color: '#142B4A' }, { name: 'Revolut', bal: 4000, color: '#16B8A6' } ] }),
+        vault({ name: 'خزنة PayPal', code: 'USD', sub: 'حسابا PayPal', in: '+9,850.00', out: '−8,005.00', note: '', accounts: [
+          { name: 'PayPal – حساب زكي', bal: 4180, color: '#142B4A' }, { name: 'PayPal – حساب المكتب', bal: 2500, color: '#16B8A6' } ] })
+      ],
+      trCount: TR.length + ' حركة اليوم',
+      transfers: TR.map(function (t) { var c = st.cancelled[t.id]; var H = function (pt) { return pt === 'office' ? 'Office.dc.html' : pt === 'customer' ? 'Customer.dc.html' : ''; }; return Object.assign({}, t, { fHref: H(t.fPt) || '#', fLink: !!H(t.fPt), fNoLink: !H(t.fPt), tHref: H(t.tPt) || '#', tLink: !!H(t.tPt), tNoLink: !H(t.tPt), hasDebt: !!t.debt && !c, inStyle: c ? 'text-decoration:line-through;color:#4A5A70' : 'color:#136A43', outStyle: c ? 'text-decoration:line-through;color:#4A5A70' : 'color:#A3291D', cancelled: !!c, active: !c, rowCls: c ? 'cx' : '', reason: c ? 'السبب: ' + c : '', strike: c ? 'text-decoration:line-through;color:#4A5A70' : '', outAccShown: t.outAcc, cancel: function () { self.setState({ cId: t.id, cReason: '', err: '' }); } }); }),
+      isCancel: !!st.cId, cId: st.cId || '', cDesc: cT ? cT.fName + ' ← ' + cT.tName + ' · ' + cT.inAmt + ' / ' + cT.outAmt : '', cReason: st.cReason, hasErr: !!st.err, err: st.err,
+      onReason: function (e) { self.setState({ cReason: e.target.value }); }, closeCancel: function () { self.setState({ cId: null, err: '' }); },
+      saveCancel: function () { if (!String(st.cReason).trim()) return self.setState({ err: 'اكتب سبب الإلغاء.' }); var o = Object.assign({}, st.cancelled); o[st.cId] = String(st.cReason).trim(); self.setState({ cancelled: o, cId: null, err: '' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
