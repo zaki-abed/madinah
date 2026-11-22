@@ -1,0 +1,4 @@
+/* أساس الصفحة. الألوان والخطوط من نظام التصميم (ds-layer.css). */
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#F5F7FA;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A}
+a{color:#0E7C70}a:hover{color:#0A5F56}

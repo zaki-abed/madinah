@@ -1,0 +1,23 @@
+{
+  "name": "madinah",
+  "private": true,
+  "version": "0.1.0",
+  "description": "نظام مكتب المدينة للخدمات المالية",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "db:setup": "npm run db:setup -w server",
+    "db:migrate": "npm run db:migrate -w server",
+    "create-admin": "npm run create-admin -w server",
+    "dev:server": "npm run dev -w server",
+    "dev:web": "npm run dev -w web",
+    "build": "npm run build -w server && npm run build -w web",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web",
+    "test": "npm run test -w server"
+  }
+}
