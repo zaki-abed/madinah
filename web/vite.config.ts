@@ -6,6 +6,6 @@ export default defineConfig({
   server: {
     port: 5173,
     // طلبات /api تذهب إلى الخادم، فتبقى كوكي الجلسة على نفس العنوان.
-    proxy: { '/api': 'http://127.0.0.1:3001' },
+    proxy: { '/api': process.env.API_TARGET ?? 'http://127.0.0.1:3001' },
   },
 });

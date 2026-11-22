@@ -13,11 +13,7 @@ import '@fontsource/ibm-plex-sans/600.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/ibm-plex-mono/600.css';
 
-// الترتيب مهم: هيكل اللوحات أولاً، ثم طبقة نظام التصميم فوقه (كما في اللوحات).
-import './styles/base.css';
-import './styles/shell.css';
-import './styles/ds-layer.css';
-import './styles/shell-responsive.css';
+import './styles/index.css';
 
 import { App } from './App';
 import { AuthProvider } from './auth';

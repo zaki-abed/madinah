@@ -9,7 +9,7 @@ export class ApiError extends Error {
   }
 }
 
-export async function api<T>(method: 'GET' | 'POST', url: string, body?: unknown): Promise<T> {
+export async function api<T>(method: 'GET' | 'POST' | 'PATCH' | 'DELETE', url: string, body?: unknown): Promise<T> {
   let response: Response;
   try {
     response = await fetch(url, {
