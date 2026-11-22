@@ -31,7 +31,7 @@ export default async function setup(): Promise<void> {
     await fixture.query(`
       CREATE TABLE test_movements (
         id            uuid PRIMARY KEY DEFAULT uuidv7(),
-        account_id    uuid NOT NULL REFERENCES accounts (id),
+        account_currency_id uuid NOT NULL REFERENCES account_currencies (id),
         amount        numeric(18,4) NOT NULL CHECK (amount <> 0),
         moved_at      timestamptz NOT NULL DEFAULT now(),
         notes         text,
@@ -49,7 +49,7 @@ export default async function setup(): Promise<void> {
       BEGIN
         PERFORM ledger_clear('TRANSFER', NEW.id);
         IF NEW.cancelled_at IS NULL THEN
-          PERFORM ledger_post(NEW.account_id, NEW.amount, 'TRANSFER', NEW.id, NEW.moved_at, 'حركة اختبار');
+          PERFORM ledger_post(NEW.account_currency_id, NEW.amount, 'TRANSFER', NEW.id, NEW.moved_at, 'حركة اختبار');
         END IF;
         RETURN NULL;
       END;

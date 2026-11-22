@@ -1,5 +1,6 @@
 import cookie from '@fastify/cookie';
 import Fastify, { type FastifyInstance } from 'fastify';
+import { registerAccounts } from './accounts.js';
 import { registerAuth } from './auth.js';
 import { businessRuleMessage, type Pool } from './db.js';
 
@@ -39,6 +40,7 @@ export async function buildApp(options: AppOptions): Promise<FastifyInstance> {
   );
 
   registerAuth(app, options.pool, options.cookieSecure);
+  registerAccounts(app, options.pool);
 
   app.get('/api/health', async () => {
     await options.pool.query('SELECT 1');
