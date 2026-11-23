@@ -5,7 +5,7 @@ import { STATUS_LABEL, accountsCount, providerPage, sectionOf, type AccountStatu
 import { useBalances } from '../../balances';
 import { formatAmount, isNegative } from '../../money';
 import '../../styles/accounts.css';
-import { errorMessage } from './data';
+import { errorMessage, type ApproxFields, type CurrencyPart } from './data';
 
 interface VaultAccount {
   id: string;
@@ -15,19 +15,25 @@ interface VaultAccount {
   type: AccountType;
   status: AccountStatus;
   responsible: string | null;
-  balance: string;
+  /** في خزنة PayPal: مجموع الحساب بالدولار (تقريبي)، أو null بلا أسعار. */
+  balance: string | null;
+  /** خزنة PayPal: في المجموع تحويل فعلي. */
+  approx?: boolean;
+  /** خزنة PayPal: الأرصدة الحقيقية بعملاتها. */
+  parts?: CurrencyPart[];
   share: number;
   lastAmount: string | null;
+  lastCurrency: string | null;
   lastAt: string | null;
 }
 
-interface VaultDetail {
+interface VaultDetail extends ApproxFields {
   key: string;
   name: string;
   currency: string;
-  total: string;
+  total: string | null;
   accounts: VaultAccount[];
-  moves: { id: string; date: string; account: string; description: string | null; amount: string }[];
+  moves: { id: string; date: string; account: string; description: string | null; amount: string; currency: string }[];
 }
 
 const GREEN = '#136A43';
@@ -63,6 +69,11 @@ export function Vault() {
   }, [key]);
 
   const money = (value: string, sign = false) => (balances.hidden ? HIDDEN : formatAmount(value, { sign }));
+  /** الأرصدة الحقيقية بعملاتها: «2,500.00 USD · 100.00 EUR». */
+  const partsText = (parts: CurrencyPart[] = []) => parts.map((p) => `${money(p.balance)} ${p.currency}`).join(' · ');
+  /** رصيد سطر في الخزنة. في خزنة PayPal: مجموع تقريبي بالدولار، أو العملات كما هي بلا أسعار. */
+  const lineAmount = (account: VaultAccount) =>
+    account.balance !== null ? `${account.approx ? '≈ ' : ''}${money(account.balance)}` : partsText(account.parts);
 
   if (error) {
     return (
@@ -105,9 +116,20 @@ export function Vault() {
       <section className="card" style={{ padding: '24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '20px' }}>
         <div style={{ flex: '1 1 240px' }}>
           <div style={{ fontSize: '13px', fontWeight: 600 }} className="sub">إجمالي الخزنة</div>
-          <div className="amt" style={{ fontSize: '30px', lineHeight: '42px', textAlign: 'end', whiteSpace: 'nowrap' }}>
-            {money(vault.total)} {vault.currency}
-          </div>
+          {vault.total !== null ? (
+            <div className="amt" style={{ fontSize: '30px', lineHeight: '42px', textAlign: 'end', whiteSpace: 'nowrap' }}>
+              {vault.approx ? '≈ ' : ''}{money(vault.total)} {vault.currency}
+            </div>
+          ) : (
+            <div className="amt" style={{ fontSize: '22px', lineHeight: '42px', textAlign: 'end' }}>
+              {(vault.totals ?? []).map((t) => `${money(t.total)} ${t.currency}`).join(' · ')}
+            </div>
+          )}
+          {vault.approx && vault.ratesAt ? (
+            <div className="cap" style={{ textAlign: 'end', fontSize: '13px' }}>
+              سعر تقريبي من الإنترنت · آخر تحديث <span className="amt">{vault.ratesAt}</span>
+            </div>
+          ) : null}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', flex: '3 1 560px' }}>
           <span style={{ fontSize: '24px', color: '#4A5A70' }} aria-hidden="true">=</span>
@@ -116,7 +138,7 @@ export function Vault() {
               {index > 0 ? <span style={{ fontSize: '24px', color: '#4A5A70' }} aria-hidden="true">+</span> : null}
               <div className="part">
                 <span className="cap">{account.provider} – {account.name}</span>
-                <b className="amt" style={{ fontSize: '18px', textAlign: 'end' }}>{money(account.balance)}</b>
+                <b className="amt" style={{ fontSize: '18px', textAlign: 'end' }}>{lineAmount(account)}</b>
               </div>
             </Fragment>
           ))}
@@ -151,7 +173,12 @@ export function Vault() {
                     <td>
                       <span className={account.type === 'BANK' ? 'pill info' : 'pill neutral'}>{sectionOf(account.type).typeLabel}</span>
                     </td>
-                    <td><b className="amt" style={{ fontSize: '15px' }}>{money(account.balance)} {vault.currency}</b></td>
+                    <td>
+                      <b className="amt" style={{ fontSize: '15px' }}>
+                        {lineAmount(account)}{account.balance !== null ? ` ${vault.currency}` : ''}
+                      </b>
+                      {account.approx ? <div className="cap amt">{partsText(account.parts)}</div> : null}
+                    </td>
                     <td style={{ minWidth: '150px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <div className="bar" style={{ flex: 1 }}>
@@ -165,6 +192,7 @@ export function Vault() {
                         <>
                           <div className="amt" style={{ color: isNegative(account.lastAmount) ? RED : GREEN }}>
                             {money(account.lastAmount, true)}
+                            {account.lastCurrency && account.lastCurrency !== vault.currency ? ` ${account.lastCurrency}` : ''}
                           </div>
                           <div className="cap">{account.lastAt}</div>
                         </>
@@ -207,7 +235,7 @@ export function Vault() {
                   <td>{move.description}</td>
                   <td>
                     <b className="amt" style={{ color: isNegative(move.amount) ? RED : GREEN }}>
-                      {money(move.amount, true)} {vault.currency}
+                      {money(move.amount, true)} {move.currency}
                     </b>
                   </td>
                 </tr>

@@ -198,7 +198,7 @@ describe('الحساب متعدد العملات (القاعدة)', () => {
     await expectDbError(move(used.accountId, 'البنك العربي'), 'MD004');
   });
 
-  it('دولار PayPal خزنة مستقلة عن خزنة الدولار', async () => {
+  it('كل عملات PayPal في خزنة PayPal، خارج خزائن عملاتها', async () => {
     const paypal = await createAccount(db, userId, { provider: 'PayPal', currencies: [['USD', '2500'], ['EUR', '10']] });
     const bank = await createAccount(db, userId, { currency: 'USD', initialBalance: '10' });
     const keys = await db.app.query<{ account_currency_id: string; vault_key: string }>(
@@ -207,7 +207,8 @@ describe('الحساب متعدد العملات (القاعدة)', () => {
     );
     const byId = Object.fromEntries(keys.rows.map((r) => [r.account_currency_id, r.vault_key]));
     expect(byId[paypal.currencies.USD!]).toBe('PAYPAL');
-    expect(byId[paypal.currencies.EUR!]).toBe('EUR');
+    // يورو PayPal يتبع خزنة PayPal ولا يدخل خزنة اليورو
+    expect(byId[paypal.currencies.EUR!]).toBe('PAYPAL');
     expect(byId[bank.id]).toBe('USD');
   });
 

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { requireAuth, type Permissions } from './auth.js';
 import { withTransaction, type Pool, type PoolClient } from './db.js';
 import { formatAmount, parseAmount } from './money.js';
+import { loadPaypalVault } from './paypal-vault.js';
 
 // الحسابات والخزائن (لوحة Accounts.dc.html). النصوص ورسائل الخطأ من اللوحة.
 
@@ -182,7 +183,7 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
 
   // ───────────── القائمة: الجهات والحسابات وأرصدتها والخزائن ─────────────
   app.get('/api/accounts', { preHandler: requireAuth }, async () => {
-    const [providers, accounts, vaults, currencies] = await Promise.all([
+    const [providers, accounts, vaults, currencies, paypal] = await Promise.all([
       pool.query(
         `SELECT id, name, type, template, currencies, is_builtin AS "isBuiltin"
          FROM providers ORDER BY is_builtin DESC, created_at, name`,
@@ -224,11 +225,32 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
                 count(*)::int AS count,
                 json_agg(json_build_object('name', label, 'status', status, 'balance', balance::text)
                          ORDER BY rank) FILTER (WHERE rank <= 4) AS top
-         FROM ranked GROUP BY vault_key`,
+         FROM ranked WHERE vault_key <> 'PAYPAL' GROUP BY vault_key`,
       ),
       pool.query('SELECT code, name_ar AS "nameAr" FROM currencies WHERE allows_accounts ORDER BY code'),
+      loadPaypalVault(pool),
     ]);
-    const orderedVaults = vaults.rows
+    // خزنة PayPal: سطر لكل حساب بمجموعه التقريبي بالدولار (أو بعملاته كما هي إن لم توجد أسعار).
+    const paypalSummary = paypal.accounts.length
+      ? [{
+          key: 'PAYPAL',
+          currency: 'USD',
+          total: paypal.total,
+          count: paypal.accounts.length,
+          converted: paypal.converted,
+          approx: paypal.approx,
+          ratesAt: paypal.ratesAt,
+          totals: paypal.totals,
+          top: paypal.accounts.slice(0, 4).map((a) => ({
+            name: `${a.provider} – ${a.name}`,
+            status: a.status,
+            balance: a.usd,
+            approx: a.approx,
+            parts: a.parts,
+          })),
+        }]
+      : [];
+    const orderedVaults = [...vaults.rows, ...paypalSummary]
       .map((v) => ({ ...v, name: VAULT_NAME[v.key] ?? `خزنة ${v.key}` }))
       .sort((x, y) => VAULT_ORDER.indexOf(x.key) - VAULT_ORDER.indexOf(y.key));
     return { providers: providers.rows, accounts: accounts.rows, vaults: orderedVaults, currencies: currencies.rows };
@@ -434,6 +456,35 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
   app.get<{ Params: { key: string } }>('/api/vaults/:key', { preHandler: requireAuth }, async (request, reply) => {
     const key = request.params.key.toUpperCase();
     if (!VAULT_NAME[key]) return fail(reply, 404, 'NOT_FOUND', 'الخزنة غير موجودة.');
+    const movesQuery = () =>
+      pool.query(
+        `SELECT l.id, to_char(l.entry_at AT TIME ZONE 'Asia/Jerusalem', 'DD/MM/YYYY') AS date,
+                p.name || ' – ' || a.name AS account, l.description, l.amount::text AS amount, l.currency
+         FROM ledger_entries l
+         JOIN v_account_currency_balances b ON b.account_currency_id = l.account_currency_id
+         JOIN accounts a ON a.id = b.account_id
+         JOIN providers p ON p.id = a.provider_id
+         WHERE b.vault_key = $1
+         ORDER BY l.entry_at DESC, l.id DESC LIMIT 20`,
+        [key],
+      );
+
+    if (key === 'PAYPAL') {
+      const [paypal, paypalMoves] = await Promise.all([loadPaypalVault(pool), movesQuery()]);
+      return {
+        key,
+        name: VAULT_NAME[key],
+        currency: 'USD',
+        total: paypal.total,
+        converted: paypal.converted,
+        approx: paypal.approx,
+        ratesAt: paypal.ratesAt,
+        totals: paypal.totals,
+        accounts: paypal.accounts.map((a) => ({ ...a, id: a.accountId, currency: 'USD', balance: a.usd })),
+        moves: paypalMoves.rows,
+      };
+    }
+
     const [accounts, moves] = await Promise.all([
       pool.query<{ balance: string; currency: string }>(
         `SELECT b.account_currency_id AS id, a.id AS "accountId", p.name AS provider, a.name, p.type, a.status,
@@ -441,7 +492,7 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
                 CASE WHEN sum(b.balance) OVER () > 0 AND b.balance > 0
                      THEN round(b.balance / sum(b.balance) OVER () * 100)::int ELSE 0 END AS share,
                 sum(b.balance) OVER ()::numeric(18,4)::text AS total,
-                last.amount::text AS "lastAmount",
+                last.amount::text AS "lastAmount", b.currency AS "lastCurrency",
                 to_char(last.entry_at AT TIME ZONE 'Asia/Jerusalem', 'DD/MM/YYYY HH24:MI') AS "lastAt"
          FROM v_account_currency_balances b
          JOIN accounts a ON a.id = b.account_id
@@ -455,17 +506,7 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
          ORDER BY b.balance DESC, p.name, a.name`,
         [key],
       ),
-      pool.query(
-        `SELECT l.id, to_char(l.entry_at AT TIME ZONE 'Asia/Jerusalem', 'DD/MM/YYYY') AS date,
-                p.name || ' – ' || a.name AS account, l.description, l.amount::text AS amount
-         FROM ledger_entries l
-         JOIN v_account_currency_balances b ON b.account_currency_id = l.account_currency_id
-         JOIN accounts a ON a.id = b.account_id
-         JOIN providers p ON p.id = a.provider_id
-         WHERE b.vault_key = $1
-         ORDER BY l.entry_at DESC, l.id DESC LIMIT 20`,
-        [key],
-      ),
+      movesQuery(),
     ]);
     const first = accounts.rows[0] as { total?: string; currency?: string } | undefined;
     return {

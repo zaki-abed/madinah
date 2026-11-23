@@ -31,13 +31,35 @@ export interface Account {
   currencies: AccountCurrency[];
 }
 
-export interface VaultSummary {
+/** رصيد حقيقي بعملته الأصلية. */
+export interface CurrencyPart {
+  currency: string;
+  balance: string;
+}
+
+/**
+ * حقول خزنة PayPal الإضافية: مجموعها بالدولار تقريبي بأسعار من الإنترنت، للعرض فقط.
+ * غير موجودة في باقي الخزائن.
+ */
+export interface ApproxFields {
+  /** أمكن التحويل إلى الدولار (توجد أسعار محفوظة). */
+  converted?: boolean;
+  /** في الإجمالي تحويل فعلي، فيُعرض مع ≈. */
+  approx?: boolean;
+  /** تاريخ آخر تحديث للأسعار. */
+  ratesAt?: string | null;
+  /** الإجمالي الحقيقي لكل عملة بلا تحويل. */
+  totals?: { currency: string; total: string }[];
+}
+
+export interface VaultSummary extends ApproxFields {
   key: string;
   currency: string;
   name: string;
-  total: string;
+  /** null في خزنة PayPal عندما لا توجد أسعار للتحويل. */
+  total: string | null;
   count: number;
-  top: { name: string; status: AccountStatus; balance: string }[];
+  top: { name: string; status: AccountStatus; balance: string | null; approx?: boolean; parts?: CurrencyPart[] }[];
 }
 
 export interface AccountsData {

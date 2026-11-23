@@ -288,15 +288,25 @@ export function Accounts() {
           ) : null}
           <div className="vgrid">
             {data.vaults.map((vault) => (
-              <Link className="vc" to={vault.key === 'PAYPAL' ? '/paypal' : `/vaults/${vault.key}`} key={vault.key}>
+              <Link className="vc" to={`/vaults/${vault.key}`} key={vault.key}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <b style={{ fontSize: '16px' }}>{vault.name}</b>
                   <span className="code">{vault.currency}</span>
                 </div>
-                <div className="amt" style={{ fontSize: '26px', lineHeight: '34px', textAlign: 'end', fontWeight: 600 }}>
-                  {money(vault.total)} {vault.currency}
-                </div>
-                <span className="cap">{accountsCount(vault.count)}</span>
+                {vault.total !== null ? (
+                  <div className="amt" style={{ fontSize: '26px', lineHeight: '34px', textAlign: 'end', fontWeight: 600 }}>
+                    {vault.approx ? '≈ ' : ''}{money(vault.total)} {vault.currency}
+                  </div>
+                ) : (
+                  // خزنة PayPal بلا أسعار محفوظة: إجمالي كل عملة كما هو، بدون تحويل
+                  <div className="amt" style={{ fontSize: '20px', lineHeight: '34px', textAlign: 'end', fontWeight: 600 }}>
+                    {(vault.totals ?? []).map((t) => `${money(t.total)} ${t.currency}`).join(' · ')}
+                  </div>
+                )}
+                <span className="cap">
+                  {accountsCount(vault.count)}
+                  {vault.approx && vault.ratesAt ? ` · سعر تقريبي من الإنترنت · آخر تحديث ${vault.ratesAt}` : ''}
+                </span>
                 <div>
                   {vault.top.map((row, index) => (
                     <div className="vrow" key={index}>
@@ -304,7 +314,11 @@ export function Accounts() {
                         {row.name}
                         {row.status !== 'ACTIVE' ? ` (${STATUS_LABEL[row.status]})` : ''}
                       </span>
-                      <b className="amt">{money(row.balance)}</b>
+                      <b className="amt">
+                        {row.balance !== null
+                          ? `${row.approx ? '≈ ' : ''}${money(row.balance)}`
+                          : (row.parts ?? []).map((part) => `${money(part.balance)} ${part.currency}`).join(' · ')}
+                      </b>
                     </div>
                   ))}
                 </div>
