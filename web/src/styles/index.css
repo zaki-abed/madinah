@@ -1,0 +1,6 @@
+/* ترتيب الطبقات كما في لوحات التصميم: أنماط اللوحة أولاً، ثم طبقة نظام التصميم فوقها. */
+@layer board, ds;
+@import './base.css' layer(board);
+@import './shell.css' layer(board);
+@import './ds-layer.css' layer(ds);
+@import './shell-responsive.css' layer(ds);

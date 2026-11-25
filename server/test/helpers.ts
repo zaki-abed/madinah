@@ -39,25 +39,51 @@ export async function createUser(
   return { id: result.rows[0]!.id, username, password };
 }
 
+export interface TestAccount {
+  /** معرّف الحساب. */
+  accountId: string;
+  /** معرّف عملة الحساب الأولى: وحدة الرصيد التي تُربط بها القيود. */
+  id: string;
+  /** معرّفات عملات الحساب حسب رمز العملة. */
+  currencies: Record<string, string>;
+}
+
+export async function providerId(db: TestDb, name: string): Promise<string> {
+  const result = await db.app.query<{ id: string }>('SELECT id FROM providers WHERE name = $1', [name]);
+  return result.rows[0]!.id;
+}
+
+/** حساب في جهة (الافتراضي بنك فلسطين) بعملة أو أكثر. */
 export async function createAccount(
   db: TestDb,
   userId: string,
-  options: { currency?: string; type?: string; initialBalance?: string } = {},
-): Promise<string> {
+  options: { provider?: string; currency?: string; initialBalance?: string; currencies?: [string, string][] } = {},
+): Promise<TestAccount> {
+  const provider = await providerId(db, options.provider ?? 'بنك فلسطين');
+  const list = options.currencies ?? [[options.currency ?? 'ILS', options.initialBalance ?? '0']];
   return withTransaction(db.app, userId, async (client) => {
-    const result = await client.query<{ id: string }>(
-      `INSERT INTO accounts (name, type, currency, initial_balance)
-       VALUES ($1, $2, $3, $4) RETURNING id`,
-      [unique('حساب'), options.type ?? 'BANK', options.currency ?? 'ILS', options.initialBalance ?? '0'],
+    const account = await client.query<{ id: string }>(
+      'INSERT INTO accounts (provider_id, name) VALUES ($1, $2) RETURNING id',
+      [provider, unique('حساب')],
     );
-    return result.rows[0]!.id;
+    const accountId = account.rows[0]!.id;
+    const currencies: Record<string, string> = {};
+    for (const [currency, initial] of list) {
+      const row = await client.query<{ id: string }>(
+        'INSERT INTO account_currencies (account_id, currency, initial_balance) VALUES ($1, $2, $3) RETURNING id',
+        [accountId, currency, initial],
+      );
+      currencies[currency] = row.rows[0]!.id;
+    }
+    return { accountId, id: Object.values(currencies)[0] ?? '', currencies };
   });
 }
 
-export async function balanceOf(db: TestDb, accountId: string): Promise<string> {
+/** رصيد عملة حساب (بمعرّف عملة الحساب). */
+export async function balanceOf(db: TestDb, accountCurrencyId: string): Promise<string> {
   const result = await db.app.query<{ balance: string }>(
-    'SELECT balance FROM v_account_balances WHERE account_id = $1',
-    [accountId],
+    'SELECT balance FROM v_account_currency_balances WHERE account_currency_id = $1',
+    [accountCurrencyId],
   );
   return result.rows[0]!.balance;
 }
@@ -66,13 +92,13 @@ export async function balanceOf(db: TestDb, accountId: string): Promise<string> 
 export async function addMovement(
   db: TestDb,
   userId: string,
-  accountId: string,
+  accountCurrencyId: string,
   amount: string,
 ): Promise<string> {
   return withTransaction(db.app, userId, async (client) => {
     const result = await client.query<{ id: string }>(
-      'INSERT INTO test_movements (account_id, amount) VALUES ($1, $2) RETURNING id',
-      [accountId, amount],
+      'INSERT INTO test_movements (account_currency_id, amount) VALUES ($1, $2) RETURNING id',
+      [accountCurrencyId, amount],
     );
     return result.rows[0]!.id;
   });

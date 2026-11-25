@@ -2,6 +2,9 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useAuth } from './auth';
 import { AppShell } from './layout/AppShell';
 import { navItems } from './layout/nav';
+import { Accounts } from './pages/accounts/Accounts';
+import { AddAccount } from './pages/add-account/AddAccount';
+import { Vault } from './pages/accounts/Vault';
 import { Login } from './pages/Login';
 import { Placeholder } from './pages/Placeholder';
 
@@ -19,8 +22,12 @@ export function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route element={<Protected />}>
+        <Route path="/accounts" element={<Accounts />} />
+        <Route path="/accounts/new" element={<AddAccount />} />
+        <Route path="/vaults/:key" element={<Vault />} />
+        <Route path="/internal-transfer" element={<Placeholder title="نقل داخلي" />} />
         {navItems.map((item) =>
-          item.kind === 'link' ? (
+          item.kind === 'link' && item.to !== '/accounts' ? (
             <Route key={item.to} path={item.to} element={<Placeholder title={item.label} />} />
           ) : null,
         )}
