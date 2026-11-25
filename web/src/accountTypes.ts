@@ -64,3 +64,9 @@ export const accountsCount = (n: number) => (n === 1 ? 'حساب واحد' : n =
 /** «بنك واحد / بنكان / 3 بنوك». */
 export const countWord = (n: number, [one, two, many]: [string, string, string]) =>
   n === 1 ? one : n === 2 ? two : `${n} ${many}`;
+
+/** حرف الجهة في مربعها: «بنك فلسطين» ← ب، «البنك العربي» ← ع، «PayPal» ← P. */
+export function providerInitial(name: string): string {
+  const core = name.trim().replace(/^البنك\s+/, '').replace(/^ال/, '');
+  return (core.charAt(0) || name.charAt(0)).toUpperCase();
+}
