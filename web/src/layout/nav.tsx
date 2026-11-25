@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-// عناصر القائمة الجانبية بترتيبها ونصوصها وأيقوناتها كما في لوحة «لوحة التحكم» (Main.dc.html).
+// عناصر القائمة الجانبية بترتيبها ونصوصها وأيقوناتها كما في لوحات التصميم (Main.dc.html، وقسم «الإدارة» من Team.dc.html).
 
 export type NavItem =
   | { kind: 'link'; to: string; label: string; icon: ReactNode; tag?: string }
@@ -30,7 +30,7 @@ export const navItems: NavItem[] = [
   { kind: 'link', to: '/limits', label: 'حدود الحسابات', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg> },
   { kind: 'link', to: '/issues', label: 'مشاكل الحسابات', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>, tag: 'قريباً' },
   { kind: 'section', label: 'الإدارة' },
-  { kind: 'link', to: '/users', label: 'المستخدمون والصلاحيات', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>, tag: 'قريباً' },
+  { kind: 'link', to: '/team', label: 'فريق العمل', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg> },
   { kind: 'section', label: 'قريباً' },
   { kind: 'off', label: 'المصاريف', tag: 'قريباً' },
   { kind: 'off', label: 'التقارير والجرد', tag: 'قريباً' },

@@ -28,13 +28,13 @@ export const unique = (prefix: string) => `${prefix}-${randomUUID().slice(0, 8)}
 
 export async function createUser(
   db: TestDb,
-  options: { password?: string; role?: 'ADMIN' | 'EMPLOYEE'; username?: string } = {},
+  options: { password?: string; username?: string; name?: string } = {},
 ): Promise<{ id: string; username: string; password: string }> {
-  const username = options.username ?? unique('user');
+  const username = (options.username ?? unique('user')).toLowerCase().replace(/[^a-z0-9._]/g, '.');
   const password = options.password ?? 'correct-horse-9';
   const result = await db.owner.query<{ id: string }>(
-    'SELECT auth_create_user($1, $2, $3, $4) AS id',
-    [username, password, 'مستخدم اختبار', options.role ?? 'ADMIN'],
+    'SELECT auth_create_user($1, $2, $3) AS id',
+    [username, password, options.name ?? 'مستخدم اختبار'],
   );
   return { id: result.rows[0]!.id, username, password };
 }

@@ -31,14 +31,13 @@ const LOG_KIND: Record<LogEntry['kind'], [string, string]> = {
 interface Props {
   account: Account;
   providers: Provider[];
-  canDelete: boolean;
   onClose(): void;
   /** بعد حفظ ناجح: رسالة تظهر أعلى الصفحة، والقسم الذي يُفتح. */
   onDone(flash: string, section?: SectionId): void;
 }
 
 /** نافذة «تعديل» من لوحة Accounts.dc.html: البيانات والحالة، وسجل التدقيق. */
-export function ManageAccountModal({ account, providers, canDelete, onClose, onDone }: Props) {
+export function ManageAccountModal({ account, providers, onClose, onDone }: Props) {
   const current = providers.find((p) => p.id === account.providerId)!;
   const title = `${current.name} – ${account.name}`;
 
@@ -70,7 +69,8 @@ export function ManageAccountModal({ account, providers, canDelete, onClose, onD
   }, [account.id]);
 
   const section = SECTIONS.find((s) => s.id === sectionId)!;
-  const options = providers.filter((p) => section.types.includes(p.type));
+  // الجهة الموقوفة لا يُنقل إليها حساب (تبقى ظاهرة إن كانت جهة الحساب الحالية)
+  const options = providers.filter((p) => section.types.includes(p.type) && (p.isActive || p.id === account.providerId));
   const choice = providerChoice === NEW || options.some((p) => p.id === providerChoice) ? providerChoice : (options[0]?.id ?? NEW);
   const isNew = choice === NEW;
   const target = options.find((p) => p.id === choice);
@@ -325,7 +325,7 @@ export function ManageAccountModal({ account, providers, canDelete, onClose, onD
               </div>
             ) : null}
 
-            {!account.hasMovements && canDelete ? (
+            {!account.hasMovements ? (
               <>
                 <div className="mgbox" style={{ borderColor: '#F3D3CF', background: '#FFF8F7' }}>
                   <div className="mgt">

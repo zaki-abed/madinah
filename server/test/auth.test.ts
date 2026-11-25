@@ -35,11 +35,11 @@ describe('كلمات المرور', () => {
     expect(row.rows[0]!.password_hash).not.toContain('my-secret-pass');
   });
 
-  it('التطبيق لا يقرأ password_hash ولا ينشئ مستخدمين مباشرة', async () => {
+  it('التطبيق لا يقرأ password_hash ولا يكتبه مباشرة', async () => {
     await expect(db.app.query('SELECT password_hash FROM users')).rejects.toMatchObject({ code: '42501' });
     await expect(db.app.query('SELECT * FROM users')).rejects.toMatchObject({ code: '42501' });
     await expect(
-      db.app.query("SELECT auth_create_user('x', 'password-123', 'x', 'ADMIN')"),
+      db.app.query("UPDATE users SET password_hash = 'x'"),
     ).rejects.toMatchObject({ code: '42501' });
   });
 
@@ -65,11 +65,11 @@ describe('كلمات المرور', () => {
 
 describe('تسجيل الدخول', () => {
   it('بيانات صحيحة: جلسة في كوكي HttpOnly، وتُسجَّل في التدقيق', async () => {
-    const user = await createUser(db, { username: unique('Ahmad') });
+    const user = await createUser(db, { username: unique('ahmad') });
     // اسم المستخدم بلا حساسية لحالة الأحرف
     const response = await login({ username: user.username.toUpperCase(), password: user.password });
     expect(response.statusCode).toBe(200);
-    expect(response.json().user).toMatchObject({ id: user.id, role: 'ADMIN', fullName: 'مستخدم اختبار' });
+    expect(response.json().user).toEqual({ id: user.id, username: user.username, fullName: 'مستخدم اختبار' });
     expect(response.body).not.toContain('password');
 
     const cookie = sessionCookie(response)!;
@@ -98,7 +98,7 @@ describe('تسجيل الدخول', () => {
 
     const me = await app.inject({ method: 'GET', url: '/api/auth/me', cookies: { [SESSION_COOKIE]: cookie.value } });
     expect(me.statusCode).toBe(200);
-    expect(me.json().user.permissions.manageUsers).toBe(true);
+    expect(me.json().user.id).toBe(user.id);
   });
 
   it('«تذكرني» يمدّ الجلسة إلى 30 يوماً', async () => {
@@ -214,18 +214,5 @@ describe('الجلسة', () => {
     await db.owner.query("UPDATE sessions SET expires_at = now() - interval '1 minute' WHERE user_id = $1", [user.id]);
     const me = await app.inject({ method: 'GET', url: '/api/auth/me', cookies: { [SESSION_COOKIE]: cookie } });
     expect(me.statusCode).toBe(401);
-  });
-
-  it('صلاحيات الموظف الافتراضية من جدول الصلاحيات', async () => {
-    const user = await createUser(db, { role: 'EMPLOYEE' });
-    const response = await login({ username: user.username, password: user.password });
-    expect(response.json().user.permissions).toEqual({
-      canEdit: true,
-      canDelete: false,
-      viewReports: false,
-      manageUsers: false,
-      viewBalances: true,
-      viewProfit: false,
-    });
   });
 });
