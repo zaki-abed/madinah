@@ -6,6 +6,7 @@ import {
   STATUS_PILL,
   accountsCount,
   countWord,
+  providerInitial,
   providerPage,
   type SectionId,
 } from '../../accountTypes';
@@ -13,7 +14,6 @@ import { useAuth } from '../../auth';
 import { useBalances } from '../../balances';
 import { formatAmount, sumAmounts } from '../../money';
 import '../../styles/accounts.css';
-import { AddAccountModal } from './AddAccountModal';
 import { ManageAccountModal } from './ManageAccountModal';
 import { useAccounts, type Account, type Provider } from './data';
 
@@ -44,7 +44,6 @@ export function Accounts() {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState<Partial<Record<SectionId, boolean>>>({});
   const [flash, setFlash] = useState('');
-  const [adding, setAdding] = useState<{ section: SectionId; providerId?: string } | null>(null);
   const [managing, setManaging] = useState<string | null>(null);
 
   useEffect(() => {
@@ -70,7 +69,6 @@ export function Accounts() {
   const managed = managing ? accounts.find((a) => a.id === managing) : undefined;
 
   async function done(message: string, section?: SectionId) {
-    setAdding(null);
     setManaging(null);
     await reload();
     setFlash(message);
@@ -107,19 +105,12 @@ export function Accounts() {
             />
           </label>
           {user?.permissions.canEdit ? (
-            <button
-              className="btn acc"
-              type="button"
-              onClick={() => {
-                setFlash('');
-                setAdding({ section: filter === 'all' ? 'bank' : filter });
-              }}
-            >
+            <Link className="btn acc" to="/accounts/new">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                 <path d="M12 5v14M5 12h14" />
               </svg>
               إضافة حساب
-            </button>
+            </Link>
           ) : null}
         </div>
       </header>
@@ -193,7 +184,7 @@ export function Accounts() {
                     return (
                       <div className="prov" key={provider.id}>
                         <div className="provh">
-                          <span className="pav" aria-hidden="true">{provider.name.charAt(0).toUpperCase()}</span>
+                          <span className="pav" aria-hidden="true">{providerInitial(provider.name)}</span>
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <b style={{ fontSize: '17px', lineHeight: '24px' }}>{provider.name}</b>
                             <div className="cap">
@@ -257,16 +248,9 @@ export function Accounts() {
                           );
                         })}
                         {user?.permissions.canEdit ? (
-                          <button
-                            type="button"
-                            className="addl"
-                            onClick={() => {
-                              setFlash('');
-                              setAdding({ section: section.id, providerId: provider.id });
-                            }}
-                          >
+                          <Link className="addl" to={`/accounts/new?provider=${provider.id}`} style={{ textDecoration: 'none' }}>
                             + حساب في {provider.name}
-                          </button>
+                          </Link>
                         ) : null}
                       </div>
                     );
@@ -326,15 +310,6 @@ export function Accounts() {
             ))}
           </div>
         </>
-      ) : null}
-
-      {adding ? (
-        <AddAccountModal
-          providers={providers}
-          initial={adding}
-          onClose={() => setAdding(null)}
-          onSaved={(message, section) => void done(message, section)}
-        />
       ) : null}
 
       {managed ? (

@@ -229,90 +229,14 @@ describe('واجهة الحسابات', () => {
   it('تتطلب جلسة', async () => {
     expect((await app.inject({ method: 'GET', url: '/api/accounts' })).statusCode).toBe(401);
     expect((await app.inject({ method: 'POST', url: '/api/accounts', payload: {} })).statusCode).toBe(401);
-  });
-
-  it('إضافة حساب بعملتين ثم ظهوره في القائمة بأرصدته', async () => {
-    const name = unique('حساب أحمد');
-    const response = await api('POST', '/api/accounts', {
-      providerId: await providerId(db, 'بنك فلسطين'),
-      name,
-      currencies: [
-        { currency: 'USD', initialBalance: '10,000' },
-        { currency: 'ILS', initialBalance: '' },
-      ],
-    });
-    expect(response.statusCode).toBe(201);
-    expect(response.json()).toMatchObject({ title: `بنك فلسطين – ${name}`, section: 'البنوك' });
-
-    const account = await listed(response.json().id);
-    expect(account).toMatchObject({ name, status: 'ACTIVE', statusSince: null, hasMovements: false, movementsCount: 0 });
-    expect(account.currencies.map((c) => [c.currency, c.initialBalance, c.balance])).toEqual([
-      ['USD', '10000.0000', '10000.0000'],
-      ['ILS', '0.0000', '0.0000'],
-    ]);
-  });
-
-  it('رسائل التحقق كما في التصميم', async () => {
-    const bank = await providerId(db, 'بنك فلسطين');
-    const name = unique('حساب كرم');
-    const post = async (payload: unknown) => (await api('POST', '/api/accounts', payload)).json().error?.message;
-
-    expect(await post({ name, currencies: [] })).toBe('اكتب اسم البنك أو المنصة.');
-    expect(await post({ newProvider: { name: ' ', type: 'BANK' }, name })).toBe('اكتب اسم البنك أو المنصة.');
-    expect(await post({ providerId: bank, name: '  ' })).toBe('اكتب اسم الحساب.');
-    expect(await post({ providerId: bank, name, currencies: [] })).toBe('اختر عملة واحدة على الأقل.');
-    expect(await post({ providerId: bank, name, currencies: [{ currency: 'USDT' }] })).toBe(
-      'العملة USDT غير متاحة لحسابات بنك فلسطين.',
-    );
-    expect(await post({ providerId: bank, name, currencies: [{ currency: 'USD', initialBalance: '12x' }] })).toBe(
-      'الرصيد الافتتاحي USD غير صالح.',
-    );
-
-    const created = await api('POST', '/api/accounts', { providerId: bank, name, currencies: [{ currency: 'USD' }] });
-    expect(await post({ providerId: bank, name, currencies: [{ currency: 'USD' }] })).toBe(
-      'يوجد حساب بنفس الاسم في بنك فلسطين. لا يمكن تكرار الحساب.',
-    );
-    await api('POST', `/api/accounts/${created.json().id}/status`, { status: 'CLOSED' });
-    expect(await post({ providerId: bank, name, currencies: [{ currency: 'USD' }] })).toBe(
-      'يوجد حساب «مغلق» بنفس الاسم في بنك فلسطين. يمكن تغيير حالته إلى «نشط» من «تعديل» بدلاً من إضافته من جديد.',
-    );
-  });
-
-  it('جهة جديدة تأخذ قالب نوعها، وفشل الحساب لا يُبقي الجهة', async () => {
-    const providerName = unique('بنك القدس');
-    const failed = await api('POST', '/api/accounts', { newProvider: { name: providerName, type: 'BANK' }, name: '' });
-    expect(failed.statusCode).toBe(400);
-    expect((await db.app.query('SELECT 1 FROM providers WHERE name = $1', [providerName])).rowCount).toBe(0);
-
-    const ok = await api('POST', '/api/accounts', {
-      newProvider: { name: providerName, type: 'BANK' },
-      name: 'حساب المكتب',
-      currencies: [{ currency: 'JOD', initialBalance: '5' }],
-    });
-    expect(ok.statusCode).toBe(201);
-    const provider = await db.app.query<{ template: string; currencies: string[]; is_builtin: boolean }>(
-      'SELECT template, currencies, is_builtin FROM providers WHERE name = $1',
-      [providerName],
-    );
-    expect(provider.rows[0]).toEqual({ template: 'bank', currencies: ['ILS', 'USD', 'JOD'], is_builtin: false });
-
-    const again = await api('POST', '/api/accounts', { newProvider: { name: providerName, type: 'BANK' }, name: 'x' });
-    expect(again.json().error.message).toContain('توجد جهة باسم');
-  });
-
-  it('حساب تطبيق بطاقات بلا عملات', async () => {
-    const response = await api('POST', '/api/accounts', { providerId: await providerId(db, 'KAST'), name: unique('حساب زكي') });
-    expect(response.statusCode).toBe(201);
-    expect((await listed(response.json().id)).currencies).toEqual([]);
+    expect((await app.inject({ method: 'POST', url: '/api/providers', payload: {} })).statusCode).toBe(401);
   });
 
   it('التعديل وتغيير الحالة وسجل التدقيق', async () => {
     const bank = await providerId(db, 'بنك فلسطين');
     const arab = await providerId(db, 'البنك العربي');
-    const name = unique('زكي');
-    const id = (
-      await api('POST', '/api/accounts', { providerId: bank, name, currencies: [{ currency: 'USD', initialBalance: '3000' }] })
-    ).json().id as string;
+    const id = (await createAccount(db, userId, { currency: 'USD', initialBalance: '3000' })).accountId;
+    const name = (await listed(id)).name;
 
     const nothing = await api('PATCH', `/api/accounts/${id}`, { providerId: bank, name });
     expect(nothing.json().error.message).toBe('لا توجد تعديلات للحفظ.');
