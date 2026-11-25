@@ -63,14 +63,14 @@ export async function loadPaypalVault(pool: Pool): Promise<PaypalVault> {
                          ORDER BY account_currency_id) AS parts
          FROM rows GROUP BY account_id
        )
-       SELECT a.id AS "accountId", p.name AS provider, a.name, p.type, a.status, s.name AS responsible,
+       SELECT a.id AS "accountId", p.name AS provider, a.name, p.type, a.status, s.full_name AS responsible,
               per.parts, per.convertible, per.usd::numeric(18,4)::text AS usd, per.approx,
               last.amount::text AS "lastAmount", last.currency AS "lastCurrency",
               to_char(last.entry_at AT TIME ZONE 'Asia/Jerusalem', 'DD/MM/YYYY HH24:MI') AS "lastAt"
        FROM per
        JOIN accounts a ON a.id = per.account_id
        JOIN providers p ON p.id = a.provider_id
-       LEFT JOIN staff_members s ON s.id = a.responsible_id
+       LEFT JOIN users s ON s.id = a.responsible_id
        LEFT JOIN LATERAL (
          SELECT l.amount, l.currency, l.entry_at
          FROM ledger_entries l JOIN account_currencies ac ON ac.id = l.account_currency_id

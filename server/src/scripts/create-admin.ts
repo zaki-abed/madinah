@@ -1,5 +1,7 @@
 /**
- * إنشاء مدير للنظام، أو إعادة تعيين كلمة مرور مستخدم موجود:  npm run create-admin
+ * إضافة أول عضو في فريق العمل على قاعدة فارغة، أو إعادة تعيين كلمة مرور عضو إذا لم يستطع أحد الدخول:
+ *   npm run create-admin
+ * باقي الأعضاء يُضافون من شاشة «فريق العمل».
  * كلمة المرور تُطلب في الطرفية وتُشفَّر داخل القاعدة (bcrypt). لا تُكتب في أي ملف.
  */
 import pg from 'pg';
@@ -23,7 +25,7 @@ async function askPassword(): Promise<string> {
 const client = new pg.Client({ connectionString: devDbUrls().owner });
 await client.connect();
 try {
-  const username = (await ask('اسم المستخدم (بالإنجليزية، مثل ahmad): ')).trim();
+  const username = (await ask('اسم الدخول (أحرف إنجليزية صغيرة وأرقام، مثل ahmad): ')).trim();
   if (!username) throw new Error('اسم المستخدم مطلوب.');
 
   const existing = await client.query<{ id: string; full_name: string }>(
@@ -43,12 +45,12 @@ try {
   } else {
     const fullName = (await ask('الاسم الظاهر في النظام (مثل أحمد): ')).trim();
     if (!fullName) throw new Error('الاسم مطلوب.');
-    await client.query("SELECT auth_create_user($1, $2, $3, 'ADMIN')", [
+    await client.query('SELECT auth_create_user($1, $2, $3)', [
       username,
       await askPassword(),
       fullName,
     ]);
-    console.log(`✓ تم إنشاء المدير «${fullName}» باسم المستخدم ${username}.`);
+    console.log(`✓ أُضيف «${fullName}» إلى فريق العمل باسم الدخول ${username}.`);
   }
 } catch (error) {
   console.error(businessRuleMessage(error) ?? (error as Error).message);

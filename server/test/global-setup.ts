@@ -23,6 +23,23 @@ export default async function setup(): Promise<void> {
     await client.end();
   }
 
+  // حتى 0012 أولاً، ثم بيانات بالنموذج القديم (مستخدم + قائمة أسماء فريق العمل)،
+  // ثم الباقي: يُختبر دمج المستخدمين مع فريق العمل في 0013 على بيانات حقيقية الشكل.
+  await runMigrations(owner, undefined, '0012');
+  const legacy = new pg.Client({ connectionString: owner });
+  await legacy.connect();
+  try {
+    await legacy.query(`
+      SELECT auth_create_user('Legacy.Admin', 'legacy-pass-1', 'كرم القديم', 'ADMIN');
+      INSERT INTO staff_members (name) VALUES ('كرم القديم'), ('هبة القديمة');
+      INSERT INTO accounts (provider_id, name, responsible_id)
+        SELECT p.id, 'حساب قديم لكرم', s.id FROM providers p, staff_members s WHERE p.name = 'KAST' AND s.name = 'كرم القديم';
+      INSERT INTO accounts (provider_id, name, responsible_id)
+        SELECT p.id, 'حساب قديم لهبة', s.id FROM providers p, staff_members s WHERE p.name = 'KAST' AND s.name = 'هبة القديمة';
+    `);
+  } finally {
+    await legacy.end();
+  }
   await runMigrations(owner);
 
   const fixture = new pg.Client({ connectionString: owner });

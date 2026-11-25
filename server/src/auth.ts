@@ -8,21 +8,11 @@ export const SESSION_COOKIE = 'madinah_session';
 const SESSION_HOURS = 12;
 const REMEMBER_DAYS = 30;
 
-export interface Permissions {
-  canEdit: boolean;
-  canDelete: boolean;
-  viewReports: boolean;
-  manageUsers: boolean;
-  viewBalances: boolean;
-  viewProfit: boolean;
-}
-
+/** عضو فريق العمل صاحب الجلسة. كل الأعضاء بصلاحيات كاملة (قرار 25/11/2026). */
 export interface AuthUser {
   id: string;
   username: string;
   fullName: string;
-  role: 'ADMIN' | 'EMPLOYEE';
-  permissions: Permissions;
 }
 
 declare module 'fastify' {
@@ -42,38 +32,13 @@ interface UserRow {
   id: string;
   username: string;
   full_name: string;
-  role: 'ADMIN' | 'EMPLOYEE';
-  can_edit: boolean | null;
-  can_delete: boolean | null;
-  view_reports: boolean | null;
-  manage_users: boolean | null;
-  view_balances: boolean | null;
-  view_profit: boolean | null;
 }
 
 const USER_SELECT = `
-  SELECT u.id, u.username::text AS username, u.full_name, u.role,
-         p.can_edit, p.can_delete, p.view_reports, p.manage_users, p.view_balances, p.view_profit
-  FROM users u
-  LEFT JOIN user_permissions p ON p.user_id = u.id`;
+  SELECT u.id, u.username::text AS username, u.full_name
+  FROM users u`;
 
-function toAuthUser(row: UserRow): AuthUser {
-  const admin = row.role === 'ADMIN'; // المدير يملك كل الصلاحيات دائماً
-  return {
-    id: row.id,
-    username: row.username,
-    fullName: row.full_name,
-    role: row.role,
-    permissions: {
-      canEdit: admin || row.can_edit === true,
-      canDelete: admin || row.can_delete === true,
-      viewReports: admin || row.view_reports === true,
-      manageUsers: admin || row.manage_users === true,
-      viewBalances: admin || row.view_balances === true,
-      viewProfit: admin || row.view_profit === true,
-    },
-  };
-}
+const toAuthUser = (row: UserRow): AuthUser => ({ id: row.id, username: row.username, fullName: row.full_name });
 
 function hashToken(token: string): Buffer {
   return createHash('sha256').update(token).digest();
@@ -88,6 +53,30 @@ export async function requireAuth(request: FastifyRequest, reply: FastifyReply):
   if (!request.user) {
     await fail(reply, 401, 'UNAUTHENTICATED', 'انتهت الجلسة. يلزم تسجيل الدخول من جديد.');
   }
+}
+
+/** ينشئ جلسة ويضع كوكيها. بدون «تذكرني»: كوكي تزول بإغلاق المتصفح، والخادم ينهيها بعد 12 ساعة. */
+export async function startSession(
+  pool: Pool,
+  reply: FastifyReply,
+  userId: string,
+  remember: boolean,
+  cookieSecure: boolean,
+): Promise<void> {
+  const token = randomBytes(32).toString('base64url');
+  const lifetime = remember ? `${REMEMBER_DAYS} days` : `${SESSION_HOURS} hours`;
+  await pool.query(
+    `INSERT INTO sessions (user_id, token_hash, remember, expires_at)
+     VALUES ($1, $2, $3, now() + $4::interval)`,
+    [userId, hashToken(token), remember, lifetime],
+  );
+  reply.setCookie(SESSION_COOKIE, token, {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: cookieSecure,
+    ...(remember ? { maxAge: REMEMBER_DAYS * 24 * 60 * 60 } : {}),
+  });
 }
 
 export function registerAuth(app: FastifyInstance, pool: Pool, cookieSecure: boolean): void {
@@ -145,20 +134,8 @@ export function registerAuth(app: FastifyInstance, pool: Pool, cookieSecure: boo
       return fail(reply, 401, 'INVALID_CREDENTIALS', 'اسم المستخدم أو كلمة المرور غير صحيحة.');
     }
 
-    const token = randomBytes(32).toString('base64url');
-    const lifetime = remember ? `${REMEMBER_DAYS} days` : `${SESSION_HOURS} hours`;
     await pool.query('DELETE FROM sessions WHERE expires_at < now()');
-    await pool.query(
-      `INSERT INTO sessions (user_id, token_hash, remember, expires_at)
-       VALUES ($1, $2, $3, now() + $4::interval)`,
-      [outcome.user_id, hashToken(token), remember, lifetime],
-    );
-
-    // بدون «تذكرني»: كوكي جلسة تزول بإغلاق المتصفح، والخادم ينهيها بعد 12 ساعة.
-    reply.setCookie(SESSION_COOKIE, token, {
-      ...cookieBase,
-      ...(remember ? { maxAge: REMEMBER_DAYS * 24 * 60 * 60 } : {}),
-    });
+    await startSession(pool, reply, outcome.user_id, remember, cookieSecure);
 
     const user = await pool.query<UserRow>(`${USER_SELECT} WHERE u.id = $1`, [outcome.user_id]);
     return { user: toAuthUser(user.rows[0]!) };

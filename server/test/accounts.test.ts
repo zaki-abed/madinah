@@ -18,10 +18,9 @@ let db: TestDb;
 let app: FastifyInstance;
 let userId: string;
 let cookies: Record<string, string>;
-let employeeCookies: Record<string, string>;
 
-async function loginAs(role: 'ADMIN' | 'EMPLOYEE') {
-  const user = await createUser(db, { role });
+async function loginAs() {
+  const user = await createUser(db);
   const response = await app.inject({
     method: 'POST',
     url: '/api/auth/login',
@@ -34,10 +33,9 @@ async function loginAs(role: 'ADMIN' | 'EMPLOYEE') {
 beforeAll(async () => {
   db = openTestDb();
   app = await buildApp({ pool: db.app, cookieSecure: false });
-  const admin = await loginAs('ADMIN');
+  const admin = await loginAs();
   userId = admin.id;
   cookies = admin.cookies;
-  employeeCookies = (await loginAs('EMPLOYEE')).cookies;
 });
 
 afterAll(async () => {
@@ -292,14 +290,6 @@ describe('واجهة الحسابات', () => {
     const account = await createAccount(db, userId);
     expect((await api('DELETE', `/api/accounts/${account.accountId}`)).statusCode).toBe(204);
     expect(await listed(account.accountId)).toBeUndefined();
-  });
-
-  it('الموظف بصلاحياته الافتراضية: يعدّل ولا يحذف', async () => {
-    const account = await createAccount(db, userId);
-    const remove = await api('DELETE', `/api/accounts/${account.accountId}`, undefined, employeeCookies);
-    expect(remove.statusCode).toBe(403);
-    const status = await api('POST', `/api/accounts/${account.accountId}/status`, { status: 'RESTRICTED' }, employeeCookies);
-    expect(status.statusCode).toBe(200);
   });
 });
 

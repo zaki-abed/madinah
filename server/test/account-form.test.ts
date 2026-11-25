@@ -20,7 +20,7 @@ beforeAll(async () => {
     payload: { username: user.username, password: user.password },
   });
   cookies = { [SESSION_COOKIE]: login.cookies.find((c) => c.name === SESSION_COOKIE)!.value };
-  staff = (await post('/api/staff', { name: unique('أحمد') })).json().member.id;
+  staff = user.id; // «المسؤول عنه» يُختار من فريق العمل
 });
 
 afterAll(async () => {
@@ -198,7 +198,7 @@ describe('إضافة حساب جديد', () => {
   });
 });
 
-describe('الجهات وفريق العمل', () => {
+describe('جهة جديدة من النموذج', () => {
   it('جهة جديدة تأخذ قالب مجموعتها والعملات المختارة', async () => {
     const name = unique('بنك القدس');
     const messages = async (payload: unknown) => (await post('/api/providers', payload)).json().error?.message;
@@ -209,24 +209,15 @@ describe('الجهات وفريق العمل', () => {
     expect(created.statusCode).toBe(201);
     expect(created.json()).toMatchObject({
       section: 'البنوك',
-      provider: { name, type: 'BANK', template: 'bank', currencies: ['ILS', 'JOD'], isBuiltin: false },
+      provider: { name, type: 'BANK', template: 'bank', currencies: ['ILS', 'JOD'], isBuiltin: false, isActive: true },
     });
     expect(await messages({ name, type: 'BANK', currencies: ['ILS'] })).toBe('توجد جهة بنفس الاسم.');
-    // لا GBP: العملة غير معرّفة في النظام
-    expect((await post('/api/providers', { name: unique('Wise'), type: 'PAYMENT_PLATFORM', currencies: ['GBP'] })).statusCode).toBe(422);
+    // لا GBP، ولا عملة من خارج عملات النوع
+    expect(await messages({ name: unique('Wise'), type: 'PAYMENT_PLATFORM', currencies: ['GBP'] })).toBe('عملة غير مسموحة لهذا النوع من الجهات.');
+    expect(await messages({ name: unique('Bank'), type: 'BANK', currencies: ['USDT'] })).toBe('عملة غير مسموحة لهذا النوع من الجهات.');
 
     const cards = await post('/api/providers', { name: unique('Bitget Card'), type: 'CARD_APP', currencies: ['USD'] });
     expect(cards.json().provider.currencies).toEqual([]);
-  });
-
-  it('قائمة فريق العمل تُدار من النظام', async () => {
-    const name = unique('كرم');
-    const created = await post('/api/staff', { name });
-    expect(created.statusCode).toBe(201);
-    expect((await post('/api/staff', { name })).json().error.message).toBe('الاسم موجود في قائمة فريق العمل.');
-    expect((await post('/api/staff', { name: '  ' })).statusCode).toBe(400);
-    const list = (await app.inject({ method: 'GET', url: '/api/staff', cookies })).json().staff as { name: string }[];
-    expect(list.map((m) => m.name)).toContain(name);
   });
 });
 

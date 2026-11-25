@@ -42,8 +42,10 @@ async function readMigrationFiles(): Promise<MigrationFile[]> {
 export async function runMigrations(
   ownerUrl: string,
   log: (message: string) => void = () => undefined,
+  /** للاختبارات فقط: التوقف بعد هذا الرقم (مثل '0012') لتجهيز بيانات قديمة قبل الباقي. */
+  upTo?: string,
 ): Promise<string[]> {
-  const files = await readMigrationFiles();
+  const files = (await readMigrationFiles()).filter((f) => !upTo || f.version <= upTo);
   const client = new pg.Client({ connectionString: ownerUrl });
   await client.connect();
   const applied: string[] = [];
