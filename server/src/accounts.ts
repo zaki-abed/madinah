@@ -4,6 +4,15 @@ import { requireAuth, type Permissions } from './auth.js';
 import { withTransaction, type Pool, type PoolClient } from './db.js';
 import { formatAmount, parseAmount } from './money.js';
 import { loadPaypalVault } from './paypal-vault.js';
+import {
+  DOC_TYPES,
+  TEMPLATES,
+  sectionLevel,
+  validateIdentity,
+  type FormValues,
+  type Issue,
+  type TemplateKey,
+} from './shared/accountTemplates.js';
 
 // الحسابات والخزائن (لوحة Accounts.dc.html). النصوص ورسائل الخطأ من اللوحة.
 
@@ -52,6 +61,16 @@ const VAULT_NAME: Record<string, string> = {
 
 class InputError extends Error {}
 
+/** نواقص تمنع الحفظ، بنفس قائمة «قبل الحفظ» في النموذج. */
+class IncompleteError extends Error {
+  constructor(
+    message: string,
+    readonly issues: Issue[],
+  ) {
+    super(message);
+  }
+}
+
 const uuid = z.string().uuid();
 const providerChoice = {
   providerId: uuid.optional(),
@@ -66,10 +85,33 @@ const currencyInput = z.object({
   currency: z.string().regex(/^[A-Z]{3,5}$/),
   initialBalance: z.union([z.string().max(40), z.number()]).optional(),
 });
+const dateText = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const text = (max: number) => z.string().trim().max(max);
 const createBody = z.object({
-  ...providerChoice,
-  name: z.string().trim().max(80).default(''),
-  currencies: z.array(currencyInput).max(10).default([]),
+  providerId: uuid,
+  name: text(80).default(''),
+  responsibleId: uuid.nullish(),
+  status: z.enum(['ACTIVE', 'RESTRICTED', 'FROZEN', 'CLOSED']).default('ACTIVE'),
+  details: z.record(z.string().max(40), z.union([z.string().max(200), z.array(z.string().max(40)).max(10)])).default({}),
+  currencies: z
+    .array(currencyInput.extend({ openingDate: dateText.nullish() }))
+    .max(10)
+    .default([]),
+  documents: z
+    .array(z.object({ type: text(40).default(''), holder: text(80).default(''), expiry: dateText.nullish(), note: text(300).nullish() }))
+    .max(30)
+    .default([]),
+  note: text(2000).nullish(),
+});
+const providerBody = z.object({
+  name: text(80).default(''),
+  type: z.enum(['BANK', 'PAYMENT_PLATFORM', 'CARD_APP', 'USDT_PLATFORM', 'EG_WALLET', 'PS_WALLET']),
+  currencies: z.array(z.string().regex(/^[A-Z]{3,5}$/)).max(10).default([]),
+});
+const staffBody = z.object({ name: text(60).default('') });
+const checkBody = z.object({
+  identifiers: z.array(z.string().max(200)).max(40).default([]),
+  documents: z.array(z.object({ type: text(40), holder: text(80) })).max(30).default([]),
 });
 const updateBody = z.object({
   ...providerChoice,
@@ -173,6 +215,10 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
     try {
       return await work();
     } catch (error) {
+      if (error instanceof IncompleteError) {
+        await reply.code(400).send({ error: { code: 'INCOMPLETE', message: error.message, issues: error.issues } });
+        return undefined;
+      }
       if (error instanceof InputError) {
         await fail(reply, 400, 'INVALID_INPUT', error.message);
         return undefined;
@@ -256,7 +302,8 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
     return { providers: providers.rows, accounts: accounts.rows, vaults: orderedVaults, currencies: currencies.rows };
   });
 
-  // ───────────── إضافة حساب ─────────────
+  // ───────────── إضافة حساب (نموذج «إضافة حساب جديد») ─────────────
+  // التحقق نفسه الذي في الواجهة يُكرَّر هنا بقوالب الحقول المشتركة.
   app.post('/api/accounts', { preHandler: canEdit }, async (request, reply) => {
     const parsed = createBody.safeParse(request.body ?? {});
     if (!parsed.success) return fail(reply, 400, 'INVALID_INPUT', 'البيانات المدخلة غير صالحة.');
@@ -264,8 +311,63 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
 
     return guarded(reply, () =>
       withTransaction(pool, request.user!.id, async (client) => {
-        const provider = await resolveProvider(client, body);
-        if (!body.name) throw new InputError('اكتب اسم الحساب.');
+        const found = await client.query<ProviderRow & { template: TemplateKey }>(
+          'SELECT id, name, type, currencies, template FROM providers WHERE id = $1',
+          [body.providerId],
+        );
+        const provider = found.rows[0];
+        if (!provider) throw new InputError('الجهة المختارة غير موجودة.');
+        const template = TEMPLATES[provider.template];
+        const issues: Issue[] = [];
+
+        // بيانات الحساب: الاسم والمسؤول والحالة، ثم حقول الجهة حسب قالبها
+        if (!body.name) issues.push({ sec: 'ident', label: 'حقل «اسم الحساب في النظام» مطلوب' });
+        let responsibleId: string | null = null;
+        if (!body.responsibleId) {
+          issues.push({ sec: 'ident', label: 'حقل «المسؤول عنه في المكتب» مطلوب' });
+        } else {
+          const staff = await client.query('SELECT 1 FROM staff_members WHERE id = $1 AND is_active', [body.responsibleId]);
+          if (staff.rowCount) responsibleId = body.responsibleId;
+          else issues.push({ sec: 'ident', label: 'المسؤول عنه في المكتب: اسم غير موجود في قائمة فريق العمل' });
+        }
+        const identity = validateIdentity(provider.template, body.details as FormValues, body.currencies.map((c) => c.currency));
+        issues.push(...identity.issues);
+
+        // العملات والأرصدة الافتتاحية
+        const currencyLevel = sectionLevel(template, 'curs');
+        if (currencyLevel === 'core' && body.currencies.length === 0) {
+          issues.push({ sec: 'curs', label: 'اختر عملة واحدة على الأقل' });
+        }
+        const currencies: { currency: string; initialBalance: string; openingDate: string | null }[] = [];
+        const seen = new Set<string>();
+        for (const item of body.currencies) {
+          if (seen.has(item.currency) || !provider.currencies.includes(item.currency)) {
+            issues.push({ sec: 'curs', label: `العملة ${item.currency} غير متاحة لحسابات ${provider.name}` });
+            continue;
+          }
+          seen.add(item.currency);
+          const amount = parseAmount(item.initialBalance);
+          if (amount === null) {
+            issues.push({ sec: 'curs', label: `الرصيد الافتتاحي ${item.currency} ليس رقماً` });
+            continue;
+          }
+          currencies.push({ currency: item.currency, initialBalance: amount, openingDate: item.openingDate ?? null });
+        }
+
+        // الوثائق: النوع وباسم مَن إلزاميان لكل وثيقة مضافة
+        body.documents.forEach((doc, index) => {
+          if (!doc.type) issues.push({ sec: 'docs', label: `وثيقة ${index + 1}: اختر نوع الوثيقة` });
+          else if (!DOC_TYPES.includes(doc.type)) issues.push({ sec: 'docs', label: `وثيقة ${index + 1}: نوع غير معروف` });
+          if (!doc.holder) issues.push({ sec: 'docs', label: `وثيقة ${index + 1}: اكتب باسم مَن` });
+        });
+
+        if (issues.length) {
+          throw new IncompleteError(
+            `لا يمكن الحفظ قبل إكمال ${issues.length === 1 ? 'نقطة واحدة' : `${issues.length} نقاط`} في القائمة.`,
+            issues,
+          );
+        }
+
         const duplicate = await findDuplicate(client, provider.id, body.name, null);
         if (duplicate) {
           throw new InputError(
@@ -274,21 +376,115 @@ export function registerAccounts(app: FastifyInstance, pool: Pool): void {
               : `يوجد حساب «${STATUS_LABEL[duplicate.status]}» بنفس الاسم في ${provider.name}. يمكن تغيير حالته إلى «نشط» من «تعديل» بدلاً من إضافته من جديد.`,
           );
         }
-        // تطبيقات البطاقات بلا عملات. غيرها يحتاج عملة واحدة على الأقل.
-        if (provider.currencies.length > 0 && body.currencies.length === 0) {
-          throw new InputError('اختر عملة واحدة على الأقل.');
-        }
-        const currencies = readCurrencies(body.currencies, provider);
+
         const created = await client.query<{ id: string }>(
-          'INSERT INTO accounts (provider_id, name) VALUES ($1, $2) RETURNING id',
-          [provider.id, body.name],
+          `INSERT INTO accounts (provider_id, name, responsible_id, status, details)
+           VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+          [provider.id, body.name, responsibleId, body.status, JSON.stringify(identity.clean)],
         );
         const id = created.rows[0]!.id;
-        await insertCurrencies(client, id, currencies);
+        for (const item of currencies) {
+          await client.query(
+            `INSERT INTO account_currencies (account_id, currency, initial_balance, opening_date)
+             VALUES ($1, $2, $3, COALESCE($4::date, (now() AT TIME ZONE 'Asia/Jerusalem')::date))`,
+            [id, item.currency, item.initialBalance, item.openingDate],
+          );
+        }
+        for (const doc of body.documents) {
+          await client.query(
+            `INSERT INTO account_documents (account_id, doc_type, holder_name, expiry_date, note)
+             VALUES ($1, $2, $3, $4, $5)`,
+            [id, doc.type, doc.holder, doc.expiry ?? null, doc.note || null],
+          );
+        }
+        if (body.note) {
+          await client.query('INSERT INTO account_notes (account_id, body) VALUES ($1, $2)', [id, body.note]);
+        }
         reply.code(201);
-        return { id, title: `${provider.name} – ${body.name}`, section: SECTION_LABEL[provider.type], providerName: provider.name };
+        return {
+          id,
+          title: `${provider.name} – ${body.name}`,
+          section: SECTION_LABEL[provider.type],
+          providerName: provider.name,
+          openings: currencies.map((c) => ({ currency: c.currency, initialBalance: c.initialBalance })),
+        };
       }),
     );
+  });
+
+  // ───────────── جهة جديدة (نافذة «إضافة جهة») ─────────────
+  app.post('/api/providers', { preHandler: canEdit }, async (request, reply) => {
+    const parsed = providerBody.safeParse(request.body ?? {});
+    if (!parsed.success) return fail(reply, 400, 'INVALID_INPUT', 'البيانات المدخلة غير صالحة.');
+    const { name, type } = parsed.data;
+    const defaults = NEW_PROVIDER_DEFAULTS[type];
+    // تطبيقات البطاقات بلا عملات. غيرها يحتاج عملة واحدة على الأقل.
+    const currencies = type === 'CARD_APP' ? [] : [...new Set(parsed.data.currencies)];
+    if (!name) return fail(reply, 400, 'INVALID_INPUT', 'اكتب اسم الجهة.');
+    return guarded(reply, () =>
+      withTransaction(pool, request.user!.id, async (client) => {
+        const existing = await client.query('SELECT 1 FROM providers WHERE lower(name) = lower($1)', [name]);
+        if (existing.rowCount) throw new InputError('توجد جهة بنفس الاسم.');
+        if (type !== 'CARD_APP' && currencies.length === 0) throw new InputError('اختر عملة واحدة على الأقل.');
+        const created = await client.query(
+          `INSERT INTO providers (name, type, template, currencies) VALUES ($1, $2, $3, $4)
+           RETURNING id, name, type, template, currencies, is_builtin AS "isBuiltin"`,
+          [name, type, defaults.template, currencies],
+        );
+        reply.code(201);
+        return { provider: created.rows[0], section: SECTION_LABEL[type] };
+      }),
+    );
+  });
+
+  // ───────────── فريق العمل: قائمة «المسؤول عنه في المكتب» ─────────────
+  app.get('/api/staff', { preHandler: requireAuth }, async () => {
+    const staff = await pool.query('SELECT id, name FROM staff_members WHERE is_active ORDER BY created_at, name');
+    return { staff: staff.rows };
+  });
+
+  app.post('/api/staff', { preHandler: canEdit }, async (request, reply) => {
+    const parsed = staffBody.safeParse(request.body ?? {});
+    if (!parsed.success || !parsed.data.name) return fail(reply, 400, 'INVALID_INPUT', 'اكتب الاسم.');
+    const name = parsed.data.name;
+    return withTransaction(pool, request.user!.id, async (client) => {
+      const existing = await client.query<{ id: string; name: string; is_active: boolean }>(
+        'SELECT id, name, is_active FROM staff_members WHERE name = $1',
+        [name],
+      );
+      if (existing.rows[0]?.is_active) return fail(reply, 400, 'INVALID_INPUT', 'الاسم موجود في قائمة فريق العمل.');
+      const row = existing.rows[0]
+        ? await client.query('UPDATE staff_members SET is_active = true WHERE id = $1 RETURNING id, name', [existing.rows[0].id])
+        : await client.query('INSERT INTO staff_members (name) VALUES ($1) RETURNING id, name', [name]);
+      reply.code(201);
+      return { member: row.rows[0] };
+    });
+  });
+
+  // ───────────── تنبيهات قبل الحفظ (لا تمنعه): رقم مسجّل في حساب آخر، ووثيقة مستعملة في حسابات أخرى ─────────────
+  app.post('/api/accounts/check', { preHandler: requireAuth }, async (request, reply) => {
+    const parsed = checkBody.safeParse(request.body ?? {});
+    if (!parsed.success) return fail(reply, 400, 'INVALID_INPUT', 'البيانات المدخلة غير صالحة.');
+    const { identifiers, documents } = parsed.data;
+    const [ids, docs] = await Promise.all([
+      identifiers.length
+        ? pool.query<{ value: string; account: string }>(
+            `SELECT DISTINCT d.value, p.name || ' – ' || a.name AS account
+             FROM accounts a JOIN providers p ON p.id = a.provider_id, jsonb_each_text(a.details) d
+             WHERE d.value = ANY ($1)`,
+            [identifiers],
+          )
+        : { rows: [] },
+      documents.length
+        ? pool.query<{ type: string; holder: string; account: string }>(
+            `SELECT DISTINCT x.doc_type AS type, x.holder_name AS holder, p.name || ' – ' || a.name AS account
+             FROM account_documents x JOIN accounts a ON a.id = x.account_id JOIN providers p ON p.id = a.provider_id
+             WHERE (x.doc_type, x.holder_name) IN (SELECT * FROM unnest($1::text[], $2::text[]))`,
+            [documents.map((d) => d.type), documents.map((d) => d.holder)],
+          )
+        : { rows: [] },
+    ]);
+    return { identifiers: ids.rows, documents: docs.rows };
   });
 
   // ───────────── تعديل: الاسم، الجهة (لحساب بلا حركات)، وإضافة عملة ─────────────
