@@ -251,7 +251,7 @@ a{color:#0E7C70}a:hover{color:#0A5F56}
    <sc-if value="{{u.isOpen}}" hint-placeholder-val="{{ false }}"><tr><td colspan="6" style="padding:0"><div class="sub-rows"><sc-for list="{{u.accs}}" as="x" hint-placeholder-count="2"><span>{{x}}</span></sc-for></div></td></tr></sc-if>
   </sc-for></tbody>
  </table></div>
- <p class="hint" style="margin:0;padding:16px 24px">العضو الذي له حسابات أو حركات في النظام لا يُحذف، بل يُوقَف: لا يدخل النظام، ويبقى اسمه في السجلات. ولا يمكن إيقاف حسابك أنت.</p>
+ <p class="hint" style="margin:0;padding:16px 24px">لا يُحذف عضو الفريق المرتبط بحسابات أو حركات في النظام، بل يُوقَف: يُمنع الدخول، ويبقى الاسم في السجلات. ولا يمكن إيقاف الحساب المستخدم حالياً.</p>
 </section>
 </main>
 </div>
@@ -317,9 +317,9 @@ class Component extends DCLogic {
     });
     var m = st.m, c = st.c, cu = c ? all.filter(function (u) { return u.id === c.id; })[0] : null;
     var CT = {
-      stop: ['إيقاف العضو', 'لن يستطيع ' + (cu ? cu.name : '') + ' الدخول إلى النظام. يبقى اسمه في السجلات، ويبقى «المسؤول عنه» في حساباته حتى تغييرها.', 'إيقاف', 'btn pri'],
-      on: ['إعادة تفعيل العضو', 'يستطيع ' + (cu ? cu.name : '') + ' الدخول إلى النظام من جديد بكلمة مروره.', 'إعادة تفعيل', 'btn pri'],
-      del: ['حذف العضو', 'يُحذف ' + (cu ? cu.name : '') + ' نهائياً. ليس له حسابات ولا حركات في النظام.', 'حذف', 'btn danger']
+      stop: ['إيقاف العضو', 'لن يتمكن حساب «' + (cu ? cu.name : '') + '» من الدخول إلى النظام. يبقى الاسم في السجلات، ويبقى «المسؤول عنه» في الحسابات المرتبطة حتى تغييرها.', 'إيقاف', 'btn pri'],
+      on: ['إعادة تفعيل العضو', 'يمكن الدخول بحساب «' + (cu ? cu.name : '') + '» من جديد بكلمة المرور نفسها.', 'إعادة تفعيل', 'btn pri'],
+      del: ['حذف العضو', 'يُحذف حساب «' + (cu ? cu.name : '') + '» نهائياً. لا توجد حسابات ولا حركات مرتبطة به.', 'حذف', 'btn danger']
     };
     var ct = c ? CT[c.kind] : null;
     var TITLES = { add: ['إضافة عضو', 'إضافة العضو'], edit: ['تعديل بيانات العضو', 'حفظ التعديل'], pass: ['تغيير كلمة المرور', 'حفظ كلمة المرور'] };
@@ -346,15 +346,15 @@ class Component extends DCLogic {
           if (String(m.pass || '').length < 8) { set({ err: 'كلمة المرور 8 أحرف على الأقل.' }); return; }
           if (m.pass !== m.pass2) { set({ err: 'كلمتا المرور غير متطابقتين.' }); return; }
         }
-        if (m.mode === 'add') set({ team: self.state.team.concat([{ id: 'u' + Date.now(), name: name, user: user, last: '', st: 'نشط', active: false, accs: [] }]), m: null, flash: 'أُضيف ' + name + ' إلى فريق العمل ويستطيع الدخول الآن.' });
-        else if (m.mode === 'edit') set({ team: upd(m.id, { name: name, user: user }), m: null, flash: 'حُفظ تعديل بيانات ' + name + '.' });
-        else set({ m: null, flash: 'تغيّرت كلمة مرور ' + m.name + '.' });
+        if (m.mode === 'add') set({ team: self.state.team.concat([{ id: 'u' + Date.now(), name: name, user: user, last: '', st: 'نشط', active: false, accs: [] }]), m: null, flash: 'تمت إضافة «' + name + '» إلى فريق العمل، ويمكن الدخول بالحساب الآن.' });
+        else if (m.mode === 'edit') set({ team: upd(m.id, { name: name, user: user }), m: null, flash: 'حُفظت بيانات «' + name + '».' });
+        else set({ m: null, flash: 'تغيّرت كلمة مرور «' + m.name + '».' });
       },
       cOpen: !!ct, cTitle: ct ? ct[0] : '', cText: ct ? ct[1] : '', cBtn: ct ? ct[2] : '', cBtnCls: ct ? ct[3] : 'btn',
       confirm: function () {
         if (c.kind === 'stop' && activeCount <= 1) { set({ c: null, flash: '' }); return; }
-        if (c.kind === 'del') set({ team: self.state.team.filter(function (u) { return u.id !== c.id; }), c: null, flash: 'حُذف ' + cu.name + ' من فريق العمل.' });
-        else set({ team: upd(c.id, { st: c.kind === 'stop' ? 'موقوف' : 'نشط' }), c: null, flash: c.kind === 'stop' ? 'أُوقف ' + cu.name + '.' : 'أُعيد تفعيل ' + cu.name + '.' });
+        if (c.kind === 'del') set({ team: self.state.team.filter(function (u) { return u.id !== c.id; }), c: null, flash: 'تم حذف «' + cu.name + '» من فريق العمل.' });
+        else set({ team: upd(c.id, { st: c.kind === 'stop' ? 'موقوف' : 'نشط' }), c: null, flash: c.kind === 'stop' ? 'تم إيقاف «' + cu.name + '».' : 'تمت إعادة تفعيل «' + cu.name + '».' });
       }
     };
   }
