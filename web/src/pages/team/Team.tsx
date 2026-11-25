@@ -97,9 +97,9 @@ export function Team() {
   const target = c ? all.find((u) => u.id === c.id) : undefined;
   const who = target?.name ?? '';
   const CONFIRM: Record<Confirming['kind'], [string, string, string, string]> = {
-    stop: ['إيقاف العضو', `لن يستطيع ${who} الدخول إلى النظام. يبقى اسمه في السجلات، ويبقى «المسؤول عنه» في حساباته حتى تغييرها.`, 'إيقاف', 'btn pri'],
-    on: ['إعادة تفعيل العضو', `يستطيع ${who} الدخول إلى النظام من جديد بكلمة مروره.`, 'إعادة تفعيل', 'btn pri'],
-    del: ['حذف العضو', `يُحذف ${who} نهائياً. ليس له حسابات ولا حركات في النظام.`, 'حذف', 'btn danger'],
+    stop: ['إيقاف العضو', `لن يتمكن حساب «${who}» من الدخول إلى النظام. يبقى الاسم في السجلات، ويبقى «المسؤول عنه» في الحسابات المرتبطة حتى تغييرها.`, 'إيقاف', 'btn pri'],
+    on: ['إعادة تفعيل العضو', `يمكن الدخول بحساب «${who}» من جديد بكلمة المرور نفسها.`, 'إعادة تفعيل', 'btn pri'],
+    del: ['حذف العضو', `يُحذف حساب «${who}» نهائياً. لا توجد حسابات ولا حركات مرتبطة به.`, 'حذف', 'btn danger'],
   };
   const confirmText = c ? CONFIRM[c.kind] : null;
   const TITLES = { add: ['إضافة عضو', 'إضافة العضو'], edit: ['تعديل بيانات العضو', 'حفظ التعديل'], pass: ['تغيير كلمة المرور', 'حفظ كلمة المرور'] };
@@ -130,9 +130,9 @@ export function Team() {
       await refresh(); // الاسم في القائمة الجانبية إذا عدّل العضو بياناته هو
       setM(null);
       setFlash(
-        m.mode === 'add' ? `أُضيف ${name} إلى فريق العمل ويستطيع الدخول الآن.`
-        : m.mode === 'edit' ? `حُفظ تعديل بيانات ${name}.`
-        : `تغيّرت كلمة مرور ${m.name}.`,
+        m.mode === 'add' ? `تمت إضافة «${name}» إلى فريق العمل، ويمكن الدخول بالحساب الآن.`
+        : m.mode === 'edit' ? `حُفظت بيانات «${name}».`
+        : `تغيّرت كلمة مرور «${m.name}».`,
       );
     } catch (caught) {
       setErr(errorMessage(caught));
@@ -149,7 +149,7 @@ export function Team() {
       if (c.kind === 'del') await api('DELETE', `/api/team/${c.id}`);
       else await api('POST', `/api/team/${c.id}/active`, { active: c.kind === 'on' });
       await reload();
-      setFlash(c.kind === 'del' ? `حُذف ${target.name} من فريق العمل.` : c.kind === 'stop' ? `أُوقف ${target.name}.` : `أُعيد تفعيل ${target.name}.`);
+      setFlash(c.kind === 'del' ? `تم حذف «${target.name}» من فريق العمل.` : c.kind === 'stop' ? `تم إيقاف «${target.name}».` : `تمت إعادة تفعيل «${target.name}».`);
     } catch (caught) {
       setPageErr(errorMessage(caught));
     } finally {

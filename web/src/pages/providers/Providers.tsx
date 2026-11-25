@@ -53,7 +53,10 @@ export function Providers() {
   }, [reload]);
 
   /** عملات النوع المسموحة بترتيب عرضها. */
-  const allowedOf = (type: SectionId) => typeCurrencies[SECTIONS.find((s) => s.id === type)!.newType] ?? [];
+  const allowedOf = (type: SectionId) => {
+    const section = SECTIONS.find((s) => s.id === type)!;
+    return typeCurrencies[section.newType] ?? section.allowedCurrencies;
+  };
   const query = q.trim().toLowerCase();
   const match = (p: ProviderRow) => !query || p.name.toLowerCase().includes(query);
   const inType = (p: ProviderRow, type: SectionId) => sectionOf(p.type).id === type;
