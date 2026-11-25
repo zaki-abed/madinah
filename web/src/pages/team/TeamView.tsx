@@ -31,7 +31,7 @@ export function TeamView({ vm }: { vm: any }) {
    {u.isOpen && (<><tr><td colSpan={6} style={{ padding: '0' }}><div className="sub-rows">{u.accs.map((x: any, x_i: number) => (<Fragment key={x_i}><span>{x}</span></Fragment>))}</div></td></tr></>)}
   </Fragment>))}</tbody>
  </table></div>
- <p className="hint" style={{ margin: '0', padding: '16px 24px' }}>العضو الذي له حسابات أو حركات في النظام لا يُحذف، بل يُوقَف: لا يدخل النظام، ويبقى اسمه في السجلات. ولا يمكن إيقاف حسابك أنت.</p>
+ <p className="hint" style={{ margin: '0', padding: '16px 24px' }}>لا يُحذف عضو الفريق المرتبط بحسابات أو حركات في النظام، بل يُوقَف: يُمنع الدخول، ويبقى الاسم في السجلات. ولا يمكن إيقاف الحساب المستخدم حالياً.</p>
 </section>
 </main>
 {mOpen && (<>
