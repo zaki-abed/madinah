@@ -34,6 +34,8 @@ export interface Section {
   newType: Exclude<AccountType, 'PAYPAL'>;
   /** العملات الافتراضية لجهة جديدة من هذا القسم (نفس قوالب الخادم). */
   newCurrencies: string[];
+  /** العملات المسموحة لجهات هذا القسم (تفرضها القاعدة). */
+  allowedCurrencies: string[];
   /** صفحة حسابات القسم. */
   page: string | null;
   /** تسمية النوع المختصرة في جداول الخزائن. */
@@ -41,12 +43,12 @@ export interface Section {
 }
 
 export const SECTIONS: Section[] = [
-  { id: 'bank', name: 'البنوك', sub: 'الحسابات البنكية', providersWord: ['بنك واحد', 'بنكان', 'بنوك'], icon: 'M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18', iconStyle: { background: '#E6EEF7', color: '#1F3F66' }, types: ['BANK'], newType: 'BANK', newCurrencies: ['ILS', 'USD', 'JOD'], page: '/banks', typeLabel: 'بنك' },
-  { id: 'pay', name: 'منصات الدفع والتحويل', sub: 'رصيد وتحويلات', providersWord: ['منصة واحدة', 'منصتان', 'منصات'], icon: 'M7 7h13l-3-3M17 17H4l3 3', iconStyle: { background: '#DDF5F2', color: '#0A5F56' }, types: ['PAYPAL', 'PAYMENT_PLATFORM'], newType: 'PAYMENT_PLATFORM', newCurrencies: ['USD', 'EUR'], page: null, typeLabel: 'منصة دفع' },
-  { id: 'cards', name: 'تطبيقات البطاقات', sub: 'بطاقات وربط', providersWord: ['منصة واحدة', 'منصتان', 'منصات'], icon: 'M3 7h18v10H3zM3 11h18M7 15h3', iconStyle: { background: '#EAEAF6', color: '#3B3D7A' }, types: ['CARD_APP'], newType: 'CARD_APP', newCurrencies: [], page: '/cards', typeLabel: 'تطبيق بطاقات' },
-  { id: 'crypto', name: 'منصات USDT', sub: 'USDT فقط', providersWord: ['منصة واحدة', 'منصتان', 'منصات'], icon: 'M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7', iconStyle: { background: '#FDF0D5', color: '#7A5200' }, types: ['USDT_PLATFORM'], newType: 'USDT_PLATFORM', newCurrencies: ['USDT'], page: '/usdt-platforms', typeLabel: 'منصة' },
-  { id: 'wallet', name: 'المحافظ المصرية', sub: 'كل محفظة حساب مستقل', providersWord: ['نوع محافظ واحد', 'نوعا محافظ', 'أنواع محافظ'], icon: 'M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2', iconStyle: { background: '#EEF1F5', color: '#3A4A60' }, types: ['EG_WALLET'], newType: 'EG_WALLET', newCurrencies: ['EGP'], page: '/egyptian-wallets', typeLabel: 'محفظة' },
-  { id: 'palwallet', name: 'المحافظ الفلسطينية', sub: 'شيكل ودولار · كل محفظة حساب مستقل', providersWord: ['نوع محافظ واحد', 'نوعا محافظ', 'أنواع محافظ'], icon: 'M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01', iconStyle: { background: '#E2F4EC', color: '#136A43' }, types: ['PS_WALLET'], newType: 'PS_WALLET', newCurrencies: ['ILS', 'USD'], page: '/palestinian-wallets', typeLabel: 'محفظة' },
+  { id: 'bank', name: 'البنوك', sub: 'الحسابات البنكية', providersWord: ['بنك واحد', 'بنكان', 'بنوك'], icon: 'M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18', iconStyle: { background: '#E6EEF7', color: '#1F3F66' }, types: ['BANK'], newType: 'BANK', newCurrencies: ['ILS', 'USD', 'JOD'], allowedCurrencies: ['ILS', 'USD', 'JOD', 'EUR'], page: '/banks', typeLabel: 'بنك' },
+  { id: 'pay', name: 'منصات الدفع والتحويل', sub: 'رصيد وتحويلات', providersWord: ['منصة واحدة', 'منصتان', 'منصات'], icon: 'M7 7h13l-3-3M17 17H4l3 3', iconStyle: { background: '#DDF5F2', color: '#0A5F56' }, types: ['PAYPAL', 'PAYMENT_PLATFORM'], newType: 'PAYMENT_PLATFORM', newCurrencies: ['USD', 'EUR'], allowedCurrencies: ['USD', 'EUR', 'ILS', 'JOD'], page: null, typeLabel: 'منصة دفع' },
+  { id: 'cards', name: 'تطبيقات البطاقات', sub: 'بطاقات وربط', providersWord: ['منصة واحدة', 'منصتان', 'منصات'], icon: 'M3 7h18v10H3zM3 11h18M7 15h3', iconStyle: { background: '#EAEAF6', color: '#3B3D7A' }, types: ['CARD_APP'], newType: 'CARD_APP', newCurrencies: [], allowedCurrencies: [], page: '/cards', typeLabel: 'تطبيق بطاقات' },
+  { id: 'crypto', name: 'منصات USDT', sub: 'USDT فقط', providersWord: ['منصة واحدة', 'منصتان', 'منصات'], icon: 'M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7', iconStyle: { background: '#FDF0D5', color: '#7A5200' }, types: ['USDT_PLATFORM'], newType: 'USDT_PLATFORM', newCurrencies: ['USDT'], allowedCurrencies: ['USDT'], page: '/usdt-platforms', typeLabel: 'منصة' },
+  { id: 'wallet', name: 'المحافظ المصرية', sub: 'كل محفظة حساب مستقل', providersWord: ['نوع محافظ واحد', 'نوعا محافظ', 'أنواع محافظ'], icon: 'M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2', iconStyle: { background: '#EEF1F5', color: '#3A4A60' }, types: ['EG_WALLET'], newType: 'EG_WALLET', newCurrencies: ['EGP'], allowedCurrencies: ['EGP'], page: '/egyptian-wallets', typeLabel: 'محفظة' },
+  { id: 'palwallet', name: 'المحافظ الفلسطينية', sub: 'شيكل ودولار · كل محفظة حساب مستقل', providersWord: ['نوع محافظ واحد', 'نوعا محافظ', 'أنواع محافظ'], icon: 'M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01', iconStyle: { background: '#E2F4EC', color: '#136A43' }, types: ['PS_WALLET'], newType: 'PS_WALLET', newCurrencies: ['ILS', 'USD'], allowedCurrencies: ['ILS', 'USD'], page: '/palestinian-wallets', typeLabel: 'محفظة' },
 ];
 
 export const sectionOf = (type: AccountType): Section => SECTIONS.find((s) => s.types.includes(type))!;

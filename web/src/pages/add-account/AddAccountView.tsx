@@ -120,13 +120,6 @@ export function AddAccountView({ vm }: { vm: any }) {
                 {f.isDate && (<><input className="inp" type="date" value={f.val} onChange={f.on} aria-label={f.label} /></>)}
                 {f.isArea && (<><textarea className="inp area" value={f.val} onChange={f.on} placeholder={f.ph} aria-label={f.label}></textarea></>)}
                 {f.isChips && (<><div className="chips" role="group" aria-label={f.label}>{f.chips.map((c: any, c_i: number) => (<Fragment key={c_i}><button type="button" className={c.cls} aria-pressed={c.pressed} onClick={c.go}>{c.label}</button></Fragment>))}</div></>)}
-                {f.adder && (<>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-                    <input className="inp" type="text" style={{ flex: '1 1 160px', maxWidth: '240px' }} value={f.adder.val} onChange={f.adder.on} placeholder="اسم جديد في فريق العمل" aria-label="اسم جديد في فريق العمل" />
-                    <button type="button" className="btn mb" onClick={f.adder.add}>+ إضافة اسم</button>
-                  </div>
-                  {f.adder.err && (<span className="ferr">{f.adder.err}</span>)}
-                </>)}
                 {f.hasHelp && (<><span className="hint">{f.help}</span></>)}
                 {f.hasErr && (<><span className="ferr">{f.err}</span></>)}
                 {f.hasWarn && (<><span className="fwarn">{f.warn}</span></>)}

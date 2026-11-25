@@ -57,7 +57,6 @@ const CATEGORY_SINGULAR: Record<CategoryId, string> = {
 const DEFAULT_CURRENCIES: Record<TemplateKey, string[]> = {
   bank: ['ILS', 'USD'], paypal: ['USD'], emi: ['USD', 'EUR'], cardapp: [], crypto: ['USDT'], vf: ['EGP'], ip: ['EGP'], plw: ['ILS', 'USD'],
 };
-const ALL_CURRENCIES = ['ILS', 'USD', 'JOD', 'EGP', 'EUR', 'USDT'];
 const SHORT: Partial<Record<SectionId, string>> = { curs: 'عملات', ident: 'بيانات', limits: 'حدود', docs: 'وثائق', cards: 'بطاقات' };
 const LEVEL: Record<string, [string, string]> = {
   core: ['أساسي', 'pill info'], opt: ['اختياري', 'pill neutral'], na: ['لا ينطبق', 'pill neutral'], soon: ['قريباً', 'pill neutral'],
@@ -95,8 +94,6 @@ export function useAddAccount(initialProviderId: string | null) {
   const [copied, setCopied] = useState('');
   const [pm, setPm] = useState<{ cat: CategoryId; name: string; curs: string[] } | null>(null);
   const [pmErr, setPmErr] = useState('');
-  const [newStaff, setNewStaff] = useState('');
-  const [staffErr, setStaffErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState<{ openings: { currency: string; initialBalance: string }[] } | null>(null);
   const [existing, setExisting] = useState<Record<string, string>>({});
@@ -125,12 +122,14 @@ export function useAddAccount(initialProviderId: string | null) {
   // الجهات وفريق العمل من الخادم
   useEffect(() => {
     let cancelled = false;
-    Promise.all([api<{ providers: Provider[] }>('GET', '/api/accounts'), api<{ staff: Staff[] }>('GET', '/api/staff')])
+    Promise.all([api<{ providers: Provider[] }>('GET', '/api/accounts'), api<{ members: (Staff & { isActive: boolean })[] }>('GET', '/api/team')])
       .then(([accounts, team]) => {
         if (cancelled) return;
-        setProviders(accounts.providers);
-        setStaff(team.staff);
-        const preset = accounts.providers.find((p) => p.id === initialProviderId);
+        // الجهات الموقوفة لا تظهر في «إضافة حساب»
+        setProviders(accounts.providers.filter((p) => p.isActive));
+        // «المسؤول عنه» يُختار من أعضاء فريق العمل النشطين فقط
+        setStaff(team.members.filter((member) => member.isActive));
+        const preset = accounts.providers.find((p) => p.id === initialProviderId && p.isActive);
         if (preset) setSt((current) => (current.prov ? current : { ...current, ...initFor(preset) }));
       })
       .catch((caught) => {
@@ -171,11 +170,11 @@ export function useAddAccount(initialProviderId: string | null) {
         };
       }),
       help: field.help ?? '', hasHelp: !!field.help && !error, err: error, hasErr: !!error, warn, hasWarn: !!warn,
-      copy: !!field.copy, filled: !empty, shown: field.multi ? many.join('، ') : one, en: !!field.en, adder: null as any,
+      copy: !!field.copy, filled: !empty, shown: field.multi ? many.join('، ') : one, en: !!field.en,
     };
   };
 
-  /** الحقول الأساسية: اسم الحساب، المسؤول عنه (من قائمة فريق العمل)، والحالة. */
+  /** الحقول الأساسية: اسم الحساب، المسؤول عنه (من أعضاء فريق العمل النشطين)، والحالة. */
   const basicFields = () => {
     const name = renderField({ k: 'name', label: 'اسم الحساب في النظام', t: 'text', req: true, ph: 'مثال: محفظة أحمد', help: 'يظهر في القوائم والتبويبات وكشف الحساب' }, 'ident');
     const ownerId = text(v.owner);
@@ -187,24 +186,6 @@ export function useAddAccount(initialProviderId: string | null) {
         const on = ownerId === member.id;
         return { label: member.name, cls: chip(on), pressed: on ? 'true' : 'false', go: () => setV('owner', member.id) };
       }),
-      adder: {
-        val: newStaff,
-        on: (e: { target: { value: string } }) => {
-          setNewStaff(e.target.value);
-          setStaffErr('');
-        },
-        err: staffErr,
-        add: async () => {
-          try {
-            const created = await api<{ member: Staff }>('POST', '/api/staff', { name: newStaff });
-            setStaff((current) => [...current, created.member]);
-            setNewStaff('');
-            setV('owner', created.member.id);
-          } catch (caught) {
-            setStaffErr(caught instanceof ApiError ? caught.message : 'تعذّرت الإضافة.');
-          }
-        },
-      },
     };
     const status = renderField({ k: 'status', label: 'حالة الحساب', t: 'chips', opts: [...STATUS_OPTIONS], req: true }, 'ident');
     return [name, owner, status];
@@ -609,7 +590,7 @@ export function useAddAccount(initialProviderId: string | null) {
       const on = pm?.cat === c.id;
       return { label: c.name, cls: chip(on), pressed: on ? 'true' : 'false', go: () => (on ? undefined : (setPm((current) => (current ? { ...current, cat: c.id, curs: [...c.newCurrencies] } : current)), setPmErr(''))) };
     }),
-    pmCurs: (pm?.cat === 'cards' ? [] : ALL_CURRENCIES).map((c) => {
+    pmCurs: (SECTIONS.find((category) => category.id === pm?.cat)?.allowedCurrencies ?? []).map((c) => {
       const on = !!pm?.curs.includes(c);
       return { label: c, cls: chip(on), pressed: on ? 'true' : 'false', go: () => (setPm((current) => (current ? { ...current, curs: on ? current.curs.filter((x) => x !== c) : [...current.curs, c] } : current)), setPmErr('')) };
     }),

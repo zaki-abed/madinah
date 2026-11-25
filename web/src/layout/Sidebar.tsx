@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { roleLabel, useAuth } from '../auth';
+import { useAuth } from '../auth';
 import { useBalances } from '../balances';
 import { Mark } from './Mark';
 import { navItems } from './nav';
@@ -64,7 +64,6 @@ export function Sidebar() {
           <div className="side-avatar">{user.fullName.trim().charAt(0)}</div>
           <div className="side-user-text">
             <div className="side-user-name">{user.fullName}</div>
-            <div className="side-user-role">{roleLabel(user.role)}</div>
           </div>
           <button className="side-logout" type="button" onClick={() => void logout()} aria-label="تسجيل الخروج" title="تسجيل الخروج">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

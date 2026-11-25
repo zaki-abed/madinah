@@ -1,0 +1,105 @@
+/* منقولة من لوحة Providers.dc.html كما هي، داخل طبقة board.
+   حُذفت قاعدة .acc القديمة غير المستعملة في اللوحة لأنها تكسر محاذاة الزر .btn.acc. */
+@layer board {
+.pg-providers {
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#0B1626;color:#fff}
+.btn.red{background:#A3291D;border-color:#A3291D;color:#fff}
+.btn.red:hover{background:#86221A;color:#fff}
+.btn svg{width:18px;height:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.code{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:#EEF1F5;color:#142B4A;direction:ltr;unicode-bidi:isolate}
+.bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#EDF1F5}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.part{display:flex;flex-direction:column;gap:2px;padding:14px 18px;border-radius:14px;background:#F5F7FA;min-width:150px}
+.tabs{display:flex;gap:4px;background:#EEF1F5;border-radius:12px;padding:4px;align-self:flex-start}
+.tabs button{font:inherit;font-size:14px;border:0;border-radius:9px;min-height:40px;padding:0 18px;background:transparent;color:#3A4A60;cursor:pointer}
+.tabs button.on{background:#fff;color:#142B4A;font-weight:600;box-shadow:0 1px 2px rgba(20,43,74,.08)}
+.chipf{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.search{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #D3DAE5;border-radius:10px;background:#fff;color:#4A5A70;min-width:240px;box-sizing:border-box}
+.search input{border:0;outline:0;font:inherit;font-size:14px;background:transparent;width:100%;color:#142B4A}
+.par{display:flex;flex-direction:column;gap:14px;background:#fff;border:1px solid #E1E6EE;border-radius:20px;padding:6px}
+.pbtn{width:100%;border:0;background:transparent;font:inherit;color:#142B4A;text-align:start;cursor:pointer;padding:12px 14px;border-radius:14px;box-sizing:border-box}
+.pbtn:hover{background:#F5F7FA}
+.pchev{margin-inline-start:auto;width:32px;height:32px;border-radius:999px;background:#EEF1F5;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#3A4A60;flex:none}
+.par .pgrid{padding:4px 8px 10px}
+.parh{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.parh .ic{width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.tot{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;background:#fff;border:1px solid #E1E6EE;font-size:13px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:16px;align-items:start}
+.prov{background:#fff;border:1px solid #E1E6EE;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.provh{display:flex;align-items:center;gap:12px;padding:16px 18px 10px}
+.pav{width:40px;height:40px;border-radius:12px;background:#142B4A;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex:none}
+.ptots{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px;border-bottom:1px solid #EDF1F5}
+.arow{display:flex;width:100%;align-items:flex-start;gap:10px;padding:12px 18px;border:0;border-bottom:1px solid #EDF1F5;background:#fff;font:inherit;color:#142B4A;text-align:start;cursor:pointer;box-sizing:border-box}
+.arow:hover{background:#F8FAFC}
+.arow.open{background:#F5F7FA;border-bottom-color:transparent}
+.chev{width:18px;flex:none;color:#4A5A70;font-size:12px;line-height:22px}
+.asum{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-inline-start:auto;font-size:14px}
+.det{padding:4px 18px 14px;background:#F5F7FA;border-bottom:1px solid #EDF1F5;display:flex;flex-direction:column;gap:8px}
+.det .cur{background:#fff}
+.acb{padding:12px 18px;border-bottom:1px solid #EDF1F5;display:flex;flex-direction:column;gap:6px}
+.acb.stp{background:#FAFBFC}
+.acb.stp .anm{color:#4A5A70}
+.acb.stp .cl{background:#EEF1F5}
+.ach{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aact{margin-inline-start:auto;display:inline-flex;align-items:center;gap:10px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:9px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#142B4A;cursor:pointer}
+.sbtn:hover{background:#F5F7FA}
+.cl{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;background:#F5F7FA}
+.cl b.amt{text-align:right}
+.addl{border:0;background:transparent;padding:12px 18px;color:#0E7C70;font:inherit;font-weight:600;font-size:13px;text-align:start;cursor:pointer}
+.addl:hover{background:#F2FBFA}
+.accn{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.curs{flex:3 1 480px;display:flex;flex-direction:column;gap:8px}
+.cur{display:flex;align-items:center;gap:14px;padding:10px 16px;border-radius:12px;background:#F5F7FA}
+.cur .cb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.cur .go{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:9px;border:1px solid #D3DAE5;background:#fff;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.lk{font-size:13px;font-weight:600;text-decoration:none}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.vc{background:#fff;border:1px solid #E1E6EE;border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#142B4A}
+.vc:hover{border-color:#16B8A6;color:#142B4A}
+.vrow{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-top:1px dashed #EDF1F5}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:flex-start;justify-content:center;padding:48px 16px;z-index:50;overflow:auto}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:620px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 24px 48px rgba(11,22,38,.25)}
+.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#4A5A70}
+.f input,.f select{font:inherit;font-size:15px;font-weight:400;color:#142B4A;height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;background:#fff;box-sizing:border-box;width:100%}
+.hint{font-size:12px;font-weight:400;color:#4A5A70}
+.x{width:40px;height:40px;border-radius:10px;border:1px solid #E1E6EE;background:#fff;font-size:20px;cursor:pointer;color:#4A5A70}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.flash{background:#E2F4EC;color:#136A43;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600}
+.mgbox{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid #E1E6EE;background:#FAFBFC}
+.mgbox .mgt{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.mgcf{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;font-size:14px}
+.lgt{width:100%;border-collapse:collapse;font-size:13px;line-height:20px}
+.lgt th{text-align:start;font-weight:600;color:#4A5A70;padding:8px 10px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.lgt td{padding:10px;border-bottom:1px solid #EDF1F5;vertical-align:top}
+.pv{width:40px;height:40px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex:none}
+.cur{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:6px;background:#F1F4F8;color:#3A4A60;font:600 12px/24px 'IBM Plex Mono',monospace}
+.lnk{background:none;border:0;padding:0;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer}
+.lnk.bad{color:#A3291D}
+.lnk[disabled]{color:#9AA6B6;cursor:not-allowed}
+.acts{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.cbx{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid #D3DAE5;border-radius:10px;font-size:14px;cursor:pointer;background:#fff}
+.cbx.on{border-color:#16B8A6;background:#F2FAF6}
+.cbx.dis{opacity:.55;cursor:not-allowed}
+.sub-rows{background:#F8FAFC;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px}
+.sub-rows span{background:#fff;border:1px solid #E1E6EE;border-radius:8px;padding:4px 10px;font-size:13px}
+.btn.danger{background:#A3291D;border-color:#A3291D;color:#fff}
+.btn.danger:hover{background:#8A2318}
+.av{width:40px;height:40px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+}
+}

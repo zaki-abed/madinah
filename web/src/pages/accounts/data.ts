@@ -9,6 +9,8 @@ export interface Provider {
   template: string;
   currencies: string[];
   isBuiltin: boolean;
+  /** الجهة الموقوفة لا تظهر في «إضافة حساب» وتبقى حساباتها. */
+  isActive: boolean;
 }
 
 export interface AccountCurrency {

@@ -10,7 +10,6 @@ import {
   providerPage,
   type SectionId,
 } from '../../accountTypes';
-import { useAuth } from '../../auth';
 import { useBalances } from '../../balances';
 import { formatAmount, sumAmounts } from '../../money';
 import '../../styles/accounts.css';
@@ -36,7 +35,6 @@ function totalsOf(accounts: Account[]): { currency: string; total: string }[] {
 
 /** صفحة «الحسابات والخزائن» كما في لوحة Accounts.dc.html. */
 export function Accounts() {
-  const { user } = useAuth();
   const balances = useBalances();
   const { data, error, reload } = useAccounts();
   const [view, setView] = useState<'type' | 'cur'>('type');
@@ -104,14 +102,13 @@ export function Accounts() {
               placeholder="ابحث عن حساب أو منصة"
             />
           </label>
-          {user?.permissions.canEdit ? (
-            <Link className="btn acc" to="/accounts/new">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-              إضافة حساب
-            </Link>
-          ) : null}
+          <Link className="btn" to="/providers">إدارة الجهات</Link>
+          <Link className="btn acc" to="/accounts/new">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            إضافة حساب
+          </Link>
         </div>
       </header>
 
@@ -217,8 +214,7 @@ export function Accounts() {
                                   {page ? (
                                     <Link className="lk" to={`${page}#${account.id}`}>صفحة الحساب ←</Link>
                                   ) : null}
-                                  {user?.permissions.canEdit ? (
-                                    <button
+                                  <button
                                       type="button"
                                       className="sbtn"
                                       aria-label="تعديل الحساب"
@@ -232,7 +228,6 @@ export function Accounts() {
                                       </svg>
                                       تعديل
                                     </button>
-                                  ) : null}
                                 </span>
                               </div>
                               {account.currencies.map((c) => (
@@ -247,11 +242,9 @@ export function Accounts() {
                             </div>
                           );
                         })}
-                        {user?.permissions.canEdit ? (
-                          <Link className="addl" to={`/accounts/new?provider=${provider.id}`} style={{ textDecoration: 'none' }}>
+                        <Link className="addl" to={`/accounts/new?provider=${provider.id}`} style={{ textDecoration: 'none' }}>
                             + حساب في {provider.name}
                           </Link>
-                        ) : null}
                       </div>
                     );
                   })}
@@ -317,7 +310,6 @@ export function Accounts() {
           key={managed.id}
           account={managed}
           providers={providers}
-          canDelete={!!user?.permissions.canDelete}
           onClose={() => setManaging(null)}
           onDone={(message, section) => void done(message, section)}
         />
