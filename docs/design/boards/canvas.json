@@ -2,6 +2,26 @@
   "v": 3,
   "attachments": {},
   "boards": {
+    "Providers.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "4ب. الجهات",
+      "w": 1440,
+      "x": 0,
+      "y": 9240
+    },
+    "Team.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "12. فريق العمل (بدل المستخدمين والصلاحيات)",
+      "w": 1440,
+      "x": 1520,
+      "y": 9240
+    },
     "FinChart.dc.html": {
       "expand": "fill",
       "h": 1000,
@@ -442,7 +462,9 @@
     "Limits.dc.html",
     "Issues.dc.html",
     "IssueDetail.dc.html",
-    "OfficePortal.dc.html"
+    "OfficePortal.dc.html",
+    "Providers.dc.html",
+    "Team.dc.html"
   ],
   "pages": [
     {
