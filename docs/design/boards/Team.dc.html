@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>فريق العمل</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0E7C70}a:hover{color:#0A5F56}
+.app{direction:rtl;font-family:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;color:#142B4A;background:#F5F7FA;display:flex;flex-wrap:wrap;min-height:100vh;font-size:15px;line-height:1.6}
+.side{flex:1 1 252px;background:#142B4A;color:#D6DEE8;padding:24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px;margin-bottom:8px;border-bottom:1px solid #1F4470}
+.brand svg{width:46px;height:46px;flex:none;background:#1C3A60;border-radius:12px;padding:6px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;padding:0 12px;min-height:44px;border-radius:10px;color:#D6DEE8;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box}
+.nav:hover{background:#1C3A60;color:#fff}
+.nav.on{background:#1F4470;color:#fff;font-weight:600}
+.nav.on svg{color:#16B8A6}
+.nav svg{width:20px;height:20px;flex:none}
+.nav.off{color:#9FB0C6;cursor:default}
+.nav.off:hover{background:transparent;color:#9FB0C6}
+.tag{margin-inline-start:auto;font-size:11px;font-weight:600;background:#1C3A60;color:#B8C4D4;border-radius:999px;padding:2px 8px;line-height:18px}
+.sec{font-size:12px;font-weight:600;color:#9FB0C6;padding:20px 12px 6px}
+.main{flex:999 1 560px;min-width:0;padding:32px 40px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px}
+.card{background:#fff;border:1px solid #E1E6EE;border-radius:20px}
+.sub{color:#4A5A70}
+.cap{font-size:12px;line-height:18px;color:#4A5A70}
+.amt{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:500;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.en{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;direction:ltr;unicode-bidi:isolate}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;border:1px solid #D3DAE5;background:#fff;color:#142B4A;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.btn:hover{background:#F5F7FA;color:#142B4A}
+.btn.pri{background:#142B4A;border-color:#142B4A;color:#fff}
+.btn.pri:hover{background:#0B1626;color:#fff}
+.btn.red{background:#A3291D;border-color:#A3291D;color:#fff}
+.btn.red:hover{background:#86221A;color:#fff}
+.btn svg{width:18px;height:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:22px;font-weight:500}
+.tbl th{text-align:start;font-size:13px;font-weight:600;color:#4A5A70;padding:12px 16px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.tbl td{padding:16px;border-bottom:1px solid #EDF1F5;white-space:nowrap;vertical-align:middle}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#E2F4EC;color:#136A43}.warn{background:#FDF0D5;color:#7A5200}.bad{background:#FBE7E5;color:#A3291D}.info{background:#E6EEF7;color:#1F3F66}.neutral{background:#EEF1F5;color:#3A4A60}.teal{background:#DDF5F2;color:#0A5F56}
+.code{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:#EEF1F5;color:#142B4A;direction:ltr;unicode-bidi:isolate}
+.bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#EDF1F5}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.part{display:flex;flex-direction:column;gap:2px;padding:14px 18px;border-radius:14px;background:#F5F7FA;min-width:150px}
+.tabs{display:flex;gap:4px;background:#EEF1F5;border-radius:12px;padding:4px;align-self:flex-start}
+.tabs button{font:inherit;font-size:14px;border:0;border-radius:9px;min-height:40px;padding:0 18px;background:transparent;color:#3A4A60;cursor:pointer}
+.tabs button.on{background:#fff;color:#142B4A;font-weight:600;box-shadow:0 1px 2px rgba(20,43,74,.08)}
+.chipf{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3A4A60;cursor:pointer}
+.chipf.on{background:#142B4A;border-color:#142B4A;color:#fff}
+.search{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #D3DAE5;border-radius:10px;background:#fff;color:#4A5A70;min-width:240px;box-sizing:border-box}
+.search input{border:0;outline:0;font:inherit;font-size:14px;background:transparent;width:100%;color:#142B4A}
+.par{display:flex;flex-direction:column;gap:14px;background:#fff;border:1px solid #E1E6EE;border-radius:20px;padding:6px}
+.pbtn{width:100%;border:0;background:transparent;font:inherit;color:#142B4A;text-align:start;cursor:pointer;padding:12px 14px;border-radius:14px;box-sizing:border-box}
+.pbtn:hover{background:#F5F7FA}
+.pchev{margin-inline-start:auto;width:32px;height:32px;border-radius:999px;background:#EEF1F5;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#3A4A60;flex:none}
+.par .pgrid{padding:4px 8px 10px}
+.parh{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.parh .ic{width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.tot{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;background:#fff;border:1px solid #E1E6EE;font-size:13px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:16px;align-items:start}
+.prov{background:#fff;border:1px solid #E1E6EE;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.provh{display:flex;align-items:center;gap:12px;padding:16px 18px 10px}
+.pav{width:40px;height:40px;border-radius:12px;background:#142B4A;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex:none}
+.ptots{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px;border-bottom:1px solid #EDF1F5}
+.arow{display:flex;width:100%;align-items:flex-start;gap:10px;padding:12px 18px;border:0;border-bottom:1px solid #EDF1F5;background:#fff;font:inherit;color:#142B4A;text-align:start;cursor:pointer;box-sizing:border-box}
+.arow:hover{background:#F8FAFC}
+.arow.open{background:#F5F7FA;border-bottom-color:transparent}
+.chev{width:18px;flex:none;color:#4A5A70;font-size:12px;line-height:22px}
+.asum{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-inline-start:auto;font-size:14px}
+.det{padding:4px 18px 14px;background:#F5F7FA;border-bottom:1px solid #EDF1F5;display:flex;flex-direction:column;gap:8px}
+.det .cur{background:#fff}
+.acb{padding:12px 18px;border-bottom:1px solid #EDF1F5;display:flex;flex-direction:column;gap:6px}
+.acb.stp{background:#FAFBFC}
+.acb.stp .anm{color:#4A5A70}
+.acb.stp .cl{background:#EEF1F5}
+.ach{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aact{margin-inline-start:auto;display:inline-flex;align-items:center;gap:10px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:9px;border:1px solid #D3DAE5;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#142B4A;cursor:pointer}
+.sbtn:hover{background:#F5F7FA}
+.cl{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;background:#F5F7FA}
+.cl b.amt{text-align:right}
+.addl{border:0;background:transparent;padding:12px 18px;color:#0E7C70;font:inherit;font-weight:600;font-size:13px;text-align:start;cursor:pointer}
+.addl:hover{background:#F2FBFA}
+.acc{display:flex;flex-wrap:wrap;gap:16px;padding:16px 20px;border-bottom:1px solid #EDF1F5;align-items:flex-start}
+.acc:last-child{border-bottom:0}
+.accn{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.curs{flex:3 1 480px;display:flex;flex-direction:column;gap:8px}
+.cur{display:flex;align-items:center;gap:14px;padding:10px 16px;border-radius:12px;background:#F5F7FA}
+.cur .cb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.cur .go{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:9px;border:1px solid #D3DAE5;background:#fff;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.lk{font-size:13px;font-weight:600;text-decoration:none}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.vc{background:#fff;border:1px solid #E1E6EE;border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#142B4A}
+.vc:hover{border-color:#16B8A6;color:#142B4A}
+.vrow{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-top:1px dashed #EDF1F5}
+.ov{position:fixed;inset:0;background:rgba(11,22,38,.45);display:flex;align-items:flex-start;justify-content:center;padding:48px 16px;z-index:50;overflow:auto}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:620px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 24px 48px rgba(11,22,38,.25)}
+.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#4A5A70}
+.f input,.f select{font:inherit;font-size:15px;font-weight:400;color:#142B4A;height:44px;border:1px solid #D3DAE5;border-radius:10px;padding:0 14px;background:#fff;box-sizing:border-box;width:100%}
+.hint{font-size:12px;font-weight:400;color:#4A5A70}
+.x{width:40px;height:40px;border-radius:10px;border:1px solid #E1E6EE;background:#fff;font-size:20px;cursor:pointer;color:#4A5A70}
+.err{background:#FBE7E5;color:#A3291D;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600}
+.flash{background:#E2F4EC;color:#136A43;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600}
+.mgbox{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid #E1E6EE;background:#FAFBFC}
+.mgbox .mgt{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.mgcf{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;font-size:14px}
+.lgt{width:100%;border-collapse:collapse;font-size:13px;line-height:20px}
+.lgt th{text-align:start;font-weight:600;color:#4A5A70;padding:8px 10px;background:#F8FAFC;border-bottom:1px solid #E1E6EE;white-space:nowrap}
+.lgt td{padding:10px;border-bottom:1px solid #EDF1F5;vertical-align:top}
+/*DS:start — Madina Design System v1 (layer موحّد، لا تعدّل داخل الصفحة)*/
+:root{--ds-navy:#142B4A;--ds-navy-2:#1C3A60;--ds-ink:#0B1626;--ds-teal:#16B8A6;--ds-teal-ink:#0A5F56;--ds-link:#0E7C70;--ds-amber:#F2B84B;--ds-bg:#F5F7FA;--ds-surface:#fff;--ds-subtle:#F8FAFC;--ds-line:#E1E6EE;--ds-line-2:#EDF1F5;--ds-field:#D3DAE5;--ds-text:#142B4A;--ds-text-2:#4A5A70;--ds-text-3:#8795A8;--ds-ok:#136A43;--ds-ok-bg:#E2F4EC;--ds-bad:#A3291D;--ds-bad-bg:#FBE7E5;--ds-warn:#7A5200;--ds-warn-bg:#FDF0D5;--ds-info:#1F3F66;--ds-info-bg:#E6EEF7;--ds-r-sm:8px;--ds-r-md:10px;--ds-r-lg:12px;--ds-r-xl:16px;--ds-f-ar:'IBM Plex Sans Arabic',Tajawal,system-ui,sans-serif;--ds-f-en:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;--ds-f-num:'IBM Plex Mono',ui-monospace,monospace}
+/* الخطوط */
+.app{font-family:var(--ds-f-ar);font-size:15px;line-height:1.6;color:var(--ds-text)}
+.amt{font-family:var(--ds-f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.en,.code{font-family:var(--ds-f-en)}
+.main h1{font-size:28px!important;line-height:40px!important;font-weight:700!important;margin:0}
+.main h2,.main .h2{font-size:18px!important;line-height:28px!important;font-weight:700!important}
+.ov h2,.modal h2{font-size:20px!important;line-height:30px!important;font-weight:700!important}
+.sub{color:var(--ds-text-2)}
+.cap{font-size:12px;line-height:18px;color:var(--ds-text-2)}
+/* التخطيط */
+.main{padding:28px 36px 44px;gap:24px}
+/* الكروت والحاويات */
+.card{background:var(--ds-surface);border:1px solid var(--ds-line);border-radius:var(--ds-r-xl);box-shadow:none}
+.cap-card,.rb,.ost,.ostrip,.k,.kpi,.bc,.tx,.fs,.bsk,.mini-card{border-radius:var(--ds-r-lg)}
+.note{border-radius:var(--ds-r-md)}
+/* الأزرار */
+.btn{min-height:40px;padding:0 16px;border-radius:var(--ds-r-md);font-size:14px;font-weight:600}
+.btn svg{width:16px;height:16px}
+.btn.sm,.btn.mb,.mb{min-height:32px;padding:0 12px;font-size:13px;border-radius:var(--ds-r-sm)}
+.btn.pri{background:var(--ds-navy);border-color:var(--ds-navy);color:#fff}
+.btn.pri:hover{background:var(--ds-ink);color:#fff}
+.btn.acc{background:var(--ds-teal);border-color:var(--ds-teal);color:var(--ds-ink)}
+.btn:focus-visible,.chipf:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--ds-teal);outline-offset:2px}
+.btn[disabled],.btn.dis,button[disabled]{opacity:.45;cursor:not-allowed}
+/* الشرائح والشارات */
+.chipf{height:34px;padding:0 12px;font-size:13px}
+.pill{height:24px;padding:0 10px;font-size:12px;font-weight:600;border-radius:999px}
+/* الحقول */
+.f input:not([type=checkbox]):not([type=radio]),.f select{height:40px;font-size:14px;border-radius:var(--ds-r-md)}
+.f textarea{font-size:14px;border-radius:var(--ds-r-md)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ds-teal);outline-offset:1px;border-color:var(--ds-teal)}
+/* الجداول */
+.tbl{font-size:13px;line-height:20px;border-collapse:collapse}
+.tbl th{font-size:12px;font-weight:600;color:var(--ds-text-2);background:var(--ds-subtle);padding:8px 12px;border:1px solid var(--ds-line);white-space:nowrap}
+.tbl td{padding:8px 12px;border:1px solid var(--ds-line)}
+.tbl tbody tr:hover td{background:#FAFBFC}
+.tbl th.n,.tbl td.n{text-align:left}
+.tbl tr.cx td,.bst tr.cx td{background:#FCF8F7;color:#6A7A90}
+/* النوافذ */
+.ov{background:rgba(11,22,38,.45)}
+.modal{border-radius:var(--ds-r-xl);padding:24px;box-shadow:0 16px 40px rgba(11,22,38,.22)}
+.x{width:36px;height:36px;border-radius:var(--ds-r-md)}
+/* الاستجابة */
+@media (max-width:1100px){.main{padding:24px 20px 36px}}
+@media (max-width:860px){
+ .app{flex-direction:column}
+ .side{flex:none!important;flex-direction:row!important;align-items:center;overflow-x:auto;gap:4px!important;padding:10px 12px!important;position:sticky;top:0;z-index:30}
+ .side .brand{border:0;padding:0 8px 0 12px;margin:0;flex:none}
+ .side .brand div,.side .sec,.side .tag,.side>div[style*="margin-top:auto"]{display:none!important}
+ .xa-seg{flex-wrap:wrap;max-width:100%}
+ .tb,.tb-f,.tb-a{flex-wrap:wrap!important}
+ .side,.main{min-width:0!important;max-width:100vw;box-sizing:border-box}
+ .app{width:100%;overflow-x:hidden}
+ .side .nav{flex:none;min-height:38px;white-space:nowrap;font-size:13px}
+ .main{padding:18px 14px 32px;gap:18px}
+ .main h1{font-size:24px!important;line-height:34px!important}
+}
+.main h2.h-xl{font-size:22px!important;line-height:32px!important}
+/*DS:end*/
+
+.pv{width:40px;height:40px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex:none}
+.cur{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:6px;background:#F1F4F8;color:#3A4A60;font:600 12px/24px 'IBM Plex Mono',monospace}
+.lnk{background:none;border:0;padding:0;font:inherit;font-size:13px;font-weight:600;color:#0E7C70;cursor:pointer}
+.lnk.bad{color:#A3291D}
+.lnk[disabled]{color:#9AA6B6;cursor:not-allowed}
+.acts{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.cbx{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid #D3DAE5;border-radius:10px;font-size:14px;cursor:pointer;background:#fff}
+.cbx.on{border-color:#16B8A6;background:#F2FAF6}
+.cbx.dis{opacity:.55;cursor:not-allowed}
+.sub-rows{background:#F8FAFC;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px}
+.sub-rows span{background:#fff;border:1px solid #E1E6EE;border-radius:8px;padding:4px 10px;font-size:13px}
+.btn.danger{background:#A3291D;border-color:#A3291D;color:#fff}
+.btn.danger:hover{background:#8A2318}
+.av{width:40px;height:40px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<nav class="side" aria-label="القائمة الرئيسية">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54 V30 A18 18 0 0 1 50 30 V54" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M24 54 V35 A8 8 0 0 1 40 35 V54" fill="none" stroke="#16B8A6" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="12" r="4.5" fill="#F2B84B"/></svg><div style="min-width:0;display:flex;flex-direction:column"><span style="color:#fff;font-weight:700;font-size:19px;line-height:24px;white-space:nowrap">مكتب المدينة</span><span style="color:#D6DEE8;font-size:13px;line-height:18px;white-space:nowrap">للخدمات المالية</span><span class="en" style="font-size:10.5px;line-height:16px;color:#9FB0C6;white-space:nowrap;margin-top:2px;letter-spacing:.02em">Al-Madina Financial Services</span></div></div>
+  <a class="nav" href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>لوحة التحكم</a>
+  <a class="nav" href="TransfersList.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>الحوالات</a>
+  <div class="sec">المكاتب والزبائن</div>
+  <a class="nav" href="Office.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M8 8h3M8 12h3M8 16h3M3 21h18"/></svg>المكاتب</a>
+  <a class="nav" href="Clients.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>الزبائن</a>
+  <a class="nav" href="Customers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>الديون</a>
+  <div class="sec">الحسابات</div>
+  <a class="nav" href="Accounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2M6 6V4h12v2"/></svg>الحسابات والخزائن</a>
+  <a class="nav" href="Providers.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M6 20V9l6-4 6 4v11M10 20v-5h4v5"/></svg>الجهات</a>
+  <a class="nav" href="BankAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg>البنوك</a>
+  <a class="nav" href="Paypal.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>PayPal</a>
+  <a class="nav" href="Wallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>المحافظ المصرية</a>
+  <a class="nav" href="PalWallets.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14.5h.01"/></svg>المحافظ الفلسطينية</a>
+  <a class="nav" href="CryptoAccounts.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM8.5 9h7M12 9v7"/></svg>منصات USDT</a>
+  <a class="nav" href="CardsLinks.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg>البطاقات والربط</a>
+  <a class="nav" href="CashPlus.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg>Cash Plus</a>
+  <div class="sec">الصناديق</div>
+  <a class="nav" href="WeightedAvg.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5"/></svg>صندوق USDT</a>
+  <a class="nav" href="Egp.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M15.4 10.2A6 6 0 1 1 10.2 15.4"/></svg>صندوق الجنيه</a>
+  <div class="sec">متابعة الحسابات</div>
+  <a class="nav" href="Limits.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M4 20h16"/></svg>حدود الحسابات</a>
+  <a class="nav" href="Issues.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>مشاكل الحسابات<span class="tag">قريباً</span></a>
+  <div class="sec">الإدارة</div>
+  <a class="nav on" href="Team.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>فريق العمل</a>
+  <div class="sec">قريباً</div>
+  <span class="nav off">المصاريف<span class="tag">قريباً</span></span>
+  <span class="nav off">التقارير والجرد<span class="tag">قريباً</span></span>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #1F4470">
+    <button class="nav" type="button" style="background:transparent;border:0;font:inherit;font-size:14px;width:100%;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>إخفاء الأرصدة</button>
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 8px"><div style="width:40px;height:40px;border-radius:999px;background:#16B8A6;color:#0B1626;display:flex;align-items:center;justify-content:center;font-weight:700">أ</div><div style="flex:1"><div style="color:#fff;font-size:14px;font-weight:600">أحمد</div><div style="font-size:12px;color:#B8C4D4">المدير</div></div><a href="Login.dc.html" aria-label="تسجيل الخروج" style="color:#B8C4D4;display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></a></div>
+  </div>
+</nav>
+
+
+<main class="main">
+<header style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between"><div><h1 style="margin:0;font-size:28px;line-height:40px;font-weight:700">فريق العمل</h1><p class="sub" style="margin:4px 0 0">أعضاء الفريق هم من يدخل النظام، ومنهم يُختار «المسؤول عنه» في الحسابات</p></div><button class="btn acc" type="button" onClick="{{openAdd}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>إضافة عضو</button></header>
+
+<div style="display:flex;align-items:center;gap:10px;background:#E6EEF7;color:#1F3F66;border-radius:12px;padding:12px 16px;font-size:14px;flex-wrap:wrap"><span class="pill info">الصلاحيات</span>كل أعضاء الفريق بصلاحيات كاملة.</div>
+
+<sc-if value="{{flash}}" hint-placeholder-val="{{ false }}"><div class="flash" role="status">{{flash}}</div></sc-if>
+
+<section class="card" style="overflow:hidden">
+ <div style="padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h2 style="margin:0;font-size:18px;line-height:28px;font-weight:700">الأعضاء</h2><span class="cap">{{count}}</span></div>
+ <div style="overflow-x:auto"><table class="tbl">
+  <thead><tr><th>العضو</th><th>اسم الدخول</th><th>الحسابات المسؤول عنها</th><th>آخر دخول</th><th>الحالة</th><th style="text-align:left">إجراءات</th></tr></thead>
+  <tbody><sc-for list="{{rows}}" as="u" hint-placeholder-count="2">
+   <tr>
+    <td><div style="display:flex;align-items:center;gap:12px"><span class="av" style="{{u.avStyle}}" aria-hidden="true">{{u.letter}}</span><span style="font-weight:600">{{u.name}}</span><sc-if value="{{u.me}}" hint-placeholder-val="{{ false }}"><span class="pill teal">أنت</span></sc-if></div></td>
+    <td><span class="code en" dir="ltr">{{u.user}}</span></td>
+    <td><div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px"><span>{{u.accTxt}}</span><sc-if value="{{u.hasAccs}}" hint-placeholder-val="{{ true }}"><button type="button" class="lnk" aria-expanded="{{u.isOpen}}" onClick="{{u.toggle}}">{{u.toggleTxt}}</button></sc-if></div></td>
+    <td><span class="cap">{{u.last}}</span></td>
+    <td><span class="{{u.stPill}}">{{u.st}}</span></td>
+    <td><div class="acts"><button type="button" class="lnk" onClick="{{u.edit}}">تعديل</button><button type="button" class="lnk" onClick="{{u.pass}}">تغيير كلمة المرور</button><sc-if value="{{u.canStop}}" hint-placeholder-val="{{ true }}"><button type="button" class="lnk" onClick="{{u.askStop}}">{{u.stopTxt}}</button></sc-if><sc-if value="{{u.canDelete}}" hint-placeholder-val="{{ false }}"><button type="button" class="lnk bad" onClick="{{u.askDel}}">حذف</button></sc-if></div></td>
+   </tr>
+   <sc-if value="{{u.isOpen}}" hint-placeholder-val="{{ false }}"><tr><td colspan="6" style="padding:0"><div class="sub-rows"><sc-for list="{{u.accs}}" as="x" hint-placeholder-count="2"><span>{{x}}</span></sc-for></div></td></tr></sc-if>
+  </sc-for></tbody>
+ </table></div>
+ <p class="hint" style="margin:0;padding:16px 24px">العضو الذي له حسابات أو حركات في النظام لا يُحذف، بل يُوقَف: لا يدخل النظام، ويبقى اسمه في السجلات. ولا يمكن إيقاف حسابك أنت.</p>
+</section>
+</main>
+</div>
+
+<sc-if value="{{mOpen}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-labelledby="tm-t"><div class="modal" style="max-width:520px">
+ <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><h2 id="tm-t" style="margin:0">{{mTitle}}</h2><button class="x" type="button" aria-label="إغلاق" onClick="{{close}}">×</button></div>
+ <sc-if value="{{showInfo}}" hint-placeholder-val="{{ true }}">
+  <label class="f"><span>الاسم الظاهر</span><input type="text" value="{{mName}}" onChange="{{onName}}" placeholder="مثال: كرم"/></label>
+  <label class="f"><span>اسم الدخول</span><input type="text" dir="ltr" value="{{mUser}}" onChange="{{onUser}}" placeholder="karam" autocomplete="off"/></label>
+  <p class="hint" style="margin:-8px 0 0">بالأحرف الإنجليزية والأرقام، 3 أحرف على الأقل.</p>
+ </sc-if>
+ <sc-if value="{{showPass}}" hint-placeholder-val="{{ true }}">
+  <label class="f"><span>{{passLabel}}</span><input type="password" value="{{mPass}}" onChange="{{onPass}}" autocomplete="new-password"/></label>
+  <label class="f"><span>تأكيد كلمة المرور</span><input type="password" value="{{mPass2}}" onChange="{{onPass2}}" autocomplete="new-password"/></label>
+  <p class="hint" style="margin:-8px 0 0">8 أحرف على الأقل.</p>
+ </sc-if>
+ <sc-if value="{{err}}" hint-placeholder-val="{{ false }}"><div class="err" role="alert">{{err}}</div></sc-if>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{close}}">تراجع</button><button class="btn pri" type="button" onClick="{{save}}">{{saveTxt}}</button></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{cOpen}}" hint-placeholder-val="{{ false }}">
+<div class="ov" role="dialog" aria-modal="true" aria-labelledby="tc-t"><div class="modal" style="max-width:480px">
+ <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><h2 id="tc-t" style="margin:0">{{cTitle}}</h2><button class="x" type="button" aria-label="إغلاق" onClick="{{close}}">×</button></div>
+ <p style="margin:0;font-size:14px;line-height:22px;color:#4A5A70">{{cText}}</p>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" type="button" onClick="{{close}}">تراجع</button><button class="{{cBtnCls}}" type="button" onClick="{{confirm}}">{{cBtn}}</button></div>
+</div></div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: {}, m: null, c: null, err: '', flash: '', me: 'u1', team: [
+      { id: 'u1', name: 'أحمد', user: 'ahmad', last: 'اليوم 09:12', st: 'نشط', active: true, accs: ['بنك فلسطين – حساب أحمد', 'بنك فلسطين – حساب المكتب', 'PayPal – حساب المكتب', 'Binance – الحساب الرئيسي', 'Vodafone Cash – محفظة أحمد', 'JAWWAL Pay – محفظة أحمد', 'PalPay – محفظة أحمد'] },
+      { id: 'u2', name: 'هبة', user: 'heba', last: 'أمس 18:40', st: 'نشط', active: true, accs: ['بنك فلسطين – حساب هبة', 'Maalchat – محفظة هبة', 'Bybit – حساب Bybit'] }
+    ] };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var set = function (o) { self.setState(o); };
+    var accTxt = function (k) { return k === 0 ? 'لا توجد حسابات' : k === 1 ? 'حساب واحد' : k === 2 ? 'حسابان' : k + ' حسابات'; };
+    var cntTxt = function (k) { return k === 1 ? 'عضو واحد' : k === 2 ? 'عضوان' : k + ' أعضاء'; };
+    var all = st.team;
+    var upd = function (id, ch) { return self.state.team.map(function (u) { return u.id === id ? Object.assign({}, u, ch) : u; }); };
+    var activeCount = all.filter(function (u) { return u.st === 'نشط'; }).length;
+    var AV = ['background:#16B8A6;color:#0B1626', 'background:#E6EEF7;color:#1F3F66', 'background:#FDF0D5;color:#7A5200', 'background:#EAEAF6;color:#3B3D7A'];
+    var rows = all.map(function (u, i) {
+      var k = u.accs.length, isOpen = !!st.open[u.id], me = u.id === st.me, stopped = u.st === 'موقوف';
+      return {
+        name: u.name, user: u.user, letter: u.name.charAt(0), avStyle: AV[i % AV.length], me: me,
+        accTxt: accTxt(k), hasAccs: k > 0, accs: u.accs, isOpen: isOpen, toggleTxt: isOpen ? 'إخفاء الحسابات' : 'عرض الحسابات',
+        toggle: function () { var o = Object.assign({}, self.state.open); o[u.id] = !o[u.id]; set({ open: o }); },
+        last: u.last || 'لم يدخل بعد', st: u.st, stPill: stopped ? 'pill neutral' : 'pill ok',
+        canStop: !me && (stopped || u.active || k > 0), stopTxt: stopped ? 'إعادة تفعيل' : 'إيقاف',
+        canDelete: !me && k === 0 && !u.active,
+        edit: function () { set({ m: { mode: 'edit', id: u.id, name: u.name, user: u.user }, err: '', flash: '' }); },
+        pass: function () { set({ m: { mode: 'pass', id: u.id, name: u.name, pass: '', pass2: '' }, err: '', flash: '' }); },
+        askStop: function () { set({ c: { kind: stopped ? 'on' : 'stop', id: u.id }, flash: '' }); },
+        askDel: function () { set({ c: { kind: 'del', id: u.id }, flash: '' }); }
+      };
+    });
+    var m = st.m, c = st.c, cu = c ? all.filter(function (u) { return u.id === c.id; })[0] : null;
+    var CT = {
+      stop: ['إيقاف العضو', 'لن يستطيع ' + (cu ? cu.name : '') + ' الدخول إلى النظام. يبقى اسمه في السجلات، ويبقى «المسؤول عنه» في حساباته حتى تغييرها.', 'إيقاف', 'btn pri'],
+      on: ['إعادة تفعيل العضو', 'يستطيع ' + (cu ? cu.name : '') + ' الدخول إلى النظام من جديد بكلمة مروره.', 'إعادة تفعيل', 'btn pri'],
+      del: ['حذف العضو', 'يُحذف ' + (cu ? cu.name : '') + ' نهائياً. ليس له حسابات ولا حركات في النظام.', 'حذف', 'btn danger']
+    };
+    var ct = c ? CT[c.kind] : null;
+    var TITLES = { add: ['إضافة عضو', 'إضافة العضو'], edit: ['تعديل بيانات العضو', 'حفظ التعديل'], pass: ['تغيير كلمة المرور', 'حفظ كلمة المرور'] };
+    return {
+      rows: rows, count: cntTxt(all.length), flash: st.flash,
+      openAdd: function () { set({ m: { mode: 'add', name: '', user: '', pass: '', pass2: '' }, err: '', flash: '' }); },
+      mOpen: !!m, mTitle: m ? (m.mode === 'pass' ? TITLES.pass[0] + ' · ' + m.name : TITLES[m.mode][0]) : '', saveTxt: m ? TITLES[m.mode][1] : '',
+      showInfo: !!m && m.mode !== 'pass', showPass: !!m && m.mode !== 'edit', passLabel: m && m.mode === 'pass' ? 'كلمة المرور الجديدة' : 'كلمة المرور',
+      mName: m ? m.name || '' : '', mUser: m ? m.user || '' : '', mPass: m ? m.pass || '' : '', mPass2: m ? m.pass2 || '' : '',
+      onName: function (e) { set({ m: Object.assign({}, st.m, { name: e.target.value }), err: '' }); },
+      onUser: function (e) { set({ m: Object.assign({}, st.m, { user: e.target.value }), err: '' }); },
+      onPass: function (e) { set({ m: Object.assign({}, st.m, { pass: e.target.value }), err: '' }); },
+      onPass2: function (e) { set({ m: Object.assign({}, st.m, { pass2: e.target.value }), err: '' }); },
+      err: st.err,
+      close: function () { set({ m: null, c: null, err: '' }); },
+      save: function () {
+        if (m.mode !== 'pass') {
+          var name = String(m.name).trim(), user = String(m.user).trim().toLowerCase();
+          if (!name) { set({ err: 'اكتب الاسم الظاهر.' }); return; }
+          if (!/^[a-z0-9._]{3,}$/.test(user)) { set({ err: 'اسم الدخول بالأحرف الإنجليزية والأرقام فقط، 3 أحرف على الأقل.' }); return; }
+          if (all.some(function (u) { return u.id !== m.id && u.user === user; })) { set({ err: 'اسم الدخول مستعمل لعضو آخر.' }); return; }
+        }
+        if (m.mode !== 'edit') {
+          if (String(m.pass || '').length < 8) { set({ err: 'كلمة المرور 8 أحرف على الأقل.' }); return; }
+          if (m.pass !== m.pass2) { set({ err: 'كلمتا المرور غير متطابقتين.' }); return; }
+        }
+        if (m.mode === 'add') set({ team: self.state.team.concat([{ id: 'u' + Date.now(), name: name, user: user, last: '', st: 'نشط', active: false, accs: [] }]), m: null, flash: 'أُضيف ' + name + ' إلى فريق العمل ويستطيع الدخول الآن.' });
+        else if (m.mode === 'edit') set({ team: upd(m.id, { name: name, user: user }), m: null, flash: 'حُفظ تعديل بيانات ' + name + '.' });
+        else set({ m: null, flash: 'تغيّرت كلمة مرور ' + m.name + '.' });
+      },
+      cOpen: !!ct, cTitle: ct ? ct[0] : '', cText: ct ? ct[1] : '', cBtn: ct ? ct[2] : '', cBtnCls: ct ? ct[3] : 'btn',
+      confirm: function () {
+        if (c.kind === 'stop' && activeCount <= 1) { set({ c: null, flash: '' }); return; }
+        if (c.kind === 'del') set({ team: self.state.team.filter(function (u) { return u.id !== c.id; }), c: null, flash: 'حُذف ' + cu.name + ' من فريق العمل.' });
+        else set({ team: upd(c.id, { st: c.kind === 'stop' ? 'موقوف' : 'نشط' }), c: null, flash: c.kind === 'stop' ? 'أُوقف ' + cu.name + '.' : 'أُعيد تفعيل ' + cu.name + '.' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
